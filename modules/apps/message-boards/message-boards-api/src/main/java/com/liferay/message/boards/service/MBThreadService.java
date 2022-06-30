@@ -61,6 +61,10 @@ public interface MBThreadService extends BaseService {
 	public void deleteThread(long threadId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getBySectionNotAnsweredThreads(
+		long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)
@@ -109,6 +113,9 @@ public interface MBThreadService extends BaseService {
 	public int getGroupThreadsCount(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getNotAnsweredThreads(long groupId);
 
 	/**
 	 * Returns the OSGi service identifier.

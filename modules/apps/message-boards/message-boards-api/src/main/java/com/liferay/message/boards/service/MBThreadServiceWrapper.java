@@ -43,6 +43,14 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> getBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return _mbThreadService.getBySectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public java.util.List<MBThread> getGroupThreads(
 			long groupId, long userId, java.util.Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)
@@ -129,6 +137,11 @@ public class MBThreadServiceWrapper
 
 		return _mbThreadService.getGroupThreadsCount(
 			groupId, userId, status, subscribed, includeAnonymous);
+	}
+
+	@Override
+	public java.util.List<MBThread> getNotAnsweredThreads(long groupId) {
+		return _mbThreadService.getNotAnsweredThreads(groupId);
 	}
 
 	/**
