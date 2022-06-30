@@ -42,6 +42,12 @@ public class MBThreadServiceUtil {
 		getService().deleteThread(threadId);
 	}
 
+	public static List<MBThread> getBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return getService().getBySectionNotAnsweredThreads(groupId, categoryId);
+	}
+
 	public static List<MBThread> getGroupThreads(
 			long groupId, long userId, java.util.Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)
@@ -121,6 +127,10 @@ public class MBThreadServiceUtil {
 
 		return getService().getGroupThreadsCount(
 			groupId, userId, status, subscribed, includeAnonymous);
+	}
+
+	public static List<MBThread> getNotAnsweredThreads(long groupId) {
+		return getService().getNotAnsweredThreads(groupId);
 	}
 
 	/**
