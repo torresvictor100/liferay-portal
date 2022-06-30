@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
@@ -208,6 +209,13 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		return getGroupThreads(
 			groupId, userId, status, subscribed, true, start, end);
+	}
+
+	public List<MBThread> getNotAnsweredThreads(long groupId) {
+		return _mbThreadLocalService.getNotAnsweredThreads(groupId);
+	}
+	public List<MBThread> getBySectionNotAnsweredThreads(long groupId, long categoryId) {
+		return _mbThreadLocalService.findBySectionNotAnsweredThreads(groupId, categoryId);
 	}
 
 	@Override
@@ -590,6 +598,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Reference
 	private MBMessageFinder _mbMessageFinder;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
