@@ -34,6 +34,7 @@ import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
+import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -373,6 +374,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 			queryDefinition.getStatus(), queryDefinition.getStart(),
 			queryDefinition.getEnd());
+	}
+
+	public List<MBThread> getNotAnsweredThreads(long groupId) {
+		return _mbThreadFinder.filterByNotAnsweredThreads(groupId);
+	}
+
+	public List<MBThread> findBySectionNotAnsweredThreads(long groupId, long categoryId) {
+		return _mbThreadFinder.findBySectionNotAnsweredThreads(groupId, categoryId);
 	}
 
 	@Override
@@ -1201,6 +1210,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	private MBMessageFinder _mbMessageFinder;
+
+	@Reference
+	private MBThreadFinder _mbThreadFinder;
 
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;
