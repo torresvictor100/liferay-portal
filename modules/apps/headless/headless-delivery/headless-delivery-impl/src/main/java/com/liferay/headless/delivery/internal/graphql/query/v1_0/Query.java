@@ -2482,6 +2482,40 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadsNotAnsweredThreads(aggregation: ___, fields: ___, filter: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, restrictedFields: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public MessageBoardThreadPage messageBoardThreadsNotAnsweredThreads(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("fields") String fields,
+			@GraphQLName("restrictedFields") String restrictedFields,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> new MessageBoardThreadPage(
+				messageBoardThreadResource.
+					getMessageBoardThreadsNotAnsweredThreadsPage(
+						messageBoardSectionId, fields, restrictedFields, search,
+						_aggregationBiFunction.apply(
+							messageBoardThreadResource, aggregations),
+						_filterBiFunction.apply(
+							messageBoardThreadResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							messageBoardThreadResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadPermissions(messageBoardThreadId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -4579,6 +4613,48 @@ public class Query {
 		}
 
 		private BlogPosting _blogPosting;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class GetMessageBoardThreadsNotAnsweredThreadsPageTypeExtension {
+
+		public GetMessageBoardThreadsNotAnsweredThreadsPageTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField
+		public MessageBoardThreadPage messageBoardThreadsNotAnsweredThreads(
+				@GraphQLName("fields") String fields,
+				@GraphQLName("restrictedFields") String restrictedFields,
+				@GraphQLName("search") String search,
+				@GraphQLName("aggregation") List<String> aggregations,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource -> new MessageBoardThreadPage(
+					messageBoardThreadResource.
+						getMessageBoardThreadsNotAnsweredThreadsPage(
+							_messageBoardSection.getId(), fields,
+							restrictedFields, search,
+							_aggregationBiFunction.apply(
+								messageBoardThreadResource, aggregations),
+							_filterBiFunction.apply(
+								messageBoardThreadResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardThreadResource, sortsString))));
+		}
+
+		private MessageBoardSection _messageBoardSection;
 
 	}
 

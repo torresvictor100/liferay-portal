@@ -117,6 +117,14 @@ public interface MessageBoardThreadResource {
 			Long messageBoardThreadId, Rating rating)
 		throws Exception;
 
+	public Page<MessageBoardThread>
+			getMessageBoardThreadsNotAnsweredThreadsPage(
+				Long messageBoardSectionId, String fields,
+				String restrictedFields, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getMessageBoardThreadPermissionsPage(
 				Long messageBoardThreadId, String roleNames)

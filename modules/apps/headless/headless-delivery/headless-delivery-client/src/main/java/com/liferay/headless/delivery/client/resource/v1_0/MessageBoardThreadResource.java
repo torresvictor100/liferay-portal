@@ -170,6 +170,22 @@ public interface MessageBoardThreadResource {
 			Long messageBoardThreadId, Rating rating)
 		throws Exception;
 
+	public Page<MessageBoardThread>
+			getMessageBoardThreadsNotAnsweredThreadsPage(
+				Long messageBoardSectionId, String fields,
+				String restrictedFields, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getMessageBoardThreadsNotAnsweredThreadsPageHttpResponse(
+				Long messageBoardSectionId, String fields,
+				String restrictedFields, String search,
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception;
+
 	public Page<Permission> getMessageBoardThreadPermissionsPage(
 			Long messageBoardThreadId, String roleNames)
 		throws Exception;
@@ -1553,6 +1569,126 @@ public interface MessageBoardThreadResource {
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/my-rating");
 
 			httpInvoker.path("messageBoardThreadId", messageBoardThreadId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<MessageBoardThread>
+				getMessageBoardThreadsNotAnsweredThreadsPage(
+					Long messageBoardSectionId, String fields,
+					String restrictedFields, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getMessageBoardThreadsNotAnsweredThreadsPageHttpResponse(
+					messageBoardSectionId, fields, restrictedFields, search,
+					aggregations, filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, MessageBoardThreadSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getMessageBoardThreadsNotAnsweredThreadsPageHttpResponse(
+					Long messageBoardSectionId, String fields,
+					String restrictedFields, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (fields != null) {
+				httpInvoker.parameter("fields", String.valueOf(fields));
+			}
+
+			if (restrictedFields != null) {
+				httpInvoker.parameter(
+					"restrictedFields", String.valueOf(restrictedFields));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardSectionId}/not-answered-threads");
+
+			httpInvoker.path("messageBoardSectionId", messageBoardSectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
