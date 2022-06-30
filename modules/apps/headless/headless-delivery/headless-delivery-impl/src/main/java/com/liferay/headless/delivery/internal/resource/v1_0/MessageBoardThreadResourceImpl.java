@@ -222,7 +222,7 @@ public class MessageBoardThreadResourceImpl
 			sorts);
 	}
 
-	public Page<MessageBoardThread> getMessageBoardThreadsNotAnsweredThreadsPage(
+	public Page<MessageBoardThread> getMessageBoardSectionNotAnsweredThreadsPage(
 		Long messageBoardSectionId, String search,
 		Aggregation aggregation, Filter filter, Pagination pagination,
 		Sort[] sorts)
@@ -243,7 +243,7 @@ public class MessageBoardThreadResourceImpl
 				"get",
 				addAction(
 					ActionKeys.VIEW, mbCategory.getCategoryId(),
-					"getMessageBoardThreadsNotAnsweredThreadsPage",
+					"getMessageBoardSectionNotAnsweredThreadsPage",
 					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
 					mbCategory.getGroupId())
 			).build();
