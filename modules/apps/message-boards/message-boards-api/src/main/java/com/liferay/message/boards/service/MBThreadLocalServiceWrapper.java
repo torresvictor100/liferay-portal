@@ -286,6 +286,14 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return _mbThreadLocalService.findBySectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -489,6 +497,11 @@ public class MBThreadLocalServiceWrapper
 	@Override
 	public int getMessageCount(long threadId, int status) {
 		return _mbThreadLocalService.getMessageCount(threadId, status);
+	}
+
+	@Override
+	public java.util.List<MBThread> getNotAnsweredThreads(long groupId) {
+		return _mbThreadLocalService.getNotAnsweredThreads(groupId);
 	}
 
 	/**

@@ -250,6 +250,9 @@ public interface MBThreadLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBThread fetchThread(long threadId);
 
+	public List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -372,6 +375,9 @@ public interface MBThreadLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMessageCount(long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getNotAnsweredThreads(long groupId);
 
 	/**
 	 * Returns the OSGi service identifier.

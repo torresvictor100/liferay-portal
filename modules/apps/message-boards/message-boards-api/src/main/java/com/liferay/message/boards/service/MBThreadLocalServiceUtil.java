@@ -255,6 +255,13 @@ public class MBThreadLocalServiceUtil {
 		return getService().fetchThread(threadId);
 	}
 
+	public static List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return getService().findBySectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -435,6 +442,10 @@ public class MBThreadLocalServiceUtil {
 
 	public static int getMessageCount(long threadId, int status) {
 		return getService().getMessageCount(threadId, status);
+	}
+
+	public static List<MBThread> getNotAnsweredThreads(long groupId) {
+		return getService().getNotAnsweredThreads(groupId);
 	}
 
 	/**
