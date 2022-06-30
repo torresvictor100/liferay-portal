@@ -69,6 +69,12 @@ public interface MBThreadFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
+	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterByNotAnsweredThreads(long groupId);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread>
+		findBySectionNotAnsweredThreads(long groupId, long categoryId);
+
 	public int filterCountByG_C(long groupId, long categoryId);
 
 	public int filterCountByG_C(
