@@ -469,6 +469,12 @@ public class MBThreadLocalServiceUtil {
 		return getService().getPriorityThreads(categoryId, priority, inherit);
 	}
 
+	public static List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return getService().getSectionNotAnsweredThreads(groupId, categoryId);
+	}
+
 	public static MBThread getThread(long threadId) throws PortalException {
 		return getService().getThread(threadId);
 	}

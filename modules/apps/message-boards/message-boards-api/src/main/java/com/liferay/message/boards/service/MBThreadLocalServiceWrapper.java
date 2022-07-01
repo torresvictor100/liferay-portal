@@ -530,6 +530,14 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return _mbThreadLocalService.getSectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public MBThread getThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
