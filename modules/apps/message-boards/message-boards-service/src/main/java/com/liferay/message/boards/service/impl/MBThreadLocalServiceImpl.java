@@ -471,6 +471,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return threads;
 	}
 
+	Override
+	public List<MBThread> getSectionNotAnsweredThreads(long groupId, long categoryId) {
+		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(groupId, categoryId);
+	}
+
 	@Override
 	public MBThread getThread(long threadId) throws PortalException {
 		return mbThreadPersistence.findByPrimaryKey(threadId);
