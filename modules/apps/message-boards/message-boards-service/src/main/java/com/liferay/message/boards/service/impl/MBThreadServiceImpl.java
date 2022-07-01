@@ -311,6 +311,10 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			groupId, userId, categoryIds, false, status);
 	}
 
+	public List<MBThread> getSectionNotAnsweredThreads(long groupId, long categoryId) {
+		return mbThreadLocalService.getSectionNotAnsweredThreads(groupId, categoryId);
+	}
+
 	@Override
 	public List<MBThread> getThreads(
 		long groupId, long categoryId, int status, int start, int end) {

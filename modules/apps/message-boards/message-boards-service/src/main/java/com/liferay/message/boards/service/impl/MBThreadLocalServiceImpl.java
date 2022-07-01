@@ -472,8 +472,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<MBThread> getSectionNotAnsweredThreads(long groupId, long categoryId) {
-		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(groupId, categoryId);
+	public List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(
+			groupId, categoryId);
 	}
 
 	@Override
