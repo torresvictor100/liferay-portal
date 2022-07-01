@@ -17,13 +17,21 @@ package com.liferay.message.boards.service.persistence.impl;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBThreadImpl;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -537,6 +545,47 @@ public class MBThreadFinderImpl
 
 		return doFindByS_G_U_C(
 			groupId, userId, categoryIds, queryDefinition, true);
+	}
+
+	public List<MBThread> filterFindBySectionNotAnsweredThreads(long groupId, long categoryId) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			Order order = OrderFactoryUtil.desc("modifiedDate");
+
+			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class, classLoader);
+			mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbMessageQuery.add(RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbMessageQuery.add(RestrictionsFactoryUtil.eq("answer", true));
+			mbMessageQuery.setProjection(ProjectionFactoryUtil.property("threadId"));
+			mbMessageQuery.addOrder(order);
+
+			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(MBThread.class, classLoader);
+			mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbThreadQuery.add(RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbThreadQuery.add(PropertyFactoryUtil.forName("threadId").notIn(mbMessageQuery));
+
+			List<MBThread> threads = MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
+
+			return threads;
+		}
+		catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			}
+			catch (SystemException se) {
+				se.printStackTrace();
+			}
+		}
+		finally {
+			closeSession(session);
+		}
+		return null;
 	}
 
 	@Override
