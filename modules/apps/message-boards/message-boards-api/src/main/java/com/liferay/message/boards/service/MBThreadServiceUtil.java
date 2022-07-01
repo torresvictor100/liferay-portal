@@ -132,6 +132,12 @@ public class MBThreadServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return getService().getSectionNotAnsweredThreads(groupId, categoryId);
+	}
+
 	public static List<MBThread> getThreads(
 		long groupId, long categoryId, int status, int start, int end) {
 
