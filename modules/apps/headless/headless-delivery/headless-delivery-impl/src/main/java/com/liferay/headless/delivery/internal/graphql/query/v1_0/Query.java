@@ -2420,6 +2420,40 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardSectionNotAnsweredThreads(aggregation: ___, filter: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the message board section's not answered threads. Results can be paginated, filtered, searched, and sorted."
+	)
+	public MessageBoardThreadPage messageBoardSectionNotAnsweredThreads(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource -> new MessageBoardThreadPage(
+				messageBoardThreadResource.
+					getMessageBoardSectionNotAnsweredThreadsPage(
+						messageBoardSectionId, search,
+						_aggregationBiFunction.apply(
+							messageBoardThreadResource, aggregations),
+						_filterBiFunction.apply(
+							messageBoardThreadResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							messageBoardThreadResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadsRanked(dateCreated: ___, dateModified: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -4943,6 +4977,47 @@ public class Query {
 							Pagination.of(page, pageSize),
 							_sortsBiFunction.apply(
 								messageBoardSectionResource, sortsString))));
+		}
+
+		private MessageBoardSection _messageBoardSection;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardSection.class)
+	public class GetMessageBoardSectionNotAnsweredThreadsPageTypeExtension {
+
+		public GetMessageBoardSectionNotAnsweredThreadsPageTypeExtension(
+			MessageBoardSection messageBoardSection) {
+
+			_messageBoardSection = messageBoardSection;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the message board section's not answered threads. Results can be paginated, filtered, searched, and sorted."
+		)
+		public MessageBoardThreadPage notAnsweredThreads(
+				@GraphQLName("search") String search,
+				@GraphQLName("aggregation") List<String> aggregations,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardThreadResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardThreadResource -> new MessageBoardThreadPage(
+					messageBoardThreadResource.
+						getMessageBoardSectionNotAnsweredThreadsPage(
+							_messageBoardSection.getId(), search,
+							_aggregationBiFunction.apply(
+								messageBoardThreadResource, aggregations),
+							_filterBiFunction.apply(
+								messageBoardThreadResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								messageBoardThreadResource, sortsString))));
 		}
 
 		private MessageBoardSection _messageBoardSection;
