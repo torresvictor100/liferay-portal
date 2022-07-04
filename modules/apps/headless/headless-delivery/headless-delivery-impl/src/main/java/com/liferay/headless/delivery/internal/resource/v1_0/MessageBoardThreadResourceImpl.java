@@ -296,6 +296,79 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	@Override
+	public Page<MessageBoardThread>
+			getMessageBoardSectionNoAnswersThreadsPage(
+				Long messageBoardSectionId, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
+		throws Exception {
+
+		MBCategory mbCategory = _mbCategoryService.getCategory(
+			messageBoardSectionId);
+
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					ActionKeys.ADD_MESSAGE, mbCategory.getCategoryId(),
+					"postMessageBoardSectionMessageBoardThread",
+					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
+					mbCategory.getGroupId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, mbCategory.getCategoryId(),
+					"getMessageBoardSectionNoAnswersThreadsPage",
+					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
+					mbCategory.getGroupId())
+			).build();
+
+		if ((search == null) && (filter == null) && (sorts == null)) {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker.isContentReviewer(
+				contextCompany.getCompanyId(), mbCategory.getGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
+			return Page.of(
+				actions,
+				TransformUtil.transform(
+					_mbThreadService.getSectionNoAnswersThreads(mbCategory.getGroupId(), messageBoardSectionId),
+					this::_toMessageBoardThread),
+				pagination,
+				_mbThreadService.getThreadsCount(
+					mbCategory.getGroupId(), mbCategory.getCategoryId(),
+					new QueryDefinition<>(
+						status, contextUser.getUserId(), true,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null)));
+		}
+
+		return _getSiteMessageBoardThreadsPage(
+			actions,
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.CATEGORY_ID,
+						String.valueOf(mbCategory.getCategoryId())),
+					BooleanClauseOccur.MUST);
+				booleanFilter.add(
+					new TermFilter("parentMessageId", "0"),
+					BooleanClauseOccur.MUST);
+			},
+			mbCategory.getGroupId(), aggregation, filter, search, pagination,
+			sorts);
+	}
+
+	@Override
 	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
 		throws Exception {
 
