@@ -398,6 +398,10 @@ public interface MBThreadLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getSectionNoAnswersThreads(
+		long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getSectionNotAnsweredThreads(
 		long groupId, long categoryId);
 

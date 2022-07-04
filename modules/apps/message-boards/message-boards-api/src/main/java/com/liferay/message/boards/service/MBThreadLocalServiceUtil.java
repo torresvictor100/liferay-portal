@@ -469,6 +469,12 @@ public class MBThreadLocalServiceUtil {
 		return getService().getPriorityThreads(categoryId, priority, inherit);
 	}
 
+	public static List<MBThread> getSectionNoAnswersThreads(
+		long groupId, long categoryId) {
+
+		return getService().getSectionNoAnswersThreads(groupId, categoryId);
+	}
+
 	public static List<MBThread> getSectionNotAnsweredThreads(
 		long groupId, long categoryId) {
 

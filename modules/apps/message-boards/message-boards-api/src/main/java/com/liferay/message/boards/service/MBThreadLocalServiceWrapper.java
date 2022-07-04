@@ -530,6 +530,14 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> getSectionNoAnswersThreads(
+		long groupId, long categoryId) {
+
+		return _mbThreadLocalService.getSectionNoAnswersThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public java.util.List<MBThread> getSectionNotAnsweredThreads(
 		long groupId, long categoryId) {
 
