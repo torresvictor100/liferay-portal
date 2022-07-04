@@ -320,6 +320,14 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBThread> getSectionNoAnswersThreads(
+		long groupId, long categoryId) {
+
+		return mbThreadLocalService.getSectionNoAnswersThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public List<MBThread> getThreads(
 		long groupId, long categoryId, int status, int start, int end) {
 
