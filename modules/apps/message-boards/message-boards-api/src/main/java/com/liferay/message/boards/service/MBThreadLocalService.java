@@ -250,6 +250,11 @@ public interface MBThreadLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBThread fetchThread(long threadId);
 
+	public List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId);
+
+	public List<MBThread> findNotAnsweredThreads(long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
