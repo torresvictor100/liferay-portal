@@ -480,6 +480,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBThread> getSectionNoAnswersThreads(
+		long groupId, long categoryId) {
+
+		return mbThreadFinder.filterFindBySectionNoAnswersThreads(
+			groupId, categoryId);
+	}
+
+	@Override
 	public MBThread getThread(long threadId) throws PortalException {
 		return mbThreadPersistence.findByPrimaryKey(threadId);
 	}

@@ -485,6 +485,7 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBThread> filterFindBySectionNotAnsweredThreads(
 		long groupId, long categoryId) {
 
@@ -531,6 +532,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> filterFindBySectionNoAnswersThreads(
 		long groupId, long categoryId) {
 
