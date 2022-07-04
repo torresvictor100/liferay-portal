@@ -34,6 +34,7 @@ import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
+import com.liferay.message.boards.service.persistence.impl.MBThreadFinderImpl;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -103,6 +104,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
+
+
 	@Override
 	public MBThread addThread(
 			long categoryId, MBMessage message, ServiceContext serviceContext)
@@ -162,6 +165,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 
 		return thread;
+	}
+	@Override
+	public List<MBThread> findNotAnsweredThreads(long groupId) {
+		return _mbThreadFinder.findByNotAnsweredThreads(groupId);
+	}
+	@Override
+	public List<MBThread> findBySectionNotAnsweredThreads(long groupId, long categoryId) {
+		return _mbThreadFinder.findBySectionNotAnsweredThreads(groupId, categoryId);
 	}
 
 	@Override
@@ -1180,6 +1191,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			moveChildrenMessages(message, category, oldThreadId);
 		}
 	}
+	@Reference
+	private MBThreadFinderImpl _mbThreadFinder;
 
 	@Reference
 	protected ExpandoRowLocalService expandoRowLocalService;
