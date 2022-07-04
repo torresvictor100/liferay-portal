@@ -531,6 +531,52 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	public List<MBThread> filterFindBySectionNoAnswersThreads(
+		long groupId, long categoryId) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			Order order = OrderFactoryUtil.desc("modifiedDate");
+
+			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(
+				MBMessage.class, classLoader);
+
+			mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbMessageQuery.add(
+				RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbMessageQuery.add(RestrictionsFactoryUtil.ne("parentMessageId", 0));
+			mbMessageQuery.setProjection(
+				ProjectionFactoryUtil.property("threadId"));
+			mbMessageQuery.addOrder(order);
+
+			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(
+				MBThread.class, classLoader);
+
+			mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbThreadQuery.add(
+				RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbThreadQuery.add(
+				PropertyFactoryUtil.forName(
+					"threadId"
+				).notIn(
+					mbMessageQuery
+				));
+
+			return MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	@Override
 	public List<MBThread> filterFindByG_C(
 		long groupId, long categoryId, int start, int end) {
