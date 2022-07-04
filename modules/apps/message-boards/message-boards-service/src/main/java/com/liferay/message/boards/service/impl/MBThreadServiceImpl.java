@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
@@ -64,6 +65,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
+
+
 
 	@Override
 	public void deleteThread(long threadId) throws PortalException {
@@ -216,6 +219,14 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException {
 
 		return getGroupThreads(groupId, userId, status, false, start, end);
+	}
+	@Override
+	public List<MBThread> findNotAnsweredThreads(long groupId) {
+		return _mbThreadLocalService.findNotAnsweredThreads(groupId);
+	}
+	@Override
+	public List<MBThread> findBySectionNotAnsweredThreads(long groupId, long categoryId) {
+		return _mbThreadLocalService.findBySectionNotAnsweredThreads(groupId, categoryId);
 	}
 
 	@Override
@@ -575,6 +586,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
+	@Reference
+	private MBThreadLocalServiceUtil _mbThreadLocalService;
 
 	@Reference(target = MBPersistenceConstants.SERVICE_CONFIGURATION_FILTER)
 	private Configuration _configuration;

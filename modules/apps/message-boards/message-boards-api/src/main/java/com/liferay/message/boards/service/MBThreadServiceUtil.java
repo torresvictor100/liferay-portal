@@ -42,6 +42,17 @@ public class MBThreadServiceUtil {
 		getService().deleteThread(threadId);
 	}
 
+	public static List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return getService().findBySectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
+	public static List<MBThread> findNotAnsweredThreads(long groupId) {
+		return getService().findNotAnsweredThreads(groupId);
+	}
+
 	public static List<MBThread> getGroupThreads(
 			long groupId, long userId, java.util.Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)

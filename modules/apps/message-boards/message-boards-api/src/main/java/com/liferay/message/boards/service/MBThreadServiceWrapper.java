@@ -43,6 +43,19 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId) {
+
+		return _mbThreadService.findBySectionNotAnsweredThreads(
+			groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<MBThread> findNotAnsweredThreads(long groupId) {
+		return _mbThreadService.findNotAnsweredThreads(groupId);
+	}
+
+	@Override
 	public java.util.List<MBThread> getGroupThreads(
 			long groupId, long userId, java.util.Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)

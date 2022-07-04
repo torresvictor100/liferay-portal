@@ -60,6 +60,11 @@ public interface MBThreadService extends BaseService {
 	 */
 	public void deleteThread(long threadId) throws PortalException;
 
+	public List<MBThread> findBySectionNotAnsweredThreads(
+		long groupId, long categoryId);
+
+	public List<MBThread> findNotAnsweredThreads(long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, Date modifiedDate,
