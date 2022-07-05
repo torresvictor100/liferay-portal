@@ -547,11 +547,11 @@ public class MBThreadFinderImpl
 
 			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(
 				MBMessage.class, classLoader);
-
 			mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
 			mbMessageQuery.add(
 				RestrictionsFactoryUtil.eq("categoryId", categoryId));
-			mbMessageQuery.add(RestrictionsFactoryUtil.ne("parentMessageId", 0));
+			mbMessageQuery.add(
+				RestrictionsFactoryUtil.ne("parentMessageId", 0L));
 			mbMessageQuery.setProjection(
 				ProjectionFactoryUtil.property("threadId"));
 			mbMessageQuery.addOrder(order);
