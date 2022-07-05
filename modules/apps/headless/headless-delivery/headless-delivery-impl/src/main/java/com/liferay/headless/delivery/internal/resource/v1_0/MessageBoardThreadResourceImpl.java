@@ -250,18 +250,18 @@ public class MessageBoardThreadResourceImpl
 					mbCategory.getGroupId())
 			).build();
 
-		if ((search == null) && (filter == null) && (sorts == null)) {
-			int status = WorkflowConstants.STATUS_APPROVED;
+		int status = WorkflowConstants.STATUS_APPROVED;
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-			if (permissionChecker.isContentReviewer(
-				contextCompany.getCompanyId(), mbCategory.getGroupId())) {
+		if (permissionChecker.isContentReviewer(
+			contextCompany.getCompanyId(), mbCategory.getGroupId())) {
 
-				status = WorkflowConstants.STATUS_ANY;
-			}
+			status = WorkflowConstants.STATUS_ANY;
+		}
 
+		if (sorts == null) {
 			return Page.of(
 				actions,
 				TransformUtil.transform(
@@ -276,23 +276,21 @@ public class MessageBoardThreadResourceImpl
 						pagination.getEndPosition(), null)));
 		}
 
-		return _getSiteMessageBoardThreadsPage(
-			actions,
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
+		String[] sortFieldName = sorts[0].getFieldName().split("_");
+		System.out.println(sortFieldName[0]);
 
-				booleanFilter.add(
-					new TermFilter(
-						Field.CATEGORY_ID,
-						String.valueOf(mbCategory.getCategoryId())),
-					BooleanClauseOccur.MUST);
-				booleanFilter.add(
-					new TermFilter("parentMessageId", "0"),
-					BooleanClauseOccur.MUST);
-			},
-			mbCategory.getGroupId(), aggregation, filter, search, pagination,
-			sorts);
+		return Page.of(
+			actions,
+			TransformUtil.transform(
+				_mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId, sortFieldName[0], sorts[0].isReverse()),
+				this::_toMessageBoardThread),
+			pagination,
+			_mbThreadService.getThreadsCount(
+				mbCategory.getGroupId(), mbCategory.getCategoryId(),
+				new QueryDefinition<>(
+					status, contextUser.getUserId(), true,
+					pagination.getStartPosition(),
+					pagination.getEndPosition(), null)));
 	}
 
 	@Override
