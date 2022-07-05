@@ -150,10 +150,10 @@ public class MBThreadServiceWrapper
 
 	@Override
 	public java.util.List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId) {
+		long groupId, long categoryId, String sort) {
 
 		return _mbThreadService.getSectionNotAnsweredThreads(
-			groupId, categoryId);
+			groupId, categoryId, sort);
 	}
 
 	@Override

@@ -82,7 +82,8 @@ public interface MBThreadFinder {
 			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
-		filterFindBySectionNotAnsweredThreads(long groupId, long categoryId);
+		filterFindBySectionNotAnsweredThreads(
+			long groupId, long categoryId, String sort);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindBySectionNoAnswersThreads(long groupId, long categoryId);

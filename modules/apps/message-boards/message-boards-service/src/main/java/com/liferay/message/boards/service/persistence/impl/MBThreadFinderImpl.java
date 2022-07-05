@@ -487,7 +487,7 @@ public class MBThreadFinderImpl
 
 	@Override
 	public List<MBThread> filterFindBySectionNotAnsweredThreads(
-		long groupId, long categoryId) {
+		long groupId, long categoryId, String sort) {
 
 		Session session = null;
 
@@ -495,8 +495,6 @@ public class MBThreadFinderImpl
 			session = openSession();
 
 			ClassLoader classLoader = getClass().getClassLoader();
-
-			Order order = OrderFactoryUtil.desc("modifiedDate");
 
 			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(
 				MBMessage.class, classLoader);
@@ -507,7 +505,27 @@ public class MBThreadFinderImpl
 			mbMessageQuery.add(RestrictionsFactoryUtil.eq("answer", true));
 			mbMessageQuery.setProjection(
 				ProjectionFactoryUtil.property("threadId"));
-			mbMessageQuery.addOrder(order);
+
+			if (sort.equals("") || sort.equals(null)) {
+				Order order = OrderFactoryUtil.desc("modifiedDate");
+				mbMessageQuery.addOrder(order);
+			} else {
+				String[] sort_terms = sort.split(":");
+
+				if (sort_terms[1].equals("asc") && sort_terms[0].equals("dateCreated")) {
+					Order order = OrderFactoryUtil.asc("createDate");
+					mbMessageQuery.addOrder(order);
+				} else if (sort_terms[1].equals("desc") && sort_terms[0].equals("dateCreated")) {
+					Order order = OrderFactoryUtil.desc("createDate");
+					mbMessageQuery.addOrder(order);
+				} else if (sort_terms[1].equals("asc") && sort_terms[0].equals("dateModified")) {
+					Order order = OrderFactoryUtil.asc("modifiedDate");
+					mbMessageQuery.addOrder(order);
+				} else if (sort_terms[1].equals("desc") && sort_terms[0].equals("dateModified")) {
+					Order order = OrderFactoryUtil.desc("modifiedDate");
+					mbMessageQuery.addOrder(order);
+				}
+			}
 
 			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(
 				MBThread.class, classLoader);

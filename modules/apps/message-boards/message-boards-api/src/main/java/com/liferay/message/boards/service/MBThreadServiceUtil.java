@@ -139,9 +139,10 @@ public class MBThreadServiceUtil {
 	}
 
 	public static List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId) {
+		long groupId, long categoryId, String sort) {
 
-		return getService().getSectionNotAnsweredThreads(groupId, categoryId);
+		return getService().getSectionNotAnsweredThreads(
+			groupId, categoryId, sort);
 	}
 
 	public static List<MBThread> getThreads(

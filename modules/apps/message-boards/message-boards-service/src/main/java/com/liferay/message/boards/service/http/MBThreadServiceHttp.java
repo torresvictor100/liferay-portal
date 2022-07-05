@@ -472,7 +472,8 @@ public class MBThreadServiceHttp {
 
 	public static java.util.List<com.liferay.message.boards.model.MBThread>
 		getSectionNotAnsweredThreads(
-			HttpPrincipal httpPrincipal, long groupId, long categoryId) {
+			HttpPrincipal httpPrincipal, long groupId, long categoryId,
+			String sort) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -480,7 +481,7 @@ public class MBThreadServiceHttp {
 				_getSectionNotAnsweredThreadsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, categoryId);
+				methodKey, groupId, categoryId, sort);
 
 			Object returnObj = null;
 
@@ -1089,7 +1090,7 @@ public class MBThreadServiceHttp {
 		};
 	private static final Class<?>[]
 		_getSectionNotAnsweredThreadsParameterTypes11 = new Class[] {
-			long.class, long.class
+			long.class, long.class, String.class
 		};
 	private static final Class<?>[]
 		_getSectionNoAnswersThreadsParameterTypes12 = new Class[] {

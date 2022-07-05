@@ -403,7 +403,7 @@ public interface MBThreadLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId);
+		long groupId, long categoryId, String sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBThread getThread(long threadId) throws PortalException;
