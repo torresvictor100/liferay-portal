@@ -92,6 +92,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -257,32 +258,27 @@ public class MessageBoardThreadResourceImpl
 
 		if (permissionChecker.isContentReviewer(
 			contextCompany.getCompanyId(), mbCategory.getGroupId())) {
-
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		if (sorts == null) {
-			return Page.of(
-				actions,
-				TransformUtil.transform(
-					_mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId),
-					this::_toMessageBoardThread),
-				pagination,
-				_mbThreadService.getThreadsCount(
-					mbCategory.getGroupId(), mbCategory.getCategoryId(),
-					new QueryDefinition<>(
-						status, contextUser.getUserId(), true,
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null)));
-		}
+		List<MBThread> threads;
 
-		String[] sortFieldName = sorts[0].getFieldName().split("_");
-		System.out.println(sortFieldName[0]);
+		if (sorts == null) {
+			threads = _mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId);
+		} else {
+			String[] sortFieldName = sorts[0].getFieldName().split("_");
+			System.out.println(sortFieldName[0]);
+
+			threads = _mbThreadService.getSectionNotAnsweredThreads(
+				mbCategory.getGroupId(),
+				messageBoardSectionId,
+				sortFieldName[0], sorts[0].isReverse());
+		}
 
 		return Page.of(
 			actions,
 			TransformUtil.transform(
-				_mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId, sortFieldName[0], sorts[0].isReverse()),
+				threads,
 				this::_toMessageBoardThread),
 			pagination,
 			_mbThreadService.getThreadsCount(
