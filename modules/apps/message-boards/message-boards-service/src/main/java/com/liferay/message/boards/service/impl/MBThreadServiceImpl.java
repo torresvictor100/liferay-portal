@@ -313,10 +313,18 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId, String sort) {
+		long groupId, long categoryId) {
 
 		return mbThreadLocalService.getSectionNotAnsweredThreads(
-			groupId, categoryId, sort);
+			groupId, categoryId);
+	}
+
+	@Override
+	public List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
+
+		return mbThreadLocalService.getSectionNotAnsweredThreads(
+			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
 	@Override
