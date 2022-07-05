@@ -123,7 +123,12 @@ public interface MBThreadService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId, String sort);
+		long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId, String sortFieldName,
+		Boolean sortIsReverse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getThreads(

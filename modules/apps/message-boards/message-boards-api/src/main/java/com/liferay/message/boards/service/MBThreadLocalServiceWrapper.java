@@ -539,10 +539,19 @@ public class MBThreadLocalServiceWrapper
 
 	@Override
 	public java.util.List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId, String sort) {
+		long groupId, long categoryId) {
 
 		return _mbThreadLocalService.getSectionNotAnsweredThreads(
-			groupId, categoryId, sort);
+			groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId, String sortFieldName,
+		Boolean sortIsReverse) {
+
+		return _mbThreadLocalService.getSectionNotAnsweredThreads(
+			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
 	@Override
