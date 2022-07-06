@@ -599,8 +599,6 @@ public class MBThreadFinderImpl
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
-			Order order = OrderFactoryUtil.desc("modifiedDate");
-
 			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(
 				MBMessage.class, classLoader);
 			mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
@@ -610,10 +608,11 @@ public class MBThreadFinderImpl
 				RestrictionsFactoryUtil.ne("parentMessageId", 0L));
 			mbMessageQuery.setProjection(
 				ProjectionFactoryUtil.property("threadId"));
-			mbMessageQuery.addOrder(order);
 
 			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(
 				MBThread.class, classLoader);
+
+			Order order = OrderFactoryUtil.desc("modifiedDate");
 
 			mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
 			mbThreadQuery.add(
@@ -624,6 +623,7 @@ public class MBThreadFinderImpl
 				).notIn(
 					mbMessageQuery
 				));
+			mbThreadQuery.addOrder(order);
 
 			return MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
 		}
