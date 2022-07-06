@@ -142,10 +142,20 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
-	public java.util.List<MBThread> getSectionNoAnswersThreads(
+	public java.util.List<MBThread> getSectionNotAcceptedAnswerThreads(
 		long groupId, long categoryId) {
 
-		return _mbThreadService.getSectionNoAnswersThreads(groupId, categoryId);
+		return _mbThreadService.getSectionNotAcceptedAnswerThreads(
+			groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<MBThread> getSectionNotAcceptedAnswerThreads(
+		long groupId, long categoryId, String sortFieldName,
+		Boolean sortIsReverse) {
+
+		return _mbThreadService.getSectionNotAcceptedAnswerThreads(
+			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
 	@Override

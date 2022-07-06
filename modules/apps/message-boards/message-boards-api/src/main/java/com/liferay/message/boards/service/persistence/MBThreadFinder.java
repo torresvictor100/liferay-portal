@@ -82,15 +82,21 @@ public interface MBThreadFinder {
 			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterFindBySectionNotAcceptedAnswerThreads(
+			long groupId, long categoryId);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterFindBySectionNotAcceptedAnswerThreads(
+			long groupId, long categoryId, String sortFieldName,
+			Boolean sortIsReverse);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindBySectionNotAnsweredThreads(long groupId, long categoryId);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindBySectionNotAnsweredThreads(
 			long groupId, long categoryId, String sortFieldName,
 			Boolean sortIsReverse);
-
-	public java.util.List<com.liferay.message.boards.model.MBThread>
-		filterFindBySectionNoAnswersThreads(long groupId, long categoryId);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindByG_C(long groupId, long categoryId, int start, int end);

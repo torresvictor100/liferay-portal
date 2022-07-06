@@ -132,10 +132,19 @@ public class MBThreadServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static List<MBThread> getSectionNoAnswersThreads(
+	public static List<MBThread> getSectionNotAcceptedAnswerThreads(
 		long groupId, long categoryId) {
 
-		return getService().getSectionNoAnswersThreads(groupId, categoryId);
+		return getService().getSectionNotAcceptedAnswerThreads(
+			groupId, categoryId);
+	}
+
+	public static List<MBThread> getSectionNotAcceptedAnswerThreads(
+		long groupId, long categoryId, String sortFieldName,
+		Boolean sortIsReverse) {
+
+		return getService().getSectionNotAcceptedAnswerThreads(
+			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
 	public static List<MBThread> getSectionNotAnsweredThreads(

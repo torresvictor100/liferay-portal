@@ -118,8 +118,13 @@ public interface MBThreadService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBThread> getSectionNoAnswersThreads(
+	public List<MBThread> getSectionNotAcceptedAnswerThreads(
 		long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getSectionNotAcceptedAnswerThreads(
+		long groupId, long categoryId, String sortFieldName,
+		Boolean sortIsReverse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBThread> getSectionNotAnsweredThreads(
