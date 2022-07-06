@@ -484,14 +484,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
 
 		return mbThreadFinder.filterFindBySectionNotAcceptedAnswerThreads(
-			groupId, categoryId);
-	}
-
-	@Override
-	public List<MBThread> getSectionNotAnsweredThreads(
-		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
-
-		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(
 			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
@@ -501,6 +493,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(
 			groupId, categoryId);
+	}
+
+	@Override
+	public List<MBThread> getSectionNotAnsweredThreads(
+		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
+
+		return mbThreadFinder.filterFindBySectionNotAnsweredThreads(
+			groupId, categoryId, sortFieldName, sortIsReverse);
 	}
 
 	@Override
