@@ -486,7 +486,7 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
-	public List<MBThread> filterFindBySectionNotAnsweredThreads(
+	public List<MBThread> filterFindBySectionNotAcceptedAnswerThreads(
 		long groupId, long categoryId) {
 
 		Session session = null;
@@ -533,7 +533,7 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
-	public List<MBThread> filterFindBySectionNotAnsweredThreads(
+	public List<MBThread> filterFindBySectionNotAcceptedAnswerThreads(
 		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
 
 		Session session = null;
@@ -566,19 +566,17 @@ public class MBThreadFinderImpl
 					mbMessageQuery
 				));
 
+			Order order = OrderFactoryUtil.desc("modifiedDate");
+
 			if (!sortIsReverse && sortFieldName.equals("createDate")) {
-				Order order = OrderFactoryUtil.asc("createDate");
-				mbThreadQuery.addOrder(order);
+				order = OrderFactoryUtil.asc("createDate");
 			} else if (sortIsReverse && sortFieldName.equals("createDate")) {
-				Order order = OrderFactoryUtil.desc("createDate");
-				mbThreadQuery.addOrder(order);
+				order = OrderFactoryUtil.desc("createDate");
 			} else if (!sortIsReverse && sortFieldName.equals("modified")) {
-				Order order = OrderFactoryUtil.asc("modifiedDate");
-				mbThreadQuery.addOrder(order);
-			} else if (sortIsReverse && sortFieldName.equals("modified")) {
-				Order order = OrderFactoryUtil.desc("modifiedDate");
-				mbThreadQuery.addOrder(order);
+				order = OrderFactoryUtil.asc("modifiedDate");
 			}
+
+			mbThreadQuery.addOrder(order);
 
 			return MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
 		}
@@ -591,7 +589,7 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
-	public List<MBThread> filterFindBySectionNoAnswersThreads(
+	public List<MBThread> filterFindBySectionNotAnsweredThreads(
 		long groupId, long categoryId) {
 
 		Session session = null;
@@ -626,6 +624,62 @@ public class MBThreadFinderImpl
 				).notIn(
 					mbMessageQuery
 				));
+
+			return MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<MBThread> filterFindBySectionNotAnsweredThreads(
+		long groupId, long categoryId, String sortFieldName, Boolean sortIsReverse) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			DynamicQuery mbMessageQuery = DynamicQueryFactoryUtil.forClass(
+				MBMessage.class, classLoader);
+			mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbMessageQuery.add(
+				RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbMessageQuery.add(
+				RestrictionsFactoryUtil.ne("parentMessageId", 0L));
+			mbMessageQuery.setProjection(
+				ProjectionFactoryUtil.property("threadId"));
+
+			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(
+				MBThread.class, classLoader);
+
+			mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+			mbThreadQuery.add(
+				RestrictionsFactoryUtil.eq("categoryId", categoryId));
+			mbThreadQuery.add(
+				PropertyFactoryUtil.forName(
+					"threadId"
+				).notIn(
+					mbMessageQuery
+				));
+
+			Order order = OrderFactoryUtil.desc("modifiedDate");
+
+			if (!sortIsReverse && sortFieldName.equals("createDate")) {
+				order = OrderFactoryUtil.asc("createDate");
+			} else if (sortIsReverse && sortFieldName.equals("createDate")) {
+				order = OrderFactoryUtil.desc("createDate");
+			} else if (!sortIsReverse && sortFieldName.equals("modified")) {
+				order = OrderFactoryUtil.asc("modifiedDate");
+			}
+
+			mbThreadQuery.addOrder(order);
 
 			return MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
 		}
