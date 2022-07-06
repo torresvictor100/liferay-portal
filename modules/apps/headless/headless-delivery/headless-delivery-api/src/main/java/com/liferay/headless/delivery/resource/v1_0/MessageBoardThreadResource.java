@@ -77,16 +77,17 @@ public interface MessageBoardThreadResource {
 		throws Exception;
 
 	public Page<MessageBoardThread>
-			getMessageBoardSectionNotAnsweredThreadsPage(
+			getMessageBoardSectionNotAcceptedAnswerThreadsPage(
 				Long messageBoardSectionId, String search,
 				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Page<MessageBoardThread> getMessageBoardSectionNoAnswersThreadsPage(
-			Long messageBoardSectionId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
+	public Page<MessageBoardThread>
+			getMessageBoardSectionNotAnsweredThreadsPage(
+				Long messageBoardSectionId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(

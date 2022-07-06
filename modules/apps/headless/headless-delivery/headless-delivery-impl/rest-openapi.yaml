@@ -9252,7 +9252,7 @@ paths:
         get:
             description:
                 Retrieves the message board section's not answered threads. Results can be paginated, filtered, searched, and sorted.
-            operationId: getMessageBoardSectionSectionNotAcceptedAnswerThreads
+            operationId: getMessageBoardSectionNotAcceptedAnswerThreadsPage
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -9312,7 +9312,7 @@ paths:
         get:
             description:
                 Retrieves the message board section's without answers threads. Results can be paginated, filtered, searched, and sorted.
-            operationId: getMessageBoardSectionNotAnsweredThreads
+            operationId: getMessageBoardSectionNotAnsweredThreadsPage
             parameters:
                 - in: path
                   name: messageBoardSectionId
