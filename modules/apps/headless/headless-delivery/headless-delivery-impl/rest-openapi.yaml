@@ -9248,11 +9248,11 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
             tags: ["MessageBoardThread"]
-    "/message-board-sections/{messageBoardSectionId}/not-answered-threads":
+    "/message-board-sections/{messageBoardSectionId}/not-accepted-answer-threads":
         get:
             description:
                 Retrieves the message board section's not answered threads. Results can be paginated, filtered, searched, and sorted.
-            operationId: getMessageBoardSectionNotAnsweredThreadsPage
+            operationId: getMessageBoardSectionSectionNotAcceptedAnswerThreads
             parameters:
                 - in: path
                   name: messageBoardSectionId
@@ -9308,11 +9308,11 @@ paths:
                                     $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
             tags: [ "MessageBoardThread" ]
-    "/message-board-sections/{messageBoardSectionId}/no-answers-threads":
+    "/message-board-sections/{messageBoardSectionId}/not-answered-threads":
         get:
             description:
                 Retrieves the message board section's without answers threads. Results can be paginated, filtered, searched, and sorted.
-            operationId: getMessageBoardSectionNoAnswersThreadsPage
+            operationId: getMessageBoardSectionNotAnsweredThreads
             parameters:
                 - in: path
                   name: messageBoardSectionId
