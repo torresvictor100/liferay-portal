@@ -45,7 +45,11 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -234,62 +238,20 @@ public class MessageBoardThreadResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			messageBoardSectionId);
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"create",
-				addAction(
-					ActionKeys.ADD_MESSAGE, mbCategory.getCategoryId(),
-					"postMessageBoardSectionMessageBoardThread",
-					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
-					mbCategory.getGroupId())
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, mbCategory.getCategoryId(),
-					"getMessageBoardSectionNotAcceptedAnswerThreadsPage",
-					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
-					mbCategory.getGroupId())
-			).build();
+		DynamicQuery notAcceptedAnswerThreadsQuery = _getDynamicQueryNotAcceptedAnswerThreads(
+			mbCategory.getGroupId(),
+			messageBoardSectionId
+		);
 
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-			contextCompany.getCompanyId(), mbCategory.getGroupId())) {
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
-		List<MBThread> threads;
-
-		if (sorts == null) {
-			threads = _mbThreadService.getSectionNotAcceptedAnswerThreads(mbCategory.getGroupId(), messageBoardSectionId);
-		} else {
-			String[] sortFieldName = sorts[0].getFieldName().split("_");
-
-			if (sortFieldName[0].equals("createDate") || sortFieldName[0].equals("modified")) {
-				threads = _mbThreadService.getSectionNotAcceptedAnswerThreads(
-					mbCategory.getGroupId(),
-					messageBoardSectionId,
-					sortFieldName[0], sorts[0].isReverse());
-			} else {
-				threads = _mbThreadService.getSectionNotAcceptedAnswerThreads(mbCategory.getGroupId(), messageBoardSectionId);
-			}
-		}
+		DynamicQuery notAcceptedAnswerThreadsWithSortQuery = _addSortToDynamicQuery(sorts, notAcceptedAnswerThreadsQuery);
 
 		return Page.of(
-			actions,
-			TransformUtil.transform(
-				threads,
-				this::_toMessageBoardThread),
+			transform(
+				_mbThreadLocalService.dynamicQuery(notAcceptedAnswerThreadsWithSortQuery,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toMessageBoardThreadConverter),
 			pagination,
-			_mbThreadService.getThreadsCount(
-				mbCategory.getGroupId(), mbCategory.getCategoryId(),
-				new QueryDefinition<>(
-					status, contextUser.getUserId(), true,
-					pagination.getStartPosition(),
-					pagination.getEndPosition(), null)));
+			_mbThreadLocalService.dynamicQueryCount(notAcceptedAnswerThreadsWithSortQuery));
 	}
 
 	@Override
@@ -303,63 +265,17 @@ public class MessageBoardThreadResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			messageBoardSectionId);
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"create",
-				addAction(
-					ActionKeys.ADD_MESSAGE, mbCategory.getCategoryId(),
-					"postMessageBoardSectionMessageBoardThread",
-					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
-					mbCategory.getGroupId())
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, mbCategory.getCategoryId(),
-					"getMessageBoardSectionNotAnsweredThreadsPage",
-					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
-					mbCategory.getGroupId())
-			).build();
+		DynamicQuery notAnsweredThreadsQuery = _getDynamicQueryNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId);
 
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-			contextCompany.getCompanyId(), mbCategory.getGroupId())) {
-
-			status = WorkflowConstants.STATUS_ANY;
-		}
-
-		List<MBThread> threads;
-
-		if (sorts == null) {
-			threads = _mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId);
-		} else {
-			String[] sortFieldName = sorts[0].getFieldName().split("_");
-
-			if (sortFieldName[0].equals("createDate") || sortFieldName[0].equals("modified")) {
-				threads = _mbThreadService.getSectionNotAnsweredThreads(
-					mbCategory.getGroupId(),
-					messageBoardSectionId,
-					sortFieldName[0], sorts[0].isReverse());
-			} else {
-				threads = _mbThreadService.getSectionNotAnsweredThreads(mbCategory.getGroupId(), messageBoardSectionId);
-			}
-		}
+		DynamicQuery notAnsweredThreadsWithSortQuery = _addSortToDynamicQuery(sorts, notAnsweredThreadsQuery);
 
 		return Page.of(
-			actions,
-			TransformUtil.transform(
-				threads,
-				this::_toMessageBoardThread),
+			transform(
+				_mbThreadLocalService.dynamicQuery(notAnsweredThreadsWithSortQuery,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toMessageBoardThreadConverter),
 			pagination,
-			_mbThreadService.getThreadsCount(
-				mbCategory.getGroupId(), mbCategory.getCategoryId(),
-				new QueryDefinition<>(
-					status, contextUser.getUserId(), true,
-					pagination.getStartPosition(),
-					pagination.getEndPosition(), null)));
+			_mbThreadLocalService.dynamicQueryCount(notAnsweredThreadsWithSortQuery));
 	}
 
 	@Override
@@ -652,6 +568,31 @@ public class MessageBoardThreadResourceImpl
 		return _toMessageBoardThread(mbMessage);
 	}
 
+	private DynamicQuery _addSortToDynamicQuery(Sort[] sorts, DynamicQuery query) {
+		if (sorts == null) {
+			query.addOrder(OrderFactoryUtil.desc("totalScore"));
+		}
+		else {
+			for (Sort sort : sorts) {
+				String fieldName = sort.getFieldName();
+
+				fieldName = StringUtil.removeSubstring(fieldName, "_sortable");
+
+				if (fieldName.equals("modified")) {
+					fieldName = "modifiedDate";
+				}
+
+				if (sort.isReverse()) {
+					query.addOrder(OrderFactoryUtil.desc(fieldName));
+				}
+				else {
+					query.addOrder(OrderFactoryUtil.asc(fieldName));
+				}
+			}
+		}
+		return query;
+	}
+
 	private void _checkPermission(
 		long companyId, long groupId, int status, long userId) {
 
@@ -749,6 +690,56 @@ public class MessageBoardThreadResourceImpl
 		return dynamicQuery;
 	}
 
+	private DynamicQuery _getDynamicQueryNotAcceptedAnswerThreads(Long groupId, Long messageBoardSectionId) {
+		DynamicQuery mbMessageQuery = _mbMessageLocalService.dynamicQuery();
+		DynamicQuery mbThreadQuery = _mbThreadLocalService.dynamicQuery();
+
+		mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		mbMessageQuery.add(
+			RestrictionsFactoryUtil.eq("categoryId", messageBoardSectionId));
+		mbMessageQuery.add(RestrictionsFactoryUtil.eq("answer", true));
+		mbMessageQuery.setProjection(
+			ProjectionFactoryUtil.property("threadId"));
+
+		mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		mbThreadQuery.add(
+			RestrictionsFactoryUtil.eq("categoryId", messageBoardSectionId));
+		mbThreadQuery.add(
+			PropertyFactoryUtil.forName(
+				"threadId"
+			).notIn(
+				mbMessageQuery
+			));
+
+		return mbThreadQuery;
+	}
+
+	private DynamicQuery _getDynamicQueryNotAnsweredThreads(Long groupId, Long messageBoardSectionId) {
+
+		DynamicQuery mbMessageQuery = _mbMessageLocalService.dynamicQuery();
+		DynamicQuery mbThreadQuery = _mbThreadLocalService.dynamicQuery();
+
+		mbMessageQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		mbMessageQuery.add(
+			RestrictionsFactoryUtil.eq("categoryId", messageBoardSectionId));
+		mbMessageQuery.add(
+			RestrictionsFactoryUtil.ne("parentMessageId", 0L));
+		mbMessageQuery.setProjection(
+			ProjectionFactoryUtil.property("threadId"));
+
+		mbThreadQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		mbThreadQuery.add(
+			RestrictionsFactoryUtil.eq("categoryId", messageBoardSectionId));
+		mbThreadQuery.add(
+			PropertyFactoryUtil.forName(
+				"threadId"
+			).notIn(
+				mbMessageQuery
+			));
+
+		return mbThreadQuery;
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		MessageBoardThread messageBoardThread) {
 
@@ -822,6 +813,64 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	private MessageBoardThread _toMessageBoardThread(MBThread mbThread)
+		throws Exception {
+
+		MBMessage mbMessage = _mbMessageLocalService.getMessage(
+			mbThread.getRootMessageId());
+
+		ModelResourcePermission<MBMessage> modelResourcePermission =
+			new MessageBoardThreadModelResourcePermission(
+				mbMessage, MBMessage.class.getName());
+
+		return _messageBoardThreadDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, mbMessage.getThreadId(),
+						"deleteMessageBoardThread", modelResourcePermission)
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, mbMessage.getThreadId(),
+						"getMessageBoardThread", modelResourcePermission)
+				).put(
+					"replace",
+					addAction(
+						ActionKeys.UPDATE, mbMessage.getThreadId(),
+						"putMessageBoardThread", modelResourcePermission)
+				).put(
+					"reply-to-thread",
+					ActionUtil.addAction(
+						ActionKeys.REPLY_TO_MESSAGE,
+						MessageBoardMessageResourceImpl.class,
+						mbMessage.getThreadId(),
+						"postMessageBoardThreadMessageBoardMessage",
+						contextScopeChecker,
+						new MessageBoardThreadModelResourcePermission(
+							mbMessage, MBConstants.RESOURCE_NAME),
+						contextUriInfo)
+				).put(
+					"subscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, mbMessage.getThreadId(),
+						"putMessageBoardThreadSubscribe",
+						modelResourcePermission)
+				).put(
+					"unsubscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, mbMessage.getThreadId(),
+						"putMessageBoardThreadUnsubscribe",
+						modelResourcePermission)
+				).build(),
+				_dtoConverterRegistry, mbThread.getThreadId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			mbThread);
+	}
+
+	private MessageBoardThread _toMessageBoardThreadConverter(MBThread mbThread)
 		throws Exception {
 
 		MBMessage mbMessage = _mbMessageLocalService.getMessage(
