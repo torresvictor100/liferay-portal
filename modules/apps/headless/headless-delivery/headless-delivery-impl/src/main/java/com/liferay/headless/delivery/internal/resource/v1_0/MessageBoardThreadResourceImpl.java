@@ -570,16 +570,20 @@ public class MessageBoardThreadResourceImpl
 
 	private DynamicQuery _addSortToDynamicQuery(Sort[] sorts, DynamicQuery query) {
 		if (sorts == null) {
-			query.addOrder(OrderFactoryUtil.desc("totalScore"));
+			query.addOrder(OrderFactoryUtil.desc("modifiedDate"));
 		}
 		else {
 			for (Sort sort : sorts) {
 				String fieldName = sort.getFieldName();
 
+				System.out.println("FIELDNAME --------------------------->" + fieldName);
+
 				fieldName = StringUtil.removeSubstring(fieldName, "_sortable");
 
 				if (fieldName.equals("modified")) {
 					fieldName = "modifiedDate";
+				} else if (fieldName.equals("ratingValue")) {
+					query.addOrder(OrderFactoryUtil.desc("totalScore"));
 				}
 
 				if (sort.isReverse()) {
