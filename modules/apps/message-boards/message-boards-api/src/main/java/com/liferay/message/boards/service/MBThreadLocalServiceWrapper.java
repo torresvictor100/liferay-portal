@@ -551,6 +551,14 @@ public class MBThreadLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> getThreadsNoRanting(
+		long groupId, long categoryId, int start, int end) {
+
+		return _mbThreadLocalService.getThreadsNoRanting(
+			groupId, categoryId, start, end);
+	}
+
+	@Override
 	public boolean hasAnswerMessage(long threadId) {
 		return _mbThreadLocalService.hasAnswerMessage(threadId);
 	}

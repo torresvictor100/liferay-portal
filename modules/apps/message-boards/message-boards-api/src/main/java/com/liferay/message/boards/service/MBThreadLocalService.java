@@ -408,6 +408,10 @@ public interface MBThreadLocalService
 	public int getThreadsCount(long groupId, long categoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getThreadsNoRanting(
+		long groupId, long categoryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAnswerMessage(long threadId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

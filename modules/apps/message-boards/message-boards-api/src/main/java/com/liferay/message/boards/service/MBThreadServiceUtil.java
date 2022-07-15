@@ -163,6 +163,13 @@ public class MBThreadServiceUtil {
 			groupId, categoryId, queryDefinition);
 	}
 
+	public static List<MBThread> getThreadsNoRanting(
+		long groupId, long categoryId, int start, int end) {
+
+		return getService().getThreadsNoRanting(
+			groupId, categoryId, start, end);
+	}
+
 	public static com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
 		throws PortalException {
 

@@ -177,6 +177,14 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBThread> getThreadsNoRanting(
+		long groupId, long categoryId, int start, int end) {
+
+		return _mbThreadService.getThreadsNoRanting(
+			groupId, categoryId, start, end);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

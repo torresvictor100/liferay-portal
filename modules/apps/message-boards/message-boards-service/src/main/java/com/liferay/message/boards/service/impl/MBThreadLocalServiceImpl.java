@@ -488,6 +488,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return mbThreadPersistence.findByG_C_S(
 			groupId, categoryId, status, start, end);
 	}
+	@Override
+	public List<MBThread> getThreadsNoRanting(long groupId, long categoryId, int start, int end){
+		return mbThreadFinder.filterFindByO_R(groupId, categoryId, start, end);
+	}
 
 	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status) {

@@ -49,6 +49,9 @@ import org.osgi.service.component.annotations.Reference;
 public class MBThreadFinderImpl
 	extends MBThreadFinderBaseImpl implements MBThreadFinder {
 
+	public static final String FIND_BY_O_R =
+		MBThreadFinder.class.getName() + ".findByO_R";
+
 	public static final String COUNT_BY_G_U =
 		MBThreadFinder.class.getName() + ".countByG_U";
 
@@ -497,6 +500,7 @@ public class MBThreadFinderImpl
 				getClass(), FIND_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
+
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
@@ -521,6 +525,49 @@ public class MBThreadFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@Override
+	public List<MBThread> filterFindByO_R(
+		long groupId, long categoryId , int start, int end) {
+		Session session = null;
+		try{
+
+			session = openSession();
+			String sql = _customSQL.get(getClass(),FIND_BY_O_R );
+
+			sql = StringUtil.replace(
+				sql, "MBThread.categoryId = ?",
+				"MBThread.categoryId = " + categoryId);
+
+			sql = StringUtil.replace(
+				sql, "MBThread.groupId = ?",
+				"MBThread.groupId = " + groupId );
+
+
+			System.out.println(sql);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			System.out.println((List<MBThread>) QueryUtil.list(
+				sqlQuery, getDialect(), start, end));
+
+
+
+		return (List<MBThread>) QueryUtil.list(
+			sqlQuery, getDialect(), start, end);
+
+		}
+		catch (Exception exception) {
+		throw new SystemException(exception);
+	}
+		finally {
+		closeSession(session);
+	}}
+
 
 	@Override
 	public List<MBThread> filterFindByG_C(
@@ -551,6 +598,7 @@ public class MBThreadFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
+
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 

@@ -511,6 +511,35 @@
 				MBThread.lastPostDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByO_R">
+		<![CDATA[
+	SELECT
+		{MBThread.*}
+			FROM
+				MBThread INNER JOIN MBMessage
+					ON MBThread.threadId = MBMessage.threadId INNER JOIN RatingsStats
+					ON MBMessage.rootMessageId = RatingsStats.classPK
+			WHERE
+				(MBThread.categoryId = ?) AND
+				(MBThread.groupId = ?) AND
+				NOT EXISTS (
+					SELECT
+						threadId
+					FROM
+						MBMessage
+					WHERE
+						(MBThread.threadId = MBMessage.threadId) AND
+						(MBMessage.answer = TRUE)
+				)
+			GROUP BY RatingsStats.totalScore, MBThread.mvccVersion ,MBThread.ctCollectionId ,MBThread.uuid_ ,MBThread.threadId ,MBThread.groupId,
+				MBThread.companyId, MBThread.userId ,MBThread.userName ,MBThread.createDate ,MBThread.modifiedDate ,
+				MBThread.categoryId, MBThread.rootMessageId ,MBThread.rootMessageUserId , MBThread.title,
+				MBThread.lastPostByUserId, MBThread.lastPostDate, MBThread.priority, MBThread.question,
+				MBThread.lastPublishDate, MBThread.status, MBThread.statusByUserId,MBThread.statusByUserName, MBThread.statusDate
+			ORDER BY RatingsStats.totalScore DESC
+	]]>
+	</sql>
+
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByS_G_U_C">
 		<![CDATA[
 			SELECT

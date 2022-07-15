@@ -323,6 +323,11 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBThread> getThreadsNoRanting(long groupId, long categoryId, int start, int end){
+		return mbThreadLocalService.getThreadsNoRanting(groupId, categoryId, start, end);
+	}
+
+	@Override
 	public List<MBThread> getThreads(
 			long groupId, long categoryId,
 			QueryDefinition<MBThread> queryDefinition)

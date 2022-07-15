@@ -136,6 +136,10 @@ public interface MBThreadService extends BaseService {
 			QueryDefinition<MBThread> queryDefinition)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBThread> getThreadsNoRanting(
+		long groupId, long categoryId, int start, int end);
+
 	public Lock lockThread(long threadId) throws PortalException;
 
 	public MBThread moveThread(long categoryId, long threadId)
