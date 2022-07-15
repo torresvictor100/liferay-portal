@@ -145,6 +145,27 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public Page<MessageBoardThread>
+	getMessageBoardSectionMessageBoardThreadsRankedPage(
+		Long messageBoardTheadId, String search,
+		Aggregation aggregation, Filter filter, Pagination pagination,
+		Sort[] sorts)
+		throws Exception {
+
+		MBCategory mbCategory = _mbCategoryService.getCategory(
+			messageBoardTheadId);
+
+		return Page.of(
+			TransformUtil.transform(
+				_mbThreadService.getThreadsNoRanting(mbCategory.getGroupId(),
+					mbCategory.getCategoryId() , pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toMessageBoardThread),
+			pagination,(_mbThreadService.getThreadsNoRanting(mbCategory.getGroupId(),
+				mbCategory.getCategoryId() , pagination.getStartPosition(), pagination.getEndPosition())
+			).size());
+	}
+
+	@Override
+	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				Long messageBoardSectionId, String search,
 				Aggregation aggregation, Filter filter, Pagination pagination,

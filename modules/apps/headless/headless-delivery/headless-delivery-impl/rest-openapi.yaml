@@ -5206,7 +5206,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.31'."
+        'com.liferay.headless.delivery.client', and version '4.0.32'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -9372,6 +9372,70 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
             tags: ["MessageBoardThread"]
+    "/message-board-sections/{messageBoardSectionId}/message-board-threads-ranked":
+        get:
+            description:
+                Retrieves the message board section's threads. Results can be paginated, filtered, searched, and sorted.
+            operationId: getMessageBoardSectionMessageBoardThreadsRankedPage
+            parameters:
+                - in: path
+                  name: messageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
+            tags: [ "MessageBoardThread" ]
     "/message-board-sections/{messageBoardSectionId}/permissions":
         get:
             operationId: getMessageBoardSectionPermissionsPage
