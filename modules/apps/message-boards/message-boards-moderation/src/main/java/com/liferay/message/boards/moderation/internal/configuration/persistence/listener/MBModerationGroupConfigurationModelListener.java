@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo García
+ * @author João Victor Torres
  */
 @Component(
 	immediate = true,
