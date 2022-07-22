@@ -17,13 +17,18 @@ package com.liferay.message.boards.service.persistence.impl;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBThreadImpl;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.impl.MBThreadLocalServiceImpl;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -475,6 +480,39 @@ public class MBThreadFinderImpl
 
 		return doCountByS_G_U_C(
 			groupId, userId, categoryIds, queryDefinition, true);
+	}
+	@Override
+	public List<MBThread> filterDataThread(String data,long groupId , long categoryId){
+
+		Session session = null;
+		try {
+			session = openSession();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(MBThread.class, classLoader)
+				.add(RestrictionsFactoryUtil.eq("categoryId", categoryId))
+				.add(RestrictionsFactoryUtil.eq("groupId", groupId))
+				.add(RestrictionsFactoryUtil.lt("createDate", data));
+
+
+			List<MBThread> mbThreads = _mbThreadLocalService.dynamicQuery(mbThreadQuery);
+
+			return mbThreads;
+		}
+		catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			}
+			catch (SystemException se) {
+				se.printStackTrace();
+			}
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -1172,6 +1210,9 @@ public class MBThreadFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private Portal _portal;

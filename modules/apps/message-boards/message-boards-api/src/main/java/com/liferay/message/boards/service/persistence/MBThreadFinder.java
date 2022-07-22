@@ -82,6 +82,9 @@ public interface MBThreadFinder {
 			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterDataThread(String data, long groupId, long categoryId);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindByG_C(long groupId, long categoryId, int start, int end);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>

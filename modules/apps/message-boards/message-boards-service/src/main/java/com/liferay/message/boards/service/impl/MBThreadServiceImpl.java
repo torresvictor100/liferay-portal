@@ -87,6 +87,11 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteForMonth(int month, long groupId, long categoryId){
+		mbThreadLocalService.deleteForMonth(month,groupId,categoryId );
+	}
+
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, Date modifiedDate,
 			boolean includeAnonymous, int status, int start, int end)
