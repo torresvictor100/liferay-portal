@@ -64,6 +64,9 @@ public interface MBThreadFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.message.boards.model.MBThread> queryDefinition);
 
+	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterDataThread(String data, long groupId, long categoryId);
+
 	public int countByS_G_U_C(
 		long groupId, long userId, long[] categoryIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
