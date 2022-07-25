@@ -192,7 +192,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		LocalDateTime DateNow =LocalDateTime.now();
 
 		String date = LocalDate.of(DateNow.getYear() ,DateNow.getMonth(),DateNow.getDayOfMonth())
-			.minusMonths(amountMonth).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			.minusMonths(amountMonth).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		return date;
 	}
 

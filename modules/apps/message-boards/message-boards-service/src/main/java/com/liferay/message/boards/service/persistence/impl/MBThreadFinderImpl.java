@@ -18,6 +18,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -409,15 +412,24 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			ClassLoader classLoader = getClass().getClassLoader();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
+			Date date1 = null;
+			try {
+				date1 = formatter.parse(data);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+
+			ClassLoader classLoader = getClass().getClassLoader();
 			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(MBThread.class, classLoader)
 				.add(RestrictionsFactoryUtil.eq("categoryId", categoryId))
 				.add(RestrictionsFactoryUtil.eq("groupId", groupId))
-				.add(RestrictionsFactoryUtil.lt("createDate", data));
+				.add(RestrictionsFactoryUtil.lt("createDate", date1));
 
 
-			List<MBThread> mbThreads = MBThreadFlagLocalServiceUtil.dynamicQuery(mbThreadQuery);
+			List<MBThread> mbThreads = MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
 
 			return mbThreads;
 		}
