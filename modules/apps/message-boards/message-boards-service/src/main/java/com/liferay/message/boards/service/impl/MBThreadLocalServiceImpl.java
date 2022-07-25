@@ -171,19 +171,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public void deleteForMonth(int month, long groupId, long categoryId){
 		extractMonth(month);
 
-		//falta fazer o metodo get para adicionar lista
+		String data = extractMonth(month);
 
-		List<MBThread> listforDelete = null;
+		List<MBThread> listforDelete = mbThreadFinder.filterDataThread(data,groupId,categoryId );
 
 		for(MBThread mbTh : listforDelete){
-			int i = 0;
+
 			try {
-				deleteThread(listforDelete.get(i).getThreadId());
+				deleteThread(mbTh.getThreadId());
 			}
 			catch (PortalException e) {
 				throw new RuntimeException(e);
 			}
-			i++;
 		}
 
 
