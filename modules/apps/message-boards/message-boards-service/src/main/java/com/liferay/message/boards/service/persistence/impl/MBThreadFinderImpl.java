@@ -405,7 +405,33 @@ public class MBThreadFinderImpl
 
 	@Override
 	public List<MBThread> filterDataThread(String data,long groupId , long categoryId){
+		Session session = null;
+		try {
+			session = openSession();
 
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(MBThread.class, classLoader)
+				.add(RestrictionsFactoryUtil.eq("categoryId", categoryId))
+				.add(RestrictionsFactoryUtil.eq("groupId", groupId))
+				.add(RestrictionsFactoryUtil.lt("createDate", data));
+
+
+			List<MBThread> mbThreads = MBThreadFlagLocalServiceUtil.dynamicQuery(mbThreadQuery);
+
+			return mbThreads;
+		}
+		catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			}
+			catch (SystemException se) {
+				se.printStackTrace();
+			}
+		}
+		finally {
+			closeSession(session);
+		}
 		return null;
 	}
 
