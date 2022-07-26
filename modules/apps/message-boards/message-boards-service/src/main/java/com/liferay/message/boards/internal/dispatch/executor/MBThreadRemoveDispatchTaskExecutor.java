@@ -38,9 +38,9 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 		long groupId;
 		long categoryId;
 
-		month = Integer.getInteger(unicodeProperties.getProperty("month"));
-		groupId = Long.getLong(unicodeProperties.getProperty("groupId"));
-		categoryId = Long.getLong(unicodeProperties.getProperty("categoryId"));
+		month = Integer.parseInt(unicodeProperties.getProperty("month"));
+		groupId = Long.parseLong(unicodeProperties.getProperty("groupId"));
+		categoryId = Long.parseLong(unicodeProperties.getProperty("categoryId"));
 
 
 		_mbThreadService.deleteForMonth(month, groupId, categoryId);
