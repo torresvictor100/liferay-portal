@@ -4,9 +4,13 @@ import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component(
 	immediate = true,
@@ -27,6 +31,20 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
+		UnicodeProperties unicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		int month;
+		long groupId;
+		long categoryId;
+
+		month = Integer.getInteger(unicodeProperties.getProperty("month"));
+		groupId = Long.getLong(unicodeProperties.getProperty("groupId"));
+		categoryId = Long.getLong(unicodeProperties.getProperty("categoryId"));
+
+
+		_mbThreadService.deleteForMonth(month, groupId, categoryId);
+
 	}
 
 	@Override
@@ -36,4 +54,8 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadRemoveDispatchTaskExecutor.class);
+
+
+	@Reference
+	MBThreadService _mbThreadService;
 }
