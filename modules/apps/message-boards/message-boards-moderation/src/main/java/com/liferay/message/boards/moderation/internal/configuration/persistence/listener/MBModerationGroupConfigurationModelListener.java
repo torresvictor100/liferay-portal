@@ -108,7 +108,7 @@ public class MBModerationGroupConfigurationModelListener
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private WorkflowDefinitionLinkLocalService
+		private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 	@Reference(target = "(proxy.bean=false)")

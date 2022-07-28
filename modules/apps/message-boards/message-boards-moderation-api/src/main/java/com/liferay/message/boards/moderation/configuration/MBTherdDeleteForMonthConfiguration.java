@@ -2,10 +2,9 @@ package com.liferay.message.boards.moderation.configuration;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import aQute.bnd.annotation.metatype.Meta;
-
 @ExtendedObjectClassDefinition(
 	category = "message-boards",
-	scope = ExtendedObjectClassDefinition.Scope.GROUP
+	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	id = "com.liferay.message.boards.moderation.configuration.MBTherdDeleteForMonthConfiguration",
@@ -24,7 +23,7 @@ public interface MBTherdDeleteForMonthConfiguration {
 
 	@Meta.AD(
 		deflt = "1", description = "message boards deleta periodo sem resposta",
-		min = "1", name = "message boards deleta periodo sem resposta", required = false
+		min = "3", name = "message boards deleta periodo sem resposta", required = false
 	)
 	public int messageBoardsDeletaPeriodoSemResposta();
 }
