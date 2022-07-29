@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
+
 @Component(
 	immediate = true,
 	property = {
@@ -41,33 +45,49 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-//		UnicodeProperties unicodeProperties =
-//			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
-
 		int month;
-		long groupId;
+		long groupId = 0;
 		long categoryId;
 
 //		month = Integer.parseInt(unicodeProperties.getProperty("month"));
 //		groupId = Long.parseLong(unicodeProperties.getProperty("groupId"));
 //		categoryId = Long.parseLong(unicodeProperties.getProperty("categoryId"));
 
+		MBTherdDeleteForMonthConfiguration MBTherdDeleteForMonthConfiguration =
+			ConfigurableUtil.createConfigurable(
+				MBTherdDeleteForMonthConfiguration.class,
+				new HashMapDictionary<>());
 
-		System.out.println(getMBTherdDeleteForMonthConfiguration());
+
+
+		System.out.println(getMBTherdDeleteForMonthConfiguration(dispatchTrigger));
 
 //		_mbThreadService.deleteForMonth(month, groupId, categoryId);
 
 	}
 
 
-	private Integer getMBTherdDeleteForMonthConfiguration(){
+	private Integer getMBTherdDeleteForMonthConfiguration(DispatchTrigger dispatchTrigger){
 
 
 		try {
+
+			long companyId =  dispatchTrigger.getCompanyId();
+
+
+
 			MBTherdDeleteForMonthConfiguration
 				mBTherdDeleteForMonthConfiguration  =
-				ConfigurationProviderUtil.getSystemConfiguration(
-					MBTherdDeleteForMonthConfiguration.class);
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					MBTherdDeleteForMonthConfiguration.class,companyId );
+
+			String[] ids = mBTherdDeleteForMonthConfiguration.grupsIds();
+
+
+			for(String id :ids ){
+				long idgrup = Long.parseLong(id);
+				System.out.println(idgrup);
+			}
 
 			int messageBoardsDeletaPeriodoSemResposta = mBTherdDeleteForMonthConfiguration.messageBoardsDeletaPeriodoSemResposta();
 
@@ -77,16 +97,7 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 				return messageBoardsDeletaPeriodoSemResposta;
 			}
 			return null;
-
-
-//			MBTherdDeleteForMonthConfiguration mbModerationGroupConfiguration =
-//				ConfigurableUtil.createConfigurable(
-//					MBTherdDeleteForMonthConfiguration.class,
-//					new HashMapDictionary<>());
-//		int messageBoardsDeletaPeriodoSemResposta = mbModerationGroupConfiguration.messageBoardsDeletaPeriodoSemResposta();
-//		boolean enableMessageBoardsDeletaAutomatico = mbModerationGroupConfiguration.enableMessageBoardsDeletaAutomatico();
-//
-//				return messageBoardsDeletaPeriodoSemResposta;
+			
 		}
 		catch (ConfigurationException configurationException) {
 			return ReflectionUtil.throwException(configurationException);

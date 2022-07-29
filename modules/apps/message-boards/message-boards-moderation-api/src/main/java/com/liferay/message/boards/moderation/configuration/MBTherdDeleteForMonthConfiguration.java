@@ -4,7 +4,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import aQute.bnd.annotation.metatype.Meta;
 @ExtendedObjectClassDefinition(
 	category = "message-boards",
-	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.message.boards.moderation.configuration.MBTherdDeleteForMonthConfiguration",
@@ -26,4 +26,11 @@ public interface MBTherdDeleteForMonthConfiguration {
 		min = "3", name = "message boards deleta periodo sem resposta", required = false
 	)
 	public int messageBoardsDeletaPeriodoSemResposta();
+
+	@Meta.AD(
+		deflt = "1", description = "ids dos grups",
+		min = "1", name = "message boards deleta id do grups", required = false
+	)
+	public String[] grupsIds();
+
 }

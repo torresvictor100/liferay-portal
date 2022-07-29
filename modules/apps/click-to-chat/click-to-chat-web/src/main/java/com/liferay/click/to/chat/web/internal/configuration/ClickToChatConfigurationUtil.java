@@ -29,8 +29,7 @@ public class ClickToChatConfigurationUtil {
 	public static ClickToChatConfiguration getClickToChatConfiguration(
 		long companyId, long groupId) {
 
-		try {
-			ClickToChatConfiguration companyClickToChatConfiguration =
+		try {		ClickToChatConfiguration companyClickToChatConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
 					ClickToChatConfiguration.class, companyId);
 
