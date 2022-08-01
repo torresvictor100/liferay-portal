@@ -113,7 +113,7 @@ public interface MBThreadLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteForMonth(int month, long groupId, long categoryId);
+	public void deleteForMonth(int month, long groupId);
 
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.

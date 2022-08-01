@@ -4,27 +4,27 @@ import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.moderation.configuration.MBTherdDeleteForMonthConfiguration;
-import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 @Component(
 	immediate = true,
@@ -39,69 +39,64 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 
 	public static final String MBTHEAD = "Remove Thread For Time";
 
+
 	@Override
 	public void doExecute(
 		DispatchTrigger dispatchTrigger,
 		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-		int month;
-		long groupId = 0;
-		long categoryId;
 
-//		month = Integer.parseInt(unicodeProperties.getProperty("month"));
-//		groupId = Long.parseLong(unicodeProperties.getProperty("groupId"));
-//		categoryId = Long.parseLong(unicodeProperties.getProperty("categoryId"));
-
-		MBTherdDeleteForMonthConfiguration MBTherdDeleteForMonthConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MBTherdDeleteForMonthConfiguration.class,
-				new HashMapDictionary<>());
+		getMBTherdDeleteForMonthConfiguration(dispatchTrigger);
 
 
-
-		System.out.println(getMBTherdDeleteForMonthConfiguration(dispatchTrigger));
-
-//		_mbThreadService.deleteForMonth(month, groupId, categoryId);
 
 	}
 
 
-	private Integer getMBTherdDeleteForMonthConfiguration(DispatchTrigger dispatchTrigger){
+	private void getMBTherdDeleteForMonthConfiguration(DispatchTrigger dispatchTrigger) {
 
 
 		try {
 
-			long companyId =  dispatchTrigger.getCompanyId();
+			long companyId = dispatchTrigger.getCompanyId();
 
+			String companyKey =
+				_companyLocalService.getCompany(companyId).getKey();
+			List<Long> groups =
+				_groupLocalService.getGroupIds(companyId, true);
 
+			for (Long idgrups : groups) {
 
-			MBTherdDeleteForMonthConfiguration
-				mBTherdDeleteForMonthConfiguration  =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					MBTherdDeleteForMonthConfiguration.class,companyId );
+				MBTherdDeleteForMonthConfiguration
+					mBTherdDeleteForMonthConfiguration =
+					ConfigurationProviderUtil.getGroupConfiguration(
+						MBTherdDeleteForMonthConfiguration.class, idgrups);
 
-			String[] ids = mBTherdDeleteForMonthConfiguration.grupsIds();
+				int messageBoardsDeletaPeriodoSemResposta =
+					mBTherdDeleteForMonthConfiguration.messageBoardsDeletaPeriodoSemResposta();
 
+				boolean enableMessageBoardsDeletaAutomatico =
+					mBTherdDeleteForMonthConfiguration.enableMessageBoardsDeletaAutomatico();
 
-			for(String id :ids ){
-				long idgrup = Long.parseLong(id);
-				System.out.println(idgrup);
+				if (enableMessageBoardsDeletaAutomatico == true) {
+					_mbThreadService.deleteForMonth(messageBoardsDeletaPeriodoSemResposta, idgrups);
+				}
+
 			}
 
-			int messageBoardsDeletaPeriodoSemResposta = mBTherdDeleteForMonthConfiguration.messageBoardsDeletaPeriodoSemResposta();
+//			long groupId = _companyLocalService.getCompany(companyId).getGroup().getLiveGroupId();
+//			Group groupId2  = _groupLocalService.getGroup(companyId , companyKey);
+//			groupId2.getChildren(true);
+//			System.out.println(groupId);
 
-			boolean enableMessageBoardsDeletaAutomatico = mBTherdDeleteForMonthConfiguration.enableMessageBoardsDeletaAutomatico();
 
-			if (enableMessageBoardsDeletaAutomatico == true) {
-				return messageBoardsDeletaPeriodoSemResposta;
-			}
-			return null;
-			
+
 		}
-		catch (ConfigurationException configurationException) {
-			return ReflectionUtil.throwException(configurationException);
+		catch (PortalException configurationException) {
+			 ReflectionUtil.throwException(configurationException);
 		}
+
 
 	}
 
@@ -112,7 +107,10 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadRemoveDispatchTaskExecutor.class);
-
+	@Reference
+	CompanyLocalService  _companyLocalService;
+	@Reference
+	GroupLocalService _groupLocalService;
 
 	@Reference
 	MBThreadService _mbThreadService;

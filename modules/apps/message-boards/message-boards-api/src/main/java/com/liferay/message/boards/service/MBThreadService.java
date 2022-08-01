@@ -58,7 +58,7 @@ public interface MBThreadService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBThreadServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the message boards thread remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MBThreadServiceUtil} if injection and service tracking are not available.
 	 */
-	public void deleteForMonth(int month, long groupId, long categoryId);
+	public void deleteForMonth(int month, long groupId);
 
 	public void deleteThread(long threadId) throws PortalException;
 

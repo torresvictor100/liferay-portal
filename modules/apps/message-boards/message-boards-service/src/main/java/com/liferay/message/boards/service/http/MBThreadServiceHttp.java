@@ -131,7 +131,7 @@ public class MBThreadServiceHttp {
 	}
 
 	public static void deleteForMonth(
-		HttpPrincipal httpPrincipal, int month, long groupId, long categoryId) {
+		HttpPrincipal httpPrincipal, int month, long groupId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -139,7 +139,7 @@ public class MBThreadServiceHttp {
 				_deleteForMonthParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, month, groupId, categoryId);
+				methodKey, month, groupId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1016,7 +1016,7 @@ public class MBThreadServiceHttp {
 			int.class, int.class, int.class
 		};
 	private static final Class<?>[] _deleteForMonthParameterTypes2 =
-		new Class[] {int.class, long.class, long.class};
+		new Class[] {int.class, long.class};
 	private static final Class<?>[] _getGroupThreadsParameterTypes3 =
 		new Class[] {
 			long.class, long.class, java.util.Date.class, int.class, int.class,

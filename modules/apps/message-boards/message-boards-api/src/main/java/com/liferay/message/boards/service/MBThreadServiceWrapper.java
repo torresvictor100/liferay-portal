@@ -36,8 +36,8 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
-	public void deleteForMonth(int month, long groupId, long categoryId) {
-		_mbThreadService.deleteForMonth(month, groupId, categoryId);
+	public void deleteForMonth(int month, long groupId) {
+		_mbThreadService.deleteForMonth(month, groupId);
 	}
 
 	@Override

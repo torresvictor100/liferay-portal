@@ -38,10 +38,8 @@ public class MBThreadServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBThreadServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void deleteForMonth(
-		int month, long groupId, long categoryId) {
-
-		getService().deleteForMonth(month, groupId, categoryId);
+	public static void deleteForMonth(int month, long groupId) {
+		getService().deleteForMonth(month, groupId);
 	}
 
 	public static void deleteThread(long threadId) throws PortalException {
