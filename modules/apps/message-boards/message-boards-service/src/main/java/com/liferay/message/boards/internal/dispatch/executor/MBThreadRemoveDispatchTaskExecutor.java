@@ -61,8 +61,6 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 
 			long companyId = dispatchTrigger.getCompanyId();
 
-			String companyKey =
-				_companyLocalService.getCompany(companyId).getKey();
 			List<Long> groups =
 				_groupLocalService.getGroupIds(companyId, true);
 
@@ -79,18 +77,20 @@ public class MBThreadRemoveDispatchTaskExecutor extends
 				boolean enableMessageBoardsDeletaAutomatico =
 					mBTherdDeleteForMonthConfiguration.enableMessageBoardsDeletaAutomatico();
 
-				if (enableMessageBoardsDeletaAutomatico == true) {
+				boolean enableMessageBoardsDeletaOnlyNoAnswer =
+					mBTherdDeleteForMonthConfiguration.enableMessageBoardsDeletaOnlyNoAnswer();
+
+				if (enableMessageBoardsDeletaAutomatico == true && enableMessageBoardsDeletaOnlyNoAnswer == false) {
+
 					_mbThreadService.deleteForMonth(messageBoardsDeletaPeriodoSemResposta, idgrups);
+
+				}else if (enableMessageBoardsDeletaAutomatico == true && enableMessageBoardsDeletaOnlyNoAnswer == true) {
+
+					_mbThreadService.deleteForMonthThreadsNoAnswer(messageBoardsDeletaPeriodoSemResposta, idgrups);
+
 				}
 
 			}
-
-//			long groupId = _companyLocalService.getCompany(companyId).getGroup().getLiveGroupId();
-//			Group groupId2  = _groupLocalService.getGroup(companyId , companyKey);
-//			groupId2.getChildren(true);
-//			System.out.println(groupId);
-
-
 
 		}
 		catch (PortalException configurationException) {

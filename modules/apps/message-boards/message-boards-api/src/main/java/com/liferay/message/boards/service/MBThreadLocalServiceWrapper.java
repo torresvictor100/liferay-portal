@@ -91,6 +91,11 @@ public class MBThreadLocalServiceWrapper
 		_mbThreadLocalService.deleteForMonth(month, groupId);
 	}
 
+	@Override
+	public void deleteForMonthThreadsNoAnswer(int month, long groupId) {
+		_mbThreadLocalService.deleteForMonthThreadsNoAnswer(month, groupId);
+	}
+
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -115,6 +115,8 @@ public interface MBThreadLocalService
 
 	public void deleteForMonth(int month, long groupId);
 
+	public void deleteForMonthThreadsNoAnswer(int month, long groupId);
+
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

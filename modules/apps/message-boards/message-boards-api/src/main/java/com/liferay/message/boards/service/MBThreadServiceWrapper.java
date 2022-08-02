@@ -41,6 +41,11 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
+	public void deleteForMonthThreadsNoAnswer(int month, long groupId) {
+		_mbThreadService.deleteForMonthThreadsNoAnswer(month, groupId);
+	}
+
+	@Override
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

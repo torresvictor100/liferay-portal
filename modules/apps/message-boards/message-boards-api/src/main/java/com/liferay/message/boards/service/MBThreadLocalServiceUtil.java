@@ -91,6 +91,10 @@ public class MBThreadLocalServiceUtil {
 		getService().deleteForMonth(month, groupId);
 	}
 
+	public static void deleteForMonthThreadsNoAnswer(int month, long groupId) {
+		getService().deleteForMonthThreadsNoAnswer(month, groupId);
+	}
+
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -22,6 +22,13 @@ public interface MBTherdDeleteForMonthConfiguration {
 	public boolean enableMessageBoardsDeletaAutomatico();
 
 	@Meta.AD(
+		deflt = "false", description = "enable message boards deleta automatico " +
+									   "pergunras sem resposta",
+		name = "enable Message Boards Deleta Only No Answer", required = false
+	)
+	public boolean enableMessageBoardsDeletaOnlyNoAnswer();
+
+	@Meta.AD(
 		deflt = "5", description = "message boards deleta periodo sem resposta",
 		name = "message boards deleta periodo sem resposta", required = false
 	)

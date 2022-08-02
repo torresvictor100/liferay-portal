@@ -172,10 +172,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		extractMonth(month);
 
 		String data = extractMonth(month);
+		List<MBThread> listforDelete = null;
+		List<MBThread> categorys  =  mbThreadLocalService.getGroupThreads(groupId , null);
 
-		List<MBThread> category  =  mbThreadLocalService.getGroupThreads(groupId , null);
+		for(MBThread category : categorys){
 
-		List<MBThread> listforDelete = mbThreadFinder.filterDataThread(data,groupId,category.get(0).getCategoryId() );
+			listforDelete = mbThreadFinder.filterDataThread(data,groupId,category.getCategoryId());
+
+		}
 
 		for(MBThread mbTh : listforDelete){
 
@@ -187,6 +191,37 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 
+	}
+
+	@Override
+	public void deleteForMonthThreadsNoAnswer(int month, long groupId){
+		extractMonth(month);
+
+		String data = extractMonth(month);
+		List<MBThread> listforDelete = null;
+		List<MBThread> categorys  =  mbThreadLocalService.getGroupThreads(groupId , null);
+
+		for(MBThread category : categorys){
+
+			listforDelete = mbThreadFinder.filterDataThread(data,groupId,category.getCategoryId());
+
+		}
+
+		for(MBThread mbTh : listforDelete){
+
+			try {
+
+				int CountMessage = _mbMessagePersistence.countByThreadId(mbTh.getThreadId());
+
+				if(CountMessage == 0){
+					deleteThread(mbTh.getThreadId());
+				}
+
+			}
+			catch (PortalException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 	}
 

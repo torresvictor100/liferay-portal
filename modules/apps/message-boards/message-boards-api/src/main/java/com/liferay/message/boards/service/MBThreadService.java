@@ -60,6 +60,8 @@ public interface MBThreadService extends BaseService {
 	 */
 	public void deleteForMonth(int month, long groupId);
 
+	public void deleteForMonthThreadsNoAnswer(int month, long groupId);
+
 	public void deleteThread(long threadId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

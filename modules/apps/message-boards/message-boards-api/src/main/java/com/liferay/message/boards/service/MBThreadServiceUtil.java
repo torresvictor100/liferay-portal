@@ -42,6 +42,10 @@ public class MBThreadServiceUtil {
 		getService().deleteForMonth(month, groupId);
 	}
 
+	public static void deleteForMonthThreadsNoAnswer(int month, long groupId) {
+		getService().deleteForMonthThreadsNoAnswer(month, groupId);
+	}
+
 	public static void deleteThread(long threadId) throws PortalException {
 		getService().deleteThread(threadId);
 	}
