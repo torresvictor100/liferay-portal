@@ -528,7 +528,7 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
-	public List<MBThread> filterFindByD_T(String data,long groupId , long categoryId){
+	public List<MBThread> filterFindByD_T(Date date,long groupId , long categoryId){
 		Session session = null;
 		try {
 			session = openSession();
@@ -538,7 +538,7 @@ public class MBThreadFinderImpl
 			DynamicQuery mbThreadQuery = DynamicQueryFactoryUtil.forClass(MBThread.class, classLoader)
 				.add(RestrictionsFactoryUtil.eq("categoryId", categoryId))
 				.add(RestrictionsFactoryUtil.eq("groupId", groupId))
-				.add(RestrictionsFactoryUtil.lt("createDate", data));
+				.add(RestrictionsFactoryUtil.lt("createDate", date));
 
 
 			List<MBThread> mbThreads = MBThreadFlagLocalServiceUtil.dynamicQuery(mbThreadQuery);
