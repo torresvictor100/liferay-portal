@@ -520,6 +520,13 @@ public class MBThreadFinderImpl
 		finally {
 			closeSession(session);
 		}
+
+	}
+
+	@Override
+	public List<MBThread> filterFindByD_T(String data,long groupId , long categoryId){
+
+		return null;
 	}
 
 	@Override
