@@ -309,6 +309,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteByThreadForDate(int month, long groupId) {
+
+
+	}
+
+
+
+	@Override
 	public MBThread fetchThread(long threadId) {
 		return mbThreadPersistence.fetchByPrimaryKey(threadId);
 	}
