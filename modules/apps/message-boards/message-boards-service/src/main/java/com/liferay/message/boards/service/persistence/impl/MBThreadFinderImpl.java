@@ -18,6 +18,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
@@ -541,7 +542,7 @@ public class MBThreadFinderImpl
 				.add(RestrictionsFactoryUtil.lt("createDate", date));
 
 
-			List<MBThread> mbThreads = MBThreadFlagLocalServiceUtil.dynamicQuery(mbThreadQuery);
+			List<MBThread> mbThreads = MBThreadLocalServiceUtil.dynamicQuery(mbThreadQuery);
 
 			return mbThreads;
 		}

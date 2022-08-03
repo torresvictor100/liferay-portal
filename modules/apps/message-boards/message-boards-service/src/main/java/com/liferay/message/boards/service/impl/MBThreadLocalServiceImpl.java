@@ -310,7 +310,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public void deleteByThreadForDate(int month, long groupId) {
+		getDateByRemoveMonths(month);
 
+		List<MBThread> listforDelete = null;
+
+		for(MBThread thread : listforDelete){
+			try {
+				deleteThread(thread.getThreadId());
+			}
+			catch (PortalException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 	}
 
