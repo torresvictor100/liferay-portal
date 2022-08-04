@@ -87,8 +87,10 @@ public class MBThreadLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteByThreadForDate(int month, long groupId) {
-		getService().deleteByThreadForDate(month, groupId);
+	public static void deleteByThreadForDate(
+		int month, long groupId, long companyId) {
+
+		getService().deleteByThreadForDate(month, groupId, companyId);
 	}
 
 	/**
