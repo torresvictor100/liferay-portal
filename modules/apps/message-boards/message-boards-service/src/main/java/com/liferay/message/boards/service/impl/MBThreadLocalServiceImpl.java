@@ -334,7 +334,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		for(MBThread thread : listforDelete){
 			int countMessage = getMessageCount(thread.getThreadId(),WorkflowConstants.STATUS_ANY);
 			try {
-				if(countMessage == 0){
+				if(countMessage <= 1){
 					deleteThread(thread.getThreadId());
 				}
 			}
