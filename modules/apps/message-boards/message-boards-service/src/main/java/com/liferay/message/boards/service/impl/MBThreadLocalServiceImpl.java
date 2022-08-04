@@ -309,17 +309,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteByThreadForDate(int month, long groupId) {
+	public void deleteByThreadForDate(int month, long groupId, long companyId) {
 		Date date = getDateByRemoveMonths(month);
 
-		List<MBThread> ListMBThreadForGropuId  =  mbThreadLocalService.getGroupThreads(groupId , null);
-		List<MBThread> listforDelete = null;
-
-		for(MBThread mbThread : ListMBThreadForGropuId) {
-
-			listforDelete = mbThreadFinder.filterFindByD_T(date, groupId,mbThread.getCategoryId());
-
-		}
+		List<MBThread> listforDelete = mbThreadFinder.filterFindByD_T(date, groupId,companyId);
 
 		for(MBThread thread : listforDelete){
 			try {
