@@ -325,6 +325,26 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	}
 
+	@Override
+	public void deleteByThreadForDateNoAnswer(int month, long groupId, long companyId) {
+		Date date = getDateByRemoveMonths(month);
+
+		List<MBThread> listforDelete = mbThreadFinder.filterFindByD_T(date, groupId,companyId);
+
+		for(MBThread thread : listforDelete){
+			int countMessage = getMessageCount(thread.getThreadId(),WorkflowConstants.STATUS_ANY);
+			try {
+				if(countMessage == 0){
+					deleteThread(thread.getThreadId());
+				}
+			}
+			catch (PortalException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+	}
+
 
 	@Override
 	public MBThread fetchThread(long threadId) {
