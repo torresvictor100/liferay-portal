@@ -529,7 +529,7 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
-	public List<MBThread> filterFindByD_T(Date date, long companyId ,long groupId ){
+	public List<MBThread> filterFindByD_T(Date date,long groupId, long companyId  ){
 		Session session = null;
 		try {
 			session = openSession();
