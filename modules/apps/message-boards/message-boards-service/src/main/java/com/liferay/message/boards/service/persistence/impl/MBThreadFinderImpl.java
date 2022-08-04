@@ -547,13 +547,8 @@ public class MBThreadFinderImpl
 			return mbThreads;
 		}
 		catch (Exception e) {
-			try {
-				throw new SystemException(e);
+				e.printStackTrace();
 			}
-			catch (SystemException se) {
-				se.printStackTrace();
-			}
-		}
 		finally {
 			closeSession(session);
 		}
