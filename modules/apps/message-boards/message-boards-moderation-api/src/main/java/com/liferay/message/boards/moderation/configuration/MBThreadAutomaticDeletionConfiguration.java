@@ -5,11 +5,11 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Eduardo García
+ * @author João Victor
  */
 @ExtendedObjectClassDefinition(
 	category = "message-boards",
-	scope = ExtendedObjectClassDefinition.Scope.GROUP
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.message.boards.moderation.configuration.MBThreadAutomaticDeletionConfiguration",

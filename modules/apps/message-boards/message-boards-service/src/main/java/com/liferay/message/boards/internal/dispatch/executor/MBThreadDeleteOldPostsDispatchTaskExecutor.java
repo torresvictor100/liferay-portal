@@ -6,11 +6,13 @@ import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.message.boards.moderation.configuration.MBThreadAutomaticDeletionConfiguration;
 import com.liferay.message.boards.service.MBThreadService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,36 +36,61 @@ public class MBThreadDeleteOldPostsDispatchTaskExecutor extends
 		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-		int month = _mbThreadAutomaticDeletionConfiguration.monthStartToTheDelete();
-		boolean  enableDeleteAllOldPost = _mbThreadAutomaticDeletionConfiguration.enableDeleteAllOldPost();
-		boolean enableDeleteOldMessageNoAnswer = _mbThreadAutomaticDeletionConfiguration.enableDeleteOldMessageNoAnswer();
-		String confimationStartToTheDelete = _mbThreadAutomaticDeletionConfiguration.confimationStartToTheDelete();
+		getMBTherdDeleteForMonthConfiguration(dispatchTrigger);
 
-		Group group = _groupLocalService.getCompanyGroup(dispatchTrigger.getCompanyId());
+	}
 
-		if(enableDeleteAllOldPost == true && enableDeleteOldMessageNoAnswer == false &&  confimationStartToTheDelete.equals("accepted")){
+	private void getMBTherdDeleteForMonthConfiguration(DispatchTrigger dispatchTrigger)
+		throws PortalException {
 
-			_mbThreadService.deleteByThreadForDate(month,group.getGroupId(),dispatchTrigger.getCompanyId());
+			Company company =
+				_companyService.getCompanyById(dispatchTrigger.getCompanyId());
 
-		}else if(enableDeleteAllOldPost == true && enableDeleteOldMessageNoAnswer == true &&  confimationStartToTheDelete.equals("accepted")) {
+			MBThreadAutomaticDeletionConfiguration
+				mbThreadAutomaticDeletionConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					MBThreadAutomaticDeletionConfiguration.class,
+					dispatchTrigger.getCompanyId());
 
-			_mbThreadService.deleteByThreadForDateNoAnswer(month,group.getGroupId(),dispatchTrigger.getCompanyId());
 
-		}
+			int month =
+				mbThreadAutomaticDeletionConfiguration.monthStartToTheDelete();
+			boolean enableDeleteAllOldPost =
+				mbThreadAutomaticDeletionConfiguration.enableDeleteAllOldPost();
+			boolean enableDeleteOldMessageNoAnswer =
+				mbThreadAutomaticDeletionConfiguration.enableDeleteOldMessageNoAnswer();
+			String confimationStartToTheDelete =
+				mbThreadAutomaticDeletionConfiguration.confimationStartToTheDelete();
 
+
+			if (enableDeleteAllOldPost == true &&
+				enableDeleteOldMessageNoAnswer == false &&
+				confimationStartToTheDelete.equals("accepted")) {
+
+				_mbThreadService.deleteByThreadForDate(month,
+					company.getGroupId(), dispatchTrigger.getCompanyId());
+
+			}
+			else if (enableDeleteAllOldPost == true &&
+					 enableDeleteOldMessageNoAnswer == true &&
+					 confimationStartToTheDelete.equals("accepted")) {
+
+				_mbThreadService.deleteByThreadForDateNoAnswer(month,
+					company.getGroupId(), dispatchTrigger.getCompanyId());
+
+			}
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return "MBThreadDeleteOldPostsDispatchTaskExecutor";
 	}
 
-	@Reference
-	MBThreadAutomaticDeletionConfiguration _mbThreadAutomaticDeletionConfiguration;
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBThreadDeleteOldPostsDispatchTaskExecutor.class);
 
 	@Reference
-	GroupLocalService _groupLocalService;
-
+	CompanyService _companyService;
 
 	@Reference
 	MBThreadService _mbThreadService;
