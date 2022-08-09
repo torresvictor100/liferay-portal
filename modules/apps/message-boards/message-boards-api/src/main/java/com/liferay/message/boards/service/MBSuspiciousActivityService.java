@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -67,7 +68,7 @@ public interface MBSuspiciousActivityService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
-		long messageId);
+		long messageId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -82,7 +83,7 @@ public interface MBSuspiciousActivityService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
-		long threadId);
+		long threadId) throws PortalException;
 
 	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
 		throws PortalException;
