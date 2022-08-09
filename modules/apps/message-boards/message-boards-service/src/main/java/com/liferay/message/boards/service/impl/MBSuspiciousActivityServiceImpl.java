@@ -48,7 +48,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			messageId, ActionKeys.FLAG );
+			messageId, ActionKeys.SUBMIT );
 
 		return mbSuspiciousActivityLocalService.
 			addOrUpdateMessageSuspiciousActivity(
@@ -61,7 +61,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			threadId, ActionKeys.FLAG );
+			threadId, ActionKeys.SUBMIT );
 
 		return mbSuspiciousActivityLocalService.
 			addOrUpdateThreadSuspiciousActivity(getUserId(), threadId, reason);
@@ -73,7 +73,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			suspiciousActivityId, ActionKeys.FLAG );
+			suspiciousActivityId, ActionKeys.DELETE );
 
 		// TODO Add permission checks for remote methods
 
@@ -86,7 +86,7 @@ public class MBSuspiciousActivityServiceImpl
 		long messageId) throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			messageId, ActionKeys.FLAG );
+			messageId, ActionKeys.VIEW_CONTROL_PANEL );
 
 		return mbSuspiciousActivityLocalService.getMessageSuspiciousActivities(
 			messageId);
@@ -97,7 +97,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			suspiciousActivityId, ActionKeys.FLAG );
+			suspiciousActivityId, ActionKeys.VIEW_CONTROL_PANEL);
 
 		return mbSuspiciousActivityLocalService.getSuspiciousActivity(
 			suspiciousActivityId);
@@ -108,7 +108,7 @@ public class MBSuspiciousActivityServiceImpl
 		long threadId) throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			threadId, ActionKeys.FLAG );
+			threadId, ActionKeys.VIEW_CONTROL_PANEL );
 
 		return mbSuspiciousActivityLocalService.getThreadSuspiciousActivities(
 			threadId);
@@ -119,7 +119,7 @@ public class MBSuspiciousActivityServiceImpl
 		throws PortalException {
 
 		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
-			suspiciousActivityId, ActionKeys.FLAG );
+			suspiciousActivityId, ActionKeys.UPDATE );
 
 		return mbSuspiciousActivityLocalService.updateValidated(
 			suspiciousActivityId);
