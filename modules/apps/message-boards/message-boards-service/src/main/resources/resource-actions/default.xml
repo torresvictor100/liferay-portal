@@ -74,6 +74,7 @@
 				<action-key>REPLY_TO_MESSAGE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>FLAG</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
@@ -104,6 +105,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>FLAG</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -137,6 +139,7 @@
 			<site-member-defaults>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>FLAG</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
