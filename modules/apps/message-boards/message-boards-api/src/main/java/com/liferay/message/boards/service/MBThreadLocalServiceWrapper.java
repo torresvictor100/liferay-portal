@@ -86,6 +86,11 @@ public class MBThreadLocalServiceWrapper
 		return _mbThreadLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteByThreadForDate(int month, long groupId) {
+		_mbThreadLocalService.deleteByThreadForDate(month, groupId);
+	}
+
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

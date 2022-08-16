@@ -87,6 +87,10 @@ public class MBThreadLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteByThreadForDate(int month, long groupId) {
+		getService().deleteByThreadForDate(month, groupId);
+	}
+
 	/**
 	 * Deletes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

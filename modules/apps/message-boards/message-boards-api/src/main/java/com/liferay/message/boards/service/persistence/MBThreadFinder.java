@@ -85,6 +85,9 @@ public interface MBThreadFinder {
 		filterFindByG_C(long groupId, long categoryId, int start, int end);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread>
+		filterFindByD_T(String data, long groupId, long categoryId);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread>
 		filterFindByG_C(
 			long groupId, long categoryId,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition

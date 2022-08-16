@@ -84,6 +84,11 @@ import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -1133,6 +1138,29 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return thread;
 	}
+
+	protected Date getDateByRemoveMonths(int amountMonth ){
+		try {
+
+		LocalDateTime DateNow = LocalDateTime.now();
+
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+		String dateString = LocalDate.of(DateNow.getYear(), DateNow.getMonth(),
+				DateNow.getDayOfMonth())
+			.minusMonths(amountMonth).format(
+				DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+		Date date = formato.parse(dateString);
+
+		return date;
+
+		}
+		catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	protected void moveAttachmentsFolders(
 			MBMessage message, long oldAttachmentsFolderId, MBThread oldThread,
