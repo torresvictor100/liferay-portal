@@ -1077,8 +1077,8 @@ public class MBThreadFinderImpl
 		return sql;
 	}
 
-	private String _addTagFilterToSQL(String tag, String sql) {
-		if (tag != null) {
+	private String _addTagFilterToSQL(String tag, String sql , long usarId) {
+		if (tag != null && !tag.equals("myWatchingTags")) {
 			String sqlAppend = StringBundler.concat(
 				"INNER JOIN AssetEntry ON AssetEntry.classPK = ",
 				"MBThread.rootMessageId INNER JOIN AssetEntries_AssetTags ON ",
@@ -1100,6 +1100,21 @@ public class MBThreadFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "TAGS ?", " AND AssetTag.name IN (" + myTags + ")");
+		}else if(tag.equals("myWatchingTags")){
+
+			String sqlAppend = StringBundler.concat(
+				"INNER JOIN AssetEntry ON AssetEntry.classPK = ",
+				"MBThread.rootMessageId INNER JOIN AssetEntries_AssetTags ON ",
+				"AssetEntries_AssetTags.entryId = AssetEntry.entryId INNER ",
+				"JOIN AssetTag ON AssetTag.tagId = ",
+				"AssetEntries_AssetTags.tagId INNER " +
+				"JOIN Subscription ON Subscription.classPK = AssetTag.tagId ");
+
+			sql = StringUtil.replace(sql, "INNER JOIN2 ?", sqlAppend);
+
+			sql = StringUtil.replace(
+				sql, "TAGS ?", " AND Subscription.userId = "+usarId+")");
+
 		}
 		else {
 			sql = StringUtil.removeSubstring(sql, "INNER JOIN2 ?");
