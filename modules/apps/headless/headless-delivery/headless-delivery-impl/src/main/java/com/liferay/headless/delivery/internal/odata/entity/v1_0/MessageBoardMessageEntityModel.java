@@ -67,30 +67,31 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new IntegerEntityField(
 				"messageBoardThreadId", locale -> Field.ROOT_ENTRY_CLASS_PK),
 			new IntegerEntityField(
+				"numberOfMessageBoardMessages",
+				locale -> Field.getSortableFieldName(
+					"numberOfMessageBoardMessages")),
+			new IntegerEntityField(
 				"parentMessageBoardMessageId", locale -> "parentMessageId"),
 			new IntegerEntityField(
 				"ratingValue",
 				locale -> Field.getSortableFieldName("totalScore")),
+			new IntegerEntityField(
+				"totalScore",
+				locale -> Field.getSortableFieldName("totalScore")),
+			new IntegerEntityField(
+				"viewCount", locale -> Field.getSortableFieldName("viewCount")),
 			new StringEntityField(
 				"friendlyUrlPath",
 				locale -> Field.getSortableFieldName("urlSubject_String")),
 			new StringEntityField(
+				"hasValidAnswer",
+				locale -> Field.getSortableFieldName("hasValidAnswer")),
+			new StringEntityField(
 				"headline",
 				locale -> Field.getSortableFieldName(
 					"localized_title_".concat(
-						LocaleUtil.toLanguageId(locale)))),
-			new IntegerEntityField(
-				"viewCount", locale -> Field.getSortableFieldName("viewCount")),
-			new IntegerEntityField(
-				"totalScore",
-				locale -> Field.getSortableFieldName("totalScore")),
-			new StringEntityField(
-				"hasValidAnswer",
-				locale -> Field.getSortableFieldName("hasValidAnswer")),
-			new IntegerEntityField(
-				"numberOfMessageBoardMessages",
-				locale -> Field.getSortableFieldName(
-					"numberOfMessageBoardMessages")));
+						LocaleUtil.toLanguageId(locale)))));
+
 	}
 
 	@Override
