@@ -26,13 +26,18 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorStatisticsUti
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -61,6 +66,24 @@ public class MessageBoardMessageDTOConverter
 		return MessageBoardMessage.class.getSimpleName();
 	}
 
+	private String getDomains(Long groupId){
+
+		MBModerationGroupConfiguration mbModerationGroupConfiguration =
+			null;
+		try {
+			mbModerationGroupConfiguration = _configurationProvider.getGroupConfiguration(
+				MBModerationGroupConfiguration.class, groupId);
+		}
+		catch (
+			ConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+
+		String domains = mbModerationGroupConfiguration.badgeDomains();
+
+		return domains;
+	}
+
 	@Override
 	public MessageBoardMessage toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
@@ -84,6 +107,11 @@ public class MessageBoardMessageDTOConverter
 					mbMessage.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
+				badge = "";
+				if (Validator.isNotNull(getDomains(mbMessage.getGroupId())) &&
+					StringUtil.endsWith(user.getEmailAddress(), getDomains(mbMessage.getGroupId()).trim())) {
+					badge = getDomains(mbMessage.getGroupId());
+				}
 				encodingFormat = mbMessage.getFormat();
 				externalReferenceCode = mbMessage.getExternalReferenceCode();
 				friendlyUrlPath = mbMessage.getUrlSubject();
@@ -119,7 +147,8 @@ public class MessageBoardMessageDTOConverter
 						if (mbMessage.isAnonymous()) {
 							return null;
 						}
-
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 						return CreatorUtil.toCreator(
 							_portal, dtoConverterContext.getUriInfoOptional(),
 							user);
@@ -182,5 +211,8 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }
