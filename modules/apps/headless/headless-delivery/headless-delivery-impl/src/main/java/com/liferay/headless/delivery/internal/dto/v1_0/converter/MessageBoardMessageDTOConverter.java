@@ -147,8 +147,6 @@ public class MessageBoardMessageDTOConverter
 						if (mbMessage.isAnonymous()) {
 							return null;
 						}
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 						return CreatorUtil.toCreator(
 							_portal, dtoConverterContext.getUriInfoOptional(),
 							user);
@@ -192,6 +190,9 @@ public class MessageBoardMessageDTOConverter
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
@@ -212,7 +213,5 @@ public class MessageBoardMessageDTOConverter
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 }
