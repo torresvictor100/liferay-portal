@@ -50,4 +50,10 @@ public interface MBModerationGroupConfiguration {
 	)
 	public String[] approvedDomains();
 
+	@Meta.AD(
+		deflt = " ", description = "enter-the-badge-domains",
+		name = "badge-domains", required = false
+	)
+	public String badgeDomains();
+
 }
