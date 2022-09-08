@@ -122,6 +122,27 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 
 	protected String articleBody;
 
+	public String getBadge() {
+		return badge;
+	}
+
+	public void setBadge(String badge) {
+		this.badge = badge;
+	}
+
+	public void setBadge(
+		UnsafeSupplier<String, Exception> badgeUnsafeSupplier) {
+
+		try {
+			badge = badgeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String badge;
+
 	public Creator getCreator() {
 		return creator;
 	}

@@ -193,6 +193,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage = randomMessageBoardMessage();
 
 		messageBoardMessage.setArticleBody(regex);
+		messageBoardMessage.setBadge(regex);
 		messageBoardMessage.setEncodingFormat(regex);
 		messageBoardMessage.setExternalReferenceCode(regex);
 		messageBoardMessage.setFriendlyUrlPath(regex);
@@ -206,6 +207,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		messageBoardMessage = MessageBoardMessageSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, messageBoardMessage.getArticleBody());
+		Assert.assertEquals(regex, messageBoardMessage.getBadge());
 		Assert.assertEquals(regex, messageBoardMessage.getEncodingFormat());
 		Assert.assertEquals(
 			regex, messageBoardMessage.getExternalReferenceCode());
@@ -2449,6 +2451,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("badge", additionalAssertFieldName)) {
+				if (messageBoardMessage.getBadge() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (messageBoardMessage.getCreator() == null) {
 					valid = false;
@@ -2826,6 +2836,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getArticleBody(),
 						messageBoardMessage2.getArticleBody())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("badge", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getBadge(),
+						messageBoardMessage2.getBadge())) {
 
 					return false;
 				}
@@ -3299,6 +3320,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("badge")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardMessage.getBadge()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3536,6 +3565,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				anonymous = RandomTestUtil.randomBoolean();
 				articleBody = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				badge = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				encodingFormat = StringUtil.toLowerCase(

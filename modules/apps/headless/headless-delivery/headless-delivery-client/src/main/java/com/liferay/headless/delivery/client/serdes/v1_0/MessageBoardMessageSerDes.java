@@ -108,6 +108,20 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardMessage.getBadge() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"badge\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(messageBoardMessage.getBadge()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardMessage.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -465,6 +479,13 @@ public class MessageBoardMessageSerDes {
 				String.valueOf(messageBoardMessage.getArticleBody()));
 		}
 
+		if (messageBoardMessage.getBadge() == null) {
+			map.put("badge", null);
+		}
+		else {
+			map.put("badge", String.valueOf(messageBoardMessage.getBadge()));
+		}
+
 		if (messageBoardMessage.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -704,6 +725,11 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setArticleBody(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "badge")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setBadge((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
