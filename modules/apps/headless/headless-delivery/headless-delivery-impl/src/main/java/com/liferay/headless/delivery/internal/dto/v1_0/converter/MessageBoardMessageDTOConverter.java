@@ -161,8 +161,9 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-	private String _getFeaturedDomainName(long groupId, User user) {
-		try {
+	private String _getFeaturedDomainName(long groupId, User user)
+		throws Exception {
+
 			MBModerationGroupConfiguration mbModerationGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					MBModerationGroupConfiguration.class, groupId);
@@ -177,10 +178,7 @@ public class MessageBoardMessageDTOConverter
 					return featuredDomainName;
 				}
 			}
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
+
 
 		return StringPool.BLANK;
 	}
