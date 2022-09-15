@@ -32,7 +32,6 @@ import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -164,21 +163,20 @@ public class MessageBoardMessageDTOConverter
 	private String _getFeaturedDomainName(long groupId, User user)
 		throws Exception {
 
-			MBModerationGroupConfiguration mbModerationGroupConfiguration =
-				_configurationProvider.getGroupConfiguration(
-					MBModerationGroupConfiguration.class, groupId);
+		MBModerationGroupConfiguration mbModerationGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				MBModerationGroupConfiguration.class, groupId);
 
-			for (String featuredDomainName :
-					mbModerationGroupConfiguration.featuredDomainNames()) {
+		for (String featuredDomainName :
+				mbModerationGroupConfiguration.featuredDomainNames()) {
 
-				if (Validator.isNotNull(featuredDomainName) &&
-					StringUtil.endsWith(
-						user.getEmailAddress(), "@" + featuredDomainName)) {
+			if (Validator.isNotNull(featuredDomainName) &&
+				StringUtil.endsWith(
+					user.getEmailAddress(), "@" + featuredDomainName)) {
 
-					return featuredDomainName;
-				}
+				return featuredDomainName;
 			}
-
+		}
 
 		return StringPool.BLANK;
 	}
