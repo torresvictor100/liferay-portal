@@ -2932,6 +2932,11 @@ components:
                         The ID of the Message Board Section to which this message is scoped.
                     format: int64
                     type: integer
+                notificationmoderation:
+                    description:
+                        enable notification moderation.
+                    readOnly: true
+                    type: boolean
                 numberOfMessageBoardAttachments:
                     description:
                         The number of the thread's attachments.
