@@ -396,6 +396,28 @@ public class MessageBoardThread implements Cloneable, Serializable {
 
 	protected Long messageBoardSectionId;
 
+	public Boolean getNotificationmoderation() {
+		return notificationmoderation;
+	}
+
+	public void setNotificationmoderation(Boolean notificationmoderation) {
+		this.notificationmoderation = notificationmoderation;
+	}
+
+	public void setNotificationmoderation(
+		UnsafeSupplier<Boolean, Exception>
+			notificationmoderationUnsafeSupplier) {
+
+		try {
+			notificationmoderation = notificationmoderationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean notificationmoderation;
+
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
 	}
