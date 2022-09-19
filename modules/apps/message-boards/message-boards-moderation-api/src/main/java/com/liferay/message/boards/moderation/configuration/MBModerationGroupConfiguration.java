@@ -39,8 +39,8 @@ public interface MBModerationGroupConfiguration {
 	public boolean enableMessageBoardsModeration();
 
 	@Meta.AD(
-		deflt = "false", description = "enable-message-boards-moderation-help",
-		name = "enable-message-boards-moderation", required = false
+		deflt = "false", description = "enable-notification-moderation-help",
+		name = "enable-notification-moderation", required = false
 	)
 	public boolean enableNotificationModeration();
 
