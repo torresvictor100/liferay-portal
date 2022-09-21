@@ -31,8 +31,11 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -92,7 +95,7 @@ public class MessageBoardMessageDTOConverter
 				encodingFormat = mbMessage.getFormat();
 				externalReferenceCode = mbMessage.getExternalReferenceCode();
 				featuredDomainName = _getFeaturedDomainName(
-					mbMessage.getGroupId(), user);
+					mbMessage.getGroupId(), user,mbMessage.getCompanyId());
 				friendlyUrlPath = mbMessage.getUrlSubject();
 				headline = mbMessage.getSubject();
 				id = mbMessage.getMessageId();
@@ -160,23 +163,34 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-	private String _getFeaturedDomainName(long groupId, User user)
+	private String _getFeaturedDomainName(long groupId, User user, long companyId)
 		throws Exception {
 
 		MBModerationGroupConfiguration mbModerationGroupConfiguration =
 			_configurationProvider.getGroupConfiguration(
 				MBModerationGroupConfiguration.class, groupId);
 
-		for (String featuredDomainName :
-				mbModerationGroupConfiguration.featuredDomainNames()) {
+		Company company = _companyLocalService.getCompany(companyId);
 
-			if (Validator.isNotNull(featuredDomainName) &&
-				StringUtil.endsWith(
-					user.getEmailAddress(), "@" + featuredDomainName)) {
+		String emailoque = user.getOriginalEmailAddress();
 
-				return featuredDomainName;
-			}
+		if(company.hasCompanyMx(user.getEmailAddress()) ){
+
+			System.out.println("to passando aqui");
+			return user.getCompanyMx();
 		}
+
+
+//		for (String featuredDomainName :
+//				mbModerationGroupConfiguration.featuredDomainNames()) {
+//
+//			if (Validator.isNotNull(featuredDomainName) &&
+//				StringUtil.endsWith(
+//					user.getEmailAddress(), "@" + featuredDomainName)) {
+//
+//				return featuredDomainName;
+//			}
+//		}
 
 		return StringPool.BLANK;
 	}
@@ -192,6 +206,9 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
