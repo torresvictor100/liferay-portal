@@ -36,6 +36,11 @@ public class MBThreadServiceWrapper
 	}
 
 	@Override
+	public void deleteByThreadForDate(int month, long groupId, long companyId) {
+		_mbThreadService.deleteByThreadForDate(month, groupId, companyId);
+	}
+
+	@Override
 	public void deleteThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
