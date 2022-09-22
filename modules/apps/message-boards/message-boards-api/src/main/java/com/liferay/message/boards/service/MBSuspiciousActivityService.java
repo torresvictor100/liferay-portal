@@ -67,7 +67,8 @@ public interface MBSuspiciousActivityService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
-		long messageId);
+			long messageId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -82,7 +83,8 @@ public interface MBSuspiciousActivityService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
-		long threadId);
+			long threadId)
+		throws PortalException;
 
 	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
 		throws PortalException;

@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.message.boards.service.base.MBSuspiciousActivityServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -21,7 +22,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,6 +48,9 @@ public class MBSuspiciousActivityServiceImpl
 			long messageId, String reason)
 		throws PortalException {
 
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			messageId, ActionKeys.SUBMIT );
+
 		return mbSuspiciousActivityLocalService.
 			addOrUpdateMessageSuspiciousActivity(
 				getUserId(), messageId, reason);
@@ -50,6 +60,9 @@ public class MBSuspiciousActivityServiceImpl
 	public MBSuspiciousActivity addOrUpdateThreadSuspiciousActivity(
 			long threadId, String reason)
 		throws PortalException {
+//
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			threadId, ActionKeys.SUBMIT );
 
 		return mbSuspiciousActivityLocalService.
 			addOrUpdateThreadSuspiciousActivity(getUserId(), threadId, reason);
@@ -60,6 +73,9 @@ public class MBSuspiciousActivityServiceImpl
 			long suspiciousActivityId)
 		throws PortalException {
 
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			suspiciousActivityId, ActionKeys.DELETE );
+
 		// TODO Add permission checks for remote methods
 
 		return mbSuspiciousActivityLocalService.deleteSuspiciousActivity(
@@ -68,7 +84,10 @@ public class MBSuspiciousActivityServiceImpl
 
 	@Override
 	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
-		long messageId) {
+		long messageId) throws PortalException {
+
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			messageId, ActionKeys.VIEW_CONTROL_PANEL );
 
 		return mbSuspiciousActivityLocalService.getMessageSuspiciousActivities(
 			messageId);
@@ -78,13 +97,19 @@ public class MBSuspiciousActivityServiceImpl
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
 		throws PortalException {
 
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			suspiciousActivityId, ActionKeys.VIEW_CONTROL_PANEL);
+
 		return mbSuspiciousActivityLocalService.getSuspiciousActivity(
 			suspiciousActivityId);
 	}
 
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
-		long threadId) {
+		long threadId) throws PortalException {
+
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			threadId, ActionKeys.VIEW_CONTROL_PANEL );
 
 		return mbSuspiciousActivityLocalService.getThreadSuspiciousActivities(
 			threadId);
@@ -94,8 +119,20 @@ public class MBSuspiciousActivityServiceImpl
 	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
 		throws PortalException {
 
+//		_MBSuspiciousActivityResourcePermission.check(getPermissionChecker(),
+//			suspiciousActivityId, ActionKeys.UPDATE );
+
 		return mbSuspiciousActivityLocalService.updateValidated(
 			suspiciousActivityId);
 	}
+
+//	public PermissionChecker getPermissionChecker() throws PrincipalException {
+//		return GuestOrUserUtil.getPermissionChecker();
+//	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBSuspiciousActivity)"
+	)
+	private ModelResourcePermission<MBSuspiciousActivity> _MBSuspiciousActivityResourcePermission;
 
 }

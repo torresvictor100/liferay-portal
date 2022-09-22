@@ -67,7 +67,8 @@ public class MBSuspiciousActivityServiceWrapper
 
 	@Override
 	public java.util.List<MBSuspiciousActivity> getMessageSuspiciousActivities(
-		long messageId) {
+			long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbSuspiciousActivityService.getMessageSuspiciousActivities(
 			messageId);
@@ -93,7 +94,8 @@ public class MBSuspiciousActivityServiceWrapper
 
 	@Override
 	public java.util.List<MBSuspiciousActivity> getThreadSuspiciousActivities(
-		long threadId) {
+			long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbSuspiciousActivityService.getThreadSuspiciousActivities(
 			threadId);

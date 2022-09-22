@@ -74,6 +74,7 @@
 				<action-key>REPLY_TO_MESSAGE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>FLAG</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
@@ -104,6 +105,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>FLAG</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -137,6 +139,7 @@
 			<site-member-defaults>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>FLAG</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
@@ -147,4 +150,30 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
+<!--	<model-resource>-->
+<!--		<model-name>com.liferay.message.boards.model.MBSuspiciousActivity</model-name>-->
+<!--		<portlet-ref>-->
+<!--			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>-->
+<!--			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>-->
+<!--		</portlet-ref>-->
+<!--		<weight>5</weight>-->
+<!--		<permissions>-->
+<!--			<supports>-->
+<!--				<action-key>DELETE</action-key>-->
+<!--				<action-key>VIEW_CONTROL_PANEL</action-key>-->
+<!--				<action-key>VIEW</action-key>-->
+<!--			</supports>-->
+<!--			<site-member-defaults>-->
+<!--				<action-key>UPDATE</action-key>-->
+<!--				<action-key>SUBMIT</action-key>-->
+<!--				<action-key>VIEW</action-key>-->
+<!--			</site-member-defaults>-->
+<!--			<guest-defaults>-->
+<!--				<action-key>VIEW</action-key>-->
+<!--			</guest-defaults>-->
+<!--			<guest-unsupported>-->
+<!--				<action-key>VIEW</action-key>-->
+<!--			</guest-unsupported>-->
+<!--		</permissions>-->
+<!--	</model-resource>-->
 </resource-action-mapping>
