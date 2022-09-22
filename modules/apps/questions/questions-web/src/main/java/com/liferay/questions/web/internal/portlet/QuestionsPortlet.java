@@ -168,7 +168,8 @@ public class QuestionsPortlet extends MVCPortlet {
 					FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
 					GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-159928"))
-				).put(
+				)
+				.put(
 					"pathTermsOfUse",
 					_portal.getPathMain() + "/portal/terms_of_use"
 				).put(
@@ -186,6 +187,9 @@ public class QuestionsPortlet extends MVCPortlet {
 							Constants.VIEW))
 				).build()
 			).build());
+
+			renderRequest.setAttribute(QuestionsWebKeys.NOTIFICATION, _notification(themeDisplay.getScopeGroupId(),themeDisplay.getUserId()));
+
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));
@@ -200,6 +204,31 @@ public class QuestionsPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_questionsConfiguration = ConfigurableUtil.createConfigurable(
 			QuestionsConfiguration.class, properties);
+	}
+
+	private boolean _notification(long groupId,long userId) {
+		MBModerationGroupConfiguration mbModerationGroupConfiguration =
+			null;
+		try {
+			mbModerationGroupConfiguration = _configurationProvider.getGroupConfiguration(
+				MBModerationGroupConfiguration.class, groupId);
+
+			if(mbModerationGroupConfiguration.enableMessageBoardsModeration() == true
+			   && mbModerationGroupConfiguration.minimumContributedMessages() > _mbStatsUserLocalService.getMessageCountByUserId(userId)){
+				return mbModerationGroupConfiguration.enableNotificationModeration();
+			}else if(mbModerationGroupConfiguration.enableNotificationModeration() == true ){
+				return false;
+			}
+
+			return mbModerationGroupConfiguration.enableNotificationModeration() == true;
+		}
+		catch (ConfigurationException e) {
+			return false;
+
+		}
+
+
+
 	}
 
 	private String _getTagSelectorURL(
