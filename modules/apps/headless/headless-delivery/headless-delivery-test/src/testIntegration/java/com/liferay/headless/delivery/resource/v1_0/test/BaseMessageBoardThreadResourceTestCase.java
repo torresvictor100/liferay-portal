@@ -2269,6 +2269,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"notificationmoderation", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getNotificationmoderation() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
 
@@ -2738,6 +2748,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getMessageBoardSectionId(),
 						messageBoardThread2.getMessageBoardSectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"notificationmoderation", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getNotificationmoderation(),
+						messageBoardThread2.getNotificationmoderation())) {
 
 					return false;
 				}
@@ -3237,6 +3260,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("notificationmoderation")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("numberOfMessageBoardAttachments")) {
 			sb.append(
 				String.valueOf(
@@ -3373,6 +3401,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				locked = RandomTestUtil.randomBoolean();
 				messageBoardRootMessageId = RandomTestUtil.randomLong();
 				messageBoardSectionId = RandomTestUtil.randomLong();
+				notificationmoderation = RandomTestUtil.randomBoolean();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				seen = RandomTestUtil.randomBoolean();

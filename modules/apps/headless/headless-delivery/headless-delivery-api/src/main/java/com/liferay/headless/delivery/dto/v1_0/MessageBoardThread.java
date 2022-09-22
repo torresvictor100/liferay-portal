@@ -591,6 +591,35 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long messageBoardSectionId;
 
+	@Schema(description = "enable notification moderation.")
+	public Boolean getNotificationmoderation() {
+		return notificationmoderation;
+	}
+
+	public void setNotificationmoderation(Boolean notificationmoderation) {
+		this.notificationmoderation = notificationmoderation;
+	}
+
+	@JsonIgnore
+	public void setNotificationmoderation(
+		UnsafeSupplier<Boolean, Exception>
+			notificationmoderationUnsafeSupplier) {
+
+		try {
+			notificationmoderation = notificationmoderationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "enable notification moderation.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean notificationmoderation;
+
 	@Schema(description = "The number of the thread's attachments.")
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
@@ -1245,6 +1274,16 @@ public class MessageBoardThread implements Serializable {
 			sb.append("\"messageBoardSectionId\": ");
 
 			sb.append(messageBoardSectionId);
+		}
+
+		if (notificationmoderation != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"notificationmoderation\": ");
+
+			sb.append(notificationmoderation);
 		}
 
 		if (numberOfMessageBoardAttachments != null) {

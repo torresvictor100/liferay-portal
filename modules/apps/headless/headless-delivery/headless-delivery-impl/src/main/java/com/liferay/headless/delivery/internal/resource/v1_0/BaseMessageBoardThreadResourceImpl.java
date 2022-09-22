@@ -553,6 +553,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getMessageBoardSectionId());
 		}
 
+		if (messageBoardThread.getNotificationmoderation() != null) {
+			existingMessageBoardThread.setNotificationmoderation(
+				messageBoardThread.getNotificationmoderation());
+		}
+
 		if (messageBoardThread.getNumberOfMessageBoardAttachments() != null) {
 			existingMessageBoardThread.setNumberOfMessageBoardAttachments(
 				messageBoardThread.getNumberOfMessageBoardAttachments());

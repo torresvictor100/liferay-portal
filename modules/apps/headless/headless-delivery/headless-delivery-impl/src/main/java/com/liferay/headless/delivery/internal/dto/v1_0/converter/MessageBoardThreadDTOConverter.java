@@ -29,6 +29,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
@@ -36,6 +37,7 @@ import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -83,6 +85,8 @@ public class MessageBoardThreadDTOConverter
 		MBMessage mbMessage = _mbMessageLocalService.getMessage(
 			mbThread.getRootMessageId());
 		User user = _userLocalService.fetchUser(mbThread.getUserId());
+		MBModerationGroupConfiguration mbModerationGroupConfiguration =_configurationProvider.getGroupConfiguration(
+			MBModerationGroupConfiguration.class, mbMessage.getGroupId());;
 
 		return new MessageBoardThread() {
 			{
@@ -119,6 +123,7 @@ public class MessageBoardThreadDTOConverter
 				locked = mbThread.isLocked();
 				messageBoardRootMessageId = mbThread.getRootMessageId();
 				messageBoardSectionId = mbMessage.getCategoryId();
+				notificationmoderation = mbModerationGroupConfiguration.enableNotificationModeration();
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =
@@ -200,6 +205,9 @@ public class MessageBoardThreadDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

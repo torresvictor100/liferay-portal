@@ -2932,6 +2932,11 @@ components:
                         The ID of the Message Board Section to which this message is scoped.
                     format: int64
                     type: integer
+                notificationmoderation:
+                    description:
+                        enable notification moderation.
+                    readOnly: true
+                    type: boolean
                 numberOfMessageBoardAttachments:
                     description:
                         The number of the thread's attachments.
@@ -5302,7 +5307,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.38'."
+        'com.liferay.headless.delivery.client', and version '4.0.39'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
