@@ -30,9 +30,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SiteNavigationLocaleFriendlyUrlConfiguration {
     @Meta.AD(
         required = false,
+        optionValues = {"1", "2", "3"},
+        optionLabels = {"1", "2", "3"},
         description = "configure-properties-locale-friendly-url-style",
         name = "locale-friendly-url-style"
     )
-    public int localeFriendlyUrlStyle();
+    public String localeFriendlyUrlStyle();
 
 }

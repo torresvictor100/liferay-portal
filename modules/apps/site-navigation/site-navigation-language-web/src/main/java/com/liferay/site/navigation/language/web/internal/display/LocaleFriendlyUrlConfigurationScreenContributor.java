@@ -5,10 +5,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -17,6 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class LocaleFriendlyUrlConfigurationScreenContributor
@@ -34,12 +34,15 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 
 		@Override
 		public String getKey() {
-			return "localization";
+			return "instance-configuration-locale-friendly-url-configuration";
 		}
 
 		@Override
 		public String getName(Locale locale) {
-			return _language.get(locale, "site-navigation-locale-friendly-url-configuration-name");
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass());
+
+			return _language.get(resourceBundle, "site-navigation-locale-friendly-url-configuration-name");
 		}
 
 		@Override
@@ -57,12 +60,7 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse) {
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			SiteNavigationLocaleFriendlyUrlConfiguration siteNavigationLocaleFriendlyUrlConfiguration =
-				(SiteNavigationLocaleFriendlyUrlConfiguration) themeDisplay.getCompany();
+			SiteNavigationLocaleFriendlyUrlConfiguration siteNavigationLocaleFriendlyUrlConfiguration = null;
 
 			try {
 				siteNavigationLocaleFriendlyUrlConfiguration =
@@ -76,7 +74,7 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 			}
 
 			httpServletRequest.setAttribute(
-				String.valueOf(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE),
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 				siteNavigationLocaleFriendlyUrlConfiguration.localeFriendlyUrlStyle()
 			);
 		}

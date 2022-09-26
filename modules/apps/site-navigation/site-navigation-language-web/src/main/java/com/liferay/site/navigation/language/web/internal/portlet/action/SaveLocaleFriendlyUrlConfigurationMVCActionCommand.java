@@ -48,6 +48,8 @@ public class SaveLocaleFriendlyUrlConfigurationMVCActionCommand
 		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
 			SessionErrors.add(actionRequest, PrincipalException.class);
 
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+
 			return;
 		}
 
@@ -55,7 +57,7 @@ public class SaveLocaleFriendlyUrlConfigurationMVCActionCommand
 			SiteNavigationLocaleFriendlyUrlConfiguration.class, themeDisplay.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"localeFriendlyUrlStyle",
-				ParamUtil.getInteger(actionRequest, "localeFriendlyUrlStyle")
+				ParamUtil.getString(actionRequest, "localeFriendlyUrlStyle")
 			).build());
 	}
 
