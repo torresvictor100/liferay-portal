@@ -23,6 +23,7 @@ SiteNavigationLocaleFriendlyUrlConfiguration siteNavigationLocaleFriendlyUrlConf
 
 <div class="row">
 	<div class="col-md-12">
-		<aui:input label='<%= LanguageUtil.get(resourceBundle, "locale-friendly-url-style") %>' type="text" value="<%= siteNavigationLocaleFriendlyUrlConfiguration.localeFriendlyUrlStyle() %>" />
+		<h1>TESTSTSTSTSTST</h1>
+		<aui:input label="locale-friendly-url-style" type="text" name="locale-friendly-url-style" value="<%= (String)request.getAttribute(siteNavigationLocaleFriendlyUrlConfiguration.localeFriendlyUrlStyle()) %>" />
 	</div>
 </div>

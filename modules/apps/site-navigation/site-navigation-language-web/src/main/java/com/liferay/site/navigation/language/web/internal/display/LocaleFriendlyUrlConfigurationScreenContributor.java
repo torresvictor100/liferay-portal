@@ -5,9 +5,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,12 +29,12 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 
 		@Override
 		public String getJspPath() {
-			return null;
+			return "/portal_settings/locale_friendly_url_style.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "instance-configuration-locale-friendly-url-configuration";
+			return "locale-friendly-url-configuration";
 		}
 
 		@Override
@@ -74,7 +74,7 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 			}
 
 			httpServletRequest.setAttribute(
-				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+				String.valueOf(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE),
 				siteNavigationLocaleFriendlyUrlConfiguration.localeFriendlyUrlStyle()
 			);
 		}
