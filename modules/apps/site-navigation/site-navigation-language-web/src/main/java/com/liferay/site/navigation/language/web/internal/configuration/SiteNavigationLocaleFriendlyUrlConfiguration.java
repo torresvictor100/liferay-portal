@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 
 @ExtendedObjectClassDefinition(
-    category = "localization",
+    category = "localization", generateUI = false,
     scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
@@ -28,13 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
     name = "site-navigation-locale-friendly-url-configuration-name"
 )
 public interface SiteNavigationLocaleFriendlyUrlConfiguration {
-    @Meta.AD(
-        required = false,
-        optionValues = {"1", "2", "3"},
-        optionLabels = {"1", "2", "3"},
-        description = "configure-properties-locale-friendly-url-style",
-        name = "locale-friendly-url-style"
-    )
+
     public String localeFriendlyUrlStyle();
 
 }

@@ -27,6 +27,21 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLanguagePortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.language.web.internal.display.context.SiteNavigationLanguageDisplayContext" %>
+page import="com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.log.Log" %><%@
+page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
+page import="com.liferay.portal.kernel.util.ContentTypes" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.Http" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
