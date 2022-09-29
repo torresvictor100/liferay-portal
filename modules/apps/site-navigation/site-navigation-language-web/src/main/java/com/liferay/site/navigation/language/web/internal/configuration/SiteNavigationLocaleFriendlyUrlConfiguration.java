@@ -17,7 +17,9 @@ package com.liferay.site.navigation.language.web.internal.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-
+/**
+ * @author Albert Gomes
+ */
 @ExtendedObjectClassDefinition(
     category = "localization", generateUI = false,
     scope = ExtendedObjectClassDefinition.Scope.COMPANY
@@ -25,10 +27,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
     id = "com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration",
     localization = "content/Language",
-    name = "site-navigation-locale-friendly-url-configuration-name"
+    name = "site-navigation-locale-prepend-friendly-url-configuration-name"
 )
 public interface SiteNavigationLocaleFriendlyUrlConfiguration {
 
-    public String localeFriendlyUrlStyle();
+    public String localePrependFriendlyUrlStyle();
 
 }

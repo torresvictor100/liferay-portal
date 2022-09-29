@@ -11,9 +11,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,9 +58,16 @@ public class SaveLocaleFriendlyUrlConfigurationMVCActionCommand
 		_configurationProvider.saveCompanyConfiguration(
 			SiteNavigationLocaleFriendlyUrlConfiguration.class, themeDisplay.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"localeFriendlyUrlStyle",
-				ParamUtil.getString(actionRequest, "localeFriendlyUrlStyle")
+				"localePrependFriendlyUrlStyle",
+				ParamUtil.getString(actionRequest, "localePrependFriendlyUrlStyle")
 			).build());
+
+		PropsUtil.set(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+				ParamUtil.getString(actionRequest, "localePrependFriendlyUrlStyle"));
+
+		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = Integer.parseInt(
+			PropsUtil.get(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE));
 	}
 
 	@Reference

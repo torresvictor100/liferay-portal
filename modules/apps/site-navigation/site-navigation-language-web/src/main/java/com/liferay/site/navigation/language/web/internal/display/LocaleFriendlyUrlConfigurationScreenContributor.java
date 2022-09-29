@@ -5,8 +5,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLocaleFriendlyUrlConfiguration;
 import org.osgi.service.component.annotations.Component;
@@ -18,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * @author Albert Gomes
+ */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class LocaleFriendlyUrlConfigurationScreenContributor
 		implements PortalSettingsConfigurationScreenContributor {
@@ -42,7 +48,7 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass());
 
-			return _language.get(resourceBundle, "site-navigation-locale-friendly-url-configuration-name");
+			return _language.get(resourceBundle, "site-navigation-locale-prepend-friendly-url-configuration-name");
 		}
 
 		@Override
@@ -73,10 +79,20 @@ public class LocaleFriendlyUrlConfigurationScreenContributor
 				ReflectionUtil.throwException(portalException);
 			}
 
+			if (Validator.isNotNull(
+							siteNavigationLocaleFriendlyUrlConfiguration.
+								localePrependFriendlyUrlStyle())) {
+					PropsUtil.set(
+							PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+							siteNavigationLocaleFriendlyUrlConfiguration.localePrependFriendlyUrlStyle());
+
+					PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = Integer.parseInt(
+							PropsUtil.get(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE));
+			}
+
 			httpServletRequest.setAttribute(
-				String.valueOf(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE),
-				siteNavigationLocaleFriendlyUrlConfiguration.localeFriendlyUrlStyle()
-			);
+				SiteNavigationLocaleFriendlyUrlConfiguration.class.getName(),
+				siteNavigationLocaleFriendlyUrlConfiguration);
 		}
 
 		@Reference
