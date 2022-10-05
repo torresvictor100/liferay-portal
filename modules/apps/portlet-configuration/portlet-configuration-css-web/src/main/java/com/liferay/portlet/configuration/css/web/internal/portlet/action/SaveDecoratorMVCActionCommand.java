@@ -1,8 +1,8 @@
 package com.liferay.portlet.configuration.css.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -10,10 +10,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -24,7 +22,6 @@ import javax.portlet.ActionResponse;
 
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DecoratorConfiguration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,6 +42,7 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -57,37 +55,43 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 
-
-		_configurationProvider.saveCompanyConfiguration(
-			DecoratorConfiguration.class, themeDisplay.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"applicationDecorators",
-				ParamUtil.getString(actionRequest, "applicationDecorators")
-			).build());
-
-
 		PropsUtil.set(
 			PropsKeys.DEFAULT_PORTLET_DECORATOR_ID,
 			ParamUtil.getString(actionRequest, "applicationDecorators"));
 
-		PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
+		PropsUtil.set(
+			PropsValues.DEFAULT_PORTLET_DECORATOR_ID,
+			PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID));
+
+		PortalPreferences portalPreferences = _portalPreferencesLocalService.fetchPortalPreferences(
+			themeDisplay.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		com.liferay.portal.kernel.portlet.PortalPreferences
+			newPortalPreferences =
+			_portalPreferencesValueLocalService.getPortalPreferences(
+				portalPreferences, false);
+
+		newPortalPreferences.setValue(
+			null, "applicationDecorators",
+			ParamUtil.getString(actionRequest, "applicationDecorators"));
 
 
-		 _portalPreferencesLocalService.addPortalPreferences( themeDisplay.getCompanyId(),
-			PortletKeys.PREFS_OWNER_TYPE_COMPANY, PropsValues.DEFAULT_PORTLET_DECORATOR_ID);
-
-		 _portalPreferencesLocalService.getPreferences()
-
+		_portalPreferencesLocalService.updatePreferences(
+			themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			newPortalPreferences);
 	}
 
-	@Reference
-	PortalPreferenceValueLocalService _portalPreferenceValueLocalService;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Reference
-	PortalPreferencesLocalService _portalPreferencesLocalService;
+	private PortalPreferenceValueLocalService _portalPreferencesValueLocalService;
+
+
+
+
 
 
 }
