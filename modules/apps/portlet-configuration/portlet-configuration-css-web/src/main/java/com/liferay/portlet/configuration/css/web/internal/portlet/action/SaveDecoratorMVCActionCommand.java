@@ -60,7 +60,8 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "applicationDecorators"));
 
 
-		PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
+		PropsUtil.set(PropsValues.DEFAULT_PORTLET_DECORATOR_ID
+			,PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID));
 
 		PortalPreferences portalPreferences = _portalPreferencesLocalService.fetchPortalPreferences(
 			themeDisplay.getCompanyId(),
