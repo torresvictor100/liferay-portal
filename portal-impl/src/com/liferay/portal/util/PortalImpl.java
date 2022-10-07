@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -133,6 +134,8 @@ import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferenceValueLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
@@ -363,6 +366,28 @@ public class PortalImpl implements Portal {
 			_log.error("Unable to determine server's IP addresses");
 
 			_log.error(exception);
+		}
+
+		// DecorateConfiguration
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		PortalPreferences portalPreferences = PortalPreferencesLocalServiceUtil.fetchPortalPreferences(
+			companyId,
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		com.liferay.portal.kernel.portlet.PortalPreferences
+			newPortalPreferences =
+			PortalPreferenceValueLocalServiceUtil.getPortalPreferences(
+				portalPreferences, false);
+		String decorate = newPortalPreferences.getValue(
+			null, "applicationDecorators");
+
+		if(decorate != null){
+			PropsUtil.set(
+				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID, decorate);
+
+			PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
 		}
 
 		// Paths
