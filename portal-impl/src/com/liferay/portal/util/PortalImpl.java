@@ -368,27 +368,6 @@ public class PortalImpl implements Portal {
 			_log.error(exception);
 		}
 
-		// DecorateConfiguration
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		PortalPreferences portalPreferences = PortalPreferencesLocalServiceUtil.fetchPortalPreferences(
-			companyId,
-			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		com.liferay.portal.kernel.portlet.PortalPreferences
-			newPortalPreferences =
-			PortalPreferenceValueLocalServiceUtil.getPortalPreferences(
-				portalPreferences, false);
-		String decorate = newPortalPreferences.getValue(
-			null, "applicationDecorators");
-
-		if(decorate != null){
-			PropsUtil.set(
-				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID, decorate);
-
-			PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
-		}
 
 		// Paths
 
