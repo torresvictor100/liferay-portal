@@ -15,18 +15,18 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-<%@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%
 DecoratorConfiguration decoratorConfiguration = (DecoratorConfiguration)request.getAttribute(DecoratorConfiguration.class.getName());
 
 String decorate = null;
+String decorateConfiguration = decoratorConfiguration.applicationDecorators();
 
-if (decorateConfiguration.equals("")) {
+if (Validator.isNotNull(decorateConfiguration)) {
 	decorate = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
 }
 else {
-	decorate = decoratorConfiguration.applicationDecorators();
+	decorate = decorateConfiguration;
 }
 %>
 
