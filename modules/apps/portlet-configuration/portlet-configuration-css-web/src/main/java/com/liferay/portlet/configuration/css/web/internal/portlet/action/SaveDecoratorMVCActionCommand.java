@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/configuration_admin/save_decorator"
+		"mvc.command.name=/portal_settings/save_decorator"
 	},
 	service = MVCActionCommand.class
 )
