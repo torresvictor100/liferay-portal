@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,6 +12,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
 <%@ include file="/init.jsp" %>
 <%@ page import="com.liferay.portal.util.PropsValues" %>
@@ -20,7 +22,7 @@ DecoratorConfiguration decoratorConfiguration = (DecoratorConfiguration)request.
 
 String decorate = null;
 
-if (decoratorConfiguration.applicationDecorators() == "") {
+if (decoratorConfiguration.applicationDecorators().equals("")) {
 	decorate = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
 }
 else {
@@ -28,14 +30,14 @@ else {
 }
 %>
 
-<div class="row">
-	<div class="col-md-12">
-		<br />
+	<div class="row">
+		<div class="col-md-12">
+			<br />
 
-		<aui:select label="select-properties-application-decorators" name="applicationDecorators" required="<%= true %>" type="text" value="<%= decorate %>">
-			<aui:option label="Barebone" value="barebone" />
-			<aui:option label="Borderless" value="borderless" />
-			<aui:option label="Decorate" value="decorate" />
-		</aui:select>
+			<aui:select label="select-properties-application-decorators" name="applicationDecorators" required="<%= true %>" type="text" value="<%= decorate %>">
+				<aui:option label="Barebone" value="barebone" />
+				<aui:option label="Borderless" value="borderless" />
+				<aui:option label="Decorate" value="decorate" />
+			</aui:select>
+		</div>
 	</div>
-</div>
