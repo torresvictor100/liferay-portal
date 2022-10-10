@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DecoratorConfiguration",
-	localization = "content/Language", name = "decorator-configuration"
+	localization = "content/Language", name = "decorator-configuration-name"
 )
 public interface DecoratorConfiguration {
 
