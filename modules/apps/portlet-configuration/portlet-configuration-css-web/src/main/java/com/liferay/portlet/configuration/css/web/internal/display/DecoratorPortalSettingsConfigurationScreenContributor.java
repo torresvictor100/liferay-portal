@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Torres Araujo
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class DecoratorConfigurationScreenContributor
+public class DecoratorPortalSettingsConfigurationScreenContributor
 	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
@@ -69,7 +69,7 @@ public class DecoratorConfigurationScreenContributor
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "/save_decorator/save_company_configuration";
+		return "/configuration_admin/save_decorator";
 	}
 
 	@Override

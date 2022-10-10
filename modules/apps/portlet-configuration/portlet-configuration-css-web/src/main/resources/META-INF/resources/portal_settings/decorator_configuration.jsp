@@ -15,29 +15,29 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-<%@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%
 DecoratorConfiguration decoratorConfiguration = (DecoratorConfiguration)request.getAttribute(DecoratorConfiguration.class.getName());
 
 String decorate = null;
+String decorateConfiguration = decoratorConfiguration.applicationDecorators();
 
-if (decoratorConfiguration.applicationDecorators().equals("")) {
+if (Validator.isNotNull(decorateConfiguration)) {
 	decorate = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
 }
 else {
-	decorate = decoratorConfiguration.applicationDecorators();
+	decorate = decorateConfiguration;
 }
 %>
 
-	<div class="row">
-		<div class="col-md-12">
-			<br />
+<div class="row">
+	<div class="col-md-12">
+		<br />
 
-			<aui:select label="select-properties-application-decorators" name="applicationDecorators" required="<%= true %>" type="text" value="<%= decorate %>">
-				<aui:option label="Barebone" value="barebone" />
-				<aui:option label="Borderless" value="borderless" />
-				<aui:option label="Decorate" value="decorate" />
-			</aui:select>
-		</div>
+		<aui:select label="select-properties-application-decorators" name="applicationDecorators" required="<%= true %>" type="text" value="<%= decorate %>">
+			<aui:option label="Barebone" value="barebone" />
+			<aui:option label="Borderless" value="borderless" />
+			<aui:option label="Decorate" value="decorate" />
+		</aui:select>
 	</div>
+</div>
