@@ -56,7 +56,7 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "decorator-configuration";
+		return "decorator-configuration-name";
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "decorator-configuration");
+		return _language.get(resourceBundle, "decorator-configuration-name");
 	}
 
 	@Override
