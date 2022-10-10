@@ -201,7 +201,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	public PortletDecorator getPortletDecorator(
 		long companyId, String themeId, String portletDecoratorId) {
 
-		_updateDefaultDecorateId(companyId);
+		_updateDefaultPortletDecorateId(companyId);
 
 		Theme theme = fetchTheme(companyId, themeId);
 
@@ -870,7 +870,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themes;
 	}
 
-	private void _updateDefaultDecorateId(long companyId){
+	private void _updateDefaultPortletDecorateId(long companyId){
 		PortalPreferences portalPreferences = PortalPreferencesLocalServiceUtil.fetchPortalPreferences(
 			companyId,
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
