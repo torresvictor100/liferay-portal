@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.css.web.internal.display;
+package com.liferay.portlet.configuration.css.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
