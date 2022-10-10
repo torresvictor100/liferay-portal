@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/save_decorator/save_company_configuration"
+		"mvc.command.name=/configuration_admin/save_decorator"
 	},
 	service = MVCActionCommand.class
 )
@@ -85,7 +85,7 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 
 		com.liferay.portal.kernel.portlet.PortalPreferences
 			newPortalPreferences =
-				_portalPreferencesValueLocalService.getPortalPreferences(
+				_portalPreferenceValueLocalService.getPortalPreferences(
 					portalPreferences, false);
 
 		newPortalPreferences.setValue(
@@ -102,6 +102,6 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortalPreferenceValueLocalService
-		_portalPreferencesValueLocalService;
+		_portalPreferenceValueLocalService;
 
 }
