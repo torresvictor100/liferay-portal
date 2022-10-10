@@ -22,7 +22,7 @@ DecoratorConfiguration decoratorConfiguration = (DecoratorConfiguration)request.
 String decorate = null;
 String decorateConfiguration = decoratorConfiguration.applicationDecorators();
 
-if (Validator.isNotNull(decorateConfiguration)) {
+if (decorateConfiguration.equals("")) {
 	decorate = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
 }
 else {
