@@ -94,18 +94,6 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 			ReflectionUtil.throwException(portalException);
 		}
 
-		if (Validator.isNotNull(
-				decoratorConfiguration.applicationDecorators())) {
-
-			PropsUtil.set(
-				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID,
-				decoratorConfiguration.applicationDecorators());
-
-			PropsUtil.set(
-				PropsValues.DEFAULT_PORTLET_DECORATOR_ID,
-				PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID));
-		}
-
 		httpServletRequest.setAttribute(
 			DecoratorConfiguration.class.getName(), decoratorConfiguration);
 	}
