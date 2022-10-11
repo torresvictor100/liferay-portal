@@ -69,7 +69,7 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "/configuration_admin/save_decorator";
+		return "/portal_settings/save_decorator";
 	}
 
 	@Override
