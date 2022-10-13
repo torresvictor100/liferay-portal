@@ -15,17 +15,17 @@
 package com.liferay.portlet.configuration.css.web.internal.decorator.configuration.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DecoratorConfiguration;
+import com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DefaultPortletDecoratorConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 @Component(service = ConfigurationBeanDeclaration.class)
-public class DecoratorConfigurationBeanDeclaration
+public class DefaultPortletDecoratorConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return DecoratorConfiguration.class;
+		return DefaultPortletDecoratorConfiguration.class;
 	}
 
 }

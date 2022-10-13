@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author João Victor Torres Araujo
  */
 @Component(service = ConfigurationCategory.class)
-public class DecoratorConfigurationCategory implements ConfigurationCategory {
+public class DefaultPortletDecoratorConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {

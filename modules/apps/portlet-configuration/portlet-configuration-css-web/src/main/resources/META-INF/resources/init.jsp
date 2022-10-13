@@ -35,7 +35,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %><%@
-page import="com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DecoratorConfiguration" %><%@
+page import="com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DefaultPortletDecoratorConfiguration" %><%@
 page import="com.liferay.portlet.configuration.css.web.internal.display.context.PortletConfigurationCSSPortletDisplayContext" %>
 
 <%@ page import="java.text.DecimalFormat" %>

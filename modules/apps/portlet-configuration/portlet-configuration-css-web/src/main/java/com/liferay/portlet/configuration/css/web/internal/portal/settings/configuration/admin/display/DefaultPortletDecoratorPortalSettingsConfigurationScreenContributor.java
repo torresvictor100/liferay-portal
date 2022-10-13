@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DecoratorConfiguration;
+import com.liferay.portlet.configuration.css.web.internal.decorator.configuration.DefaultPortletDecoratorConfiguration;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -41,22 +41,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Torres Araujo
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class DecoratorPortalSettingsConfigurationScreenContributor
+public class DefaultPortletDecoratorPortalSettingsConfigurationScreenContributor
 	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "decorator-portlet";
+		return "default-portlet-decorator";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/portal_settings/decorator_configuration.jsp";
+		return "/portal_settings/default_portlet_decorator_configuration.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "decorator-configuration-name";
+		return "default-portlet-decorator-configuration-name";
 	}
 
 	@Override
@@ -64,12 +64,13 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "decorator-configuration-name");
+		return _language.get(
+			resourceBundle, "default-portlet-decorator-configuration-name");
 	}
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "/portal_settings/save_decorator";
+		return "/portal_settings/save_default_portlet_decorator";
 	}
 
 	@Override
@@ -82,12 +83,13 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		DecoratorConfiguration decoratorConfiguration = null;
+		DefaultPortletDecoratorConfiguration
+			defaultPortletDecoratorConfiguration = null;
 
 		try {
-			decoratorConfiguration =
+			defaultPortletDecoratorConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					DecoratorConfiguration.class,
+					DefaultPortletDecoratorConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 		}
 		catch (PortalException portalException) {
@@ -95,7 +97,8 @@ public class DecoratorPortalSettingsConfigurationScreenContributor
 		}
 
 		httpServletRequest.setAttribute(
-			DecoratorConfiguration.class.getName(), decoratorConfiguration);
+			DefaultPortletDecoratorConfiguration.class.getName(),
+			defaultPortletDecoratorConfiguration);
 	}
 
 	@Reference

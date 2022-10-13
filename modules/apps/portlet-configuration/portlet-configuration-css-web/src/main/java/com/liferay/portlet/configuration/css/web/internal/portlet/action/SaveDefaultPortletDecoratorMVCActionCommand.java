@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/portal_settings/save_decorator"
+		"mvc.command.name=/portal_settings/save_default_portlet_decorator"
 	},
 	service = MVCActionCommand.class
 )
-public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
+public class SaveDefaultPortletDecoratorMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -74,7 +74,7 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 
 		PropsUtil.set(
 			PropsKeys.DEFAULT_PORTLET_DECORATOR_ID,
-			ParamUtil.getString(actionRequest, "applicationDecorators"));
+			ParamUtil.getString(actionRequest, "defaultPortletDecoratorId"));
 
 		PropsValues.DEFAULT_PORTLET_DECORATOR_ID =
 			PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
@@ -90,8 +90,8 @@ public class SaveDecoratorMVCActionCommand extends BaseMVCActionCommand {
 					portalPreferences, false);
 
 		newPortalPreferences.setValue(
-			null, "applicationDecorators",
-			ParamUtil.getString(actionRequest, "applicationDecorators"));
+			null, "defaultPortletDecoratorId",
+			ParamUtil.getString(actionRequest, "defaultPortletDecoratorId"));
 
 		_portalPreferencesLocalService.updatePreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,

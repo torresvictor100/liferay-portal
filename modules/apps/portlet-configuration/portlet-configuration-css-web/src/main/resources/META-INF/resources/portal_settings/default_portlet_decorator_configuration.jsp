@@ -17,16 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DecoratorConfiguration decoratorConfiguration = (DecoratorConfiguration)request.getAttribute(DecoratorConfiguration.class.getName());
+DefaultPortletDecoratorConfiguration defaultPortletDecoratorConfiguration = (DefaultPortletDecoratorConfiguration)request.getAttribute(DefaultPortletDecoratorConfiguration.class.getName());
 
-String decorate = null;
-String decorateConfiguration = decoratorConfiguration.applicationDecorators();
+String portletDecoratorId = null;
+String defaultPortletDecoratorId = defaultPortletDecoratorConfiguration.defaultPortletDecoratorId();
 
-if (Validator.isNotNull(decorateConfiguration)) {
-	decorate = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
+if (defaultPortletDecoratorId.equals("")) {
+	portletDecoratorId = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
 }
 else {
-	decorate = decorateConfiguration;
+	portletDecoratorId = defaultPortletDecoratorId;
 }
 %>
 
@@ -34,7 +34,7 @@ else {
 	<div class="col-md-12">
 		<br />
 
-		<aui:select label="select-properties-application-decorators" name="applicationDecorators" required="<%= true %>" type="text" value="<%= decorate %>">
+		<aui:select label="select-default-portlet-decorator-id" name="defaultPortletDecoratorId" required="<%= true %>" type="text" value="<%= portletDecoratorId %>">
 			<aui:option label="Barebone" value="barebone" />
 			<aui:option label="Borderless" value="borderless" />
 			<aui:option label="Decorate" value="decorate" />

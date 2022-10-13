@@ -879,11 +879,13 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				PortalPreferenceValueLocalServiceUtil.getPortalPreferences(
 					portalPreferences, false);
 
-		String decorate = newPortalPreferences.getValue(
-			null, "applicationDecorators");
+		String defaultPortletDecoratorId = newPortalPreferences.getValue(
+			null, "defaultPortletDecoratorId");
 
-		if (decorate != null) {
-			PropsUtil.set(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID, decorate);
+		if (defaultPortletDecoratorId != null) {
+			PropsUtil.set(
+				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID,
+				defaultPortletDecoratorId);
 
 			PropsValues.DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(
 				PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
