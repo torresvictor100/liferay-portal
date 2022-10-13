@@ -18,23 +18,13 @@
 
 <%
 DefaultPortletDecoratorConfiguration defaultPortletDecoratorConfiguration = (DefaultPortletDecoratorConfiguration)request.getAttribute(DefaultPortletDecoratorConfiguration.class.getName());
-
-String portletDecoratorId = null;
-String defaultPortletDecoratorId = defaultPortletDecoratorConfiguration.defaultPortletDecoratorId();
-
-if (defaultPortletDecoratorId.equals("")) {
-	portletDecoratorId = PropsValues.DEFAULT_PORTLET_DECORATOR_ID;
-}
-else {
-	portletDecoratorId = defaultPortletDecoratorId;
-}
 %>
 
 <div class="row">
 	<div class="col-md-12">
 		<br />
 
-		<aui:select label="select-default-portlet-decorator-id" name="defaultPortletDecoratorId" required="<%= true %>" type="text" value="<%= portletDecoratorId %>">
+		<aui:select label="select-default-portlet-decorator-id" name="defaultPortletDecoratorId" required="<%= true %>" type="text" value="<%= Validator.isNotNull(defaultPortletDecoratorConfiguration.defaultPortletDecoratorId()) ? defaultPortletDecoratorConfiguration.defaultPortletDecoratorId() : PropsValues.DEFAULT_PORTLET_DECORATOR_ID %>">
 			<aui:option label="Barebone" value="barebone" />
 			<aui:option label="Borderless" value="borderless" />
 			<aui:option label="Decorate" value="decorate" />
