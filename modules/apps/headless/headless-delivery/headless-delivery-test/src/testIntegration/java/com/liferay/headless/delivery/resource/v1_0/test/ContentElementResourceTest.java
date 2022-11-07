@@ -87,7 +87,7 @@ public class ContentElementResourceTest
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
-			"contentType", "creatorId", "dateCreated", "dateModified"
+			"contentType", "creatorId", "dateCreated", "dateModified", "key"
 		};
 	}
 
