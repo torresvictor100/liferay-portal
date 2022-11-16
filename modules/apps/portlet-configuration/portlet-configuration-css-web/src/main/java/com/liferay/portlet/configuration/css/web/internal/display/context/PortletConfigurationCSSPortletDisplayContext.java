@@ -90,7 +90,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		}
 
 		return bgDataJSONObject.getString("backgroundColor");
-	}
+	}asdfsdaf
 
 	public String getBorderProperty(String position, String property) {
 		JSONObject borderDataJSONObject = _portletSetupJSONObject.getJSONObject(
