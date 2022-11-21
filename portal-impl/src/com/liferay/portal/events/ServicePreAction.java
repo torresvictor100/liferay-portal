@@ -1982,7 +1982,9 @@ public class ServicePreAction extends Action {
 		if (com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
 			CompanyThreadLocal.getCompanyId(),
 			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) &&
-			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE) {
+			com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+				CompanyThreadLocal.getCompanyId(),
+				PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE)) {
 
 			addDefaultUserPrivateLayouts = true;
 
