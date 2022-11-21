@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -1028,7 +1029,9 @@ public class ServicePreAction extends Action {
 				}
 
 				if ((layout.isPrivateLayout() &&
-					 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+					 !com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+						 CompanyThreadLocal.getCompanyId(),
+						 PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED)) ||
 					(layout.isPublicLayout() &&
 					 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
 
@@ -1976,7 +1979,9 @@ public class ServicePreAction extends Action {
 
 		boolean addDefaultUserPrivateLayouts = false;
 
-		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
+		if (com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) &&
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE) {
 
 			addDefaultUserPrivateLayouts = true;
@@ -2005,7 +2010,9 @@ public class ServicePreAction extends Action {
 
 		boolean deleteDefaultUserPrivateLayouts = false;
 
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
+		if (!!com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED)) {
 			deleteDefaultUserPrivateLayouts = true;
 		}
 		else if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
