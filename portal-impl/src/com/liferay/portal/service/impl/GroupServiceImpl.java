@@ -657,7 +657,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			(com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
 				CompanyThreadLocal.getCompanyId(),
 				PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
+			 com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+				 CompanyThreadLocal.getCompanyId(),
+				 PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
 
 			userSiteGroups.add(user.getGroup());
 

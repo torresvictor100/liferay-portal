@@ -737,8 +737,10 @@ public class UserImpl extends UserBaseImpl {
 		if ((com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
 			CompanyThreadLocal.getCompanyId(),
 			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
-			(getUserId() == PrincipalThreadLocal.getUserId())) {
+			 com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+				 CompanyThreadLocal.getCompanyId(),
+				 PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
+			(getUserId() == PrincipalThreadLocal.getUserId()))) {
 
 			return true;
 		}
