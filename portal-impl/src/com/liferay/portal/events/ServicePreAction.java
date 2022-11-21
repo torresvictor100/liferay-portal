@@ -2051,7 +2051,9 @@ public class ServicePreAction extends Action {
 
 			addDefaultUserPublicLayouts = true;
 
-			if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) {
+			if (com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+				CompanyThreadLocal.getCompanyId(),
+				PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE)) {
 				if (hasPowerUserRole == null) {
 					hasPowerUserRole = _hasPowerUserRole(user);
 				}
@@ -2080,7 +2082,9 @@ public class ServicePreAction extends Action {
 			PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
 			deleteDefaultUserPublicLayouts = true;
 		}
-		else if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) {
+		else if ( com.liferay.portal.kernel.util.PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE)) {
 			if (hasPowerUserRole == null) {
 				hasPowerUserRole = _hasPowerUserRole(user);
 			}
