@@ -263,6 +263,7 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 
 						{sxpBlueprint.title && (
 							<ClayButton
+								aria-label={Liferay.Language.get('remove')}
 								className="remove-sxp-blueprint"
 								displayType="secondary"
 								onClick={_handleSXPBlueprintSelectorClickRemove}
