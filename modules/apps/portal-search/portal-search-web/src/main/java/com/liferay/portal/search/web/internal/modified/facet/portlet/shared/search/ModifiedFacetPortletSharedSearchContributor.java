@@ -69,6 +69,9 @@ public class ModifiedFacetPortletSharedSearchContributor
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
 			_modifiedFacetFactory, _dateFormatFactory, _jsonFactory);
 
+		modifiedFacetBuilder.setOrder(
+			modifiedFacetPortletPreferences.getOrder());
+
 		modifiedFacetBuilder.setRangesJSONArray(
 			_dateRangeFactory.replaceAliases(
 				modifiedFacetPortletPreferences.getRangesJSONArray(),
