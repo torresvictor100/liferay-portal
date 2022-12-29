@@ -128,6 +128,9 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(renderRequest);
 
+		modifiedFacetDisplayContextBuilder.setFrequencyThreshold(
+			modifiedFacetPortletPreferences.getFrequencyThreshold());
+
 		modifiedFacetDisplayContextBuilder.setLocale(themeDisplay.getLocale());
 
 		modifiedFacetDisplayContextBuilder.setOrder(

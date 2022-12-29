@@ -67,6 +67,10 @@ public class ModifiedFacetBuilder {
 		_customRangeTo = customRangeTo;
 	}
 
+	public void setFrequencyThreshold(int frequencyThreshold) {
+		_frequencyThreshold = frequencyThreshold;
+	}
+
 	public void setOrder(String order) {
 		_order = order;
 	}
@@ -174,6 +178,7 @@ public class ModifiedFacetBuilder {
 	private String _customRangeFrom;
 	private String _customRangeTo;
 	private final DateRangeFactory _dateRangeFactory;
+	private int _frequencyThreshold;
 	private final JSONFactory _jsonFactory;
 	private final ModifiedFacetFactory _modifiedFacetFactory;
 	private String _order;
