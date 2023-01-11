@@ -81,12 +81,18 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 			label="advanced-configuration"
 		>
 			<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= modifiedFacetPortletPreferences.getFrequencyThreshold() %>" />
+
 			<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= modifiedFacetPortletPreferences.getOrder() %>">
-				<aui:option label="" value="" />
+				<aui:option label="ranges-configuration" value="" />
 				<aui:option label="term-frequency-descending" value="count:desc" />
 				<aui:option label="term-frequency-ascending" value="count:asc" />
 			</aui:select>
+		</liferay-frontend:fieldset>
 
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="ranges-configuration"
+		>
 			<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "rangesId" %>'>
 
 				<%
