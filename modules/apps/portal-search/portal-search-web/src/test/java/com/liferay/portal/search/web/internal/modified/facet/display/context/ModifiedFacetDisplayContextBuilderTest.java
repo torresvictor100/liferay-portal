@@ -273,7 +273,11 @@ public class ModifiedFacetDisplayContextBuilderTest {
 			modifiedFacetDisplayContext.getBucketDisplayContexts());
 	}
 
-	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder() {
+	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(){
+		return createDisplayContextBuilder("OrderHitsDesc");
+	}
+
+	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(String order) {
 		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
 			_createModifiedFacetDisplayContextBuilder();
 
@@ -281,6 +285,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 		modifiedFacetDisplayContextBuilder.setFacet(_facet);
 		modifiedFacetDisplayContextBuilder.setLocale(LocaleUtil.getDefault());
+		modifiedFacetDisplayContextBuilder.setOrder(order);
 		modifiedFacetDisplayContextBuilder.setTimeZone(
 			TimeZoneUtil.getDefault());
 
