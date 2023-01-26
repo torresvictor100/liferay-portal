@@ -107,6 +107,7 @@ async function getFieldSettingsByBusinessType(
 		businessType,
 		defaultValue,
 		listTypeDefinitionExternalReferenceCode,
+		listTypeDefinitionId,
 		objectFieldSettings,
 		state,
 	} = values;
@@ -118,7 +119,7 @@ async function getFieldSettingsByBusinessType(
 
 		if (state && listTypeDefinitionExternalReferenceCode) {
 			const picklistItemsData = await API.getPickListItems(
-				listTypeDefinitionExternalReferenceCode
+				listTypeDefinitionId!
 			);
 
 			setPickListItems(picklistItemsData);
@@ -444,7 +445,7 @@ export default function ObjectFieldFormBase({
 									setValues({required: state, state});
 									setPickListItems(
 										await API.getPickListItems(
-											values.externalReferenceCode!
+											values.listTypeDefinitionId!
 										)
 									);
 								}
