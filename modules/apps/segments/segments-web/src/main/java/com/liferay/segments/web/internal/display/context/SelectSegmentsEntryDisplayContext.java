@@ -246,11 +246,13 @@ public class SelectSegmentsEntryDisplayContext {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
+		long groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
 
-		if (_groupId == 0) {
-			_groupId = _themeDisplay.getScopeGroupId();
+		if (groupId == 0) {
+			groupId = _themeDisplay.getScopeGroupId();
 		}
+
+		_groupId = groupId;
 
 		return _groupId;
 	}
