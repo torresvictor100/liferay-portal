@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -34,7 +32,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
@@ -43,8 +41,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.List;
-
-import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,7 +53,8 @@ import org.mockito.Mockito;
 /**
  * @author Adam Brandizzi
  */
-public class ModifiedFacetDisplayContextBuilderTest {
+public class ModifiedFacetDisplayContextBuilderTest
+	extends BaseFacetDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -65,6 +62,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		_dateFormatFactory = new DateFormatFactoryImpl();
 
@@ -163,6 +161,16 @@ public class ModifiedFacetDisplayContextBuilderTest {
 			modifiedFacetDisplayContext.getCustomRangeBucketDisplayContext();
 
 		Assert.assertEquals(frequency, bucketDisplayContext.getFrequency());
+	}
+
+	@Override
+	@Test
+	public void testEmptySearchResults() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testEmptySearchResultsWithPreviousSelection() throws Exception {
 	}
 
 	@Test
@@ -273,11 +281,41 @@ public class ModifiedFacetDisplayContextBuilderTest {
 			modifiedFacetDisplayContext.getBucketDisplayContexts());
 	}
 
-	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(){
+	@Override
+	@Test
+	public void testOneTerm() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testOneTermWithPreviousSelection() throws Exception {
+	}
+
+	@Test
+	public void testOrderByTermFrequencyAscending() throws Exception {
+	}
+
+	@Test
+	public void testOrderByTermFrequencyDescending() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermValueAscending() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testOrderByTermValueDescending() throws Exception {
+	}
+
+	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder() {
 		return createDisplayContextBuilder("OrderHitsDesc");
 	}
 
-	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(String order) {
+	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(
+		String order) {
+
 		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
 			_createModifiedFacetDisplayContextBuilder();
 
@@ -306,20 +344,6 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		facetConfiguration.setDataJSONObject(dataJSONObject);
 
 		return facetConfiguration;
-	}
-
-	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.doReturn(
-			Mockito.mock(ModifiedFacetPortletInstanceConfiguration.class)
-		).when(
-			portletDisplay
-		).getPortletInstanceConfiguration(
-			Mockito.any()
-		);
-
-		return portletDisplay;
 	}
 
 	protected Portal portal = Mockito.mock(Portal.class);
@@ -381,7 +405,9 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 		try {
 			return new ModifiedFacetDisplayContextBuilder(
-				_dateFormatFactory, _getRenderRequest());
+				_dateFormatFactory,
+				getRenderRequest(
+					ModifiedFacetPortletInstanceConfiguration.class));
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
@@ -399,32 +425,6 @@ public class ModifiedFacetDisplayContextBuilderTest {
 		}
 
 		return jsonArray;
-	}
-
-	private RenderRequest _getRenderRequest() throws ConfigurationException {
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		Mockito.doReturn(
-			_getThemeDisplay()
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return renderRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws ConfigurationException {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			getPortletDisplay()
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		return themeDisplay;
 	}
 
 	private void _mockFacetConfiguration(String... labelsAndRanges) {
