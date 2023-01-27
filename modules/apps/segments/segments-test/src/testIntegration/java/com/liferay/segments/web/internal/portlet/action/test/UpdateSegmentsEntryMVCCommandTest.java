@@ -92,9 +92,9 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			String.format("(lastName eq '%s')", user.getLastName()));
 
 		mockLiferayPortletActionRequest.setParameter(
-			"name_" + LocaleUtil.getDefault(), "New segments entry");
+			"name_" + LocaleUtil.getDefault(), "New Segments Entry");
 		mockLiferayPortletActionRequest.setParameter(
-			"description_" + LocaleUtil.getDefault(), "description");
+			"description_" + LocaleUtil.getDefault(), "This is a description.");
 		mockLiferayPortletActionRequest.setParameter("active", StringPool.TRUE);
 		mockLiferayPortletActionRequest.setParameter(
 			"type", User.class.getName());
@@ -111,10 +111,10 @@ public class UpdateSegmentsEntryMVCCommandTest {
 				_group.getGroupId(), "key12345", false);
 
 		Assert.assertEquals(
-			"New segments entry",
+			"New Segments Entry",
 			segmentsEntry.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
-			"description",
+			"This is a description.",
 			segmentsEntry.getDescription(LocaleUtil.getDefault()));
 
 		String criteria = segmentsEntry.getCriteria();
@@ -149,11 +149,11 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			"criterionFilteruser",
 			String.format("(lastName eq '%s')", user.getLastName()));
 		mockLiferayPortletActionRequest.setParameter(
-			"name_" + LocaleUtil.getDefault(), "New segments entry");
+			"name_" + LocaleUtil.getDefault(), "New Segments Entry");
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryKey", initialSegmentsEntry.getSegmentsEntryKey());
 		mockLiferayPortletActionRequest.setParameter(
-			"description_" + LocaleUtil.getDefault(), "description");
+			"description_" + LocaleUtil.getDefault(), "This is a description.");
 		mockLiferayPortletActionRequest.setParameter(
 			"type", initialSegmentsEntry.getType());
 		mockLiferayPortletActionRequest.setParameter(
@@ -170,10 +170,10 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			initialSegmentsEntry.getSegmentsEntryId(),
 			finalSegmentsEntry.getSegmentsEntryId());
 		Assert.assertEquals(
-			"New segments entry",
+			"New Segments Entry",
 			finalSegmentsEntry.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
-			"description",
+			"This is a description.",
 			finalSegmentsEntry.getDescription(LocaleUtil.getDefault()));
 
 		String criteria = finalSegmentsEntry.getCriteria();
