@@ -114,20 +114,30 @@ public class SaveFormInstanceMVCCommandHelper {
 			boolean validateDDMFormFieldSettings)
 		throws Exception {
 
-		AuthTokenUtil.checkCSRFToken(
-			_portal.getHttpServletRequest(portletRequest),
-			SaveFormInstanceMVCCommandHelper.class.getName());
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			portletRequest);
 
-		long formInstanceId = ParamUtil.getLong(
-			portletRequest, "formInstanceId");
+		try {
+			AuthTokenUtil.checkCSRFToken(
+				httpServletRequest,
+				SaveFormInstanceMVCCommandHelper.class.getName());
 
-		if (formInstanceId == 0) {
-			return _addFormInstance(
-				portletRequest, validateDDMFormFieldSettings);
+			long formInstanceId = ParamUtil.getLong(
+				portletRequest, "formInstanceId");
+
+			if (formInstanceId == 0) {
+				return _addFormInstance(
+					portletRequest, validateDDMFormFieldSettings);
+			}
+
+			return _updateFormInstance(
+				portletRequest, formInstanceId, validateDDMFormFieldSettings);
+		}
+		catch (PortalException portalException) {
+			_log.error("The CSRF token is invalid", portalException);
 		}
 
-		return _updateFormInstance(
-			portletRequest, formInstanceId, validateDDMFormFieldSettings);
+		return null;
 	}
 
 	protected DDMFormLayout getDDMFormLayout(PortletRequest portletRequest)
