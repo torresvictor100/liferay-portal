@@ -210,35 +210,33 @@ public abstract class BaseFacetDisplayContextTestCase {
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
 		testOrderBy(
-			new String[] {"charlie", "delta", "bravo", "alpha"},
-			new int[] {6, 5, 5, 4}, "count:asc",
-			expectedTermsFrequencyAscending,
-			expectedFrequenciesFrequencyAscending);
+			expectedFrequenciesFrequencyAscending,
+			expectedTermsFrequencyAscending, new int[] {6, 5, 5, 4},
+			"count:asc", new String[] {"charlie", "delta", "bravo", "alpha"});
 	}
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		testOrderBy(
-			new String[] {"alpha", "delta", "bravo", "charlie"},
-			new int[] {4, 5, 5, 6}, "count:desc",
-			expectedTermsFrequencyDescending,
-			expectedFrequenciesFrequencyDescending);
+			expectedFrequenciesFrequencyDescending,
+			expectedTermsFrequencyDescending, new int[] {4, 5, 5, 6},
+			"count:desc", new String[] {"alpha", "delta", "bravo", "charlie"});
 	}
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:asc", expectedTermsValueAscending,
-			expectedFrequenciesValueAscending);
+			expectedFrequenciesValueAscending, expectedTermsValueAscending,
+			new int[] {2, 3, 4, 5}, "key:asc",
+			new String[] {"bravo", "alpha", "bravo", "charlie"});
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		testOrderBy(
-			new String[] {"bravo", "alpha", "bravo", "charlie"},
-			new int[] {2, 3, 4, 5}, "key:desc", expectedTermsValueDescending,
-			expectedFrequenciesValueDescending);
+			expectedFrequenciesValueDescending, expectedTermsValueDescending,
+			new int[] {2, 3, 4, 5}, "key:desc",
+			new String[] {"bravo", "alpha", "bravo", "charlie"});
 	}
 
 	protected static String buildExpectedNameFrequencyString(
@@ -418,13 +416,10 @@ public abstract class BaseFacetDisplayContextTestCase {
 	protected void setUpAsset(String term) throws Exception {
 	}
 
-	protected void testOrderBy(
-			String[] terms, int[] frequencies, String order,
-			String[] expectedTerms, int[] expectedFrequencies)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
+	protected abstract void testOrderBy(
+			int[] expectedFrequencies, String[] expectedTerms,
+			int[] frequencies, String order, String[] terms)
+		throws Exception;
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};
 	protected int[] expectedFrequenciesFrequencyDescending = {6, 5, 5, 4};

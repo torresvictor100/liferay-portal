@@ -66,24 +66,24 @@ public class AssetEntriesSearchFacetDisplayContextTest
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		testOrderBy(
-			new String[] {"bravo", "alpha", "charlie"}, new int[] {2, 3, 4},
-			"key:asc", new String[] {"alpha", "bravo", "charlie"},
-			new int[] {3, 2, 4});
+			new int[] {3, 2, 4}, new String[] {"alpha", "bravo", "charlie"},
+			new int[] {2, 3, 4}, "key:asc",
+			new String[] {"bravo", "alpha", "charlie"});
 	}
 
 	@Override
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		testOrderBy(
-			new String[] {"bravo", "alpha", "charlie"}, new int[] {2, 3, 4},
-			"key:desc", new String[] {"charlie", "bravo", "alpha"},
-			new int[] {4, 2, 3});
+			new int[] {4, 2, 3}, new String[] {"charlie", "bravo", "alpha"},
+			new int[] {2, 3, 4}, "key:desc",
+			new String[] {"bravo", "alpha", "charlie"});
 	}
 
 	@Override
 	protected void testOrderBy(
-			String[] classNames, int[] frequencies, String order,
-			String[] expectedClassNames, int[] expectedFrequencies)
+			int[] expectedFrequencies, String[] expectedClassNames,
+			int[] frequencies, String order, String[] classNames)
 		throws Exception {
 
 		_mockResourceActions(classNames);

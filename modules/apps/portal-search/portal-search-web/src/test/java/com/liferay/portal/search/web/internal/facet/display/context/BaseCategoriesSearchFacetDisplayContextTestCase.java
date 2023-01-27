@@ -467,6 +467,15 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase
 		).getTermCollectors();
 	}
 
+	@Override
+	protected void testOrderBy(
+			int[] expectedFrequencies, String[] expectedTerms,
+			int[] frequencies, String order, String[] terms)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	private AssetCategory _createAssetCategory(
 		long assetCategoryId, long groupId) {
 

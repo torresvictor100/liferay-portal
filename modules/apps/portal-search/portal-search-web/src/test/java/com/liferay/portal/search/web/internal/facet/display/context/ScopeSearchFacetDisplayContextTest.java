@@ -111,8 +111,8 @@ public class ScopeSearchFacetDisplayContextTest
 
 	@Override
 	protected void testOrderBy(
-			String[] groupNames, int[] frequencies, String order,
-			String[] expectedGroupNames, int[] expectedFrequencies)
+			int[] expectedFrequencies, String[] expectedGroupNames,
+			int[] frequencies, String order, String[] groupNames)
 		throws Exception {
 
 		setUpTermCollectors(

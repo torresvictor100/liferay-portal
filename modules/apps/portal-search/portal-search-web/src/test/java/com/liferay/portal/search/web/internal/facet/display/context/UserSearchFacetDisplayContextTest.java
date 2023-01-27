@@ -64,8 +64,8 @@ public class UserSearchFacetDisplayContextTest
 
 	@Override
 	protected void testOrderBy(
-			String[] userNames, int[] frequencies, String order,
-			String[] expectedUserNames, int[] expectedFrequencies)
+			int[] expectedFrequencies, String[] expectedUserNames,
+			int[] frequencies, String order, String[] userNames)
 		throws Exception {
 
 		setUpTermCollectors(

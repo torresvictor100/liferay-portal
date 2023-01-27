@@ -79,8 +79,8 @@ public class CustomFacetDisplayContextTest
 
 	@Override
 	protected void testOrderBy(
-			String[] terms, int[] frequencies, String order,
-			String[] expectedTerms, int[] expectedFrequencies)
+			int[] expectedFrequencies, String[] expectedTerms,
+			int[] frequencies, String order, String[] terms)
 		throws Exception {
 
 		setUpTermCollectors(
