@@ -446,7 +446,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				new DefaultDTOConverterContext(
 					false, null, null, null, null, themeDisplay.getLocale(),
 					null, themeDisplay.getUser()),
-				_getFilter(collectionQuery),
+				_getFilterString(collectionQuery),
 				_getPagination(collectionQuery.getPagination()),
 				_getSearch(collectionQuery), null);
 
@@ -478,7 +478,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return "";
 	}
 
-	private String _getFilter(CollectionQuery collectionQuery) {
+	private String _getFilterString(CollectionQuery collectionQuery) {
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
@@ -486,11 +486,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			return null;
 		}
 
+		StringBundler sb = new StringBundler();
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());
-
-		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
 			if (Validator.isNull(entry.getValue()[0])) {
