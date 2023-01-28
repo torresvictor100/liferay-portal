@@ -416,10 +416,13 @@ public abstract class BaseFacetDisplayContextTestCase {
 	protected void setUpAsset(String term) throws Exception {
 	}
 
-	protected abstract void testOrderBy(
+	protected void testOrderBy(
 			int[] expectedFrequencies, String[] expectedTerms,
 			int[] frequencies, String order, String[] terms)
-		throws Exception;
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};
 	protected int[] expectedFrequenciesFrequencyDescending = {6, 5, 5, 4};
