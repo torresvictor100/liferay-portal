@@ -143,7 +143,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			if (!_objectDefinition.isAccountEntryRestricted() &&
 				_objectDefinition.isDefaultStorageType()) {
 
-				return _getCollectionInfoPageNotAccountEntryRestricted(
+				return _getCollectionInfoPageByIndexer(
 					collectionQuery);
 			}
 
@@ -441,9 +441,8 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			collectionQuery.getPagination(), objectEntries.size());
 	}
 
-	private InfoPage<ObjectEntry>
-			_getCollectionInfoPageNotAccountEntryRestricted(
-				CollectionQuery collectionQuery)
+	private InfoPage<ObjectEntry> _getCollectionInfoPageByIndexer(
+			CollectionQuery collectionQuery)
 		throws Exception {
 
 		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
