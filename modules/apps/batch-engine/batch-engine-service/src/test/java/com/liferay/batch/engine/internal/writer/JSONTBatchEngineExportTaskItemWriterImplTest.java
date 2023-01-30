@@ -17,6 +17,8 @@ package com.liferay.batch.engine.internal.writer;
 import com.liferay.batch.engine.internal.auto.deploy.BatchEngineAutoDeployListener;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -134,12 +136,17 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		String content = unsyncByteArrayOutputStream.toString();
 
-		System.out.println("Content:\n" + content);
+		if (_log.isInfoEnabled()) {
+			_log.info("Content:\n" + content);
+		}
 
 		JSONAssert.assertEquals(
 			_getExpectedContent(
 				batchEngineImportConfiguration, fieldNames, getItems()),
 			content, true);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSONTBatchEngineExportTaskItemWriterImplTest.class);
 
 }
