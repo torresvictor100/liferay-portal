@@ -753,14 +753,14 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					List<LinkedHashMap<String, Object>>
-						nestedObjectEntryPropertiesList =
-							(List<LinkedHashMap<String, Object>>)propertyValue;
-
 					ObjectDefinition relatedObjectDefinition =
 						_objectDefinitionLocalService.getObjectDefinition(
 							_getRelatedObjectDefinitionId(
 								objectDefinition, objectRelationship));
+
+					List<LinkedHashMap<String, Object>>
+						nestedObjectEntryPropertiesList =
+							(List<LinkedHashMap<String, Object>>)propertyValue;
 
 					for (Map<String, Object> nestedObjectEntryProperties :
 							nestedObjectEntryPropertiesList) {
