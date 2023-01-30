@@ -1411,6 +1411,7 @@ public class BundleSiteInitializerTest {
 					resourcePermission.getName(), actionId);
 
 			Assert.assertNotNull(resourceAction);
+
 			resourceActionBitwiseValue += resourceAction.getBitwiseValue();
 		}
 
@@ -1429,6 +1430,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getCompanyId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+
 		_assertResourceAction(new String[] {"VIEW_PRICE"}, resourcePermission);
 
 		role = _roleLocalService.fetchRole(group.getCompanyId(), "Test Role 2");
@@ -1440,6 +1442,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getGroupId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+
 		_assertResourceAction(new String[] {"VIEW_PRICE"}, resourcePermission);
 
 		ObjectDefinition objectDefinition =
@@ -1455,6 +1458,7 @@ public class BundleSiteInitializerTest {
 				String.valueOf(group.getCompanyId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
+
 		_assertResourceAction(
 			new String[] {"DELETE", "UPDATE", "VIEW"}, resourcePermission);
 	}

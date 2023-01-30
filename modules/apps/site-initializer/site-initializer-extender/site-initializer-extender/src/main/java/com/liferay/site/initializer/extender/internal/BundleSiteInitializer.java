@@ -2931,7 +2931,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String[] actionIds = ArrayUtil.toStringArray(
 				jsonObject.getJSONArray("actionIds"));
-
 			String[] resourceActionIds = TransformUtil.transformToArray(
 				_resourceActionLocalService.getResourceActions(
 					jsonObject.getString("resourceName")),
