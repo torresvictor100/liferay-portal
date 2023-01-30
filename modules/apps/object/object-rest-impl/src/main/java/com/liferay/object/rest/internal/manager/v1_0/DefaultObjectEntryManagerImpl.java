@@ -743,39 +743,32 @@ public class DefaultObjectEntryManagerImpl
 
 			Object propertyValue = properties.get(entry.getKey());
 
-			if (propertyValue instanceof List) {
-				if ((StringUtil.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-					 (objectRelationship.getObjectDefinitionId1() ==
-						 objectDefinition.getObjectDefinitionId())) ||
-					StringUtil.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+			if ((propertyValue instanceof List) &&
+				((StringUtil.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+				  (objectRelationship.getObjectDefinitionId1() ==
+					  objectDefinition.getObjectDefinitionId())) ||
+				 StringUtil.equals(
+					 objectRelationship.getType(),
+					 ObjectRelationshipConstants.TYPE_MANY_TO_MANY))) {
 
-					ObjectDefinition relatedObjectDefinition =
-						_objectDefinitionLocalService.getObjectDefinition(
-							_getRelatedObjectDefinitionId(
-								objectDefinition, objectRelationship));
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						_getRelatedObjectDefinitionId(
+							objectDefinition, objectRelationship));
 
-					List<LinkedHashMap<String, Object>>
-						nestedObjectEntryPropertiesList =
-							(List<LinkedHashMap<String, Object>>)propertyValue;
+				List<LinkedHashMap<String, Object>>
+					nestedObjectEntryPropertiesList =
+						(List<LinkedHashMap<String, Object>>)propertyValue;
 
-					for (Map<String, Object> nestedObjectEntryProperties :
-							nestedObjectEntryPropertiesList) {
+				for (Map<String, Object> nestedObjectEntryProperties :
+						nestedObjectEntryPropertiesList) {
 
-						_addAndRelateNestedObjectEntry(
-							dtoConverterContext, nestedObjectEntryProperties,
-							objectRelationship, relatedObjectDefinition, false,
-							serviceBuilderObjectEntry);
-					}
-				}
-				else {
-					throw new BadRequestException(
-						"Unable to create nested object entries for object " +
-							"entry " +
-								serviceBuilderObjectEntry.getObjectEntryId());
+					_addAndRelateNestedObjectEntry(
+						dtoConverterContext, nestedObjectEntryProperties,
+						objectRelationship, relatedObjectDefinition, false,
+						serviceBuilderObjectEntry);
 				}
 			}
 			else if ((propertyValue instanceof Map) &&
