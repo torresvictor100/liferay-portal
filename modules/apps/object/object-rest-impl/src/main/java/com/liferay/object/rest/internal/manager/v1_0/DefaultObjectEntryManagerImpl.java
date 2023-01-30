@@ -723,8 +723,8 @@ public class DefaultObjectEntryManagerImpl
 
 				_createAndRelateNestedObjectEntry(
 					dtoConverterContext, nestedObjectEntry,
-					relatedObjectDefinition, true, serviceBuilderObjectEntry,
-					objectRelationship);
+					relatedObjectDefinition, true, objectRelationship,
+					serviceBuilderObjectEntry);
 			}
 			else if (propertyValue instanceof List) {
 				if ((StringUtil.equals(
@@ -749,8 +749,8 @@ public class DefaultObjectEntryManagerImpl
 
 						_createAndRelateNestedObjectEntry(
 							dtoConverterContext, nestedObjectEntry,
-							relatedObjectDefinition, false, serviceBuilderObjectEntry,
-							objectRelationship);
+							relatedObjectDefinition, false, objectRelationship,
+							serviceBuilderObjectEntry);
 					}
 				}
 				else {
@@ -828,8 +828,8 @@ public class DefaultObjectEntryManagerImpl
 			DTOConverterContext dtoConverterContext,
 			Map<String, Object> nestedObjectEntry,
 			ObjectDefinition relatedObjectDefinition, boolean reverse,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			ObjectRelationship objectRelationship)
+			ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry newNestedObjectEntry =
@@ -841,7 +841,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectRelationshipService.addObjectRelationshipMappingTableValues(
 				objectRelationship.getObjectRelationshipId(),
 				newNestedObjectEntry.getPrimaryKey(),
-				serviceBuilderObjectEntry.getPrimaryKey(), new ServiceContext());
+				serviceBuilderObjectEntry.getPrimaryKey(),
+				new ServiceContext());
 		}
 		else {
 			_objectRelationshipService.addObjectRelationshipMappingTableValues(
