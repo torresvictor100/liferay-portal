@@ -455,6 +455,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
+			_invoke(() -> _addOrUpdateRoles(serviceContext));
 			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
 
 			Map<String, String> segmentsEntriesIdsStringUtilReplaceValues =
@@ -487,6 +488,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
 				_invoke(() -> _addOrUpdateListTypeDefinitions(serviceContext));
 
+			_invoke(() -> _addUserAccounts(serviceContext));
+
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues =
 					_invoke(
@@ -501,10 +504,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addPermissions(
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext));
 
 			Map<String, Layout> layouts = _invoke(
 				() -> _addOrUpdateLayouts(serviceContext));
@@ -514,6 +513,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
+			_invoke(() -> _addOrUpdateResourcePermissions(
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+				serviceContext));
 
 			// LPS-172108 Layouts have to be created first so that links in
 			// layout page templates work
@@ -552,6 +554,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
+			_invoke(() -> _addRolesAssignments(serviceContext));
+
 			_invoke(
 				() -> _addSegmentsExperiences(
 					assetListEntryIdsStringUtilReplaceValues,
@@ -561,6 +565,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					segmentsEntriesIdsStringUtilReplaceValues, serviceContext,
 					taxonomyCategoryIdsStringUtilReplaceValues));
+			_invoke(() -> _addUserRoles(serviceContext));
 
 			_invoke(() -> _addWorkflowDefinitions(serviceContext));
 
@@ -2947,10 +2952,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addOrUpdateResourcePermissions(
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-			String resourcePath, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
+		String json = SiteInitializerUtil.read("/site-initializer/resource-permissions.json", _servletContext);
 
 		if (json == null) {
 			return;
@@ -3355,21 +3360,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_userGroupLocalService.addGroupUserGroup(
 				serviceContext.getScopeGroupId(), userGroup);
 		}
-	}
-
-	private void _addPermissions(
-			Map<String, String>
-				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		_addRoles(
-			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-			serviceContext);
-		_addUserAccounts(serviceContext);
-
-		_addRolesAssignments(serviceContext);
-		_addUserRoles(serviceContext);
 	}
 
 	private void _addPortletSettings(ServiceContext serviceContext)
