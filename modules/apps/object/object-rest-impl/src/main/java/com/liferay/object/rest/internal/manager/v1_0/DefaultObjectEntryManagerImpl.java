@@ -720,7 +720,7 @@ public class DefaultObjectEntryManagerImpl
 			Map<String, ObjectRelationship> objectRelationships)
 		throws Exception {
 
-		Map<String, Object> objectEntryProperties = objectEntry.getProperties();
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (Map.Entry<String, ObjectRelationship> entry :
 				objectRelationships.entrySet()) {
@@ -732,7 +732,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship = objectRelationships.get(
 				entry.getKey());
 
-			Object propertyValue = objectEntryProperties.get(entry.getKey());
+			Object propertyValue = properties.get(entry.getKey());
 
 			if ((propertyValue instanceof Map) &&
 				StringUtil.equals(
