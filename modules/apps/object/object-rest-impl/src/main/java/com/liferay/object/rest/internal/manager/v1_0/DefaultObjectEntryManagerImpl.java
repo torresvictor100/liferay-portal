@@ -852,11 +852,11 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _checkObjectEntryObjectDefinitionId(
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		if (objectDefinition.getObjectDefinitionId() !=
-				objectEntry.getObjectDefinitionId()) {
+				serviceBuilderObjectEntry.getObjectDefinitionId()) {
 
 			throw new NoSuchObjectEntryException();
 		}
@@ -891,24 +891,24 @@ public class DefaultObjectEntryManagerImpl
 	private void _executeObjectAction(
 			DTOConverterContext dtoConverterContext, String objectActionName,
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		_objectEntryService.checkModelResourcePermission(
 			objectDefinition.getObjectDefinitionId(),
-			objectEntry.getObjectEntryId(), objectActionName);
+			serviceBuilderObjectEntry.getObjectEntryId(), objectActionName);
 
 		_objectActionEngine.executeObjectAction(
 			objectActionName, ObjectActionTriggerConstants.KEY_STANDALONE,
 			objectDefinition.getObjectDefinitionId(),
 			JSONUtil.put(
-				"classPK", objectEntry.getObjectEntryId()
+				"classPK", serviceBuilderObjectEntry.getObjectEntryId()
 			).put(
 				"objectEntry",
 				HashMapBuilder.putAll(
-					objectEntry.getModelAttributes()
+					serviceBuilderObjectEntry.getModelAttributes()
 				).put(
-					"values", objectEntry.getValues()
+					"values", serviceBuilderObjectEntry.getValues()
 				).build()
 			).put(
 				"objectEntryDTO" + objectDefinition.getShortName(),
@@ -920,7 +920,7 @@ public class DefaultObjectEntryManagerImpl
 						_jsonFactory.looseSerializeDeep(
 							_toObjectEntry(
 								dtoConverterContext, objectDefinition,
-								objectEntry)));
+								serviceBuilderObjectEntry)));
 
 					return jsonObject.toMap();
 				}
