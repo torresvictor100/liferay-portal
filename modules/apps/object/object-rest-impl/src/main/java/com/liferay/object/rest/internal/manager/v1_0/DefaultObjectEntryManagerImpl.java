@@ -192,12 +192,12 @@ public class DefaultObjectEntryManagerImpl
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
 		ServiceContext serviceContext = _createServiceContext(
 			objectEntry.getProperties(), dtoConverterContext.getUserId());
 
 		serviceContext.setCompanyId(companyId);
-
-		long groupId = getGroupId(objectDefinition, scopeKey);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
