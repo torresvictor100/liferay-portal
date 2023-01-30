@@ -686,7 +686,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _addAndRelateNestedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			Map<String, Object> nestedObjectEntry,
+			Map<String, Object> nestedObjectEntryProperties,
 			ObjectRelationship objectRelationship,
 			ObjectDefinition relatedObjectDefinition, boolean reverse,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
@@ -694,7 +694,7 @@ public class DefaultObjectEntryManagerImpl
 
 		com.liferay.object.model.ObjectEntry newNestedObjectEntry =
 			_addNestedObjectEntry(
-				dtoConverterContext, nestedObjectEntry,
+				dtoConverterContext, nestedObjectEntryProperties,
 				relatedObjectDefinition);
 
 		if (reverse) {
@@ -741,7 +741,7 @@ public class DefaultObjectEntryManagerImpl
 				(objectRelationship.getObjectDefinitionId2() ==
 					objectDefinition.getObjectDefinitionId())) {
 
-				Map<String, Object> nestedObjectEntry =
+				Map<String, Object> nestedObjectEntryProperties =
 					(Map<String, Object>)propertyValue;
 
 				ObjectDefinition relatedObjectDefinition =
@@ -750,8 +750,9 @@ public class DefaultObjectEntryManagerImpl
 							objectDefinition, objectRelationship));
 
 				_addAndRelateNestedObjectEntry(
-					dtoConverterContext, nestedObjectEntry, objectRelationship,
-					relatedObjectDefinition, true, serviceBuilderObjectEntry);
+					dtoConverterContext, nestedObjectEntryProperties,
+					objectRelationship, relatedObjectDefinition, true,
+					serviceBuilderObjectEntry);
 			}
 			else if (propertyValue instanceof List) {
 				if ((StringUtil.equals(
@@ -763,19 +764,20 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					List<LinkedHashMap<String, Object>> nestedObjectEntries =
-						(List<LinkedHashMap<String, Object>>)propertyValue;
+					List<LinkedHashMap<String, Object>>
+						nestedObjectEntryPropertiesList =
+							(List<LinkedHashMap<String, Object>>)propertyValue;
 
 					ObjectDefinition relatedObjectDefinition =
 						_objectDefinitionLocalService.getObjectDefinition(
 							_getRelatedObjectDefinitionId(
 								objectDefinition, objectRelationship));
 
-					for (Map<String, Object> nestedObjectEntry :
-							nestedObjectEntries) {
+					for (Map<String, Object> nestedObjectEntryProperties :
+							nestedObjectEntryPropertiesList) {
 
 						_addAndRelateNestedObjectEntry(
-							dtoConverterContext, nestedObjectEntry,
+							dtoConverterContext, nestedObjectEntryProperties,
 							objectRelationship, relatedObjectDefinition, false,
 							serviceBuilderObjectEntry);
 					}
@@ -798,7 +800,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private com.liferay.object.model.ObjectEntry _addNestedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			Map<String, Object> nestedObjectEntry,
+			Map<String, Object> nestedObjectEntryProperties,
 			ObjectDefinition relatedObjectDefinition)
 		throws Exception {
 
@@ -807,12 +809,13 @@ public class DefaultObjectEntryManagerImpl
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
-		objectEntry.setProperties(nestedObjectEntry);
+		objectEntry.setProperties(nestedObjectEntryProperties);
 
-		if (nestedObjectEntry.containsKey("externalReferenceCode")) {
+		if (nestedObjectEntryProperties.containsKey("externalReferenceCode")) {
 			com.liferay.object.model.ObjectEntry existingObjectEntry =
 				_objectEntryLocalService.fetchObjectEntry(
-					(String)nestedObjectEntry.get("externalReferenceCode"),
+					(String)nestedObjectEntryProperties.get(
+						"externalReferenceCode"),
 					relatedObjectDefinition.getObjectDefinitionId());
 
 			if (existingObjectEntry == null) {
@@ -823,7 +826,8 @@ public class DefaultObjectEntryManagerImpl
 						relatedObjectDefinition, objectEntry, 0L,
 						dtoConverterContext.getLocale()),
 					_createServiceContext(
-						nestedObjectEntry, dtoConverterContext.getUserId()));
+						nestedObjectEntryProperties,
+						dtoConverterContext.getUserId()));
 			}
 
 			return existingObjectEntry;
@@ -836,7 +840,7 @@ public class DefaultObjectEntryManagerImpl
 				relatedObjectDefinition, objectEntry, 0L,
 				dtoConverterContext.getLocale()),
 			_createServiceContext(
-				nestedObjectEntry, dtoConverterContext.getUserId()));
+				nestedObjectEntryProperties, dtoConverterContext.getUserId()));
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(
