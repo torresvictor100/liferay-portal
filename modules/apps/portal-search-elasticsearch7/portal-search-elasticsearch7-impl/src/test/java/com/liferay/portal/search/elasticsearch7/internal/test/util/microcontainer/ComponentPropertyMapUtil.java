@@ -57,7 +57,7 @@ public class ComponentPropertyMapUtil {
 		}
 
 		throw new NoSuchElementException(
-			"Unable to find an AnnotationNode containing description of: " +
+			"Unable to find an annotation node containing description of: " +
 				Component.class.getSimpleName());
 	}
 
