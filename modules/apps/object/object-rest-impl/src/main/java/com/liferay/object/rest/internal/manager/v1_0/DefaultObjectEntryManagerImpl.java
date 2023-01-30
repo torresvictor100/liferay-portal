@@ -687,8 +687,8 @@ public class DefaultObjectEntryManagerImpl
 	private void _addAndRelateNestedObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			Map<String, Object> nestedObjectEntry,
-			ObjectDefinition relatedObjectDefinition, boolean reverse,
 			ObjectRelationship objectRelationship,
+			ObjectDefinition relatedObjectDefinition, boolean reverse,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
@@ -750,9 +750,8 @@ public class DefaultObjectEntryManagerImpl
 							objectDefinition, objectRelationship));
 
 				_addAndRelateNestedObjectEntry(
-					dtoConverterContext, nestedObjectEntry,
-					relatedObjectDefinition, true, objectRelationship,
-					serviceBuilderObjectEntry);
+					dtoConverterContext, nestedObjectEntry, objectRelationship,
+					relatedObjectDefinition, true, serviceBuilderObjectEntry);
 			}
 			else if (propertyValue instanceof List) {
 				if ((StringUtil.equals(
@@ -777,7 +776,7 @@ public class DefaultObjectEntryManagerImpl
 
 						_addAndRelateNestedObjectEntry(
 							dtoConverterContext, nestedObjectEntry,
-							relatedObjectDefinition, false, objectRelationship,
+							objectRelationship, relatedObjectDefinition, false,
 							serviceBuilderObjectEntry);
 					}
 				}
