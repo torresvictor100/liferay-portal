@@ -66,7 +66,7 @@ public class ServiceLatch {
 
 		_serviceTrackers.add(serviceTracker);
 
-		_serviceTrackerCount.incrementAndGet();
+		_serviceTrackersCount.incrementAndGet();
 
 		return this;
 	}
@@ -93,7 +93,7 @@ public class ServiceLatch {
 
 			_serviceTrackers.add(serviceTracker);
 
-			_serviceTrackerCount.incrementAndGet();
+			_serviceTrackersCount.incrementAndGet();
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			throw new RuntimeException(invalidSyntaxException);
@@ -104,7 +104,7 @@ public class ServiceLatch {
 
 	private final BundleContext _bundleContext;
 	private Runnable _openRunnable;
-	private final AtomicInteger _serviceTrackerCount = new AtomicInteger();
+	private final AtomicInteger _serviceTrackersCount = new AtomicInteger();
 	private final Queue<ServiceTracker<?, ?>> _serviceTrackers =
 		new ConcurrentLinkedQueue<>();
 
@@ -117,7 +117,7 @@ public class ServiceLatch {
 
 			_serviceConsumer.accept(service);
 
-			if (_serviceTrackerCount.decrementAndGet() == 0) {
+			if (_serviceTrackersCount.decrementAndGet() == 0) {
 				_openRunnable.run();
 
 				for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
