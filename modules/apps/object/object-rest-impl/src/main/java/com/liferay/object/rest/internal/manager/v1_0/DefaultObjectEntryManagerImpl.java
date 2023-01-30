@@ -743,27 +743,7 @@ public class DefaultObjectEntryManagerImpl
 
 			Object propertyValue = properties.get(entry.getKey());
 
-			if ((propertyValue instanceof Map) &&
-				StringUtil.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-				(objectRelationship.getObjectDefinitionId2() ==
-					objectDefinition.getObjectDefinitionId())) {
-
-				Map<String, Object> nestedObjectEntryProperties =
-					(Map<String, Object>)propertyValue;
-
-				ObjectDefinition relatedObjectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						_getRelatedObjectDefinitionId(
-							objectDefinition, objectRelationship));
-
-				_addAndRelateNestedObjectEntry(
-					dtoConverterContext, nestedObjectEntryProperties,
-					objectRelationship, relatedObjectDefinition, true,
-					serviceBuilderObjectEntry);
-			}
-			else if (propertyValue instanceof List) {
+			if (propertyValue instanceof List) {
 				if ((StringUtil.equals(
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
@@ -797,6 +777,26 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getObjectEntryId() +
 								" can not create nested entities");
 				}
+			}
+			else if ((propertyValue instanceof Map) &&
+					 StringUtil.equals(
+						 objectRelationship.getType(),
+						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+					 (objectRelationship.getObjectDefinitionId2() ==
+						 objectDefinition.getObjectDefinitionId())) {
+
+				Map<String, Object> nestedObjectEntryProperties =
+					(Map<String, Object>)propertyValue;
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						_getRelatedObjectDefinitionId(
+							objectDefinition, objectRelationship));
+
+				_addAndRelateNestedObjectEntry(
+					dtoConverterContext, nestedObjectEntryProperties,
+					objectRelationship, relatedObjectDefinition, true,
+					serviceBuilderObjectEntry);
 			}
 			else {
 				throw new BadRequestException(
