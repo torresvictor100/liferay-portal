@@ -9,8 +9,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"SUBSCRIBE"
+			"SUBSCRIBE",
+			"VIEW"
 		],
 		"resourceName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 		"roleName": "User",
