@@ -50,7 +50,7 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineImportConfiguration));
 		_unsyncPrintWriter.write(",\n");
-		_unsyncPrintWriter.write("\"items\":[");
+		_unsyncPrintWriter.write("\"items\": [");
 	}
 
 	@Override

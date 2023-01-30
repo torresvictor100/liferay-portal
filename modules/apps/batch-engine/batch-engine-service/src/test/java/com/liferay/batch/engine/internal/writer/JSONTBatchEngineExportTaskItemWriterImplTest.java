@@ -75,13 +75,13 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("{\"configuration\":{\"className\":\"");
+		sb.append("{\"configuration\": {\"className\": \"");
 		sb.append(batchEngineImportConfiguration.getClassName());
-		sb.append("\",\n\"userId\":");
+		sb.append("\",\n\"userId\": ");
 		sb.append(batchEngineImportConfiguration.getUserId());
-		sb.append(",\n\"companyId\":");
+		sb.append(",\n\"companyId\" :");
 		sb.append(batchEngineImportConfiguration.getCompanyId());
-		sb.append(",\n\"version\":\"");
+		sb.append(",\n\"version\": \"");
 		sb.append(batchEngineImportConfiguration.getVersion());
 		sb.append("\"\n},");
 
@@ -89,7 +89,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 			fieldNames = jsonFieldNames;
 		}
 
-		sb.append("\"items\":[\n");
+		sb.append("\"items\": [\n");
 
 		Iterator<Item> iterator = items.iterator();
 
@@ -117,10 +117,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 				new BatchEngineAutoDeployListener.
 					BatchEngineImportConfiguration();
 
-		Class<Item> itemClass = Item.class;
-
-		batchEngineImportConfiguration.setClassName(itemClass.getName());
-
+		batchEngineImportConfiguration.setClassName(Item.class.getName());
 		batchEngineImportConfiguration.setVersion("v1.0");
 
 		try (JSONTBatchEngineExportTaskItemWriterImpl
@@ -137,7 +134,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		String content = unsyncByteArrayOutputStream.toString();
 
-		System.out.println("Content: \n" + content);
+		System.out.println("Content:\n" + content);
 
 		JSONAssert.assertEquals(
 			_getExpectedContent(
