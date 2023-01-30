@@ -48,17 +48,17 @@ public class DebugUtils {
 		List<StackTraceElement> stackTraceElements = new ArrayList<>(
 			Arrays.asList(throwable.getStackTrace()));
 
-		List<String> classAndMethods = new ArrayList<>();
+		List<String> classNameAndMethodNames = new ArrayList<>();
 
 		for (StackTraceElement stackTraceElement : stackTraceElements) {
-			classAndMethods.add(
-				_toClassAndMethod(stackTraceElement.toString()));
+			classNameAndMethodNames.add(
+				_toClassNameAndMethodName(stackTraceElement.toString()));
 		}
 
-		return String.join(System.lineSeparator(), classAndMethods);
+		return String.join(System.lineSeparator(), classNameAndMethodNames);
 	}
 
-	private static String _toClassAndMethod(String line) {
+	private static String _toClassNameAndMethodName(String line) {
 		Matcher matcher = _stackLinePattern.matcher(line);
 
 		if (!matcher.matches()) {
