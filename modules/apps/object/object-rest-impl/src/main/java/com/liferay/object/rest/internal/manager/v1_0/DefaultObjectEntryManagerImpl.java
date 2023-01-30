@@ -721,7 +721,7 @@ public class DefaultObjectEntryManagerImpl
 						_getRelatedObjectDefinitionId(
 							objectDefinition, objectRelationship));
 
-				_createAndRelateNestedObjectEntry(
+				_addAndRelateNestedObjectEntry(
 					dtoConverterContext, nestedObjectEntry,
 					relatedObjectDefinition, true, objectRelationship,
 					serviceBuilderObjectEntry);
@@ -747,7 +747,7 @@ public class DefaultObjectEntryManagerImpl
 					for (Map<String, Object> nestedObjectEntry :
 							nestedObjectEntries) {
 
-						_createAndRelateNestedObjectEntry(
+						_addAndRelateNestedObjectEntry(
 							dtoConverterContext, nestedObjectEntry,
 							relatedObjectDefinition, false, objectRelationship,
 							serviceBuilderObjectEntry);
@@ -824,7 +824,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 	}
 
-	private void _createAndRelateNestedObjectEntry(
+	private void _addAndRelateNestedObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			Map<String, Object> nestedObjectEntry,
 			ObjectDefinition relatedObjectDefinition, boolean reverse,
