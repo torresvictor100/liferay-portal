@@ -722,17 +722,17 @@ public class DefaultObjectEntryManagerImpl
 
 		Map<String, Object> objectEntryProperties = objectEntry.getProperties();
 
-		for (Map.Entry<String, ObjectRelationship> property :
+		for (Map.Entry<String, ObjectRelationship> entry :
 				objectRelationships.entrySet()) {
 
-			if (!objectRelationships.containsKey(property.getKey())) {
+			if (!objectRelationships.containsKey(entry.getKey())) {
 				continue;
 			}
 
 			ObjectRelationship objectRelationship = objectRelationships.get(
-				property.getKey());
+				entry.getKey());
 
-			Object propertyValue = objectEntryProperties.get(property.getKey());
+			Object propertyValue = objectEntryProperties.get(entry.getKey());
 
 			if ((propertyValue instanceof Map) &&
 				StringUtil.equals(
