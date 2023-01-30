@@ -67,8 +67,7 @@ public class GetLayoutsTreeStrutsAction implements StrutsAction {
 				"hasMoreElements",
 				() -> {
 					int childLayoutsCount = _layoutService.getLayoutsCount(
-						themeDisplay.getScopeGroupId(), privateLayout,
-						parentLayoutId);
+						groupId, privateLayout, parentLayoutId);
 
 					int start = ParamUtil.getInteger(
 						httpServletRequest, "start");
