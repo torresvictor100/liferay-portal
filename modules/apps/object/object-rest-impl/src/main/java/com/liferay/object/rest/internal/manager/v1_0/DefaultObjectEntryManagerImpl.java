@@ -684,6 +684,34 @@ public class DefaultObjectEntryManagerImpl
 			uriInfo);
 	}
 
+	private void _addAndRelateNestedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			Map<String, Object> nestedObjectEntry,
+			ObjectDefinition relatedObjectDefinition, boolean reverse,
+			ObjectRelationship objectRelationship,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry newNestedObjectEntry =
+			_addNestedObjectEntry(
+				dtoConverterContext, nestedObjectEntry,
+				relatedObjectDefinition);
+
+		if (reverse) {
+			_objectRelationshipService.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				newNestedObjectEntry.getPrimaryKey(),
+				serviceBuilderObjectEntry.getPrimaryKey(),
+				new ServiceContext());
+		}
+		else {
+			_objectRelationshipService.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				serviceBuilderObjectEntry.getPrimaryKey(),
+				newNestedObjectEntry.getPrimaryKey(), new ServiceContext());
+		}
+	}
+
 	private void _addNestedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -821,34 +849,6 @@ public class DefaultObjectEntryManagerImpl
 				objectEntry.getObjectDefinitionId()) {
 
 			throw new NoSuchObjectEntryException();
-		}
-	}
-
-	private void _addAndRelateNestedObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			Map<String, Object> nestedObjectEntry,
-			ObjectDefinition relatedObjectDefinition, boolean reverse,
-			ObjectRelationship objectRelationship,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry newNestedObjectEntry =
-			_addNestedObjectEntry(
-				dtoConverterContext, nestedObjectEntry,
-				relatedObjectDefinition);
-
-		if (reverse) {
-			_objectRelationshipService.addObjectRelationshipMappingTableValues(
-				objectRelationship.getObjectRelationshipId(),
-				newNestedObjectEntry.getPrimaryKey(),
-				serviceBuilderObjectEntry.getPrimaryKey(),
-				new ServiceContext());
-		}
-		else {
-			_objectRelationshipService.addObjectRelationshipMappingTableValues(
-				objectRelationship.getObjectRelationshipId(),
-				serviceBuilderObjectEntry.getPrimaryKey(),
-				newNestedObjectEntry.getPrimaryKey(), new ServiceContext());
 		}
 	}
 
