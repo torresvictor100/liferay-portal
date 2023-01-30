@@ -773,9 +773,9 @@ public class DefaultObjectEntryManagerImpl
 				}
 				else {
 					throw new BadRequestException(
-						"Object Entry with id " +
-							serviceBuilderObjectEntry.getObjectEntryId() +
-								" can not create nested entities");
+						"Unable to create nested object entries for object " +
+							"entry " +
+								serviceBuilderObjectEntry.getObjectEntryId());
 				}
 			}
 			else if ((propertyValue instanceof Map) &&
@@ -798,12 +798,10 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationship, relatedObjectDefinition, true,
 					serviceBuilderObjectEntry);
 			}
-			else {
-				throw new BadRequestException(
-					"Object Entry with id " +
-						serviceBuilderObjectEntry.getObjectEntryId() +
-							" can not create nested entities");
-			}
+
+			throw new BadRequestException(
+				"Unable to create nested object entries for object entry " +
+					serviceBuilderObjectEntry.getObjectEntryId());
 		}
 	}
 
