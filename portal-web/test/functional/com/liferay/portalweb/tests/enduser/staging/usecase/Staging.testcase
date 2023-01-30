@@ -2304,6 +2304,8 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page 1",
 			siteName = "Site Name");
