@@ -744,14 +744,14 @@ public class DefaultObjectEntryManagerImpl
 			Object propertyValue = properties.get(entry.getKey());
 
 			if ((propertyValue instanceof List) &&
-				((StringUtil.equals(
+				(StringUtil.equals(
 					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-				  (objectRelationship.getObjectDefinitionId1() ==
-					  objectDefinition.getObjectDefinitionId())) ||
-				 StringUtil.equals(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+				 (StringUtil.equals(
 					 objectRelationship.getType(),
-					 ObjectRelationshipConstants.TYPE_MANY_TO_MANY))) {
+					 ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+				  (objectRelationship.getObjectDefinitionId1() ==
+					  objectDefinition.getObjectDefinitionId())))) {
 
 				ObjectDefinition relatedObjectDefinition =
 					_objectDefinitionLocalService.getObjectDefinition(
