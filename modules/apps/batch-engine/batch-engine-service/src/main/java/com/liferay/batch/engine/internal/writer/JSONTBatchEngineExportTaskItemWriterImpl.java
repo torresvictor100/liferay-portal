@@ -47,7 +47,6 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
 		_unsyncPrintWriter.write("{\"configuration\":\n");
-
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineImportConfiguration));
 		_unsyncPrintWriter.write(",\n");
@@ -59,6 +58,7 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 		_unsyncPrintWriter.write("]\n}");
 
 		_unsyncPrintWriter.flush();
+
 		_unsyncPrintWriter.close();
 	}
 

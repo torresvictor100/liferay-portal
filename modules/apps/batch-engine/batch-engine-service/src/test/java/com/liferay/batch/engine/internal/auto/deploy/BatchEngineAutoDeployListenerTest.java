@@ -142,8 +142,12 @@ public class BatchEngineAutoDeployListenerTest {
 					BatchEngineImportTask batchEngineImportTask =
 						new BatchEngineImportTaskImpl();
 
+					batchEngineImportTask.setExternalReferenceCode(
+						(String)invocationOnMock.getArguments()[0]);
 					batchEngineImportTask.setCompanyId(
 						(long)invocationOnMock.getArguments()[1]);
+					batchEngineImportTask.setUserId(
+						(long)invocationOnMock.getArguments()[2]);
 					batchEngineImportTask.setBatchSize(
 						(long)invocationOnMock.getArguments()[3]);
 					batchEngineImportTask.setCallbackURL(
@@ -154,10 +158,6 @@ public class BatchEngineAutoDeployListenerTest {
 						(String)invocationOnMock.getArguments()[7]);
 					batchEngineImportTask.setExecuteStatus(
 						(String)invocationOnMock.getArguments()[8]);
-					batchEngineImportTask.setExternalReferenceCode(
-						(String)invocationOnMock.getArguments()[0]);
-					batchEngineImportTask.setUserId(
-						(long)invocationOnMock.getArguments()[2]);
 					batchEngineImportTask.setFieldNameMapping(
 						(Map<String, Serializable>)
 							invocationOnMock.getArguments()[9]);
