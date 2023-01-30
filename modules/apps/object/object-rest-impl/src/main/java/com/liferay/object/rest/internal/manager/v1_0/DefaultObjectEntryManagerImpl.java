@@ -300,19 +300,18 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.fetchObjectEntry(objectEntryId);
 
-		if (serviceBuilderObjectEntry != null) {
-			if (objectDefinition == null) {
-				objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						serviceBuilderObjectEntry.getObjectDefinitionId());
-			}
-
-			return _toObjectEntry(
-				dtoConverterContext, objectDefinition,
-				serviceBuilderObjectEntry);
+		if (serviceBuilderObjectEntry == null) {
+			return null;
 		}
 
-		return null;
+		if (objectDefinition == null) {
+			objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					serviceBuilderObjectEntry.getObjectDefinitionId());
+		}
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	@Override
