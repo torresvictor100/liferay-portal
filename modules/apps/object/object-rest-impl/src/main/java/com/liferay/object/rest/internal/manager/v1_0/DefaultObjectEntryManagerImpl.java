@@ -930,15 +930,16 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(
 				GetterUtil.getLong(
 					values.get(objectDefinition.getPKObjectFieldName())));
 
-		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
+		_checkObjectEntryObjectDefinitionId(
+			objectDefinition, serviceBuilderObjectEntry);
 
 		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
 	private String _getObjectEntryPermissionName(long objectDefinitionId) {
@@ -1045,7 +1046,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private boolean _hasRelatedObjectEntries(
 			String deletionType, ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws PortalException {
 
 		for (ObjectRelationship objectRelationship :
@@ -1068,9 +1069,9 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getType());
 
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(
-				objectEntry.getGroupId(),
+				serviceBuilderObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey());
+				serviceBuilderObjectEntry.getPrimaryKey());
 
 			if (count > 0) {
 				return true;
@@ -1144,7 +1145,7 @@ public class DefaultObjectEntryManagerImpl
 
 	private Object _toDTO(
 			BaseModel<?> baseModel,
-			com.liferay.object.model.ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
 		throws Exception {
 
@@ -1163,7 +1164,8 @@ public class DefaultObjectEntryManagerImpl
 				"No DTO converter found for " + baseModel.getModelClassName());
 		}
 
-		User user = _userLocalService.getUser(objectEntry.getUserId());
+		User user = _userLocalService.getUser(
+			serviceBuilderObjectEntry.getUserId());
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
@@ -1175,21 +1177,22 @@ public class DefaultObjectEntryManagerImpl
 
 	private List<ObjectEntry> _toObjectEntries(
 		DTOConverterContext dtoConverterContext,
-		List<com.liferay.object.model.ObjectEntry> objectEntries) {
+		List<com.liferay.object.model.ObjectEntry>
+			serviceBuilderObjectEntries) {
 
 		return TransformUtil.transform(
-			objectEntries,
-			objectEntry -> _toObjectEntry(
+			serviceBuilderObjectEntries,
+			serviceBuilderObjectEntry -> _toObjectEntry(
 				dtoConverterContext,
 				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId()),
-				objectEntry));
+					serviceBuilderObjectEntry.getObjectDefinitionId()),
+				serviceBuilderObjectEntry));
 	}
 
 	private ObjectEntry _toObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
 		Map<String, Map<String, String>> actions =
@@ -1209,35 +1212,36 @@ public class DefaultObjectEntryManagerImpl
 				() -> {
 					if (_hasRelatedObjectEntries(
 							ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-							objectDefinition, objectEntry)) {
+							objectDefinition, serviceBuilderObjectEntry)) {
 
 						return null;
 					}
 
 					return _addAction(
-						ActionKeys.DELETE, "deleteObjectEntry", objectEntry,
+						ActionKeys.DELETE, "deleteObjectEntry",
+						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"get",
 				_addAction(
-					ActionKeys.VIEW, "getObjectEntry", objectEntry,
-					dtoConverterContext.getUriInfo())
+					ActionKeys.VIEW, "getObjectEntry",
+					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).put(
 				"permissions",
 				_addAction(
 					ActionKeys.PERMISSIONS, "getObjectEntryPermissionsPage",
-					objectEntry, dtoConverterContext.getUriInfo())
+					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).put(
 				"replace",
 				_addAction(
-					ActionKeys.UPDATE, "putObjectEntry", objectEntry,
-					dtoConverterContext.getUriInfo())
+					ActionKeys.UPDATE, "putObjectEntry",
+					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).put(
 				"update",
 				_addAction(
-					ActionKeys.UPDATE, "patchObjectEntry", objectEntry,
-					dtoConverterContext.getUriInfo())
+					ActionKeys.UPDATE, "patchObjectEntry",
+					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).build();
 
 			for (ObjectAction objectAction :
@@ -1251,7 +1255,8 @@ public class DefaultObjectEntryManagerImpl
 						objectAction.getName(),
 						"putByExternalReferenceCodeObjectEntryExternal" +
 							"ReferenceCodeObjectActionObjectActionName",
-						objectEntry, dtoConverterContext.getUriInfo()));
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo()));
 			}
 		}
 
@@ -1260,7 +1265,8 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.isAcceptAllLanguages(), actions,
 				dtoConverterContext.getDTOConverterRegistry(),
 				dtoConverterContext.getHttpServletRequest(),
-				objectEntry.getObjectEntryId(), dtoConverterContext.getLocale(),
+				serviceBuilderObjectEntry.getObjectEntryId(),
+				dtoConverterContext.getLocale(),
 				dtoConverterContext.getUriInfo(),
 				dtoConverterContext.getUser());
 
@@ -1268,7 +1274,7 @@ public class DefaultObjectEntryManagerImpl
 			"objectDefinition", objectDefinition);
 
 		return _objectEntryDTOConverter.toDTO(
-			defaultDTOConverterContext, objectEntry);
+			defaultDTOConverterContext, serviceBuilderObjectEntry);
 	}
 
 	private Map<String, Serializable> _toObjectValues(
