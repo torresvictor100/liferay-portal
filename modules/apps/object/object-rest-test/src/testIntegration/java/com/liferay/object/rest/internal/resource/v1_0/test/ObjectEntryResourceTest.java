@@ -302,7 +302,6 @@ public class ObjectEntryResourceTest {
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
-
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
@@ -402,7 +401,6 @@ public class ObjectEntryResourceTest {
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
-
 		_assertObjectEntryField(
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
