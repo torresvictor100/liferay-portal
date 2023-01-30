@@ -89,23 +89,22 @@ public class GetDataMVCResourceCommandTest {
 
 	@Test
 	public void testGetProps() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
 		themeDisplay.setLayout(layout);
+
 		themeDisplay.setLocale(
 			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setLocale(_locale);
@@ -127,17 +126,15 @@ public class GetDataMVCResourceCommandTest {
 		String url = "http://localhost:8080";
 
 		mockLiferayResourceRequest.setParameter("backURL", url);
-		mockLiferayResourceRequest.setParameter("redirect", url);
 
 		mockLiferayResourceRequest.setParameter(
 			"plid", String.valueOf(layout.getPlid()));
-
-		String segmentsEntryName = RandomTestUtil.randomString();
+		mockLiferayResourceRequest.setParameter("redirect", url);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), RandomTestUtil.randomString(),
-			segmentsEntryName, RandomTestUtil.randomString(), StringPool.BLANK,
-			SegmentsEntryConstants.SOURCE_DEFAULT);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, SegmentsEntryConstants.SOURCE_DEFAULT);
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
@@ -149,6 +146,9 @@ public class GetDataMVCResourceCommandTest {
 		mockLiferayResourceRequest.setParameter(
 			"segmentsExperienceId",
 			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
 
 		_mvcResourceCommand.serveResource(
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
@@ -162,16 +162,15 @@ public class GetDataMVCResourceCommandTest {
 
 		JSONObject propsJSONObject = jsonObject.getJSONObject("props");
 
-		Assert.assertEquals(
-			String.valueOf(segmentsExperience.getSegmentsExperienceId()),
-			propsJSONObject.getString("selectedSegmentsExperienceId"));
-
 		Assert.assertTrue(
 			propsJSONObject.getString(
 				"hideSegmentsExperimentPanelURL"
 			).contains(
 				HttpComponentsUtil.encodeParameters(url)
 			));
+		Assert.assertEquals(
+			String.valueOf(segmentsExperience.getSegmentsExperienceId()),
+			propsJSONObject.getString("selectedSegmentsExperienceId"));
 	}
 
 	private static Company _company;
