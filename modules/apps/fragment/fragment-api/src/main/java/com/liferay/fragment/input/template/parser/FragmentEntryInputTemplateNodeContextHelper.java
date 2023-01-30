@@ -404,13 +404,13 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		String defaultInputLabel, String editableValues, InfoField<?> infoField,
 		Locale locale) {
 
+		String inputLabel = null;
+
 		JSONObject inputLabelJSONObject =
 			(JSONObject)
 				_fragmentEntryConfigurationParser.getConfigurationFieldValue(
 					editableValues, "inputLabel",
 					FragmentConfigurationFieldDataType.OBJECT);
-
-		String inputLabel = null;
 
 		if (inputLabelJSONObject != null) {
 			inputLabel = inputLabelJSONObject.getString(
