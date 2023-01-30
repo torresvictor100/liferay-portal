@@ -139,15 +139,6 @@ public abstract class BaseNotificationType implements NotificationType {
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
-		if (Validator.isNull(notificationTemplate.getEditorType())) {
-			throw new NotificationTemplateEditorTypeException(
-				"Editor type is null");
-		}
-
-		if (Validator.isNull(notificationTemplate.getName())) {
-			throw new NotificationTemplateNameException("Name is null");
-		}
-
 		if (notificationTemplate.getObjectDefinitionId() > 0) {
 			ObjectDefinition objectDefinition =
 				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
@@ -156,6 +147,15 @@ public abstract class BaseNotificationType implements NotificationType {
 			if (objectDefinition == null) {
 				throw new NotificationTemplateObjectDefinitionIdException();
 			}
+		}
+
+		if (Validator.isNull(notificationTemplate.getEditorType())) {
+			throw new NotificationTemplateEditorTypeException(
+				"Editor type is null");
+		}
+
+		if (Validator.isNull(notificationTemplate.getName())) {
+			throw new NotificationTemplateNameException("Name is null");
 		}
 
 		if (Validator.isNull(notificationTemplate.getSubject())) {
