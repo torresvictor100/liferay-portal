@@ -56,21 +56,22 @@ public class GetLayoutClassedModelUsagesStrutsAction implements StrutsAction {
 		throws Exception {
 
 		String className = ParamUtil.getString(httpServletRequest, "className");
-		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
 		long classNameId = _portal.getClassNameId(className);
 
-		int usagesPageSize = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20);
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
 		int layoutClassedModelUsagesCount =
 			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesCount(classNameId, classPK);
 
-		int totalNumberOfPages = (int)Math.ceil(
-			layoutClassedModelUsagesCount / (double)usagesPageSize);
+		int delta = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20);
 
-		JSONArray usagesjsonArray = _jsonFactory.createJSONArray();
+		int totalNumberOfPages = (int)Math.ceil(
+			layoutClassedModelUsagesCount / (double)delta);
+
+		JSONArray usagesJSONArray = _jsonFactory.createJSONArray();
 
 		if (layoutClassedModelUsagesCount == 0) {
 			ServletResponseUtil.write(
@@ -78,11 +79,15 @@ public class GetLayoutClassedModelUsagesStrutsAction implements StrutsAction {
 				JSONUtil.put(
 					"totalNumberOfPages", totalNumberOfPages
 				).put(
-					"usages", usagesjsonArray
+					"usages", usagesJSONArray
 				).toString());
 
 			return null;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		int pageIndex = ParamUtil.getInteger(
 			httpServletRequest, "pageIndex", 1);
@@ -97,18 +102,14 @@ public class GetLayoutClassedModelUsagesStrutsAction implements StrutsAction {
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
-				classNameId, classPK, usagesPageSize * (pageIndex - 1),
-				usagesPageSize * pageIndex,
+				classNameId, classPK, delta * (pageIndex - 1),
+				delta * pageIndex,
 				new LayoutClassedModelUsageModifiedDateComparator(false));
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {
 
-			usagesjsonArray.put(
+			usagesJSONArray.put(
 				JSONUtil.put(
 					"id", layoutClassedModelUsage.getLayoutClassedModelUsageId()
 				).put(
@@ -141,7 +142,7 @@ public class GetLayoutClassedModelUsagesStrutsAction implements StrutsAction {
 			JSONUtil.put(
 				"totalNumberOfPages", totalNumberOfPages
 			).put(
-				"usages", usagesjsonArray
+				"usages", usagesJSONArray
 			).toString());
 
 		return null;
