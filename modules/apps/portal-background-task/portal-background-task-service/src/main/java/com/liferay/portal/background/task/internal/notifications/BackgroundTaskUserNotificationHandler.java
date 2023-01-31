@@ -51,15 +51,15 @@ public class BackgroundTaskUserNotificationHandler
 			userNotificationEvent.getPayload());
 
 		return StringUtil.replace(
-			getBodyTemplate(), new String[] {"[$TITLE$]", "[$BODY$]"},
+			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 			new String[] {
-				_language.get(serviceContext.getLocale(), "background-task"),
 				_language.format(
 					serviceContext.getLocale(), "background-task-has-failed",
 					new String[] {
 						jsonObject.getString("name"),
 						jsonObject.getString("taskExecutorClassName")
-					})
+					}),
+				_language.get(serviceContext.getLocale(), "background-task")
 			});
 	}
 
