@@ -84,12 +84,12 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	@Before
 	public void setUp() throws Exception {
 		if (_STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS) {
-			_groupCount = 5;
-			_userCount = 100;
+			_groupsCount = 5;
+			_usersCount = 100;
 		}
 		else {
-			_groupCount = 2;
-			_userCount = 3;
+			_groupsCount = 2;
+			_usersCount = 3;
 		}
 
 		groupSearchFixture = new GroupSearchFixture();
@@ -124,12 +124,12 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 	@Test
 	public void testAddUsersOnly() throws Exception {
-		addUsers(_userCount);
+		addUsers(_usersCount);
 	}
 
 	@Test
 	public void testAddUsersThenReindex() throws Exception {
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		reindex(users);
 	}
@@ -158,8 +158,8 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 		return groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
-	protected void addGroups(int groupCount, List<Group> groups) {
-		for (int i = 0; i < groupCount; i++) {
+	protected void addGroups(int groupsCount, List<Group> groups) {
+		for (int i = 0; i < groupsCount; i++) {
 			groups.add(addGroup());
 		}
 	}
@@ -228,7 +228,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 		List<User> users = new ArrayList<>();
 
-		measure(timesMap, "addUsers", () -> addUsers(_userCount, users));
+		measure(timesMap, "addUsers", () -> addUsers(_usersCount, users));
 
 		measure(
 			timesMap, "addUserGroupUsers",
@@ -239,7 +239,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 		List<Group> groups = new ArrayList<>();
 
-		measure(timesMap, "addGroups", () -> addGroups(_groupCount, groups));
+		measure(timesMap, "addGroups", () -> addGroups(_groupsCount, groups));
 
 		for (Group group : groups) {
 			measure(
@@ -386,7 +386,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();
 
-	private int _groupCount;
+	private int _groupsCount;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
@@ -394,7 +394,7 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	@DeleteAfterTestRun
 	private List<Organization> _organizations;
 
-	private int _userCount;
+	private int _usersCount;
 
 	@DeleteAfterTestRun
 	private List<UserGroup> _userGroups;

@@ -74,12 +74,12 @@ public class UserGroupCascadeReindexUsersTest {
 	@Before
 	public void setUp() throws Exception {
 		if (_STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS) {
-			_groupCount = 5;
-			_userCount = 100;
+			_groupsCount = 5;
+			_usersCount = 100;
 		}
 		else {
-			_groupCount = 2;
-			_userCount = 3;
+			_groupsCount = 2;
+			_usersCount = 3;
 		}
 
 		groupSearchFixture = new GroupSearchFixture();
@@ -99,12 +99,12 @@ public class UserGroupCascadeReindexUsersTest {
 
 	@Test
 	public void testAddUsersOnly() throws Exception {
-		addUsers(_userCount);
+		addUsers(_usersCount);
 	}
 
 	@Test
 	public void testAddUsersThenRetrieveBulk() throws Exception {
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		doTraverseWithActionableDynamicQuery(
 			users,
@@ -114,7 +114,7 @@ public class UserGroupCascadeReindexUsersTest {
 
 	@Test
 	public void testAddUsersThenRetrieveNonbulk() throws Exception {
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		doTraverseWithIndividualFetches(
 			users,
@@ -124,14 +124,14 @@ public class UserGroupCascadeReindexUsersTest {
 
 	@Test
 	public void testAddUsersThenTranslateBulk() throws Exception {
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		doTraverseWithActionableDynamicQuery(users, this::_translate);
 	}
 
 	@Test
 	public void testAddUsersThenTranslateNonbulk() {
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		doTraverseWithIndividualFetches(users, this::_translate);
 	}
@@ -142,7 +142,7 @@ public class UserGroupCascadeReindexUsersTest {
 
 		long userGroupId = userGroup.getUserGroupId();
 
-		List<User> users = addUsers(_userCount);
+		List<User> users = addUsers(_usersCount);
 
 		_userLocalService.addUserGroupUsers(userGroupId, users);
 
@@ -152,7 +152,7 @@ public class UserGroupCascadeReindexUsersTest {
 			searchResponse.getRequestString(), searchResponse.getDocuments(),
 			"userGroupIds", _repeat(String.valueOf(userGroupId), users.size()));
 
-		List<Group> groups = addGroups(_groupCount);
+		List<Group> groups = addGroups(_groupsCount);
 
 		for (Group group : groups) {
 			_userGroupLocalService.addGroupUserGroup(
@@ -171,10 +171,10 @@ public class UserGroupCascadeReindexUsersTest {
 		return groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
-	protected List<Group> addGroups(int groupCount) {
-		List<Group> groups = new ArrayList<>(groupCount);
+	protected List<Group> addGroups(int groupsCount) {
+		List<Group> groups = new ArrayList<>(groupsCount);
 
-		for (int i = 0; i < groupCount; i++) {
+		for (int i = 0; i < groupsCount; i++) {
 			groups.add(addGroup());
 		}
 
@@ -360,7 +360,7 @@ public class UserGroupCascadeReindexUsersTest {
 	@Inject
 	private static UserLocalService _userLocalService;
 
-	private int _groupCount;
-	private int _userCount;
+	private int _groupsCount;
+	private int _usersCount;
 
 }
