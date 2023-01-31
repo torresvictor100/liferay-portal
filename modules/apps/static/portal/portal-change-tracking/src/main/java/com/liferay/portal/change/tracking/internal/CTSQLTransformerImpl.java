@@ -235,9 +235,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public String transform(String sql) {
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		String key = _getTransformedSQLKey(ctCollectionId, sql);
-
 		String transformedSQL = null;
+
+		String key = _getTransformedSQLKey(ctCollectionId, sql);
 
 		if (ctCollectionId ==
 				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
@@ -303,7 +303,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		}
 		catch (JSQLParserException jsqlParserException) {
 			throw new RuntimeException(
-				"Failed to parse sql for " + sql, jsqlParserException);
+				"Unable to parse SQL for " + sql, jsqlParserException);
 		}
 	}
 
