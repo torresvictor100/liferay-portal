@@ -117,8 +117,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	public void setFrequenciesVisible(boolean frequenciesVisible) {
 		_frequenciesVisible = frequenciesVisible;
 	}
-	
-		public void setFrequencyThreshold(int frequencyThreshold) {
+
+	public void setFrequencyThreshold(int frequencyThreshold) {
 		_frequencyThreshold = frequencyThreshold;
 	}
 
