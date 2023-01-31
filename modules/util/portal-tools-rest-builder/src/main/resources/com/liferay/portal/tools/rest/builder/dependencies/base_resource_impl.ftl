@@ -969,22 +969,18 @@ public abstract class Base${schemaName}ResourceImpl
 
 		Map<String, Permission> permissions = new LinkedHashMap<>();
 
-		List<ResourcePermission> resourcePermissionList = new ArrayList<>();
-
-		Class<? extends ResourcePermissionLocalService> clazz = ResourcePermissionLocalService.class;
+		List<ResourcePermission> resourcePermissions = new ArrayList<>();
 
 		try {
-			Method method = clazz.getMethod("getResourcePermissions", String.class);
+			Method method = ResourcePermissionLocalService.class.getMethod("getResourcePermissions", String.class);
 
-			resourcePermissionList = (List<ResourcePermission>)method.invoke(resourcePermissionLocalService, resourceName);
-
-		} catch (NoSuchMethodException noSuchMethodException) {
-
-			resourcePermissionList = resourcePermissionLocalService.getResourcePermissions(
-				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(resourceId));
+			resourcePermissions = (List<ResourcePermission>)method.invoke(resourcePermissionLocalService, resourceName);
 		}
-		for (ResourcePermission resourcePermission : resourcePermissionList) {
+		catch (NoSuchMethodException noSuchMethodException) {
+			resourcePermissions = resourcePermissionLocalService.getResourcePermissions(companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(resourceId));
+		}
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if ((resourcePermission.getPrimKeyId() == 0) || (resourcePermission.getPrimKeyId() == resourceId)) {
 				com.liferay.portal.kernel.model.Role role = roleLocalService.getRole(resourcePermission.getRoleId());
 
