@@ -34,7 +34,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -109,21 +108,21 @@ public class CommerceOrderModelDocumentContributor
 	private String[] _getCommerceOrderItemNames(CommerceOrder commerceOrder) {
 		List<String> commerceOrderItemNamesList = new ArrayList<>();
 
-		Set<Locale> availableLocales = _language.getAvailableLocales(
-			commerceOrder.getGroupId());
+		for (Locale locale :
+				_language.getAvailableLocales(commerceOrder.getGroupId())) {
 
-		for (Locale locale : availableLocales) {
 			for (CommerceOrderItem commerceOrderItem :
 					commerceOrder.getCommerceOrderItems()) {
 
-				String orderItemName = commerceOrderItem.getName(locale);
+				String commerceOrderItemName = commerceOrderItem.getName(
+					locale);
 
-				if (Validator.isNull(orderItemName)) {
-					orderItemName = _localization.getDefaultLanguageId(
+				if (Validator.isNull(commerceOrderItemName)) {
+					commerceOrderItemName = _localization.getDefaultLanguageId(
 						commerceOrderItem.getName());
 				}
 
-				commerceOrderItemNamesList.add(orderItemName);
+				commerceOrderItemNamesList.add(commerceOrderItemName);
 			}
 		}
 
@@ -131,10 +130,10 @@ public class CommerceOrderModelDocumentContributor
 	}
 
 	private String[] _getCommerceOrderItemSKUs(CommerceOrder commerceOrder) {
+		List<String> commerceOrderItemSKUsList = new ArrayList<>();
+
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
-
-		List<String> commerceOrderItemSKUsList = new ArrayList<>();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			commerceOrderItemSKUsList.add(commerceOrderItem.getSku());
