@@ -503,26 +503,23 @@ public abstract class BaseSegmentUserResourceImpl
 
 		Map<String, Permission> permissions = new LinkedHashMap<>();
 
-		List<ResourcePermission> resourcePermissionList = new ArrayList<>();
-
-		Class<? extends ResourcePermissionLocalService> clazz =
-			ResourcePermissionLocalService.class;
+		List<ResourcePermission> resourcePermissions = new ArrayList<>();
 
 		try {
-			Method method = clazz.getMethod(
+			Method method = ResourcePermissionLocalService.class.getMethod(
 				"getResourcePermissions", String.class);
 
-			resourcePermissionList = (List<ResourcePermission>)method.invoke(
+			resourcePermissions = (List<ResourcePermission>)method.invoke(
 				resourcePermissionLocalService, resourceName);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			resourcePermissionList =
+			resourcePermissions =
 				resourcePermissionLocalService.getResourcePermissions(
 					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(resourceId));
 		}
 
-		for (ResourcePermission resourcePermission : resourcePermissionList) {
+		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if ((resourcePermission.getPrimKeyId() == 0) ||
 				(resourcePermission.getPrimKeyId() == resourceId)) {
 
