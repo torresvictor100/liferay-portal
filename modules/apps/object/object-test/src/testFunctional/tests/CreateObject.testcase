@@ -6569,7 +6569,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object 145");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object 145");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -6878,11 +6878,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object 147");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object 147");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object 147");
+		CreateObject.activeCustomObject(objectLabel = "Custom Object 147");
 
 		Navigator.openURL();
 
@@ -8066,7 +8066,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object A 169");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object A 169");
 
 		Navigator.openURL();
 
@@ -8405,7 +8405,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object B 173");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object B 173");
 
 		Navigator.openURL();
 
@@ -8421,13 +8421,13 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object B 173");
+		CreateObject.activeCustomObject(objectLabel = "Custom Object B 173");
 
 		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object A 173");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object A 173");
 
 		Navigator.openURL();
 
@@ -8510,7 +8510,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object B 174");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object B 174");
 
 		Navigator.openURL();
 
@@ -8595,11 +8595,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object 140875 B");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object 140875 B");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object 140875 B");
+		CreateObject.activeCustomObject(objectLabel = "Custom Object 140875 B");
 
 		Navigator.openURL();
 
@@ -8613,11 +8613,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.inactiveCustomObject(objectName = "Custom Object 140875 A");
+		CreateObject.inactiveCustomObject(objectLabel = "Custom Object 140875 A");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.activeCustomObject(objectName = "Custom Object 140875 A");
+		CreateObject.activeCustomObject(objectLabel = "Custom Object 140875 A");
 
 		Navigator.openURL();
 
@@ -8897,7 +8897,7 @@ definition {
 
 		ObjectAdmin.openMySubmissions();
 
-		CreateObject.withdrawObjectTask(objectName = "Custom Object 177");
+		CreateObject.withdrawObjectTask(objectLabel = "Custom Object 177");
 
 		Navigator.openURL();
 
