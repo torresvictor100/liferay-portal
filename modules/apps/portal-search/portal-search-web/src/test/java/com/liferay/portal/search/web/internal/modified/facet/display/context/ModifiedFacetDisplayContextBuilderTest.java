@@ -291,12 +291,38 @@ public class ModifiedFacetDisplayContextBuilderTest
 	public void testOneTermWithPreviousSelection() throws Exception {
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
+		testOrderBy(
+			new int[] {1, 3, 3, 4},
+			new String[] {
+				"past-24-hours", "past-month", "past-week", "past-hour"
+			},
+			new int[] {4, 3, 3, 1}, "count:asc",
+			new String[] {
+				"[20180515225959 TO 20180515235959]",
+				"[20180508235959 TO 20180508235959]",
+				"[20180508235959 TO 20180415235959]",
+				"[20180508235959 TO 20180514235959]"
+			});
 	}
 
+	@Override
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
+		testOrderBy(
+			new int[] {3, 3, 2, 1},
+			new String[] {
+				"past-24-hours", "past-month", "past-week", "past-hour"
+			},
+			new int[] {1, 2, 3, 3}, "count:desc",
+			new String[] {
+				"[20180515225959 TO 20180515235959]",
+				"[20180508235959 TO 20180508235959]",
+				"[20180508235959 TO 20180415235959]",
+				"[20180508235959 TO 20180514235959]"
+			});
 	}
 
 	@Override
@@ -344,6 +370,35 @@ public class ModifiedFacetDisplayContextBuilderTest
 		facetConfiguration.setDataJSONObject(dataJSONObject);
 
 		return facetConfiguration;
+	}
+
+	@Override
+	protected void testOrderBy(
+			int[] expectedFrequencies, String[] expectedTerms,
+			int[] frequencies, String order, String[] terms)
+		throws Exception {
+
+		setUpTermCollectors(
+			_facetCollector, getTermCollectors(terms, frequencies));
+
+		ModifiedFacetDisplayContextBuilder modifiedFacetDisplayContextBuilder =
+			createDisplayContextBuilder(order);
+
+		_mockFacetConfiguration(
+			"past-hour=[20180515225959 TO 20180515235959]",
+			"past-week=[20180508235959 TO 20180508235959]",
+			"past-month=[20180508235959 TO 20180415235959]",
+			"past-24-hours=[20180508235959 TO 20180514235959]");
+
+		modifiedFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
+		modifiedFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
+
+		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
+			modifiedFacetDisplayContextBuilder.build();
+
+		assertFacetOrder(
+			modifiedFacetDisplayContext.getBucketDisplayContexts(),
+			expectedTerms, expectedFrequencies);
 	}
 
 	protected Portal portal = Mockito.mock(Portal.class);
