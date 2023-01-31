@@ -702,6 +702,21 @@ public class ServletDataImpl implements ServletData {
 							ProductShippingConfigurationResourceImpl.class,
 							"patchProductIdShippingConfiguration"));
 					put(
+						"mutation#deleteProductSpecification",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"deleteProductSpecification"));
+					put(
+						"mutation#deleteProductSpecificationBatch",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"deleteProductSpecificationBatch"));
+					put(
+						"mutation#patchProductSpecification",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"patchProductSpecification"));
+					put(
 						"mutation#createProductIdProductSpecification",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -1080,6 +1095,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductShippingConfigurationResourceImpl.class,
 							"getProductIdShippingConfiguration"));
+					put(
+						"query#productSpecification",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getProductSpecification"));
 					put(
 						"query#productIdProductSpecifications",
 						new ObjectValuePair<>(
