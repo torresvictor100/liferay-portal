@@ -64,22 +64,21 @@ public class BackgroundTaskStatusMessageListenerTest {
 				BackgroundTaskStatusMessageListenerTest.class.getClassLoader(),
 				new Class<?>[] {BackgroundTaskExecutor.class},
 				(proxy, method, argus) -> {
-					if (Objects.equals(method.getName(), "execute")) {
-						return new BackgroundTaskResult(
-							BackgroundTaskConstants.STATUS_FAILED);
-					}
-
 					if (Objects.equals(method.getName(), "clone")) {
 						return proxy;
 					}
-
-					if (Objects.equals(method.getName(), "isSerial")) {
-						return false;
+					else if (Objects.equals(method.getName(), "execute")) {
+						return new BackgroundTaskResult(
+							BackgroundTaskConstants.STATUS_FAILED);
 					}
+					else if (Objects.equals(
+								method.getName(), "getIsolationLevel")) {
 
-					if (Objects.equals(method.getName(), "getIsolationLevel")) {
 						return BackgroundTaskConstants.
 							ISOLATION_LEVEL_NOT_ISOLATED;
+					}
+					else if (Objects.equals(method.getName(), "isSerial")) {
+						return false;
 					}
 
 					return null;
