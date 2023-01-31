@@ -376,9 +376,9 @@ public class WikiPageStagedModelDataHandler
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Can not restore wiki page from recycle bin.  A page ",
-						"with the same title '", page.getTitle(),
-						"' already exists."));
+						"Unable to restore wiki page from the Recycle Bin. A ",
+						"wiki page with the same title \"", page.getTitle(),
+						"\" already exists."));
 			}
 
 			return;
