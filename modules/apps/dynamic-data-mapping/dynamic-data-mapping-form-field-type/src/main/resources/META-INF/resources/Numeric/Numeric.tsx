@@ -103,7 +103,10 @@ const getMaskedValue = ({
 	);
 
 	return {
-		masked,
+		masked:
+			dataType === 'double'
+				? Number(masked).toFixed(decimalPlaces)
+				: masked,
 		placeholder:
 			dataType === 'double'
 				? `0${symbols.decimalSymbol}${'0'.repeat(decimalPlaces)}`
