@@ -282,19 +282,19 @@ public class DataStorageUtil {
 	private static Map<String, Object> _toLocalizedMap(
 		String fieldType, LocalizedValue localizedValue) {
 
-		Function<Locale, Object> mapFunction = localizedValue::getString;
+		Map<String, Object> localizedMap = new HashMap<>();
+
+		Function<Locale, Object> function = localizedValue::getString;
 
 		if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
 			fieldType.equals(DDMFormFieldType.SELECT)) {
 
-			mapFunction = locale -> _toStringList(locale, localizedValue);
+			function = locale -> _toStringList(locale, localizedValue);
 		}
-
-		Map<String, Object> localizedMap = new HashMap<>();
 
 		for (Locale locale : localizedValue.getAvailableLocales()) {
 			localizedMap.put(
-				LanguageUtil.getLanguageId(locale), mapFunction.apply(locale));
+				LanguageUtil.getLanguageId(locale), function.apply(locale));
 		}
 
 		return localizedMap;
