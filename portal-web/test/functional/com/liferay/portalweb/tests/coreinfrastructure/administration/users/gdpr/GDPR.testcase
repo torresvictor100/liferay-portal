@@ -127,6 +127,7 @@ definition {
 		}
 	}
 
+	@description = "This test adds entries from different application and anonymizes all entries via Select All"
 	@priority = "4"
 	test CanAnonymizeAllEntries {
 		JSONBlog.addEntry(
@@ -556,6 +557,7 @@ definition {
 
 	}
 
+	@description = "This test anonymizes a single entry from an application"
 	@priority = "5"
 	test CanAnonymizeEntryFromApplication {
 		property portal.acceptance = "true";
@@ -590,7 +592,7 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
-	@description = "LPS-77748"
+	@description = "This tests LPS-77748. This test anonymizes multiple entries from a single application"
 	@priority = "3"
 	test CanAnonymizeMultipleEntriesFromAnApplication {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -786,6 +788,7 @@ definition {
 		}
 	}
 
+	@description = "This test deletes all entries when filtered by Instance scope"
 	@priority = "4"
 	test CanDeleteAllEntriesFromInstanceScope {
 		JSONLayout.addPublicLayout(
@@ -840,6 +843,7 @@ definition {
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcement Entry Title");
 	}
 
+	@description = "This test deletes all entries when filtered by Personal Site scope"
 	@priority = "4"
 	test CanDeleteAllEntriesFromPersonalSiteScope {
 		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
@@ -896,6 +900,7 @@ definition {
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 	}
 
+	@description = "This test deletes all entries when filtered by Regular Sites scope"
 	@priority = "4"
 	test CanDeleteAllEntriesFromRegularSitesScope {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1311,6 +1316,7 @@ definition {
 
 	}
 
+	@description = "This test deletes a single entry from a single application"
 	@priority = "5"
 	test CanDeleteEntryFromApplication {
 		property portal.acceptance = "true";
@@ -1387,6 +1393,7 @@ definition {
 		AssertTextNotPresent(value1 = "Document_2");
 	}
 
+	@description = "This test edits an entry in Delete Personal Data"
 	@priority = "4"
 	test CanEditEntryFromApplication {
 		ProductMenuHelper.openProductMenu();
@@ -1433,6 +1440,7 @@ definition {
 			tableEntryPartialTextList = "Document_1.txt,Edit DM Document Description");
 	}
 
+	@description = "This test exports multiple entries from different applications"
 	@priority = "4"
 	test CanExportMultipleEntries {
 		property portal.acceptance = "true";
@@ -1786,7 +1794,7 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
-	@description = "LPS-77749"
+	@description = "LPS-77749. This test orders entries by Name and by Description"
 	@priority = "2"
 	test CanOrderDataInViewData {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
