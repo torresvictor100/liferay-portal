@@ -53,7 +53,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AnonymizeAllEntries {
+	test CanAnonymizeAllEntries {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@priority = "5"
-	test AnonymizeEntryFromApplication {
+	test CanAnonymizeEntryFromApplication {
 		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -1546,7 +1546,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteAllEntriesFromInstanceScope {
+	test CanDeleteAllEntriesFromInstanceScope {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Announcements Page");
@@ -1600,7 +1600,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteAllEntriesFromPersonalSiteScope {
+	test CanDeleteAllEntriesFromPersonalSiteScope {
 		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
@@ -1656,7 +1656,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteAllEntriesFromRegularSitesScope {
+	test CanDeleteAllEntriesFromRegularSitesScope {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -1699,7 +1699,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteEntryFromApplication {
+	test CanDeleteEntryFromApplication {
 		property portal.acceptance = "true";
 
 		JSONBlog.addEntry(
@@ -1733,7 +1733,7 @@ definition {
 	}
 
 	@priority = "4"
-	test EditEntryFromApplication {
+	test CanEditEntryFromApplication {
 		ProductMenuHelper.openProductMenu();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -1922,7 +1922,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ExportAllEntries {
+	test CanExportMultipleEntries {
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
