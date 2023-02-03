@@ -217,10 +217,11 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		String[] previousSyncedAccountFieldNames =
 			analyticsConfiguration.previousSyncedAccountFieldNames();
 
+		Arrays.sort(previousSyncedAccountFieldNames);
+
 		String[] syncedAccountFieldNames =
 			analyticsConfiguration.syncedAccountFieldNames();
 
-		Arrays.sort(previousSyncedAccountFieldNames);
 		Arrays.sort(syncedAccountFieldNames);
 
 		if ((previousSyncedAccountFieldNames.length != 0) &&
@@ -247,10 +248,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 		String[] previousSyncedAccountGroupIds =
 			analyticsConfiguration.previousSyncedAccountGroupIds();
+
+		Arrays.sort(previousSyncedAccountGroupIds);
+
 		String[] syncedAccountGroupIds =
 			analyticsConfiguration.syncedAccountGroupIds();
 
-		Arrays.sort(previousSyncedAccountGroupIds);
 		Arrays.sort(syncedAccountGroupIds);
 
 		if (!analyticsConfiguration.syncAllAccounts() &&
@@ -269,15 +272,14 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
 
+		String[] previousSyncedAccountGroupIds =
+			analyticsConfiguration.previousSyncedAccountGroupIds();
 		String[] syncedAccountGroupIds =
 			analyticsConfiguration.syncedAccountGroupIds();
 
-		String[] previousSyncedAccountGroupIds =
-			analyticsConfiguration.previousSyncedAccountGroupIds();
-
 		if (analyticsConfiguration.syncAllAccounts() ||
-			(syncedAccountGroupIds.length != 0) ||
-			(previousSyncedAccountGroupIds.length != 0)) {
+			(previousSyncedAccountGroupIds.length != 0) ||
+			(syncedAccountGroupIds.length != 0)) {
 
 			return true;
 		}
@@ -293,17 +295,23 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 		String[] commerceSyncEnabledAnalyticsChannelIds =
 			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds();
+
+		Arrays.sort(commerceSyncEnabledAnalyticsChannelIds);
+
 		String[] previousCommerceSyncEnabledAnalyticsChannelIds =
 			analyticsConfiguration.
 				previousCommerceSyncEnabledAnalyticsChannelIds();
+
+		Arrays.sort(previousCommerceSyncEnabledAnalyticsChannelIds);
+
 		String[] previousSyncedCommerceChannelIds =
 			analyticsConfiguration.previousSyncedCommerceChannelIds();
+
+		Arrays.sort(previousSyncedCommerceChannelIds);
+
 		String[] syncedCommerceChannelIds =
 			analyticsConfiguration.syncedCommerceChannelIds();
 
-		Arrays.sort(commerceSyncEnabledAnalyticsChannelIds);
-		Arrays.sort(previousCommerceSyncEnabledAnalyticsChannelIds);
-		Arrays.sort(previousSyncedCommerceChannelIds);
 		Arrays.sort(syncedCommerceChannelIds);
 
 		if (!Arrays.equals(
@@ -352,22 +360,29 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 		String[] previousSyncedOrganizationIds =
 			analyticsConfiguration.previousSyncedOrganizationIds();
+
+		Arrays.sort(previousSyncedOrganizationIds);
+
 		String[] previousSyncedUserGroupIds =
 			analyticsConfiguration.previousSyncedUserGroupIds();
+
+		Arrays.sort(previousSyncedUserGroupIds);
+
 		String[] syncedOrganizationIds =
 			analyticsConfiguration.syncedOrganizationIds();
+
+		Arrays.sort(syncedOrganizationIds);
+
 		String[] syncedUserGroupIds =
 			analyticsConfiguration.syncedUserGroupIds();
 
-		Arrays.sort(previousSyncedOrganizationIds);
-		Arrays.sort(previousSyncedUserGroupIds);
-		Arrays.sort(syncedOrganizationIds);
 		Arrays.sort(syncedUserGroupIds);
 
 		if (!analyticsConfiguration.syncAllContacts() &&
-			(!Arrays.equals(previousSyncedUserGroupIds, syncedUserGroupIds) ||
+			(!Arrays.equals(
+				previousSyncedOrganizationIds, syncedOrganizationIds) ||
 			 !Arrays.equals(
-				 previousSyncedOrganizationIds, syncedOrganizationIds))) {
+				 previousSyncedUserGroupIds, syncedUserGroupIds))) {
 
 			return true;
 		}
@@ -381,15 +396,14 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
 
+		String[] syncedOrganizationIds =
+			analyticsConfiguration.syncedOrganizationIds();
 		String[] syncedUserGroupIds =
 			analyticsConfiguration.syncedUserGroupIds();
 
-		String[] syncedOrganizationIds =
-			analyticsConfiguration.syncedOrganizationIds();
-
 		if (analyticsConfiguration.syncAllContacts() ||
-			(syncedUserGroupIds.length != 0) ||
-			(syncedOrganizationIds.length != 0)) {
+			(syncedOrganizationIds.length != 0) ||
+			(syncedUserGroupIds.length != 0)) {
 
 			return true;
 		}
@@ -403,10 +417,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 		String[] previousSyncedOrderFieldNames =
 			analyticsConfiguration.previousSyncedOrderFieldNames();
+
+		Arrays.sort(previousSyncedOrderFieldNames);
+
 		String[] syncedOrderFieldNames =
 			analyticsConfiguration.syncedOrderFieldNames();
 
-		Arrays.sort(previousSyncedOrderFieldNames);
 		Arrays.sort(syncedOrderFieldNames);
 
 		if ((previousSyncedOrderFieldNames.length != 0) &&
@@ -425,10 +441,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 		String[] previousSyncedProductFieldNames =
 			analyticsConfiguration.previousSyncedProductFieldNames();
+
+		Arrays.sort(previousSyncedProductFieldNames);
+
 		String[] syncedProductFieldNames =
 			analyticsConfiguration.syncedProductFieldNames();
 
-		Arrays.sort(previousSyncedProductFieldNames);
 		Arrays.sort(syncedProductFieldNames);
 
 		if ((previousSyncedProductFieldNames.length != 0) &&
@@ -448,18 +466,21 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		String[] previousSyncedContactFieldNames =
 			analyticsConfiguration.previousSyncedContactFieldNames();
 
+		Arrays.sort(previousSyncedContactFieldNames);
+
 		String[] previousSyncedUserFieldNames =
 			analyticsConfiguration.previousSyncedUserFieldNames();
+
+		Arrays.sort(previousSyncedUserFieldNames);
 
 		String[] syncedContactFieldNames =
 			analyticsConfiguration.syncedContactFieldNames();
 
+		Arrays.sort(syncedContactFieldNames);
+
 		String[] syncedUserFieldNames =
 			analyticsConfiguration.syncedUserFieldNames();
 
-		Arrays.sort(previousSyncedContactFieldNames);
-		Arrays.sort(previousSyncedUserFieldNames);
-		Arrays.sort(syncedContactFieldNames);
 		Arrays.sort(syncedUserFieldNames);
 
 		if ((previousSyncedContactFieldNames.length != 0) &&
