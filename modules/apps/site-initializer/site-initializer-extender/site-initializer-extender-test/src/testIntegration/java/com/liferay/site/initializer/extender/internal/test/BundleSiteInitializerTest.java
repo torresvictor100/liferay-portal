@@ -100,6 +100,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -156,6 +157,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -1086,8 +1088,8 @@ public class BundleSiteInitializerTest {
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		_assertObjectActions(3, objectDefinition1);
-		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 9);
+		_assertObjectEntries(group.getGroupId(), objectDefinition1, 5);
+		_assertObjectFields(objectDefinition1, 8);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
@@ -1100,7 +1102,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(2, objectDefinition2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
-		_assertObjectFields(objectDefinition2, 8);
+		_assertObjectFields(objectDefinition2, 9);
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -1123,10 +1125,24 @@ public class BundleSiteInitializerTest {
 			int objectEntriesCount)
 		throws Exception {
 
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				groupId, objectDefinition.getObjectDefinitionId(), -1, -1);
+
+		Assert.assertNotNull(objectEntries);
 		Assert.assertEquals(
-			objectEntriesCount,
-			_objectEntryLocalService.getObjectEntriesCount(
-				groupId, objectDefinition.getObjectDefinitionId()));
+			objectEntries.toString(), objectEntriesCount, objectEntries.size());
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			Map<String, Serializable> objectEntryValues =
+				objectEntry.getValues();
+
+			for (Map.Entry<String, Serializable> entry :
+					objectEntryValues.entrySet()) {
+
+				Assert.assertTrue(Validator.isNotNull(entry.getValue()));
+			}
+		}
 	}
 
 	private void _assertObjectFields(
@@ -1142,6 +1158,9 @@ public class BundleSiteInitializerTest {
 			ObjectDefinition objectDefinition, ServiceContext serviceContext)
 		throws Exception {
 
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition("User");
+
 		ObjectRelationshipResource.Builder objectRelationshipResourceBuilder =
 			_objectRelationshipResourceFactory.create();
 
@@ -1153,7 +1172,7 @@ public class BundleSiteInitializerTest {
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinition.getObjectDefinitionId(), null,
+					objectDefinition1.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter("name eq 'testOR1'"),
 					null);
 
