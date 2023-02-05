@@ -341,14 +341,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addDefaultGroups(long userId) throws PortalException {
+		Set<Group> defaultGroups = new TreeSet<>(
+			Comparator.comparing(GroupModel::getTreePath));
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		String[] defaultGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_GROUP_NAMES);
-
-		Set<Group> defaultGroups = new TreeSet<>(
-			Comparator.comparing(GroupModel::getTreePath));
 
 		for (String defaultGroupName : defaultGroupNames) {
 			Company company = _companyPersistence.findByPrimaryKey(
@@ -390,10 +390,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long[] userGroupIds = user.getGroupIds();
 
-		Iterator<Group> groupIterator = defaultGroups.iterator();
+		Iterator<Group> iterator = defaultGroups.iterator();
 
-		while (groupIterator.hasNext()) {
-			Group group = groupIterator.next();
+		while (iterator.hasNext()) {
+			Group group = iterator.next();
 
 			long groupId = group.getGroupId();
 
@@ -403,7 +403,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 			else {
-				groupIterator.remove();
+				iterator.remove();
 			}
 		}
 
