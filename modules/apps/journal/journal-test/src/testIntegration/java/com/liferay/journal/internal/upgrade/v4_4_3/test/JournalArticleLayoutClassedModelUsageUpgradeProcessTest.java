@@ -113,7 +113,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
 
-		_assertAssetPublisherPortletPreferencesCount(false, 2);
+		_assertAssetPublisherPortletPreferencesCount(2, false);
 
 		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
-		_assertAssetPublisherPortletPreferencesCount(true, 1);
+		_assertAssetPublisherPortletPreferencesCount(1, true);
 
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
@@ -170,7 +170,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_publicLayout));
 
-		_assertAssetPublisherPortletPreferencesCount(false, 2);
+		_assertAssetPublisherPortletPreferencesCount(2, false);
 
 		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
 
@@ -182,7 +182,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
 				_privateLayout));
 
-		_assertAssetPublisherPortletPreferencesCount(true, 1);
+		_assertAssetPublisherPortletPreferencesCount(1, true);
 
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
@@ -236,7 +236,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	}
 
 	private void _assertAssetPublisherPortletPreferencesCount(
-		boolean privateLayout, int expected) {
+		int count, boolean privateLayout) {
 
 		List<PortletPreferences> portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(
@@ -246,18 +246,18 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				AssetPublisherPortletKeys.ASSET_PUBLISHER, privateLayout);
 
 		Assert.assertEquals(
-			portletPreferences.toString(), expected, portletPreferences.size());
+			portletPreferences.toString(), count, portletPreferences.size());
 	}
 
 	private void _assertJournalContentSearchesCount(
-		String articleId, int expected) {
+		String articleId, int count) {
 
 		List<JournalContentSearch> articleContentSearches =
 			_journalContentSearchLocalService.getArticleContentSearches(
 				articleId);
 
 		Assert.assertEquals(
-			articleContentSearches.toString(), expected,
+			articleContentSearches.toString(), count,
 			articleContentSearches.size());
 	}
 
@@ -271,14 +271,14 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				containerType, plid));
 	}
 
-	private void _assertLayoutClassedModelUsageCount(int expected) {
+	private void _assertLayoutClassedModelUsageCount(int count) {
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
 				_journalArticleClassNameId,
 				_journalArticle.getResourcePrimKey());
 
 		Assert.assertEquals(
-			layoutClassedModelUsages.toString(), expected,
+			layoutClassedModelUsages.toString(), count,
 			layoutClassedModelUsages.size());
 	}
 
