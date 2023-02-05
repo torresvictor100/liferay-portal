@@ -39,7 +39,7 @@ public class DTOMapperImpl implements DTOMapper {
 
 	@Override
 	public String toInternalDTOClassName(String externalDTOClassName) {
-		return _externalInternalDTOClassNameMap.get(externalDTOClassName);
+		return _internalDTOClassNames.get(externalDTOClassName);
 	}
 
 	@Activate
@@ -60,8 +60,7 @@ public class DTOMapperImpl implements DTOMapper {
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<String, String> _externalInternalDTOClassNameMap =
-		new HashMap<>();
+	private final Map<String, String> _internalDTOClassNames = new HashMap<>();
 	private ServiceTracker<DTOConverter<?, ?>, String> _serviceTracker;
 
 	private class DTOConverterServiceTrackerCustomizer
@@ -98,7 +97,7 @@ public class DTOMapperImpl implements DTOMapper {
 				return null;
 			}
 
-			_externalInternalDTOClassNameMap.put(
+			_internalDTOClassNames.put(
 				externalDTOClassName, internalDTOClassName);
 
 			_bundleContext.ungetService(serviceReference);
@@ -117,7 +116,7 @@ public class DTOMapperImpl implements DTOMapper {
 			ServiceReference<DTOConverter<?, ?>> serviceReference,
 			String externalDTOClassName) {
 
-			_externalInternalDTOClassNameMap.remove(externalDTOClassName);
+			_internalDTOClassNames.remove(externalDTOClassName);
 		}
 
 		private String _getDTOConverterGenericType(

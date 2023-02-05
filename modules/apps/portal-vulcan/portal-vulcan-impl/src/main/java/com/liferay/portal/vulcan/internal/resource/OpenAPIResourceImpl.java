@@ -539,7 +539,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		Set<String> classNames = new HashSet<>();
 
 		for (Class<?> resourceClass : resourceClasses) {
-			String entryClassName = _jaxRsResourceEntryClassNameMap.get(
+			String entryClassName = _entityClassNames.get(
 				resourceClass.getName());
 
 			if (entryClassName != null) {
@@ -1403,11 +1403,11 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
+	private final Map<String, String> _entityClassNames =
+		new ConcurrentHashMap<>();
+
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
-
-	private final Map<String, String> _jaxRsResourceEntryClassNameMap =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;
@@ -1431,7 +1431,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				return null;
 			}
 
-			_jaxRsResourceEntryClassNameMap.put(componentName, entityClassName);
+			_entityClassNames.put(componentName, entityClassName);
 
 			return componentName;
 		}
@@ -1445,7 +1445,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		public void removedService(
 			ServiceReference<Object> serviceReference, String componentName) {
 
-			_jaxRsResourceEntryClassNameMap.remove(componentName);
+			_entityClassNames.remove(componentName);
 		}
 
 	}
