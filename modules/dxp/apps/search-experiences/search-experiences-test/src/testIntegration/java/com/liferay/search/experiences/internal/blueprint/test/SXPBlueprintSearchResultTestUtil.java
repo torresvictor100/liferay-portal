@@ -57,13 +57,11 @@ public class SXPBlueprintSearchResultTestUtil {
 			new ElementInstance[sxpElementNames.length];
 
 		for (int i = 0; i < sxpElementNames.length; i++) {
-			String sxpElementName = sxpElementNames[i];
-
 			SXPElement sxpElement = null;
 
 			for (SXPElement sxpE : sxpElements) {
 				if (StringUtil.equalsIgnoreCase(
-						sxpE.getTitle(LocaleUtil.US), sxpElementName)) {
+						sxpE.getTitle(LocaleUtil.US), sxpElementNames[i])) {
 
 					sxpElement = sxpE;
 
