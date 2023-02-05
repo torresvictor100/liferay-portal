@@ -249,11 +249,11 @@ public class EditImageConfigurationEntryMVCActionCommand
 				break;
 			}
 
-			AMImageConfigurationEntry nullableAMImageConfigurationEntry =
+			AMImageConfigurationEntry amImageConfigurationEntry =
 				_amImageConfigurationHelper.getAMImageConfigurationEntry(
 					companyId, curUuid);
 
-			if (nullableAMImageConfigurationEntry == null) {
+			if (amImageConfigurationEntry == null) {
 				break;
 			}
 
