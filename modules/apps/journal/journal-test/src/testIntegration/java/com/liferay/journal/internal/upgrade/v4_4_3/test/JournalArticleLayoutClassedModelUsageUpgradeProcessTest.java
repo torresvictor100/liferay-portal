@@ -127,11 +127,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
-		_assertLayoutClassedModelUsageCount(0);
+		_assertLayoutClassedModelUsagesCount(0);
 
 		_runUpgrade();
 
-		_assertLayoutClassedModelUsageCount(4);
+		_assertLayoutClassedModelUsagesCount(4);
 
 		long portletClassNameId = _classNameLocalService.getClassNameId(
 			Portlet.class.getName());
@@ -184,7 +184,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
-		_assertLayoutClassedModelUsageCount(0);
+		_assertLayoutClassedModelUsagesCount(0);
 
 		_layoutClassedModelUsageLocalService.addDefaultLayoutClassedModelUsage(
 			_journalArticle.getGroupId(), _journalArticleClassNameId,
@@ -198,7 +198,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_assertLayoutClassedModelUsageCount(0);
+		_assertLayoutClassedModelUsagesCount(0);
 	}
 
 	private String _addAssetPublisherPortletToLayout(
@@ -269,7 +269,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				containerType, plid));
 	}
 
-	private void _assertLayoutClassedModelUsageCount(int count) {
+	private void _assertLayoutClassedModelUsagesCount(int count) {
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
 				_journalArticleClassNameId,
