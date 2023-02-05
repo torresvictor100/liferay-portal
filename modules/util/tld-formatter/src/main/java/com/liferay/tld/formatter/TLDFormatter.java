@@ -107,7 +107,7 @@ public class TLDFormatter {
 		return _modifiedFileNames;
 	}
 
-	private String _documentToString(Node node) throws Exception {
+	private String _toString(Node node) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
@@ -159,7 +159,7 @@ public class TLDFormatter {
 			}
 		}
 
-		String newContent = _documentToString(document);
+		String newContent = _toString(document);
 
 		int x = newContent.indexOf("<tlib-version");
 		int y = newContent.indexOf("</taglib>");
