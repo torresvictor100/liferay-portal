@@ -60,8 +60,8 @@ public class JournalContentPortletConfigurationListener
 			portletPreferences.reset("portletSetupUseCustomTitle");
 
 			if (_resetValues(portletPreferences)) {
-				portletPreferences.reset("assetEntryId");
 				portletPreferences.reset("articleId");
+				portletPreferences.reset("assetEntryId");
 				portletPreferences.reset("ddmTemplateKey");
 				portletPreferences.reset("groupId");
 			}
