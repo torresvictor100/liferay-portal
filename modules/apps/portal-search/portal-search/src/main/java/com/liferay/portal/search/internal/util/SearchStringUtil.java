@@ -54,14 +54,14 @@ public class SearchStringUtil {
 		);
 	}
 
-	public static String[] splitAndUnquote(String s) {
-		List<String> finalStrings = new ArrayList<>();
+	public static String[] splitAndUnquote(String string) {
+		List<String> list = new ArrayList<>();
 
-		for (String splitString : StringUtil.split(s.trim(), CharPool.COMMA)) {
-			finalStrings.add(StringUtil.unquote(splitString.trim()));
+		for (String part : StringUtil.split(string.trim(), CharPool.COMMA)) {
+			list.add(StringUtil.unquote(part.trim()));
 		}
 
-		return finalStrings.toArray(new String[0]);
+		return list.toArray(new String[0]);
 	}
 
 }

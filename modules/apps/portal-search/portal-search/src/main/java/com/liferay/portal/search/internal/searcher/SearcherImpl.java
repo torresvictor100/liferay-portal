@@ -287,8 +287,8 @@ public class SearcherImpl implements Searcher {
 	private <T> T _transform(T t, Collection<Function<T, T>> collection) {
 		Function<T, T> function = Function.identity();
 
-		for (Function<T, T> f : collection) {
-			function = function.andThen(f);
+		for (Function<T, T> curFunction : collection) {
+			function = function.andThen(curFunction);
 		}
 
 		return function.apply(t);
