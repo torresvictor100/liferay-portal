@@ -539,12 +539,10 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
-			int initialSiteAMImageEntriesCount =
-				AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
-					company.getCompanyId());
-
 			amImageCounterServiceRegistration = _registerAMImageCounter(
-				"test", -initialSiteAMImageEntriesCount);
+				"test",
+				-AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
+					company.getCompanyId()));
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
