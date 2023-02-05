@@ -538,7 +538,7 @@ public class StructuredContentResourceImpl
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagNames(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
 	}
 
@@ -759,12 +759,12 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-		Long[] assetCategoryIds, double assetPriority, String[] assetTags,
+		Long[] assetCategoryIds, double assetPriority, String[] assetTagNames,
 		long groupId, StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTags,
+				assetCategoryIds, assetTagNames,
 				_getExpandoBridgeAttributes(structuredContent), groupId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -835,7 +835,7 @@ public class StructuredContentResourceImpl
 		return assetEntry.getPriority();
 	}
 
-	private String[] _getAssetTags(
+	private String[] _getAssetTagNames(
 			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
 
@@ -1255,7 +1255,7 @@ public class StructuredContentResourceImpl
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagNames(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
 	}
 
