@@ -114,8 +114,8 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Entity with ClassPK: ", classPK,
-							" and ClassName: ", className,
+							"Asset entry with class PK ", classPK,
+							" and class name ", className,
 							" is not categorizable"),
 						portalException);
 				}
