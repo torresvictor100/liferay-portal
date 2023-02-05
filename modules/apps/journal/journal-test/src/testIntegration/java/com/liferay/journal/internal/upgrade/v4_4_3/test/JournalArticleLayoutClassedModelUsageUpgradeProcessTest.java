@@ -101,18 +101,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			RandomTestUtil.randomString(), _journalArticle.getGroupId(),
 			_publicLayout);
 
-		List<String> publicLayoutExpectedPortletIds = new ArrayList<>();
-
-		publicLayoutExpectedPortletIds.add(
-			_addAssetPublisherPortletToLayout(
-				_publicLayout, "manual", _assetEntry.getClassUuid()));
-		publicLayoutExpectedPortletIds.add(
-			_addJournalContentPortletToLayout(
-				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
-				_publicLayout));
-
-		_assertAssetPublisherPortletPreferencesCount(2, false);
-
 		List<String> privateLayoutExpectedPortletIds = new ArrayList<>();
 
 		privateLayoutExpectedPortletIds.add(
@@ -124,6 +112,18 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_privateLayout));
 
 		_assertAssetPublisherPortletPreferencesCount(1, true);
+
+		List<String> publicLayoutExpectedPortletIds = new ArrayList<>();
+
+		publicLayoutExpectedPortletIds.add(
+			_addAssetPublisherPortletToLayout(
+				_publicLayout, "manual", _assetEntry.getClassUuid()));
+		publicLayoutExpectedPortletIds.add(
+			_addJournalContentPortletToLayout(
+				_journalArticle.getArticleId(), _journalArticle.getGroupId(),
+				_publicLayout));
+
+		_assertAssetPublisherPortletPreferencesCount(2, false);
 
 		_assertJournalContentSearchesCount(_journalArticle.getArticleId(), 2);
 
