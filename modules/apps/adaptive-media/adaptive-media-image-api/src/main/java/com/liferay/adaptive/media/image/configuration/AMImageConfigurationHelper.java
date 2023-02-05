@@ -133,7 +133,7 @@ public interface AMImageConfigurationHelper {
 
 	/**
 	 * Returns an image configuration entry for the given company and
-	 * image configuration entry UUID, return null if no one provided.
+	 * image configuration entry UUID or null.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  configurationEntryUUID the image configuration entry's UUID
