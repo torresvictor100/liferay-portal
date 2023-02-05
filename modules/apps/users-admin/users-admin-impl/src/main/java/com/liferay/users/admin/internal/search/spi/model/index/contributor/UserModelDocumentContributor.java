@@ -155,7 +155,7 @@ public class UserModelDocumentContributor
 			TransformUtil.transform(
 				groupLocalService.getUserGroups(userId, true),
 				group -> {
-					if (group.isSite() && group.isActive()) {
+					if (group.isActive() && group.isSite()) {
 						return group.getGroupId();
 					}
 

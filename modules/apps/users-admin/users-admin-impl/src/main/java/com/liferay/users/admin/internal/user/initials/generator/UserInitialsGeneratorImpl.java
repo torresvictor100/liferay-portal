@@ -44,18 +44,18 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 		String[] userNames = {firstName, middleName, lastName};
 
-		List<String> userNameList = TransformUtil.transformToList(
+		List<String> userNamesList = TransformUtil.transformToList(
 			_getUserInitialsFieldNames(locale),
 			userInitialsFieldName ->
 				userNames[_userNameIndexes.get(userInitialsFieldName)]);
 
-		if (userNameList.size() > 2) {
-			userNameList = userNameList.subList(0, 2);
+		if (userNamesList.size() > 2) {
+			userNamesList = userNamesList.subList(0, 2);
 		}
 
-		StringBundler sb = new StringBundler(userNameList.size());
+		StringBundler sb = new StringBundler(userNamesList.size());
 
-		for (String userName : userNameList) {
+		for (String userName : userNamesList) {
 			sb.append(StringUtil.toUpperCase(StringUtil.shorten(userName, 1)));
 		}
 
