@@ -180,7 +180,6 @@ public class TLDFormatter {
 		}
 	}
 
-
 	private String _toString(Node node) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
