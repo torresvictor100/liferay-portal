@@ -100,7 +100,7 @@ public class StartupHelperUtil {
 		}
 	}
 
-	public static void setDbNew(boolean dbNew) {
+	public static void setDBNew(boolean dbNew) {
 		_dbNew = dbNew;
 	}
 

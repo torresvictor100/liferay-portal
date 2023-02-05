@@ -122,7 +122,7 @@ public class DBInitUtil {
 			if (!resultSet.next()) {
 				_addReleaseInfo(connection);
 
-				_setDbNew();
+				_setDBNew();
 			}
 
 			return true;
@@ -153,7 +153,7 @@ public class DBInitUtil {
 
 		_addReleaseInfo(connection);
 
-		_setDbNew();
+		_setDBNew();
 	}
 
 	private static boolean _hasDefaultReleaseWithTestString(
@@ -259,8 +259,8 @@ public class DBInitUtil {
 			false);
 	}
 
-	private static void _setDbNew() {
-		StartupHelperUtil.setDbNew(true);
+	private static void _setDBNew() {
+		StartupHelperUtil.setDBNew(true);
 
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
@@ -268,7 +268,7 @@ public class DBInitUtil {
 			DependencyManagerSync.class,
 			dependencyManagerSync -> dependencyManagerSync.registerSyncCallable(
 				() -> {
-					StartupHelperUtil.setDbNew(false);
+					StartupHelperUtil.setDBNew(false);
 
 					return null;
 				}));
