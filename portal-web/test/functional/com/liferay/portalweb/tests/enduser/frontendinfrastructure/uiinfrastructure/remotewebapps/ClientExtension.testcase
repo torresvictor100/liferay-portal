@@ -181,7 +181,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ClientExtension#CustomElementCanBeCreatedInNonRootContext";
-		property testray.component.names = "Frontend Dataset,Client Extensions";
+		property testray.component.names = "Client Extensions,Frontend Dataset";
 
 		task ("Given a non-root portal context") {
 			var portalURL = JSONCompany.getPortalURL();
