@@ -133,29 +133,31 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
 			List<com.liferay.portal.kernel.model.PortletPreferences>
-				originalPreferencesList =
+				serviceBuilderPortletPreferencesList =
 					_portletPreferencesLocalService.getPortletPreferences(
 						portletDataContext.getPlid(),
 						portletDataContext.getPortletId());
 
-			long navigationMenuId = 0;
+			long siteNavigationMenuId = 0;
 
-			if (!originalPreferencesList.isEmpty()) {
+			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
 				com.liferay.portal.kernel.model.PortletPreferences
-					originalPreferences = originalPreferencesList.get(0);
+					serviceBuilderPortletPreferences =
+						serviceBuilderPortletPreferencesList.get(0);
 
-				PortletPreferences originalPreferencesWithValue =
+				PortletPreferences originalPortletPreferences =
 					_portletPreferenceValueLocalService.getPreferences(
-						originalPreferences);
+						serviceBuilderPortletPreferences);
 
-				navigationMenuId = GetterUtil.getLong(
-					originalPreferencesWithValue.getValue(
+				siteNavigationMenuId = GetterUtil.getLong(
+					originalPortletPreferences.getValue(
 						"siteNavigationMenuId", "0"));
 			}
 
 			try {
 				portletPreferences.setValue(
-					"siteNavigationMenuId", String.valueOf(navigationMenuId));
+					"siteNavigationMenuId",
+					String.valueOf(siteNavigationMenuId));
 			}
 			catch (ReadOnlyException readOnlyException) {
 				PortletDataException portletDataException =
