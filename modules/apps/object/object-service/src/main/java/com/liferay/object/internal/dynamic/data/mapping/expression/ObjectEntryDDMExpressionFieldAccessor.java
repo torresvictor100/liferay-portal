@@ -27,36 +27,31 @@ import java.util.Map;
 public class ObjectEntryDDMExpressionFieldAccessor
 	implements DDMExpressionFieldAccessor {
 
-	public ObjectEntryDDMExpressionFieldAccessor(
-		Map<String, Object> objectEntryValues) {
-
-		_objectEntryValues = objectEntryValues;
+	public ObjectEntryDDMExpressionFieldAccessor(Map<String, Object> values) {
+		_values = values;
 	}
 
 	@Override
 	public GetFieldPropertyResponse getFieldProperty(
 		GetFieldPropertyRequest getFieldPropertyRequest) {
 
-		Object fieldProperty = _objectEntryValues.get(
-			getFieldPropertyRequest.getField());
+		Object value = _values.get(getFieldPropertyRequest.getField());
 
-		if ((fieldProperty == null) &&
-			isField(getFieldPropertyRequest.getField())) {
-
-			fieldProperty = StringPool.BLANK;
+		if ((value == null) && isField(getFieldPropertyRequest.getField())) {
+			value = StringPool.BLANK;
 		}
 
 		GetFieldPropertyResponse.Builder builder =
-			GetFieldPropertyResponse.Builder.newBuilder(fieldProperty);
+			GetFieldPropertyResponse.Builder.newBuilder(value);
 
 		return builder.build();
 	}
 
 	@Override
 	public boolean isField(String parameter) {
-		return _objectEntryValues.containsKey(parameter);
+		return _values.containsKey(parameter);
 	}
 
-	private final Map<String, Object> _objectEntryValues;
+	private final Map<String, Object> _values;
 
 }
