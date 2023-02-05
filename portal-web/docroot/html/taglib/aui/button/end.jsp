@@ -26,11 +26,12 @@
 			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %>"
 			href="<%= escapedHREF %>"
 			id="<%= id %>"
-			role="button"
 
 			<c:if test="<%= Validator.isNotNull(onClick) %>">
 				onClick="<%= onClick %>"
 			</c:if>
+
+			role="button"
 
 			<%= AUIUtil.buildData(data) %>
 			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
