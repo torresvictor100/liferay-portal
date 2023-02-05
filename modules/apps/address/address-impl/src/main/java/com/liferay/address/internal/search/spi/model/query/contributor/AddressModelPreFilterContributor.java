@@ -127,18 +127,18 @@ public class AddressModelPreFilterContributor
 		long[] typeIds = new long[typeNames.length];
 
 		for (int i = 0; i < typeNames.length; i++) {
-			String classNameAddress =
+			String listTypeType =
 				className.getClassName() + ListTypeConstants.ADDRESS;
 
 			ListType listType = _listTypeLocalService.getListType(
-				typeNames[i], classNameAddress);
+				typeNames[i], listTypeType);
 
 			if (listType == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"No list type found for ", classNameAddress,
-							" with the name: ", typeNames[i]));
+							"No list type found for ", listTypeType,
+							" with the name ", typeNames[i]));
 				}
 
 				typeIds[i] = -1;
