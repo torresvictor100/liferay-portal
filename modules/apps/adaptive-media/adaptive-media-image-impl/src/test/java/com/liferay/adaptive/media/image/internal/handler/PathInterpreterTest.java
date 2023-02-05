@@ -223,10 +223,10 @@ public class PathInterpreterTest {
 
 	@Test
 	public void testNonmatchingPathInfo() {
-		Tuple<FileVersion, Map<String, String>> result =
+		Tuple<FileVersion, Map<String, String>> tuple =
 			_pathInterpreter.interpretPath("/" + RandomTestUtil.randomString());
 
-		Assert.assertNull(result);
+		Assert.assertNull(tuple);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
