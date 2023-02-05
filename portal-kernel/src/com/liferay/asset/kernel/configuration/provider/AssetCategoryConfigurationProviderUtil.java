@@ -31,7 +31,8 @@ public class AssetCategoryConfigurationProviderUtil {
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(
-				"Unable to get the configuration, companyId " + companyId,
+				"Unable to get asset category configuration for company " +
+					companyId,
 				configurationException);
 		}
 
