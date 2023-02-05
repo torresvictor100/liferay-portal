@@ -117,12 +117,12 @@ public class ContextProviderUtil {
 	}
 
 	private static Object _fetchExistingResource(
-		Exchange exchange, String... messageKeys) {
+		Exchange exchange, String... keys) {
 
 		Object resource = null;
 
-		for (int i = 0; (i < messageKeys.length) && (resource == null); i++) {
-			resource = exchange.get(messageKeys[i]);
+		for (int i = 0; (i < keys.length) && (resource == null); i++) {
+			resource = exchange.get(keys[i]);
 		}
 
 		return resource;

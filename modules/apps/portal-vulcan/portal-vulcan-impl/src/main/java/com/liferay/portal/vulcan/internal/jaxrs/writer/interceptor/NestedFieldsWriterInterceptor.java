@@ -270,14 +270,12 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 			Object[] args = new Object[resourceMethod.getParameterCount()];
 
-			MultivaluedMap<String, String> pathParameters =
-				nestedFieldsContext.getPathParameters();
-
-			MultivaluedMap<String, String> queryParameters =
-				nestedFieldsContext.getQueryParameters();
-
 			Message message = _handleNestedFieldMessage(
 				fieldName, nestedFieldsContext.getMessage(), resource);
+			MultivaluedMap<String, String> pathParameters =
+				nestedFieldsContext.getPathParameters();
+			MultivaluedMap<String, String> queryParameters =
+				nestedFieldsContext.getQueryParameters();
 
 			for (int i = 0; i < resourceMethod.getParameterCount(); i++) {
 				if (resourceMethodArgNameTypeEntries[i] == null) {
@@ -289,7 +287,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				if (args[i] == null) {
 					args[i] = _getMethodArgValueFromRequest(
-						fieldName, pathParameters, queryParameters, message,
+						fieldName, message, pathParameters, queryParameters,
 						resourceMethodArgNameTypeEntries[i]);
 				}
 			}
@@ -334,8 +332,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		}
 
 		private Object _getMethodArgValueFromRequest(
-			String fieldName, MultivaluedMap<String, String> pathParameters,
-			MultivaluedMap<String, String> queryParameters, Message message,
+			String fieldName, Message message,
+			MultivaluedMap<String, String> pathParameters,
+			MultivaluedMap<String, String> queryParameters,
 			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry) {
 
 			Object argValue = null;
@@ -470,7 +469,6 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				"HTTP.REQUEST",
 				new NestedFieldsHttpServletRequestWrapper(
 					fieldName, getHttpServletRequest(message)));
-
 			message.setExchange(
 				new ExchangeWrapper(message.getExchange(), resource));
 
