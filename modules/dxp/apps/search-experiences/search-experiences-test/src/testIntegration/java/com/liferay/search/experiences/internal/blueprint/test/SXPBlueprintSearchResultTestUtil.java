@@ -72,7 +72,7 @@ public class SXPBlueprintSearchResultTestUtil {
 			}
 
 			if (sxpElement == null) {
-				throw new NoSuchElementException("No SXPElement present");
+				throw new NoSuchElementException();
 			}
 
 			ElementDefinition elementDefinition = ElementDefinitionUtil.unpack(
