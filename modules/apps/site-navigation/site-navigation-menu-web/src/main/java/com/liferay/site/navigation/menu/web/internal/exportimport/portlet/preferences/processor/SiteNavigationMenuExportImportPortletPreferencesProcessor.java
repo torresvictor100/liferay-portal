@@ -132,13 +132,13 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				PortletDataHandlerKeys.PORTLET_DATA) &&
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
+			long siteNavigationMenuId = 0;
+
 			List<com.liferay.portal.kernel.model.PortletPreferences>
 				serviceBuilderPortletPreferencesList =
 					_portletPreferencesLocalService.getPortletPreferences(
 						portletDataContext.getPlid(),
 						portletDataContext.getPortletId());
-
-			long siteNavigationMenuId = 0;
 
 			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
 				com.liferay.portal.kernel.model.PortletPreferences
