@@ -52,12 +52,12 @@ public class CommerceChannelResourceImpl
 			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<Long, String> analyticsChannelsMap = new HashMap<>();
+
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> analyticsChannelsPage =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
 					contextCompany.getCompanyId(), null, 0, 100, null);
-
-		Map<Long, String> analyticsChannelsMap = new HashMap<>();
 
 		for (AnalyticsChannel analyticsChannel :
 				analyticsChannelsPage.getItems()) {

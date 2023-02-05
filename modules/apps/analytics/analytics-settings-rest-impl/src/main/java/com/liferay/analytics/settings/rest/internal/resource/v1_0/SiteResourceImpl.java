@@ -54,6 +54,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<Long, String> analyticsChannelsMap = new HashMap<>();
+
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> analyticsChannelsPage =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
@@ -61,8 +63,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		Collection<AnalyticsChannel> analyticsChannels =
 			analyticsChannelsPage.getItems();
-
-		Map<Long, String> analyticsChannelsMap = new HashMap<>();
 
 		for (AnalyticsChannel analyticsChannel : analyticsChannels) {
 			analyticsChannelsMap.put(
