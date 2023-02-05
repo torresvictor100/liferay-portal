@@ -23,6 +23,7 @@
 		md="6"
 	>
 		<div class="h5"><liferay-ui:message key="order-by" /></div>
+
 		<div class="align-items-center d-flex">
 			<aui:select aria-label='<%= LanguageUtil.get(request, "order-by") %>' label="" name="preferences--orderByColumn1--" value="<%= assetPublisherDisplayContext.getOrderByColumn1() %>" wrapperCssClass="d-inline-flex m-0">
 				<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
@@ -78,6 +79,7 @@
 		%>
 
 		<div class="h5"><liferay-ui:message key="and-then-by" /></div>
+
 		<div class="align-items-center d-flex">
 			<aui:select aria-label='<%= LanguageUtil.get(request, "and-then-by") %>' label="" name="preferences--orderByColumn2--" wrapperCssClass="d-inline-flex m-0">
 				<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
