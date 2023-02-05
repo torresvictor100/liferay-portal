@@ -191,6 +191,8 @@ public class ExportTranslationDisplayContext {
 	}
 
 	private Set<Locale> _getAvailableSourceLocales() throws Exception {
+		Set<Locale> availableSourceLocales = new HashSet<>();
+
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, _className);
@@ -203,8 +205,6 @@ public class ExportTranslationDisplayContext {
 				Arrays.asList(
 					infoItemLanguagesProvider.getAvailableLanguageIds(model)));
 		}
-
-		Set<Locale> availableSourceLocales = new HashSet<>();
 
 		for (String languageId : languageIds) {
 			availableSourceLocales.add(LocaleUtil.fromLanguageId(languageId));
