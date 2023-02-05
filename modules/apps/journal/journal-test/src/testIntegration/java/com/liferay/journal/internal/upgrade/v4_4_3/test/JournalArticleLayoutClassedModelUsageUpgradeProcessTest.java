@@ -85,14 +85,12 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			JournalArticle.class.getName(),
 			_journalArticle.getResourcePrimKey());
 
-		_publicLayout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), false);
-
-		_privateLayout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), true);
-
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
+		_privateLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), true);
+		_publicLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false);
 	}
 
 	@Test
