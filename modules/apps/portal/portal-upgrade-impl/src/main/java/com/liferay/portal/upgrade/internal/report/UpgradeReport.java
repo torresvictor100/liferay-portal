@@ -108,9 +108,9 @@ public class UpgradeReport {
 	}
 
 	public void filterMessages() {
-		for (String filteredClass : _FILTERED_CLASSES) {
-			_warningMessages.remove(filteredClass);
-			_errorMessages.remove(filteredClass);
+		for (String filteredClassName : _FILTERED_CLASSES) {
+			_errorMessages.remove(filteredClassName);
+			_warningMessages.remove(filteredClassName);
 		}
 	}
 
@@ -658,7 +658,7 @@ public class UpgradeReport {
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
 
-	private static final String[] _FILTERED_CLASSES = {
+	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
 	};
