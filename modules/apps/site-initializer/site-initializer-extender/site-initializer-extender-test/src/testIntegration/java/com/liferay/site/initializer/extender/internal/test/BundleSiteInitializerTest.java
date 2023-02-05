@@ -1259,11 +1259,11 @@ public class BundleSiteInitializerTest {
 
 		Layout privateLayout = privateLayouts.get(0);
 
-		Assert.assertTrue(privateLayout.isHidden());
 		Assert.assertEquals(
 			"Test Private Layout",
 			privateLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", privateLayout.getType());
+		Assert.assertTrue(privateLayout.isHidden());
 
 		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
 
@@ -1289,10 +1289,10 @@ public class BundleSiteInitializerTest {
 		Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/test-public-layout");
 
-		Assert.assertFalse(layout.isHidden());
 		Assert.assertEquals(
 			"Test Public Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", layout.getType());
+		Assert.assertFalse(layout.isHidden());
 
 		List<Layout> layouts = layout.getAllChildren();
 
@@ -1360,7 +1360,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotEquals(
 			PropsUtil.get("default.user.private.layout.name"),
 			layout.getName(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			PropsUtil.get("default.guest.public.layout.friendly.url"),
 			layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
@@ -1393,12 +1392,12 @@ public class BundleSiteInitializerTest {
 		layout = _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/test-url-layout");
 
-		Assert.assertFalse(layout.isHidden());
 		Assert.assertEquals(
 			"Test URL Layout", layout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("url", layout.getType());
 		Assert.assertEquals(
 			"url=/test-public-layout\n", layout.getTypeSettings());
+		Assert.assertFalse(layout.isHidden());
 	}
 
 	private void _assertResourceAction(
