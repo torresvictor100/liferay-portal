@@ -581,7 +581,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return null;
 		}
 
-		// The target page and the article must belong to the same group
+		// The layout and journal article must belong to the same group
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			getLayoutUuid(), getGroupId(), false);
