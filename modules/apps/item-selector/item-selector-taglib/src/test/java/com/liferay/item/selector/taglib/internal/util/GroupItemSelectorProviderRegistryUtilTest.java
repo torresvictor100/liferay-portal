@@ -66,7 +66,6 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 				"test");
 
 		Assert.assertNotNull(groupItemSelectorProvider);
-
 		Assert.assertEquals("icon", groupItemSelectorProvider.getIcon());
 
 		ReflectionTestUtil.setFieldValue(
@@ -85,7 +84,6 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 		Assert.assertNull(
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
 				"test"));
-
 		Assert.assertTrue(
 			SetUtil.isEmpty(
 				GroupItemSelectorProviderRegistryUtil.
