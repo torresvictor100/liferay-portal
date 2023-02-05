@@ -107,31 +107,6 @@ public class TLDFormatter {
 		return _modifiedFileNames;
 	}
 
-	private String _toString(Node node) throws Exception {
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
-
-		outputFormat.setOmitEncoding(true);
-		outputFormat.setPadText(true);
-		outputFormat.setTrimText(true);
-
-		XMLWriter xmlWriter = new XMLWriter(
-			unsyncByteArrayOutputStream, outputFormat);
-
-		xmlWriter.write(node);
-
-		String content = StringUtil.trimTrailing(
-			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
-
-		while (content.contains(" \n")) {
-			content = StringUtil.replace(content, " \n", "\n");
-		}
-
-		return content;
-	}
-
 	private void _formatTLD(Path file) throws Exception {
 		String content = new String(
 			Files.readAllBytes(file), StandardCharsets.UTF_8);
@@ -203,6 +178,32 @@ public class TLDFormatter {
 
 			parentElement.add(element);
 		}
+	}
+
+
+	private String _toString(Node node) throws Exception {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = new OutputFormat(StringPool.TAB, true);
+
+		outputFormat.setOmitEncoding(true);
+		outputFormat.setPadText(true);
+		outputFormat.setTrimText(true);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(node);
+
+		String content = StringUtil.trimTrailing(
+			unsyncByteArrayOutputStream.toString(StringPool.UTF8));
+
+		while (content.contains(" \n")) {
+			content = StringUtil.replace(content, " \n", "\n");
+		}
+
+		return content;
 	}
 
 	private final Set<String> _modifiedFileNames = new HashSet<>();
