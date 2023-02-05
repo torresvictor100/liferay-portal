@@ -2228,10 +2228,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			parentResourcePath + "page.json", _servletContext);
-
-		JSONObject pageJSONObject = _jsonFactory.createJSONObject(json);
+		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
+			SiteInitializerUtil.read(
+				parentResourcePath + "page.json", _servletContext));
 
 		Map<Locale, String> nameMap = new HashMap<>(
 			SiteInitializerUtil.toMap(pageJSONObject.getString("name_i18n")));
