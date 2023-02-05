@@ -120,11 +120,9 @@ public class ContextProviderUtil {
 		Exchange exchange, String... messageKeys) {
 
 		Object resource = null;
-		int i = 0;
 
-		while ((i < messageKeys.length) && (resource == null)) {
+		for (int i = 0; (i < messageKeys.length) && (resource == null); i++) {
 			resource = exchange.get(messageKeys[i]);
-			i++;
 		}
 
 		return resource;
