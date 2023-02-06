@@ -86,7 +86,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinition, externalReferenceCode, userId, nameMap);
 
 		_addListTypeEntries(
-			listTypeDefinition.getListTypeDefinitionId(), userId,
+			userId, listTypeDefinition.getListTypeDefinitionId(),
 			listTypeEntries);
 
 		return listTypeDefinition;
@@ -149,12 +149,15 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
 		listTypeDefinition.setNameMap(nameMap);
 
+		listTypeDefinition = listTypeDefinitionPersistence.update(
+			listTypeDefinition);
+
 		_listTypeEntryLocalService.deleteListTypeEntryByListTypeDefinitionId(
 			listTypeDefinitionId);
 
-		_addListTypeEntries(listTypeDefinitionId, userId, listTypeEntries);
+		_addListTypeEntries(userId, listTypeDefinitionId, listTypeEntries);
 
-		return listTypeDefinitionPersistence.update(listTypeDefinition);
+		return listTypeDefinition;
 	}
 
 	private ListTypeDefinition _addListTypeDefinition(
@@ -184,7 +187,7 @@ public class ListTypeDefinitionLocalServiceImpl
 	}
 
 	private void _addListTypeEntries(
-			long listTypeDefinitionId, long userId,
+			long userId, long listTypeDefinitionId,
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 

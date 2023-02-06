@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.util.PropsUtil;
@@ -135,7 +136,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
-			Validator.isNotNull(listTypeDefinition.getListTypeEntries())) {
+			ListUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -157,7 +158,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
-			Validator.isNotNull(listTypeDefinition.getListTypeEntries())) {
+			ListUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -179,13 +180,13 @@ public class ListTypeDefinitionResourceImpl
 			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
+		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
+
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition =
 				_listTypeDefinitionService.
 					fetchListTypeDefinitionByExternalReferenceCode(
 						externalReferenceCode, contextCompany.getCompanyId());
-
-		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
 
 		if (serviceBuilderListTypeDefinition != null) {
 			return putListTypeDefinition(
