@@ -747,6 +747,8 @@ definition {
 	}
 
 	macro deleteAllCustomObjectsViaAPI {
+		ObjectAdmin.deleteAllRelationships();
+
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
