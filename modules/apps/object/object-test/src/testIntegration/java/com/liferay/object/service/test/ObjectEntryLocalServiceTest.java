@@ -2313,9 +2313,8 @@ public class ObjectEntryLocalServiceTest {
 				objectEntryValuesException.getMessage());
 		}
 
-		_testUpdateExternalReferenceCode();
-
-		_testUpdateObjectStateTransitions();
+		_testUpdateObjectEntryExternalReferenceCode();
+		_testUpdateObjectEntryObjectStateTransitions();
 	}
 
 	@Test
@@ -2590,7 +2589,9 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	private void _testUpdateExternalReferenceCode() throws Exception {
+	private void _testUpdateObjectEntryExternalReferenceCode()
+		throws Exception {
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
@@ -2697,7 +2698,9 @@ public class ObjectEntryLocalServiceTest {
 			objectEntry2.getObjectEntryId());
 	}
 
-	private void _testUpdateObjectStateTransitions() throws Exception {
+	private void _testUpdateObjectEntryObjectStateTransitions()
+		throws Exception {
+
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "state");
 
