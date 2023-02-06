@@ -46,12 +46,12 @@ public class InputsFragmentCollectionContributor
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries() {
-		return _filterList(super.getFragmentEntries());
+		return _filter(super.getFragmentEntries());
 	}
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(int type) {
-		return _filterList(super.getFragmentEntries(type));
+		return _filter(super.getFragmentEntries(type));
 	}
 
 	@Override
@@ -59,9 +59,7 @@ public class InputsFragmentCollectionContributor
 		return _servletContext;
 	}
 
-	private List<FragmentEntry> _filterList(
-		List<FragmentEntry> fragmentEntries) {
-
+	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161631"))) {
 			return fragmentEntries;
 		}
