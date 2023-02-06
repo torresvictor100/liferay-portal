@@ -19,7 +19,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.web.internal.util.ExportJSONUtil;
+import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -117,7 +117,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 			objectDefinitionJSONObject.remove("storageType");
 		}
 
-		ExportJSONUtil.sanitizeJSON(
+		JSONObjectSanitizerUtil.sanitize(
 			objectDefinitionJSONObject,
 			new String[] {
 				"dateCreated", "dateModified", "id", "listTypeDefinitionId",

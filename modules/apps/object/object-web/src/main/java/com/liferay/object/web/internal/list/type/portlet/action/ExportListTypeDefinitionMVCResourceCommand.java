@@ -17,7 +17,7 @@ package com.liferay.object.web.internal.list.type.portlet.action;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.web.internal.util.ExportJSONUtil;
+import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -75,7 +75,7 @@ public class ExportListTypeDefinitionMVCResourceCommand
 		JSONObject listTypeDefinitionJSONObject = _jsonFactory.createJSONObject(
 			listTypeDefinition.toString());
 
-		ExportJSONUtil.sanitizeJSON(
+		JSONObjectSanitizerUtil.sanitize(
 			listTypeDefinitionJSONObject,
 			new String[] {"actions", "dateCreated", "dateModified", "id"});
 

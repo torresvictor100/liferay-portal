@@ -21,35 +21,37 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 /**
  * @author Murilo Stodolni
  */
-public class ExportJSONUtil {
+public class JSONObjectSanitizerUtil {
 
-	public static void sanitizeJSON(Object object, String[] keys) {
+	public static void sanitize(JSONObject jsonObject, String[] keys) {
+		if (jsonObject.length() == 0) {
+			return;
+		}
+
+		JSONArray jsonArray = jsonObject.names();
+
+		for (int i = 0; i < jsonArray.length(); ++i) {
+			String key = jsonArray.getString(i);
+
+			if (ArrayUtil.contains(keys, key)) {
+				jsonObject.remove(key);
+			}
+			else {
+				_sanitize(jsonObject.get(key), keys);
+			}
+		}
+	}
+
+	private static void _sanitize(Object object, String[] keys) {
 		if (object instanceof JSONArray) {
 			JSONArray jsonArray = (JSONArray)object;
 
 			for (int i = 0; i < jsonArray.length(); ++i) {
-				sanitizeJSON(jsonArray.get(i), keys);
+				_sanitize(jsonArray.get(i), keys);
 			}
 		}
 		else if (object instanceof JSONObject) {
-			JSONObject jsonObject = (JSONObject)object;
-
-			if (jsonObject.length() == 0) {
-				return;
-			}
-
-			JSONArray jsonArray = jsonObject.names();
-
-			for (int i = 0; i < jsonArray.length(); ++i) {
-				String key = jsonArray.getString(i);
-
-				if (ArrayUtil.contains(keys, key)) {
-					jsonObject.remove(key);
-				}
-				else {
-					sanitizeJSON(jsonObject.get(key), keys);
-				}
-			}
+			sanitize((JSONObject)object, keys);
 		}
 	}
 
