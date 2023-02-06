@@ -108,7 +108,7 @@ public class UpgradeReport {
 	}
 
 	public void filterMessages() {
-		for (String filteredClassName : _FILTERED_CLASSES) {
+		for (String filteredClassName : _FILTERED_CLASS_NAMES) {
 			_errorMessages.remove(filteredClassName);
 			_warningMessages.remove(filteredClassName);
 		}
