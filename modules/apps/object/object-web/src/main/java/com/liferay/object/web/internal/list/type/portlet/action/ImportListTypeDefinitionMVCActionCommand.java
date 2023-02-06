@@ -82,7 +82,7 @@ public class ImportListTypeDefinitionMVCActionCommand
 					"title",
 					_language.get(
 						_portal.getHttpServletRequest(actionRequest),
-						"the-picklist-was-not-successfully-imported")));
+						"the-picklist-failed-to-import")));
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
