@@ -102,8 +102,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				{
 					name = entry.getKey();
 
-					value = StringPool.BLANK;
-
 					if (entry.getValue() instanceof Date) {
 						Date date = (Date)entry.getValue();
 
@@ -111,6 +109,9 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					}
 					else if (Validator.isNotNull(entry.getValue())) {
 						value = String.valueOf(entry.getValue());
+					}
+					else {
+						value = StringPool.BLANK;
 					}
 				}
 			};
