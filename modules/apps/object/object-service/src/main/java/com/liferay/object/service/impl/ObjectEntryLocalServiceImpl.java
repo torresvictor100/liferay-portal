@@ -2043,6 +2043,11 @@ public class ObjectEntryLocalServiceImpl
 			return repository;
 		}
 
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
 		try {
 			return _portletFileRepository.addPortletRepository(
 				groupId, portletId, serviceContext);
