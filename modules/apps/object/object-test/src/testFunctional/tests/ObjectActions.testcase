@@ -1670,7 +1670,7 @@ definition {
 
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
-				actionName = "CustomUpdateAction",
+				actionLabel = "Custom Update Action",
 				status = "Success");
 		}
 	}
