@@ -47,9 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"dispatch.task.executor.feature.flag=LPS-170809",
-		"dispatch.task.executor.name=testray-auto-fill",
+		"dispatch.task.executor.name=testray-autofill",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-auto-fill"
+		"dispatch.task.executor.type=testray-autofill"
 	},
 	service = DispatchTaskExecutor.class
 )
