@@ -14,7 +14,7 @@
 
 package com.liferay.layout.utility.page.converter;
 
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -46,11 +46,11 @@ public class LayoutUtilityPageEntryTypeConverter {
 
 	private static final Map<String, String> _externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Error", LayoutUtilityPageEntryTypesConstants.STATUS
+			"Error", LayoutUtilityPageEntryConstants.TYPE_STATUS
 		).put(
-			"ErrorCode404", LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND
+			"ErrorCode404", LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND
 		).put(
-			"TermsOfUse", LayoutUtilityPageEntryTypesConstants.TERMS_OF_USE
+			"TermsOfUse", LayoutUtilityPageEntryConstants.TYPE_TERMS_OF_USE
 		).build();
 
 }

@@ -17,12 +17,12 @@ package com.liferay.layout.utility.page.kernel.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class LayoutUtilityPageEntryTypesConstants {
+public class LayoutUtilityPageEntryConstants {
 
-	public static final String SC_NOT_FOUND = "SC_NOT_FOUND";
+	public static final String TYPE_SC_NOT_FOUND = "SC_NOT_FOUND";
 
-	public static final String STATUS = "STATUS";
+	public static final String TYPE_STATUS = "STATUS";
 
-	public static final String TERMS_OF_USE = "TERMS_OF_USE";
+	public static final String TYPE_TERMS_OF_USE = "TERMS_OF_USE";
 
 }
