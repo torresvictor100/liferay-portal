@@ -106,7 +106,7 @@ public class SiteInitializerTestrayAutofillDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-auto-fill";
+		return "testray-autofill";
 	}
 
 	@Override
