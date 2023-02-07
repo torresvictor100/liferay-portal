@@ -75,7 +75,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 			).build());
 	}
 
-	public static void testrayAutoFillBuilds(
+	public static void autoFillBuilds(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
@@ -140,7 +140,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 		}
 	}
 
-	public static void testrayAutoFillRuns(
+	public static void autoFillRuns(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,

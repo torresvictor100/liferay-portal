@@ -1220,7 +1220,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			return;
 		}
 
-		SiteInitializerTestrayAutoFillUtil.testrayAutoFillRuns(
+		SiteInitializerTestrayAutoFillUtil.autoFillRuns(
 			companyId, _defaultDTOConverterContext, _objectEntryManager,
 			testrayRunObjectEntry1, testrayRunObjectEntry2);
 	}

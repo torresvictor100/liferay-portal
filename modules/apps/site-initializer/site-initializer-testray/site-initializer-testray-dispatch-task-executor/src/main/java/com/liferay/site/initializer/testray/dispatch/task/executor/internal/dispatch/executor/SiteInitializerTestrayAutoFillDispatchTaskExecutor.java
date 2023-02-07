@@ -132,12 +132,12 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 			_objectEntryManager);
 
 		if (StringUtil.equals(autoFillType, "Build")) {
-			SiteInitializerTestrayAutoFillUtil.testrayAutoFillBuilds(
+			SiteInitializerTestrayAutoFillUtil.autoFillBuilds(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
 		else if (StringUtil.equals(autoFillType, "Run")) {
-			SiteInitializerTestrayAutoFillUtil.testrayAutoFillRuns(
+			SiteInitializerTestrayAutoFillUtil.autoFillRuns(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
