@@ -60,11 +60,11 @@ public class ObjectEntryUtil {
 			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+		Page<ObjectEntry> page = getObjectEntriesPage(
 			aggregation, companyId, defaultDTOConverterContext, filterString,
 			objectDefinitionShortName, objectEntryManager, sorts);
 
-		return (List<ObjectEntry>)objectEntriesPage.getItems();
+		return (List<ObjectEntry>)page.getItems();
 	}
 
 	public static Page<ObjectEntry> getObjectEntriesPage(
@@ -104,11 +104,11 @@ public class ObjectEntryUtil {
 			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+		Page<ObjectEntry> page = getObjectEntriesPage(
 			null, companyId, defaultDTOConverterContext, filterString,
 			objectDefinitionShortName, objectEntryManager, sorts);
 
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+		ObjectEntry objectEntry = page.fetchFirstItem();
 
 		if (objectEntry == null) {
 			return 1;
