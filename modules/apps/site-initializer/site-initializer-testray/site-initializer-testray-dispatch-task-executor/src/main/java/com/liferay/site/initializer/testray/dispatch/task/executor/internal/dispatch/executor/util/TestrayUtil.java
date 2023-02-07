@@ -210,7 +210,6 @@ public class TestrayUtil {
 				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
 					"'",
 				"CaseResultsIssues", objectEntryManager, null);
-
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries2 =
 			ObjectEntryUtil.getObjectEntries(
 				null, companyId, defaultDTOConverterContext,
