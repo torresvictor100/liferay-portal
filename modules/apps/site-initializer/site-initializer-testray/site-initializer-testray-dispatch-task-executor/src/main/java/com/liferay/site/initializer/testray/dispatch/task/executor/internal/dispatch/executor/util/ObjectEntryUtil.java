@@ -100,8 +100,7 @@ public class ObjectEntryUtil {
 	public static long increment(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
-			String fieldName, String filterString,
-			String objectDefinitionShortName,
+			String filterString, String key, String objectDefinitionShortName,
 			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
@@ -115,7 +114,7 @@ public class ObjectEntryUtil {
 			return 1;
 		}
 
-		Long fieldValue = (Long)getProperty(fieldName, objectEntry);
+		Long fieldValue = (Long)getProperty(key, objectEntry);
 
 		if (fieldValue == null) {
 			return 1;

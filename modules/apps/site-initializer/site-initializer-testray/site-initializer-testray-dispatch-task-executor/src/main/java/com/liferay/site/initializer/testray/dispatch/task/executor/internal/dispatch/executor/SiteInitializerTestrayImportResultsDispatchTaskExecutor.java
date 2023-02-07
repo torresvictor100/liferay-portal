@@ -246,9 +246,9 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				).put(
 					"number",
 					ObjectEntryUtil.increment(
-						companyId, _defaultDTOConverterContext, "number",
-						"projectId eq '" + testrayProjectId + "'", "Case",
-						_objectEntryManager,
+						companyId, _defaultDTOConverterContext,
+						"projectId eq '" + testrayProjectId + "'", "number",
+						"Case", _objectEntryManager,
 						new Sort[] {
 							new Sort("nestedFieldArray.value_long#number", true)
 						})
@@ -915,8 +915,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			).put(
 				"number",
 				ObjectEntryUtil.increment(
-					companyId, _defaultDTOConverterContext, "number",
-					"buildId eq '" + testrayBuildId + "'", "Run",
+					companyId, _defaultDTOConverterContext,
+					"buildId eq '" + testrayBuildId + "'", "number", "Run",
 					_objectEntryManager,
 					new Sort[] {
 						new Sort("nestedFieldArray.value_long#number", true)

@@ -338,8 +338,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				testrayCaseResultGroups) {
 
 			long testraySubtaskNumber = ObjectEntryUtil.increment(
-				companyId, _defaultDTOConverterContext, "number",
-				"taskId eq '" + testrayTaskId + "'", "Subtask",
+				companyId, _defaultDTOConverterContext,
+				"taskId eq '" + testrayTaskId + "'", "number", "Subtask",
 				_objectEntryManager,
 				new Sort[] {
 					new Sort("nestedFieldArray.value_long#number", true)
