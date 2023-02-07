@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Nilton Vieira
  */
-public class SiteInitializerTestrayObjectUtil {
+public class ObjectEntryUtil {
 
 	public static ObjectEntry addObjectEntry(
 			DefaultDTOConverterContext defaultDTOConverterContext,

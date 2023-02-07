@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.ObjectEntryUtil;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,7 +91,7 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			SiteInitializerTestrayObjectUtil.loadObjectDefinitions(
+			ObjectEntryUtil.loadObjectDefinitions(
 				dispatchTrigger.getCompanyId(), _objectDefinitionLocalService);
 
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
@@ -124,14 +124,12 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		long objectEntryId2 = GetterUtil.getLong(
 			unicodeProperties.getProperty("objectEntryId2"));
 
-		ObjectEntry objectEntry1 =
-			SiteInitializerTestrayObjectUtil.getObjectEntry(
-				_defaultDTOConverterContext, autoFillType, objectEntryId1,
-				_objectEntryManager);
-		ObjectEntry objectEntry2 =
-			SiteInitializerTestrayObjectUtil.getObjectEntry(
-				_defaultDTOConverterContext, autoFillType, objectEntryId2,
-				_objectEntryManager);
+		ObjectEntry objectEntry1 = ObjectEntryUtil.getObjectEntry(
+			_defaultDTOConverterContext, autoFillType, objectEntryId1,
+			_objectEntryManager);
+		ObjectEntry objectEntry2 = ObjectEntryUtil.getObjectEntry(
+			_defaultDTOConverterContext, autoFillType, objectEntryId2,
+			_objectEntryManager);
 
 		if (StringUtil.equals(autoFillType, "Build")) {
 			SiteInitializerTestrayAutoFillUtil.testrayAutoFillBuilds(

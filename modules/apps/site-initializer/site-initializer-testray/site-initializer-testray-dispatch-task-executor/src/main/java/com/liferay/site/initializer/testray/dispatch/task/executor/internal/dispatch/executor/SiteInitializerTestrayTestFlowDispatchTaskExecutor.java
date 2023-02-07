@@ -44,7 +44,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayObjectUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.ObjectEntryUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -107,7 +107,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			SiteInitializerTestrayObjectUtil.loadObjectDefinitions(
+			ObjectEntryUtil.loadObjectDefinitions(
 				dispatchTrigger.getCompanyId(), _objectDefinitionLocalService);
 
 			_updateTestrayTaskStatus(unicodeProperties, "PROCESSING");
@@ -139,7 +139,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		throws Exception {
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
-			SiteInitializerTestrayObjectUtil.getObjectEntries(
+			ObjectEntryUtil.getObjectEntries(
 				null, companyId, _defaultDTOConverterContext,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
@@ -154,18 +154,18 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
 				testrayCaseResultsIssuesObjectEntries) {
 
-			long issueId = (long)SiteInitializerTestrayObjectUtil.getProperty(
+			long issueId = (long)ObjectEntryUtil.getProperty(
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
 			ObjectEntry testrayIssueObjectEntry =
-				SiteInitializerTestrayObjectUtil.getObjectEntry(
+				ObjectEntryUtil.getObjectEntry(
 					_defaultDTOConverterContext, "Issue", issueId,
 					_objectEntryManager);
 
 			sb.append(
 				StringUtil.removeSubstring(
-					(String)SiteInitializerTestrayObjectUtil.getProperty(
+					(String)ObjectEntryUtil.getProperty(
 						"name", testrayIssueObjectEntry),
 					StringPool.DASH));
 
@@ -183,16 +183,14 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		int score = 0;
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			Long testrayCaseId =
-				(Long)SiteInitializerTestrayObjectUtil.getProperty(
-					"r_caseToCaseResult_c_caseId", objectEntry);
+			Long testrayCaseId = (Long)ObjectEntryUtil.getProperty(
+				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			ObjectEntry testrayCaseObjectEntry =
-				SiteInitializerTestrayObjectUtil.getObjectEntry(
-					_defaultDTOConverterContext, "Case", testrayCaseId,
-					_objectEntryManager);
+			ObjectEntry testrayCaseObjectEntry = ObjectEntryUtil.getObjectEntry(
+				_defaultDTOConverterContext, "Case", testrayCaseId,
+				_objectEntryManager);
 
-			score += (int)SiteInitializerTestrayObjectUtil.getProperty(
+			score += (int)ObjectEntryUtil.getProperty(
 				"priority", testrayCaseObjectEntry);
 		}
 
@@ -227,7 +225,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayBuildId"));
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			SiteInitializerTestrayObjectUtil.getObjectEntriesPage(
+			ObjectEntryUtil.getObjectEntriesPage(
 				aggregation, companyId, _defaultDTOConverterContext,
 				"buildId eq '" + testrayBuildId + "'", "CaseResult",
 				_objectEntryManager, null);
@@ -241,7 +239,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			testrayCaseResultFacet.getFacetValues();
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			SiteInitializerTestrayObjectUtil.getObjectEntries(
+			ObjectEntryUtil.getObjectEntries(
 				null, companyId, _defaultDTOConverterContext, sb.toString(),
 				"Case", _objectEntryManager, null),
 			ObjectEntry::getId);
@@ -256,7 +254,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			}
 
 			List<ObjectEntry> testrayCaseResultObjectEntries =
-				SiteInitializerTestrayObjectUtil.getObjectEntries(
+				ObjectEntryUtil.getObjectEntries(
 					null, companyId, _defaultDTOConverterContext,
 					StringBundler.concat(
 						"buildId eq '", testrayBuildId, "' and errors eq '",
@@ -270,7 +268,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 			testrayCaseResultObjectEntries.removeIf(
 				objectEntry -> !testrayCaseObjectEntriesIds.contains(
-					(Long)SiteInitializerTestrayObjectUtil.getProperty(
+					(Long)ObjectEntryUtil.getProperty(
 						"r_caseToCaseResult_c_caseId", objectEntry)));
 
 			Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
@@ -339,14 +337,13 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {
 
-			long testraySubtaskNumber =
-				SiteInitializerTestrayObjectUtil.increment(
-					companyId, _defaultDTOConverterContext, "number",
-					"taskId eq '" + testrayTaskId + "'", "Subtask",
-					_objectEntryManager,
-					new Sort[] {
-						new Sort("nestedFieldArray.value_long#number", true)
-					});
+			long testraySubtaskNumber = ObjectEntryUtil.increment(
+				companyId, _defaultDTOConverterContext, "number",
+				"taskId eq '" + testrayTaskId + "'", "Subtask",
+				_objectEntryManager,
+				new Sort[] {
+					new Sort("nestedFieldArray.value_long#number", true)
+				});
 
 			ObjectEntry firstTestrayCaseResultObjectEntry =
 				testrayCaseResultObjectEntry.get(0);
@@ -355,7 +352,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				firstTestrayCaseResultObjectEntry.getProperties();
 
 			ObjectEntry testraySubtaskObjectEntry =
-				SiteInitializerTestrayObjectUtil.addObjectEntry(
+				ObjectEntryUtil.addObjectEntry(
 					_defaultDTOConverterContext, "Subtask", _objectEntryManager,
 					HashMapBuilder.<String, Object>put(
 						"dueStatus", "OPEN"
@@ -373,7 +370,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 					).build());
 
 			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
-				SiteInitializerTestrayObjectUtil.addObjectEntry(
+				ObjectEntryUtil.addObjectEntry(
 					_defaultDTOConverterContext, "SubtasksCasesResults",
 					_objectEntryManager,
 					HashMapBuilder.<String, Object>put(
@@ -394,10 +391,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		long testrayTaskId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayTaskId"));
 
-		ObjectEntry objectEntry =
-			SiteInitializerTestrayObjectUtil.getObjectEntry(
-				_defaultDTOConverterContext, "Task", testrayTaskId,
-				_objectEntryManager);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			_defaultDTOConverterContext, "Task", testrayTaskId,
+			_objectEntryManager);
 
 		Map<String, Object> map = objectEntry.getProperties();
 
@@ -405,7 +401,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		objectEntry.setProperties(map);
 
-		SiteInitializerTestrayObjectUtil.updateObjectEntry(
+		ObjectEntryUtil.updateObjectEntry(
 			_defaultDTOConverterContext, "Task", objectEntry, testrayTaskId,
 			_objectEntryManager);
 	}

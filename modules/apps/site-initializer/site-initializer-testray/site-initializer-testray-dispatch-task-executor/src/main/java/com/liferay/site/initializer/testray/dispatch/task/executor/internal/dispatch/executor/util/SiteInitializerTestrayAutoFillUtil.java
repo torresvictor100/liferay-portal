@@ -43,7 +43,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 			return;
 		}
 
-		SiteInitializerTestrayObjectUtil.addObjectEntry(
+		ObjectEntryUtil.addObjectEntry(
 			defaultDTOConverterContext, "CaseResultsIssues", objectEntryManager,
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
@@ -52,7 +52,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 				"r_issueToCaseResultsIssues_c_issueId",
 				() -> {
 					Page<ObjectEntry> objectEntriesPage =
-						SiteInitializerTestrayObjectUtil.getObjectEntriesPage(
+						ObjectEntryUtil.getObjectEntriesPage(
 							null, companyId, defaultDTOConverterContext,
 							"name eq '" + testrayIssueName + "'", "Issue",
 							objectEntryManager, null);
@@ -64,13 +64,11 @@ public class SiteInitializerTestrayAutoFillUtil {
 						return objectEntry.getId();
 					}
 
-					objectEntry =
-						SiteInitializerTestrayObjectUtil.addObjectEntry(
-							defaultDTOConverterContext, "Issue",
-							objectEntryManager,
-							HashMapBuilder.<String, Object>put(
-								"name", testrayIssueName
-							).build());
+					objectEntry = ObjectEntryUtil.addObjectEntry(
+						defaultDTOConverterContext, "Issue", objectEntryManager,
+						HashMapBuilder.<String, Object>put(
+							"name", testrayIssueName
+						).build());
 
 					return objectEntry.getId();
 				}
@@ -111,7 +109,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 					testrayCaseResultCompositesA) {
 
 				String testrayCaseResultErrors1 =
-					(String)SiteInitializerTestrayObjectUtil.getProperty(
+					(String)ObjectEntryUtil.getProperty(
 						"errors", testrayCaseResultCompositeA);
 
 				if (Validator.isNull(testrayCaseResultErrors1)) {
@@ -122,7 +120,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 						testrayCaseResultCompositesB) {
 
 					String testrayCaseResultErrors2 =
-						(String)SiteInitializerTestrayObjectUtil.getProperty(
+						(String)ObjectEntryUtil.getProperty(
 							"errors", testrayCaseResultCompositeB);
 
 					if (Validator.isNull(testrayCaseResultErrors2) ||
@@ -173,11 +171,11 @@ public class SiteInitializerTestrayAutoFillUtil {
 			ObjectEntry testrayCaseResultObjectEntry1 = entry.getValue();
 
 			String testrayCaseResultErrors1 =
-				(String)SiteInitializerTestrayObjectUtil.getProperty(
+				(String)ObjectEntryUtil.getProperty(
 					"errors", testrayCaseResultObjectEntry1);
 
 			String testrayCaseResultErrors2 =
-				(String)SiteInitializerTestrayObjectUtil.getProperty(
+				(String)ObjectEntryUtil.getProperty(
 					"errors", testrayCaseResultObjectEntry2);
 
 			if (Validator.isNull(testrayCaseResultErrors1) ||
@@ -205,16 +203,14 @@ public class SiteInitializerTestrayAutoFillUtil {
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries =
 			new HashMap<>();
 
-		List<ObjectEntry> objectEntries =
-			SiteInitializerTestrayObjectUtil.getObjectEntries(
-				null, companyId, defaultDTOConverterContext,
-				"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
-				"CaseResult", objectEntryManager, null);
+		List<ObjectEntry> objectEntries = ObjectEntryUtil.getObjectEntries(
+			null, companyId, defaultDTOConverterContext,
+			"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
+			"CaseResult", objectEntryManager, null);
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			long testrayCaseId =
-				(Long)SiteInitializerTestrayObjectUtil.getProperty(
-					"r_caseToCaseResult_c_caseId", objectEntry);
+			long testrayCaseId = (Long)ObjectEntryUtil.getProperty(
+				"r_caseToCaseResult_c_caseId", objectEntry);
 
 			List<ObjectEntry> matchingTestrayCaseResults =
 				testrayCaseResultObjectEntries.get(testrayCaseId);
@@ -243,13 +239,13 @@ public class SiteInitializerTestrayAutoFillUtil {
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
 
 		for (ObjectEntry objectEntry :
-				SiteInitializerTestrayObjectUtil.getObjectEntries(
+				ObjectEntryUtil.getObjectEntries(
 					null, companyId, defaultDTOConverterContext,
 					"runId eq '" + testrayRunObjectEntry.getId() + "'",
 					"CaseResult", objectEntryManager, null)) {
 
 			testrayCaseResultObjectEntries.put(
-				(Long)SiteInitializerTestrayObjectUtil.getProperty(
+				(Long)ObjectEntryUtil.getProperty(
 					"r_caseToCaseResult_c_caseId", objectEntry),
 				objectEntry);
 		}
@@ -270,24 +266,24 @@ public class SiteInitializerTestrayAutoFillUtil {
 		List<ObjectEntry> sourceTestrayCaseResultsIssuesObjectEntries = null;
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries1 =
-			SiteInitializerTestrayObjectUtil.getObjectEntries(
+			ObjectEntryUtil.getObjectEntries(
 				null, companyId, defaultDTOConverterContext,
 				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
 					"'",
 				"CaseResultsIssues", objectEntryManager, null);
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries2 =
-			SiteInitializerTestrayObjectUtil.getObjectEntries(
+			ObjectEntryUtil.getObjectEntries(
 				null, companyId, defaultDTOConverterContext,
 				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
 					"'",
 				"CaseResultsIssues", objectEntryManager, null);
 
-		if (((Long)SiteInitializerTestrayObjectUtil.getProperty(
+		if (((Long)ObjectEntryUtil.getProperty(
 				"r_userToCaseResults_userId", testrayCaseResultObjectEntry1) >
 					0) &&
 			!testrayCaseResultsIssuesObjectEntries1.isEmpty() &&
-			((Long)SiteInitializerTestrayObjectUtil.getProperty(
+			((Long)ObjectEntryUtil.getProperty(
 				"r_userToCaseResults_userId", testrayCaseResultObjectEntry2) <=
 					0) &&
 			testrayCaseResultsIssuesObjectEntries2.isEmpty()) {
@@ -298,11 +294,11 @@ public class SiteInitializerTestrayAutoFillUtil {
 			sourceTestrayCaseResultsIssuesObjectEntries =
 				testrayCaseResultsIssuesObjectEntries1;
 		}
-		else if (((Long)SiteInitializerTestrayObjectUtil.getProperty(
+		else if (((Long)ObjectEntryUtil.getProperty(
 					"r_userToCaseResults_userId",
 					testrayCaseResultObjectEntry1) <= 0) &&
 				 testrayCaseResultsIssuesObjectEntries1.isEmpty() &&
-				 ((Long)SiteInitializerTestrayObjectUtil.getProperty(
+				 ((Long)ObjectEntryUtil.getProperty(
 					 "r_userToCaseResults_userId",
 					 testrayCaseResultObjectEntry2) > 0) &&
 				 !testrayCaseResultsIssuesObjectEntries2.isEmpty()) {
@@ -325,15 +321,15 @@ public class SiteInitializerTestrayAutoFillUtil {
 
 		properties.put(
 			"dueStatus",
-			SiteInitializerTestrayObjectUtil.getProperty(
+			ObjectEntryUtil.getProperty(
 				"dueStatus", sourceTestrayCaseResultObjectEntry));
 		properties.put(
 			"r_userToCaseResults_userId",
-			SiteInitializerTestrayObjectUtil.getProperty(
+			ObjectEntryUtil.getProperty(
 				"r_userToCaseResults_userId",
 				sourceTestrayCaseResultObjectEntry));
 
-		SiteInitializerTestrayObjectUtil.updateObjectEntry(
+		ObjectEntryUtil.updateObjectEntry(
 			defaultDTOConverterContext, "CaseResult",
 			destinationTestrayCaseResultObjectEntry,
 			destinationTestrayCaseResultObjectEntry.getId(),
@@ -342,13 +338,12 @@ public class SiteInitializerTestrayAutoFillUtil {
 		for (ObjectEntry sourceTestrayCaseResultsIssuesObjectEntry :
 				sourceTestrayCaseResultsIssuesObjectEntries) {
 
-			long testrayIssueId =
-				(long)SiteInitializerTestrayObjectUtil.getProperty(
-					"r_issueToCaseResultsIssues_c_issueId",
-					sourceTestrayCaseResultsIssuesObjectEntry);
+			long testrayIssueId = (long)ObjectEntryUtil.getProperty(
+				"r_issueToCaseResultsIssues_c_issueId",
+				sourceTestrayCaseResultsIssuesObjectEntry);
 
 			ObjectEntry testrayIssueObjectEntry =
-				SiteInitializerTestrayObjectUtil.getObjectEntry(
+				ObjectEntryUtil.getObjectEntry(
 					defaultDTOConverterContext, "Issue", testrayIssueId,
 					objectEntryManager);
 
@@ -359,7 +354,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 			addTestrayCaseResultIssue(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				destinationTestrayCaseResultObjectEntry.getId(),
-				(String)SiteInitializerTestrayObjectUtil.getProperty(
+				(String)ObjectEntryUtil.getProperty(
 					"name", testrayIssueObjectEntry));
 		}
 	}
