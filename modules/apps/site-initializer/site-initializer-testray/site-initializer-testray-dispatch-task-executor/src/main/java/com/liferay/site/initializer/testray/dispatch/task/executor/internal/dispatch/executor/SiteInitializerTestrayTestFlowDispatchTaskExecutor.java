@@ -218,19 +218,20 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		Aggregation aggregation = new Aggregation();
-
-		aggregation.setAggregationTerms(
-			HashMapBuilder.put(
-				"errors", "errors"
-			).build());
-
 		long testrayBuildId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayBuildId"));
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
 			ObjectEntryUtil.getObjectEntriesPage(
-				aggregation, companyId, _defaultDTOConverterContext,
+				new Aggregation() {
+					{
+						setAggregationTerms(
+							HashMapBuilder.put(
+								"errors", "errors"
+							).build());
+					}
+				},
+				companyId, _defaultDTOConverterContext,
 				"buildId eq '" + testrayBuildId + "'", "CaseResult",
 				_objectEntryManager, null);
 
