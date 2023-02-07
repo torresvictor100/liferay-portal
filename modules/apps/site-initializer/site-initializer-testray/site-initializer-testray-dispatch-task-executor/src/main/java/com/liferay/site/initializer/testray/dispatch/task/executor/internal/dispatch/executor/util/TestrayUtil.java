@@ -309,26 +309,26 @@ public class TestrayUtil {
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries =
 			new HashMap<>();
 
-		List<ObjectEntry> objectEntries = ObjectEntryUtil.getObjectEntries(
-			null, companyId, defaultDTOConverterContext,
-			"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
-			"CaseResult", objectEntryManager, null);
+		for (ObjectEntry objectEntry :
+				ObjectEntryUtil.getObjectEntries(
+					null, companyId, defaultDTOConverterContext,
+					"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
+					"CaseResult", objectEntryManager, null)) {
 
-		for (ObjectEntry objectEntry : objectEntries) {
 			long testrayCaseId = (Long)ObjectEntryUtil.getProperty(
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			List<ObjectEntry> matchingTestrayCaseResults =
+			List<ObjectEntry> objectEntries =
 				testrayCaseResultObjectEntries.get(testrayCaseId);
 
-			if (matchingTestrayCaseResults == null) {
-				matchingTestrayCaseResults = new ArrayList<>();
+			if (objectEntries == null) {
+				objectEntries = new ArrayList<>();
 
 				testrayCaseResultObjectEntries.put(
-					testrayCaseId, matchingTestrayCaseResults);
+					testrayCaseId, objectEntries);
 			}
 
-			matchingTestrayCaseResults.add(objectEntry);
+			objectEntries.add(objectEntry);
 		}
 
 		return testrayCaseResultObjectEntries;
