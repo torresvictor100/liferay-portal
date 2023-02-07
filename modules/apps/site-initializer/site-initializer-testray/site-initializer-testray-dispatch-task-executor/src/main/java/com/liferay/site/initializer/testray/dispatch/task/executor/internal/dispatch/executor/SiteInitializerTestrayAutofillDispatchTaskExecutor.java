@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.ObjectEntryUtil;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutofillUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = DispatchTaskExecutor.class
 )
-public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
+public class SiteInitializerTestrayAutofillDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
 	@Override
@@ -65,7 +65,7 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(unicodeProperties.getProperty("autoFillType")) ||
+		if (Validator.isNull(unicodeProperties.getProperty("autofillType")) ||
 			Validator.isNull(unicodeProperties.getProperty("objectEntryId1")) ||
 			Validator.isNull(unicodeProperties.getProperty("objectEntryId2"))) {
 
@@ -117,27 +117,27 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		String autoFillType = GetterUtil.getString(
-			unicodeProperties.getProperty("autoFillType"));
+		String autofillType = GetterUtil.getString(
+			unicodeProperties.getProperty("autofillType"));
 		long objectEntryId1 = GetterUtil.getLong(
 			unicodeProperties.getProperty("objectEntryId1"));
 		long objectEntryId2 = GetterUtil.getLong(
 			unicodeProperties.getProperty("objectEntryId2"));
 
 		ObjectEntry objectEntry1 = ObjectEntryUtil.getObjectEntry(
-			_defaultDTOConverterContext, autoFillType, objectEntryId1,
+			_defaultDTOConverterContext, autofillType, objectEntryId1,
 			_objectEntryManager);
 		ObjectEntry objectEntry2 = ObjectEntryUtil.getObjectEntry(
-			_defaultDTOConverterContext, autoFillType, objectEntryId2,
+			_defaultDTOConverterContext, autofillType, objectEntryId2,
 			_objectEntryManager);
 
-		if (StringUtil.equals(autoFillType, "Build")) {
-			SiteInitializerTestrayAutoFillUtil.autoFillBuilds(
+		if (StringUtil.equals(autofillType, "Build")) {
+			SiteInitializerTestrayAutofillUtil.autofillBuilds(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
-		else if (StringUtil.equals(autoFillType, "Run")) {
-			SiteInitializerTestrayAutoFillUtil.autoFillRuns(
+		else if (StringUtil.equals(autofillType, "Run")) {
+			SiteInitializerTestrayAutofillUtil.autofillRuns(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
@@ -147,7 +147,7 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteInitializerTestrayAutoFillDispatchTaskExecutor.class);
+		SiteInitializerTestrayAutofillDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 

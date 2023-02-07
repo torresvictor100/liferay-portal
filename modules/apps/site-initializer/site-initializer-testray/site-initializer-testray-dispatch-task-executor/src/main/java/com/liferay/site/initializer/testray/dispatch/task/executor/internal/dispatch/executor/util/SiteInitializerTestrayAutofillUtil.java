@@ -30,7 +30,7 @@ import java.util.Objects;
 /**
  * @author Nilton Vieira
  */
-public class SiteInitializerTestrayAutoFillUtil {
+public class SiteInitializerTestrayAutofillUtil {
 
 	public static void addTestrayCaseResultIssue(
 			long companyId,
@@ -75,7 +75,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 			).build());
 	}
 
-	public static void autoFillBuilds(
+	public static void autofillBuilds(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
@@ -131,7 +131,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 						continue;
 					}
 
-					_testrayAutoFillCaseResults(
+					_testrayAutofillCaseResults(
 						companyId, defaultDTOConverterContext,
 						objectEntryManager, testrayCaseResultCompositeA,
 						testrayCaseResultCompositeB);
@@ -140,7 +140,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 		}
 	}
 
-	public static void autoFillRuns(
+	public static void autofillRuns(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
@@ -186,7 +186,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 				continue;
 			}
 
-			_testrayAutoFillCaseResults(
+			_testrayAutofillCaseResults(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayCaseResultObjectEntry1, testrayCaseResultObjectEntry2);
 		}
@@ -253,7 +253,7 @@ public class SiteInitializerTestrayAutoFillUtil {
 		return testrayCaseResultObjectEntries;
 	}
 
-	private static void _testrayAutoFillCaseResults(
+	private static void _testrayAutofillCaseResults(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,

@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.ObjectEntryUtil;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutoFillUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutofillUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -276,11 +276,11 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testcaseNode, testrayBuildId, testrayBuildTime, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
 
-		SiteInitializerTestrayAutoFillUtil.addTestrayCaseResultIssue(
+		SiteInitializerTestrayAutofillUtil.addTestrayCaseResultIssue(
 			companyId, _defaultDTOConverterContext, _objectEntryManager,
 			testrayCaseResultId,
 			(String)testrayCasePropertiesMap.get("testray.case.defect"));
-		SiteInitializerTestrayAutoFillUtil.addTestrayCaseResultIssue(
+		SiteInitializerTestrayAutofillUtil.addTestrayCaseResultIssue(
 			companyId, _defaultDTOConverterContext, _objectEntryManager,
 			testrayCaseResultId,
 			(String)testrayCasePropertiesMap.get("testray.case.issue"));
@@ -1220,7 +1220,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			return;
 		}
 
-		SiteInitializerTestrayAutoFillUtil.autoFillRuns(
+		SiteInitializerTestrayAutofillUtil.autofillRuns(
 			companyId, _defaultDTOConverterContext, _objectEntryManager,
 			testrayRunObjectEntry1, testrayRunObjectEntry2);
 	}
