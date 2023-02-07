@@ -259,46 +259,44 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				continue;
 			}
 
-			List<ObjectEntry> testrayCaseResultObjectEntries =
-				ObjectEntryUtil.getObjectEntries(
-					null, companyId, _defaultDTOConverterContext,
-					StringBundler.concat(
-						"buildId eq '", testrayBuildId, "' and errors eq '",
-						StringUtil.removeChar(
-							StringUtil.replace(
-								facetValue.getTerm(), '\'', "''"),
-							'\\'),
-						"'"),
-					"CaseResult", _objectEntryManager, null);
-
-			testrayCaseResultObjectEntries.removeIf(
-				objectEntry -> !testrayCaseObjectEntriesIds.contains(
-					(Long)ObjectEntryUtil.getProperty(
-						"r_caseToCaseResult_c_caseId", objectEntry)));
-
-			Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
-				new HashMap<>();
+			Map<String, List<ObjectEntry>> map = new HashMap<>();
 
 			for (ObjectEntry testrayCaseResultObjectEntry :
-					testrayCaseResultObjectEntries) {
+					ObjectEntryUtil.getObjectEntries(
+						null, companyId, _defaultDTOConverterContext,
+						StringBundler.concat(
+							"buildId eq '", testrayBuildId, "' and errors eq '",
+							StringUtil.removeChar(
+								StringUtil.replace(
+									facetValue.getTerm(), '\'', "''"),
+								'\\'),
+							"'"),
+						"CaseResult", _objectEntryManager, null)) {
+
+				if (!testrayCaseObjectEntriesIds.contains(
+						(Long)ObjectEntryUtil.getProperty(
+							"r_caseToCaseResult_c_caseId",
+							testrayCaseResultObjectEntry))) {
+
+					continue;
+				}
 
 				String testrayIssueNames = _getTestrayIssueNames(
 					companyId, testrayCaseResultObjectEntry);
 
-				List<ObjectEntry> matchingTestrayCaseResults =
-					testrayCaseResultIssuesMap.get(testrayIssueNames);
+				List<ObjectEntry> matchingTestrayCaseResults = map.get(
+					testrayIssueNames);
 
 				if (matchingTestrayCaseResults == null) {
 					matchingTestrayCaseResults = new ArrayList<>();
 
-					testrayCaseResultIssuesMap.put(
-						testrayIssueNames, matchingTestrayCaseResults);
+					map.put(testrayIssueNames, matchingTestrayCaseResults);
 				}
 
 				matchingTestrayCaseResults.add(testrayCaseResultObjectEntry);
 			}
 
-			testrayCaseResultGroups.addAll(testrayCaseResultIssuesMap.values());
+			testrayCaseResultGroups.addAll(map.values());
 		}
 
 		ListUtil.sort(
