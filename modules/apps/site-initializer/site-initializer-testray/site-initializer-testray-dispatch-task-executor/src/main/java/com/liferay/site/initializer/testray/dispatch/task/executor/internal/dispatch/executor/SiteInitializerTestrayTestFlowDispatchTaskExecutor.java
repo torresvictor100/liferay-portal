@@ -284,16 +284,17 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				String testrayIssueNames = _getTestrayIssueNames(
 					companyId, testrayCaseResultObjectEntry);
 
-				List<ObjectEntry> matchingTestrayCaseResults = map.get(
+				List<ObjectEntry> testrayCaseResultObjectEntries = map.get(
 					testrayIssueNames);
 
-				if (matchingTestrayCaseResults == null) {
-					matchingTestrayCaseResults = new ArrayList<>();
+				if (testrayCaseResultObjectEntries == null) {
+					testrayCaseResultObjectEntries = new ArrayList<>();
 
-					map.put(testrayIssueNames, matchingTestrayCaseResults);
+					map.put(testrayIssueNames, testrayCaseResultObjectEntries);
 				}
 
-				matchingTestrayCaseResults.add(testrayCaseResultObjectEntry);
+				testrayCaseResultObjectEntries.add(
+					testrayCaseResultObjectEntry);
 			}
 
 			testrayCaseResultGroups.addAll(map.values());
@@ -337,7 +338,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		long testrayTaskId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayTaskId"));
 
-		for (List<ObjectEntry> testrayCaseResultObjectEntry :
+		for (List<ObjectEntry> testrayCaseResultObjectEntries :
 				testrayCaseResultGroups) {
 
 			long testraySubtaskNumber = ObjectEntryUtil.increment(
@@ -349,7 +350,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				});
 
 			ObjectEntry firstTestrayCaseResultObjectEntry =
-				testrayCaseResultObjectEntry.get(0);
+				testrayCaseResultObjectEntries.get(0);
 
 			Map<String, Object> map =
 				firstTestrayCaseResultObjectEntry.getProperties();
@@ -369,10 +370,10 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 						"r_taskToSubtasks_c_taskId", testrayTaskId
 					).put(
 						"score",
-						_getTestraySubtaskScore(testrayCaseResultObjectEntry)
+						_getTestraySubtaskScore(testrayCaseResultObjectEntries)
 					).build());
 
-			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+			for (ObjectEntry objectEntry : testrayCaseResultObjectEntries) {
 				ObjectEntryUtil.addObjectEntry(
 					_defaultDTOConverterContext, "SubtasksCasesResults",
 					_objectEntryManager,
@@ -398,11 +399,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			_defaultDTOConverterContext, "Task", testrayTaskId,
 			_objectEntryManager);
 
-		Map<String, Object> map = objectEntry.getProperties();
+		Map<String, Object> properties = objectEntry.getProperties();
 
-		map.replace("dueStatus", testrayTaskStatus);
+		properties.replace("dueStatus", testrayTaskStatus);
 
-		objectEntry.setProperties(map);
+		objectEntry.setProperties(properties);
 
 		ObjectEntryUtil.updateObjectEntry(
 			_defaultDTOConverterContext, "Task", objectEntry, testrayTaskId,
