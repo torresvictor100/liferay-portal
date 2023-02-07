@@ -142,7 +142,7 @@ public class SiteInitializerTestrayAutofillDispatchTaskExecutor
 				objectEntry1, objectEntry2);
 		}
 		else {
-			_log.error("Auto fill type selected is not available");
+			_log.error("Unknown autofill type: " + autofillType);
 		}
 	}
 
