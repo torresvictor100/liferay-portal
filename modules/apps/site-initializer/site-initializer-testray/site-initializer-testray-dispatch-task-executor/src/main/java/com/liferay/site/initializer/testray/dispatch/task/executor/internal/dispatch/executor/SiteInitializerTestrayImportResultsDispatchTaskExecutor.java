@@ -393,12 +393,12 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			return objectEntryId;
 		}
 
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			objectEntriesPage = ObjectEntryUtil.getObjectEntriesPage(
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry> page =
+			ObjectEntryUtil.getObjectEntriesPage(
 				null, companyId, _defaultDTOConverterContext, filterString,
 				objectDefinitionShortName, _objectEntryManager, null);
 
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+		ObjectEntry objectEntry = page.fetchFirstItem();
 
 		if (objectEntry == null) {
 			return 0;

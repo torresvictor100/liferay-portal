@@ -51,14 +51,13 @@ public class TestrayUtil {
 			).put(
 				"r_issueToCaseResultsIssues_c_issueId",
 				() -> {
-					Page<ObjectEntry> objectEntriesPage =
+					Page<ObjectEntry> page =
 						ObjectEntryUtil.getObjectEntriesPage(
 							null, companyId, defaultDTOConverterContext,
 							"name eq '" + testrayIssueName + "'", "Issue",
 							objectEntryManager, null);
 
-					ObjectEntry objectEntry =
-						objectEntriesPage.fetchFirstItem();
+					ObjectEntry objectEntry = page.fetchFirstItem();
 
 					if (objectEntry.getId() > 0) {
 						return objectEntry.getId();
