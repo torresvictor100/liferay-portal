@@ -154,13 +154,13 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
 				testrayCaseResultsIssuesObjectEntries) {
 
-			long issueId = (long)ObjectEntryUtil.getProperty(
+			long testrayIssueId = (long)ObjectEntryUtil.getProperty(
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
 			ObjectEntry testrayIssueObjectEntry =
 				ObjectEntryUtil.getObjectEntry(
-					_defaultDTOConverterContext, "Issue", issueId,
+					_defaultDTOConverterContext, "Issue", testrayIssueId,
 					_objectEntryManager);
 
 			sb.append(
