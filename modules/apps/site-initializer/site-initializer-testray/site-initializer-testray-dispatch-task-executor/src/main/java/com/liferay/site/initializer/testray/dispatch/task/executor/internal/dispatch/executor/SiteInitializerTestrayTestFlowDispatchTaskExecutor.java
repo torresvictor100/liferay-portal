@@ -340,7 +340,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				testrayCaseResultGroups) {
 
 			long testraySubtaskNumber =
-				SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
+				SiteInitializerTestrayObjectUtil.increment(
 					companyId, _defaultDTOConverterContext, "number",
 					"taskId eq '" + testrayTaskId + "'", "Subtask",
 					_objectEntryManager,

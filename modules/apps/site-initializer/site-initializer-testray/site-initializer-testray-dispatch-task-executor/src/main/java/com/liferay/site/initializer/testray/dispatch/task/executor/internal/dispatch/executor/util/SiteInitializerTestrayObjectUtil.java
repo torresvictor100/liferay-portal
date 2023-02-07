@@ -96,7 +96,7 @@ public class SiteInitializerTestrayObjectUtil {
 		return properties.get(key);
 	}
 
-	public static long incrementTestrayFieldValue(
+	public static long increment(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			String fieldName, String filterString,

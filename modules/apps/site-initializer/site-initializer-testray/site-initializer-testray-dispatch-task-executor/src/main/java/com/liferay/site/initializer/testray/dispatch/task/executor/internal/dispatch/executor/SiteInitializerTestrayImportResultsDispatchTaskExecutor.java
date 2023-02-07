@@ -248,7 +248,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 					).put(
 						"number",
 						SiteInitializerTestrayObjectUtil.
-							incrementTestrayFieldValue(
+							increment(
 								companyId, _defaultDTOConverterContext,
 								"number",
 								"projectId eq '" + testrayProjectId + "'",
@@ -936,7 +936,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 					"name", testrayRunName
 				).put(
 					"number",
-					SiteInitializerTestrayObjectUtil.incrementTestrayFieldValue(
+					SiteInitializerTestrayObjectUtil.increment(
 						companyId, _defaultDTOConverterContext, "number",
 						"buildId eq '" + testrayBuildId + "'", "Run",
 						_objectEntryManager,
