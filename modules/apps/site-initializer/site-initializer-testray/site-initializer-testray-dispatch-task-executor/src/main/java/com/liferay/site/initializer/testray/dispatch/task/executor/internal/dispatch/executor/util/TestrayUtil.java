@@ -30,7 +30,7 @@ import java.util.Objects;
 /**
  * @author Nilton Vieira
  */
-public class SiteInitializerTestrayAutofillUtil {
+public class TestrayUtil {
 
 	public static void addTestrayCaseResultIssue(
 			long companyId,

@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.ObjectEntryUtil;
-import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayAutofillUtil;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.TestrayUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -132,12 +132,12 @@ public class SiteInitializerTestrayAutofillDispatchTaskExecutor
 			_objectEntryManager);
 
 		if (StringUtil.equals(autofillType, "Build")) {
-			SiteInitializerTestrayAutofillUtil.autofillBuilds(
+			TestrayUtil.autofillBuilds(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
 		else if (StringUtil.equals(autofillType, "Run")) {
-			SiteInitializerTestrayAutofillUtil.autofillRuns(
+			TestrayUtil.autofillRuns(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
