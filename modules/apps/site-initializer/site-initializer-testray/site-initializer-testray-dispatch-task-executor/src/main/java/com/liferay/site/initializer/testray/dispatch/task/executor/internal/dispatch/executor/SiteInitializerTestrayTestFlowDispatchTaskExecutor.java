@@ -134,6 +134,30 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return true;
 	}
 
+	private List<Facet.FacetValue> _getFacetValues(
+			long companyId, long testrayBuildId)
+		throws Exception {
+
+		Page<ObjectEntry> page = ObjectEntryUtil.getObjectEntriesPage(
+			new Aggregation() {
+				{
+					setAggregationTerms(
+						HashMapBuilder.put(
+							"errors", "errors"
+						).build());
+				}
+			},
+			companyId, _defaultDTOConverterContext,
+			"buildId eq '" + testrayBuildId + "'", "CaseResult",
+			_objectEntryManager, null);
+
+		List<Facet> facets = (List<Facet>)page.getFacets();
+
+		Facet facet = facets.get(0);
+
+		return facet.getFacetValues();
+	}
+
 	private String _getFilterString(UnicodeProperties unicodeProperties) {
 		StringBundler sb = new StringBundler();
 
@@ -220,36 +244,17 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		long testrayBuildId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayBuildId"));
-
-		Page<ObjectEntry> page = ObjectEntryUtil.getObjectEntriesPage(
-			new Aggregation() {
-				{
-					setAggregationTerms(
-						HashMapBuilder.put(
-							"errors", "errors"
-						).build());
-				}
-			},
-			companyId, _defaultDTOConverterContext,
-			"buildId eq '" + testrayBuildId + "'", "CaseResult",
-			_objectEntryManager, null);
-
-		List<Facet> facets = (List<Facet>)page.getFacets();
-
-		Facet facet = facets.get(0);
-
-		List<Facet.FacetValue> facetValues = facet.getFacetValues();
-
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			ObjectEntryUtil.getObjectEntries(
 				null, companyId, _defaultDTOConverterContext,
 				_getFilterString(unicodeProperties), "Case",
 				_objectEntryManager, null),
 			ObjectEntry::getId);
-
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
-		for (Facet.FacetValue facetValue : facetValues) {
+		for (Facet.FacetValue facetValue :
+				_getFacetValues(companyId, testrayBuildId)) {
+
 			if (Objects.equals(facetValue.getTerm(), "null")) {
 				continue;
 			}
