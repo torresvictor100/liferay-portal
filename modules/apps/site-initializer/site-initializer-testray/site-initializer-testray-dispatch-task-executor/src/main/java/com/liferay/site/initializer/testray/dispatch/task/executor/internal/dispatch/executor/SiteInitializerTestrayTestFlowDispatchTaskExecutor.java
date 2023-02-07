@@ -221,27 +221,24 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		long testrayBuildId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayBuildId"));
 
-		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			ObjectEntryUtil.getObjectEntriesPage(
-				new Aggregation() {
-					{
-						setAggregationTerms(
-							HashMapBuilder.put(
-								"errors", "errors"
-							).build());
-					}
-				},
-				companyId, _defaultDTOConverterContext,
-				"buildId eq '" + testrayBuildId + "'", "CaseResult",
-				_objectEntryManager, null);
+		Page<ObjectEntry> page = ObjectEntryUtil.getObjectEntriesPage(
+			new Aggregation() {
+				{
+					setAggregationTerms(
+						HashMapBuilder.put(
+							"errors", "errors"
+						).build());
+				}
+			},
+			companyId, _defaultDTOConverterContext,
+			"buildId eq '" + testrayBuildId + "'", "CaseResult",
+			_objectEntryManager, null);
 
-		List<Facet> testrayCaseResultFacets =
-			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
+		List<Facet> facets = (List<Facet>)page.getFacets();
 
-		Facet testrayCaseResultFacet = testrayCaseResultFacets.get(0);
+		Facet facet = facets.get(0);
 
-		List<Facet.FacetValue> testrayCaseResultFacetValues =
-			testrayCaseResultFacet.getFacetValues();
+		List<Facet.FacetValue> facetValues = facet.getFacetValues();
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			ObjectEntryUtil.getObjectEntries(
@@ -252,10 +249,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
-		for (Facet.FacetValue testrayCaseResultFacetValue :
-				testrayCaseResultFacetValues) {
-
-			if (Objects.equals(testrayCaseResultFacetValue.getTerm(), "null")) {
+		for (Facet.FacetValue facetValue : facetValues) {
+			if (Objects.equals(facetValue.getTerm(), "null")) {
 				continue;
 			}
 
@@ -266,8 +261,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 						"buildId eq '", testrayBuildId, "' and errors eq '",
 						StringUtil.removeChar(
 							StringUtil.replace(
-								testrayCaseResultFacetValue.getTerm(), '\'',
-								"''"),
+								facetValue.getTerm(), '\'', "''"),
 							'\\'),
 						"'"),
 					"CaseResult", _objectEntryManager, null);
