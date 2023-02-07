@@ -126,7 +126,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-test-flow";
+		return "testray-testflow";
 	}
 
 	@Override
