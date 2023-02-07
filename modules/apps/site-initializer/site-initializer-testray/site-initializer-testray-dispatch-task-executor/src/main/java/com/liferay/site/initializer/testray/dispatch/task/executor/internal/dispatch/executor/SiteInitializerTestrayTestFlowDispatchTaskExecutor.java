@@ -250,7 +250,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				_getFilterString(unicodeProperties), "Case",
 				_objectEntryManager, null),
 			ObjectEntry::getId);
-		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
+		List<List<ObjectEntry>> testrayCaseResultObjectEntriesList =
+			new ArrayList<>();
 
 		for (Facet.FacetValue facetValue :
 				_getFacetValues(companyId, testrayBuildId)) {
@@ -297,11 +298,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 					testrayCaseResultObjectEntry);
 			}
 
-			testrayCaseResultGroups.addAll(map.values());
+			testrayCaseResultObjectEntriesList.addAll(map.values());
 		}
 
 		ListUtil.sort(
-			testrayCaseResultGroups,
+			testrayCaseResultObjectEntriesList,
 			new Comparator<List<ObjectEntry>>() {
 
 				@Override
@@ -315,7 +316,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 					try {
 						testraySubtaskScore1 = _getTestraySubtaskScore(
 							testrayCaseResultObjectEntries1);
-
 						testraySubtaskScore2 = _getTestraySubtaskScore(
 							testrayCaseResultObjectEntries2);
 					}
@@ -339,7 +339,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayTaskId"));
 
 		for (List<ObjectEntry> testrayCaseResultObjectEntries :
-				testrayCaseResultGroups) {
+				testrayCaseResultObjectEntriesList) {
 
 			long testraySubtaskNumber = ObjectEntryUtil.increment(
 				companyId, _defaultDTOConverterContext,
@@ -352,7 +352,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			ObjectEntry firstTestrayCaseResultObjectEntry =
 				testrayCaseResultObjectEntries.get(0);
 
-			Map<String, Object> map =
+			Map<String, Object> properties =
 				firstTestrayCaseResultObjectEntry.getProperties();
 
 			ObjectEntry testraySubtaskObjectEntry =
@@ -361,7 +361,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 					HashMapBuilder.<String, Object>put(
 						"dueStatus", "OPEN"
 					).put(
-						"errors", map.get("errors")
+						"errors", properties.get("errors")
 					).put(
 						"name", "ST-" + testraySubtaskNumber
 					).put(
@@ -373,13 +373,15 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 						_getTestraySubtaskScore(testrayCaseResultObjectEntries)
 					).build());
 
-			for (ObjectEntry objectEntry : testrayCaseResultObjectEntries) {
+			for (ObjectEntry testrayCaseResultObjectEntry :
+					testrayCaseResultObjectEntries) {
+
 				ObjectEntryUtil.addObjectEntry(
 					_defaultDTOConverterContext, "SubtasksCasesResults",
 					_objectEntryManager,
 					HashMapBuilder.<String, Object>put(
 						"r_caseResultToSubtasksCasesResults_c_caseResultId",
-						objectEntry.getId()
+						testrayCaseResultObjectEntry.getId()
 					).put(
 						"r_subtaskToSubtasksCasesResults_c_subtaskId",
 						String.valueOf(testraySubtaskObjectEntry.getId())
