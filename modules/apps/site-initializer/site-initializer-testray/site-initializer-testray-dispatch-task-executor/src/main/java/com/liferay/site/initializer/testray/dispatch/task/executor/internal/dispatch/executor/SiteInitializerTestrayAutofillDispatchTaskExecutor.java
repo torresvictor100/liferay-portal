@@ -132,12 +132,12 @@ public class SiteInitializerTestrayAutofillDispatchTaskExecutor
 			_objectEntryManager);
 
 		if (StringUtil.equals(autofillType, "Build")) {
-			TestrayUtil.autofillBuilds(
+			TestrayUtil.autofillTestrayBuilds(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}
 		else if (StringUtil.equals(autofillType, "Run")) {
-			TestrayUtil.autofillRuns(
+			TestrayUtil.autofillTestrayRuns(
 				companyId, _defaultDTOConverterContext, _objectEntryManager,
 				objectEntry1, objectEntry2);
 		}

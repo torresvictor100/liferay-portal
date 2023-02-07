@@ -75,7 +75,7 @@ public class TestrayUtil {
 			).build());
 	}
 
-	public static void autofillBuilds(
+	public static void autofillTestrayBuilds(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
@@ -84,12 +84,12 @@ public class TestrayUtil {
 		throws Exception {
 
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries1 =
-			_getTestrayCaseResultObjectEntriesByBuild(
+			_getTestrayCaseResultObjectEntriesByTestrayBuild(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayBuildObjectEntry1);
 
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries2 =
-			_getTestrayCaseResultObjectEntriesByBuild(
+			_getTestrayCaseResultObjectEntriesByTestrayBuild(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayBuildObjectEntry2);
 
@@ -131,7 +131,7 @@ public class TestrayUtil {
 						continue;
 					}
 
-					_testrayAutofillCaseResults(
+					_autofillTestrayCaseResults(
 						companyId, defaultDTOConverterContext,
 						objectEntryManager, testrayCaseResultCompositeA,
 						testrayCaseResultCompositeB);
@@ -140,7 +140,7 @@ public class TestrayUtil {
 		}
 	}
 
-	public static void autofillRuns(
+	public static void autofillTestrayRuns(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
@@ -149,12 +149,12 @@ public class TestrayUtil {
 		throws Exception {
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries1 =
-			_getTestrayCaseResultObjectEntriesByRun(
+			_getTestrayCaseResultObjectEntriesByTestrayRun(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayRunObjectEntry1);
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries2 =
-			_getTestrayCaseResultObjectEntriesByRun(
+			_getTestrayCaseResultObjectEntriesByTestrayRun(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayRunObjectEntry2);
 
@@ -186,14 +186,14 @@ public class TestrayUtil {
 				continue;
 			}
 
-			_testrayAutofillCaseResults(
+			_autofillTestrayCaseResults(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayCaseResultObjectEntry1, testrayCaseResultObjectEntry2);
 		}
 	}
 
 	private static Map<Long, List<ObjectEntry>>
-			_getTestrayCaseResultObjectEntriesByBuild(
+			_getTestrayCaseResultObjectEntriesByTestrayBuild(
 				long companyId,
 				DefaultDTOConverterContext defaultDTOConverterContext,
 				ObjectEntryManager objectEntryManager,
@@ -229,7 +229,7 @@ public class TestrayUtil {
 	}
 
 	private static Map<Long, ObjectEntry>
-			_getTestrayCaseResultObjectEntriesByRun(
+			_getTestrayCaseResultObjectEntriesByTestrayRun(
 				long companyId,
 				DefaultDTOConverterContext defaultDTOConverterContext,
 				ObjectEntryManager objectEntryManager,
@@ -253,7 +253,7 @@ public class TestrayUtil {
 		return testrayCaseResultObjectEntries;
 	}
 
-	private static void _testrayAutofillCaseResults(
+	private static void _autofillTestrayCaseResults(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
 			ObjectEntryManager objectEntryManager,
