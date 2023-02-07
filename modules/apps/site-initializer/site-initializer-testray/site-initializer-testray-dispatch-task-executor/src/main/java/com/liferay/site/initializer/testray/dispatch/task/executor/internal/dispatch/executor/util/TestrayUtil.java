@@ -192,67 +192,6 @@ public class TestrayUtil {
 		}
 	}
 
-	private static Map<Long, List<ObjectEntry>>
-			_getTestrayCaseResultObjectEntriesByTestrayBuild(
-				long companyId,
-				DefaultDTOConverterContext defaultDTOConverterContext,
-				ObjectEntryManager objectEntryManager,
-				ObjectEntry testrayBuildObjectEntry)
-		throws Exception {
-
-		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries =
-			new HashMap<>();
-
-		List<ObjectEntry> objectEntries = ObjectEntryUtil.getObjectEntries(
-			null, companyId, defaultDTOConverterContext,
-			"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
-			"CaseResult", objectEntryManager, null);
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			long testrayCaseId = (Long)ObjectEntryUtil.getProperty(
-				"r_caseToCaseResult_c_caseId", objectEntry);
-
-			List<ObjectEntry> matchingTestrayCaseResults =
-				testrayCaseResultObjectEntries.get(testrayCaseId);
-
-			if (matchingTestrayCaseResults == null) {
-				matchingTestrayCaseResults = new ArrayList<>();
-
-				testrayCaseResultObjectEntries.put(
-					testrayCaseId, matchingTestrayCaseResults);
-			}
-
-			matchingTestrayCaseResults.add(objectEntry);
-		}
-
-		return testrayCaseResultObjectEntries;
-	}
-
-	private static Map<Long, ObjectEntry>
-			_getTestrayCaseResultObjectEntriesByTestrayRun(
-				long companyId,
-				DefaultDTOConverterContext defaultDTOConverterContext,
-				ObjectEntryManager objectEntryManager,
-				ObjectEntry testrayRunObjectEntry)
-		throws Exception {
-
-		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
-
-		for (ObjectEntry objectEntry :
-				ObjectEntryUtil.getObjectEntries(
-					null, companyId, defaultDTOConverterContext,
-					"runId eq '" + testrayRunObjectEntry.getId() + "'",
-					"CaseResult", objectEntryManager, null)) {
-
-			testrayCaseResultObjectEntries.put(
-				(Long)ObjectEntryUtil.getProperty(
-					"r_caseToCaseResult_c_caseId", objectEntry),
-				objectEntry);
-		}
-
-		return testrayCaseResultObjectEntries;
-	}
-
 	private static void _autofillTestrayCaseResults(
 			long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
@@ -357,6 +296,67 @@ public class TestrayUtil {
 				(String)ObjectEntryUtil.getProperty(
 					"name", testrayIssueObjectEntry));
 		}
+	}
+
+	private static Map<Long, List<ObjectEntry>>
+			_getTestrayCaseResultObjectEntriesByTestrayBuild(
+				long companyId,
+				DefaultDTOConverterContext defaultDTOConverterContext,
+				ObjectEntryManager objectEntryManager,
+				ObjectEntry testrayBuildObjectEntry)
+		throws Exception {
+
+		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries =
+			new HashMap<>();
+
+		List<ObjectEntry> objectEntries = ObjectEntryUtil.getObjectEntries(
+			null, companyId, defaultDTOConverterContext,
+			"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
+			"CaseResult", objectEntryManager, null);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			long testrayCaseId = (Long)ObjectEntryUtil.getProperty(
+				"r_caseToCaseResult_c_caseId", objectEntry);
+
+			List<ObjectEntry> matchingTestrayCaseResults =
+				testrayCaseResultObjectEntries.get(testrayCaseId);
+
+			if (matchingTestrayCaseResults == null) {
+				matchingTestrayCaseResults = new ArrayList<>();
+
+				testrayCaseResultObjectEntries.put(
+					testrayCaseId, matchingTestrayCaseResults);
+			}
+
+			matchingTestrayCaseResults.add(objectEntry);
+		}
+
+		return testrayCaseResultObjectEntries;
+	}
+
+	private static Map<Long, ObjectEntry>
+			_getTestrayCaseResultObjectEntriesByTestrayRun(
+				long companyId,
+				DefaultDTOConverterContext defaultDTOConverterContext,
+				ObjectEntryManager objectEntryManager,
+				ObjectEntry testrayRunObjectEntry)
+		throws Exception {
+
+		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
+
+		for (ObjectEntry objectEntry :
+				ObjectEntryUtil.getObjectEntries(
+					null, companyId, defaultDTOConverterContext,
+					"runId eq '" + testrayRunObjectEntry.getId() + "'",
+					"CaseResult", objectEntryManager, null)) {
+
+			testrayCaseResultObjectEntries.put(
+				(Long)ObjectEntryUtil.getProperty(
+					"r_caseToCaseResult_c_caseId", objectEntry),
+				objectEntry);
+		}
+
+		return testrayCaseResultObjectEntries;
 	}
 
 }
