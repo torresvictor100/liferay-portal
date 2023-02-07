@@ -266,13 +266,13 @@ public class AMImageEntryLocalServiceImpl
 	 */
 	@Override
 	public int getExpectedAMImageEntriesCount(long companyId) {
-		int entryCount = 0;
+		int count = 0;
 
 		for (AMImageCounter amImageCounter : _serviceTrackerMap.values()) {
-			entryCount += amImageCounter.countExpectedAMImageEntries(companyId);
+			count += amImageCounter.countExpectedAMImageEntries(companyId);
 		}
 
-		return entryCount;
+		return count;
 	}
 
 	/**
