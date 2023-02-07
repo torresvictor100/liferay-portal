@@ -87,7 +87,6 @@ public class TestrayUtil {
 			_getTestrayCaseResultObjectEntriesByTestrayBuild(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayBuildObjectEntry1);
-
 		Map<Long, List<ObjectEntry>> testrayCaseResultObjectEntries2 =
 			_getTestrayCaseResultObjectEntriesByTestrayBuild(
 				companyId, defaultDTOConverterContext, objectEntryManager,
@@ -96,45 +95,41 @@ public class TestrayUtil {
 		for (Map.Entry<Long, List<ObjectEntry>> entry :
 				testrayCaseResultObjectEntries1.entrySet()) {
 
-			List<ObjectEntry> testrayCaseResultCompositesB =
+			List<ObjectEntry> testrayCaseResultObjectEntry2s =
 				testrayCaseResultObjectEntries2.get(entry.getKey());
 
-			if (testrayCaseResultCompositesB == null) {
+			if (testrayCaseResultObjectEntry2s == null) {
 				continue;
 			}
 
-			List<ObjectEntry> testrayCaseResultCompositesA = entry.getValue();
+			List<ObjectEntry> testrayCaseResultObjectEntry1s = entry.getValue();
 
-			for (ObjectEntry testrayCaseResultCompositeA :
-					testrayCaseResultCompositesA) {
+			for (ObjectEntry testrayCaseResultObjectEntry1 :
+					testrayCaseResultObjectEntry1s) {
 
-				String testrayCaseResultErrors1 =
-					(String)ObjectEntryUtil.getProperty(
-						"errors", testrayCaseResultCompositeA);
+				String errors1 = (String)ObjectEntryUtil.getProperty(
+					"errors", testrayCaseResultObjectEntry1);
 
-				if (Validator.isNull(testrayCaseResultErrors1)) {
+				if (Validator.isNull(errors1)) {
 					continue;
 				}
 
-				for (ObjectEntry testrayCaseResultCompositeB :
-						testrayCaseResultCompositesB) {
+				for (ObjectEntry testrayCaseResultObjectEntry2 :
+						testrayCaseResultObjectEntry2s) {
 
-					String testrayCaseResultErrors2 =
-						(String)ObjectEntryUtil.getProperty(
-							"errors", testrayCaseResultCompositeB);
+					String errors2 = (String)ObjectEntryUtil.getProperty(
+						"errors", testrayCaseResultObjectEntry2);
 
-					if (Validator.isNull(testrayCaseResultErrors2) ||
-						!Objects.equals(
-							testrayCaseResultErrors1,
-							testrayCaseResultErrors2)) {
+					if (Validator.isNull(errors2) ||
+						!Objects.equals(errors1, errors2)) {
 
 						continue;
 					}
 
 					_autofillTestrayCaseResults(
 						companyId, defaultDTOConverterContext,
-						objectEntryManager, testrayCaseResultCompositeA,
-						testrayCaseResultCompositeB);
+						objectEntryManager, testrayCaseResultObjectEntry1,
+						testrayCaseResultObjectEntry2);
 				}
 			}
 		}
@@ -152,7 +147,6 @@ public class TestrayUtil {
 			_getTestrayCaseResultObjectEntriesByTestrayRun(
 				companyId, defaultDTOConverterContext, objectEntryManager,
 				testrayRunObjectEntry1);
-
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries2 =
 			_getTestrayCaseResultObjectEntriesByTestrayRun(
 				companyId, defaultDTOConverterContext, objectEntryManager,
