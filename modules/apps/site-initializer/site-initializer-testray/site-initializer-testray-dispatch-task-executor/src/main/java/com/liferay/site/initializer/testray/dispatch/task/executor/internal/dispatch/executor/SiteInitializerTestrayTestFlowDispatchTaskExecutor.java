@@ -134,6 +134,24 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return true;
 	}
 
+	private String _getFilterString(UnicodeProperties unicodeProperties) {
+		StringBundler sb = new StringBundler();
+
+		String[] testrayCaseTypeIds = StringUtil.split(
+			unicodeProperties.getProperty("testrayCaseTypeIds"));
+
+		for (int i = 0; i <= (testrayCaseTypeIds.length - 1); i++) {
+			sb.append("caseTypeId eq '");
+			sb.append(testrayCaseTypeIds[i]);
+			sb.append("'");
+			sb.append(" or ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private String _getTestrayIssueNames(
 			long companyId, ObjectEntry testrayCaseResultObjectEntry)
 		throws Exception {
@@ -200,20 +218,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		String[] testrayCaseTypeIds = StringUtil.split(
-			unicodeProperties.getProperty("testrayCaseTypeIds"));
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i <= (testrayCaseTypeIds.length - 1); i++) {
-			sb.append("caseTypeId eq '");
-			sb.append(testrayCaseTypeIds[i]);
-			sb.append("'");
-			sb.append(" or ");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
 		Aggregation aggregation = new Aggregation();
 
 		aggregation.setAggregationTerms(
@@ -240,8 +244,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			ObjectEntryUtil.getObjectEntries(
-				null, companyId, _defaultDTOConverterContext, sb.toString(),
-				"Case", _objectEntryManager, null),
+				null, companyId, _defaultDTOConverterContext,
+				_getFilterString(unicodeProperties), "Case",
+				_objectEntryManager, null),
 			ObjectEntry::getId);
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
