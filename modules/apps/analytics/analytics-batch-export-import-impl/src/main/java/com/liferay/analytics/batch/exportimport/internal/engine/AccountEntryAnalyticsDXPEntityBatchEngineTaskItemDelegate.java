@@ -51,7 +51,7 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
-		return new AccountEntryAnalyticsDXPEntityEntityModel();
+		return _entityModel;
 	}
 
 	@Override
@@ -81,6 +81,9 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			page.getTotalCount());
 	}
+
+	private static final EntityModel _entityModel =
+		new AccountEntryAnalyticsDXPEntityEntityModel();
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
