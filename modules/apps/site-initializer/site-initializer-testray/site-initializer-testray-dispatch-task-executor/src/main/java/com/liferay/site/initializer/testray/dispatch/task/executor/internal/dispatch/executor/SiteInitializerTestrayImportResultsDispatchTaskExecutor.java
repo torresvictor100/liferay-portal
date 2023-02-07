@@ -247,17 +247,14 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 							"testray.testcase.name")
 					).put(
 						"number",
-						SiteInitializerTestrayObjectUtil.
-							increment(
-								companyId, _defaultDTOConverterContext,
-								"number",
-								"projectId eq '" + testrayProjectId + "'",
-								"Case", _objectEntryManager,
-								new Sort[] {
-									new Sort(
-										"nestedFieldArray.value_long#number",
-										true)
-								})
+						SiteInitializerTestrayObjectUtil.increment(
+							companyId, _defaultDTOConverterContext, "number",
+							"projectId eq '" + testrayProjectId + "'", "Case",
+							_objectEntryManager,
+							new Sort[] {
+								new Sort(
+									"nestedFieldArray.value_long#number", true)
+							})
 					).put(
 						"priority",
 						testrayCasePropertiesMap.get(
