@@ -56,12 +56,12 @@ public class ObjectEntryUtil {
 	public static List<ObjectEntry> getObjectEntries(
 			Aggregation aggregation, long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
-			String filter, String objectDefinitionShortName,
+			String filterString, String objectDefinitionShortName,
 			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			aggregation, companyId, defaultDTOConverterContext, filter,
+			aggregation, companyId, defaultDTOConverterContext, filterString,
 			objectDefinitionShortName, objectEntryManager, sorts);
 
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
@@ -70,13 +70,14 @@ public class ObjectEntryUtil {
 	public static Page<ObjectEntry> getObjectEntriesPage(
 			Aggregation aggregation, long companyId,
 			DefaultDTOConverterContext defaultDTOConverterContext,
-			String filter, String objectDefinitionShortName,
+			String filterString, String objectDefinitionShortName,
 			ObjectEntryManager objectEntryManager, Sort[] sorts)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntries(
 			companyId, _getObjectDefinition(objectDefinitionShortName), null,
-			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
+			aggregation, defaultDTOConverterContext, filterString, null, null,
+			sorts);
 	}
 
 	public static ObjectEntry getObjectEntry(
