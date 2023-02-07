@@ -68,8 +68,8 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 					companyId, groupId, className, classPK);
 
 			if (Objects.equals(actionId, ActionKeys.VIEW) &&
-				(workflowInstanceLink.getUserId() ==
-					permissionChecker.getUserId())) {
+				(permissionChecker.getUserId() ==
+					workflowInstanceLink.getUserId())) {
 
 				return Boolean.TRUE;
 			}
