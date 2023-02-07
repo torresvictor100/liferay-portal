@@ -175,22 +175,20 @@ public class AssetCategoryAdminPortletTest {
 				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
 				new ServiceContext());
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"assetDisplayPageId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"categoryIds",
 			TransformUtil.transformToArray(
 				assetCategories,
 				assetCategory -> String.valueOf(assetCategory.getCategoryId()),
 				String.class));
-
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"displayPageType",
 			String.valueOf(AssetDisplayPageConstants.TYPE_SPECIFIC));
 
@@ -200,12 +198,14 @@ public class AssetCategoryAdminPortletTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(_user);
 
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		long classNameId = _portal.getClassNameId(
 			AssetCategory.class.getName());
