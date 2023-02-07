@@ -62,9 +62,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"dispatch.task.executor.feature.flag=LPS-166126",
-		"dispatch.task.executor.name=testray-test-flow",
+		"dispatch.task.executor.name=testray-testflow",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-test-flow"
+		"dispatch.task.executor.type=testray-testflow"
 	},
 	service = DispatchTaskExecutor.class
 )
