@@ -26,7 +26,7 @@ IFrameCET iFrameCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= iFrameCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="web-application-url-to-be-rendered-in-the-iframe" />
+		<liferay-ui:message key="specify-the-url-that-will-be-rendered-in-the-iframe" />
 	</div>
 </aui:field-wrapper>
 

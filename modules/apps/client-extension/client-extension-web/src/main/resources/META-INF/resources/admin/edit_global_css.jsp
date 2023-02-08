@@ -26,6 +26,6 @@ GlobalCSSCET globalCSSCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="url" required="<%= true %>" type="text" value="<%= globalCSSCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="this-css-adds-extra-content-to-the-theme-css" />
+		<liferay-ui:message key="this-css-is-appended-to-theme-css" />
 	</div>
 </aui:field-wrapper>

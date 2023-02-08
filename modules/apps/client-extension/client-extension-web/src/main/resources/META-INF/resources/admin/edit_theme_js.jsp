@@ -26,6 +26,6 @@ ThemeJSCET themeJSCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:input ignoreRequestValue="<%= true %>" label="main-js-url" name="url" required="<%= true %>" type="text" value="<%= themeJSCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="this-js-replaces-the-main-js-file-of-the-system" />
+		<liferay-ui:message key="this-javascript-replaces-main-js" />
 	</div>
 </aui:field-wrapper>

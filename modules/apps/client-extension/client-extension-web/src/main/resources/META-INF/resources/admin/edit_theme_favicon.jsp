@@ -26,6 +26,6 @@ ThemeFaviconCET themeFaviconCET = editClientExtensionEntryDisplayContext.getCET(
 	<aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= themeFaviconCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="this-favicon-replaces-the-main-one-of-the-system" />
+		<liferay-ui:message key="this-favicon-replaces-the-one-from-the-theme" />
 	</div>
 </aui:field-wrapper>

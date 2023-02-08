@@ -26,6 +26,6 @@ GlobalJSCET globalJSCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:input ignoreRequestValue="<%= true %>" label="js-url" name="url" required="<%= true %>" type="text" value="<%= globalJSCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="this-js-adds-extra-content-to-the-main-js" />
+		<liferay-ui:message key="this-javascript-is-appended-to-main-js" />
 	</div>
 </aui:field-wrapper>

@@ -26,7 +26,7 @@ CustomElementCET customElementCET = editClientExtensionEntryDisplayContext.getCE
 	<aui:input label="html-element-name" name="htmlElementName" required="<%= true %>" type="text" value="<%= customElementCET.getHTMLElementName() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="the-name-for-the-custom-element-thats-declared-in-its-js-file" />
+		<liferay-ui:message key="specify-the-name-for-the-custom-element-thats-declared-in-its-javascript-file" />
 	</div>
 </aui:field-wrapper>
 
@@ -43,7 +43,7 @@ CustomElementCET customElementCET = editClientExtensionEntryDisplayContext.getCE
 				<aui:input ignoreRequestValue="<%= true %>" label="js-url" name="urls" required="<%= true %>" type="text" value="<%= url %>" />
 
 				<div class="form-text form-text-repeat">
-					<liferay-ui:message key="enter-individual-urls-for-each-of-your-client-extension-js-files" />
+					<liferay-ui:message key="enter-individual-urls-for-each-of-your-client-extension-javascript-files" />
 				</div>
 			</aui:field-wrapper>
 		</div>
