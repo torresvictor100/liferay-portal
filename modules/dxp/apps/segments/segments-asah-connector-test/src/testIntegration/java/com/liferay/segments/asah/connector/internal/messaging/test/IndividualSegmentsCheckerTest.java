@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -39,13 +41,10 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
-import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -210,8 +209,7 @@ public class IndividualSegmentsCheckerTest {
 					segmentsEntry.getSegmentsEntryId());
 
 			Assert.assertEquals(
-				segmentsEntryRels.toString(), 1,
-				segmentsEntryRels.size());
+				segmentsEntryRels.toString(), 1, segmentsEntryRels.size());
 
 			SegmentsEntryRel segmentsEntryRel = segmentsEntryRels.get(0);
 
@@ -220,7 +218,7 @@ public class IndividualSegmentsCheckerTest {
 		}
 	}
 
-	private  Http _geHttp(
+	private Http _geHttp(
 		Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
 
 		return (Http)ProxyUtil.newProxyInstance(
