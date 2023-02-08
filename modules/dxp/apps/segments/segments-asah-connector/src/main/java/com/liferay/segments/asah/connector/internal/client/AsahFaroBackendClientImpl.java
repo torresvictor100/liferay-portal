@@ -290,7 +290,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	private String _delete(long companyId, String path) throws Exception {
-		return _getResponse(
+		return _invoke(
 			_getHttpOptions(
 				companyId, Http.Method.DELETE, new MultivaluedHashMap<>(),
 				path));
@@ -302,7 +302,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		throws Exception {
 
 		return unsafeFunction.apply(
-			_getResponse(
+			_invoke(
 				_getHttpOptions(companyId, Http.Method.GET, parameters, path)));
 	}
 
@@ -380,7 +380,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
-	private String _getResponse(Http.Options httpOptions) throws Exception {
+	private String _invoke(Http.Options httpOptions) throws Exception {
 		String response = _http.URLtoString(httpOptions);
 
 		Http.Response httpResponse = httpOptions.getResponse();
@@ -448,7 +448,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			_objectMapper.writeValueAsString(object),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		return _getResponse(httpOptions);
+		return _invoke(httpOptions);
 	}
 
 	private <T> T _post(
@@ -463,7 +463,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			_objectMapper.writeValueAsString(object),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		String response = _getResponse(httpOptions);
+		String response = _invoke(httpOptions);
 
 		if (Validator.isNull(response)) {
 			return null;
@@ -482,7 +482,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			_objectMapper.writeValueAsString(object),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		return _getResponse(httpOptions);
+		return _invoke(httpOptions);
 	}
 
 	private static final String _ERROR_MSG = "Unable to handle response: ";
