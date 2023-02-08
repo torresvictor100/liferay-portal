@@ -21,10 +21,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Michael Hashimoto
  */
 @SpringBootApplication
-public class Jethr0SpringBootApplication {
+public class CE02SpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Jethr0SpringBootApplication.class, args);
+		SpringApplication.run(CE02SpringBootApplication.class, args);
 	}
 
 }
