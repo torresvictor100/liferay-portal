@@ -418,10 +418,8 @@ public class JournalFeedReferencesExportImportContentProcessor
 
 				exportImportContentValidationException.setJournalArticleFeedURL(
 					_getJournalFeedReferenceURL(content, beginPos, endPos));
-
 				exportImportContentValidationException.setStagedModelClassName(
 					JournalFeed.class.getName());
-
 				exportImportContentValidationException.setType(
 					ExportImportContentValidationException.
 						JOURNAL_FEED_NOT_FOUND);
