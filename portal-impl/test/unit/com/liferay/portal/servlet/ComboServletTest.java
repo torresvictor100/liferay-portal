@@ -389,10 +389,6 @@ public class ComboServletTest {
 			String path, String queryString, ServletContext servletContext)
 		throws Exception {
 
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(new LanguageImpl());
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
