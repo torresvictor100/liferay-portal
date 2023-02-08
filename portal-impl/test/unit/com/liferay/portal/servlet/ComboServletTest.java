@@ -113,12 +113,11 @@ public class ComboServletTest {
 		_portalServletContext = _setUpPortalServletContext();
 
 		_comboServlet = _setUpComboServlet(_portalServletContext);
-
 		_portalPortlet = _setUpPortalPortlet(_portalServletContext);
 
 		_pluginServletContext = Mockito.spy(new MockServletContext());
 
-		_setUpTestPortlet(_pluginServletContext);
+		_testPortlet = _setUpTestPortlet(_pluginServletContext);
 
 		_portletUndeployed = new PortletWrapper(null) {
 
