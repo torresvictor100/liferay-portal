@@ -38,6 +38,7 @@ import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -109,15 +110,15 @@ public class ComboServletTest {
 			new String[] {".css", ".js"}
 		);
 
-		setUpPortalServletContext();
+		_portalServletContext = setUpPortalServletContext();
 
-		setUpComboServlet();
+		_comboServlet = setUpComboServlet(_portalServletContext);
 
-		setUpPortalPortlet();
+		_portalPortlet = setUpPortalPortlet(_portalServletContext);
 
-		setUpPluginServletContext();
+		_pluginServletContext = Mockito.spy(new MockServletContext());
 
-		setUpTestPortlet();
+		setUpTestPortlet(_pluginServletContext);
 
 		_portletUndeployed = new PortletWrapper(null) {
 
@@ -305,26 +306,22 @@ public class ComboServletTest {
 		Assert.assertTrue(valid);
 	}
 
-	protected ServletConfig getServletConfig() {
-		return new MockServletConfig(_portalServletContext);
+	protected ComboServlet setUpComboServlet(ServletContext portalServletContext)
+		throws ServletException {
+
+		ComboServlet comboServlet = new ComboServlet();
+
+		comboServlet.init(new MockServletConfig(portalServletContext));
+
+		return comboServlet;
 	}
 
-	protected void setUpComboServlet() throws ServletException {
-		_comboServlet = new ComboServlet();
+	protected Portlet setUpPortalPortlet(ServletContext portalServletContext) {
+		PortletApp portletApp = new PortletAppImpl(StringPool.BLANK);
 
-		_comboServlet.init(getServletConfig());
-	}
+		portletApp.setServletContext(portalServletContext);
 
-	protected void setUpPluginServletContext() {
-		_pluginServletContext = Mockito.spy(new MockServletContext());
-	}
-
-	protected void setUpPortalPortlet() {
-		_portalPortletApp = new PortletAppImpl(StringPool.BLANK);
-
-		_portalPortletApp.setServletContext(_portalServletContext);
-
-		_portalPortlet = new PortletWrapper(null) {
+		return new PortletWrapper(null) {
 
 			@Override
 			public String getContextPath() {
@@ -333,7 +330,7 @@ public class ComboServletTest {
 
 			@Override
 			public PortletApp getPortletApp() {
-				return _portalPortletApp;
+				return portletApp;
 			}
 
 			@Override
@@ -349,10 +346,13 @@ public class ComboServletTest {
 		};
 	}
 
-	protected void setUpPortalServletContext() {
-		_portalServletContext = Mockito.spy(new MockServletContext());
+	protected ServletContext setUpPortalServletContext() {
+		MockServletContext mockServletContext = Mockito.spy(
+			new MockServletContext());
 
-		_portalServletContext.setContextPath("/portal");
+		mockServletContext.setContextPath("/portal");
+
+		return mockServletContext;
 	}
 
 	protected void setUpProxy() {
@@ -362,12 +362,12 @@ public class ComboServletTest {
 		_portalUtil.setPortal(new PortalImpl());
 	}
 
-	protected void setUpTestPortlet() {
-		_testPortletApp = new PortletAppImpl(StringPool.BLANK);
+	protected Portlet setUpTestPortlet(ServletContext pluginServletContext) {
+		PortletApp portletApp = new PortletAppImpl(StringPool.BLANK);
 
-		_testPortletApp.setServletContext(_pluginServletContext);
+		portletApp.setServletContext(pluginServletContext);
 
-		_testPortlet = new PortletWrapper(null) {
+		return new PortletWrapper(null) {
 
 			@Override
 			public String getContextPath() {
@@ -376,7 +376,7 @@ public class ComboServletTest {
 
 			@Override
 			public PortletApp getPortletApp() {
-				return _testPortletApp;
+				return portletApp;
 			}
 
 			@Override
@@ -393,7 +393,7 @@ public class ComboServletTest {
 	}
 
 	private void _testService(
-			MockServletContext mockServletContext, String queryString,
+			ServletContext servletContext, String queryString,
 			String expectedPath)
 		throws Exception {
 
@@ -410,12 +410,12 @@ public class ComboServletTest {
 			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Mockito.verify(
-			mockServletContext
+			servletContext
 		).getRequestDispatcher(
 			expectedPath
 		);
 
-		Mockito.reset(mockServletContext);
+		Mockito.reset(servletContext);
 	}
 
 	private static final String _NONEXISTING_PORTLET_ID = "2345678";
@@ -428,13 +428,11 @@ public class ComboServletTest {
 	private ComboServlet _comboServlet;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
-	private MockServletContext _pluginServletContext;
+	private ServletContext _pluginServletContext;
 	private Portlet _portalPortlet;
-	private PortletApp _portalPortletApp;
-	private MockServletContext _portalServletContext;
+	private ServletContext _portalServletContext;
 	private Portlet _portletUndeployed;
 	private final PrefsProps _prefsProps = Mockito.mock(PrefsProps.class);
 	private Portlet _testPortlet;
-	private PortletApp _testPortletApp;
 
 }
