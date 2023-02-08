@@ -95,7 +95,7 @@ public class ComboServletTest {
 						return null;
 					}
 
-					return _portletUndeployed;
+					return _undeployedPortlet;
 				}
 
 			});
@@ -119,7 +119,7 @@ public class ComboServletTest {
 
 		_testPortlet = _setUpTestPortlet(_pluginServletContext);
 
-		_portletUndeployed = new PortletWrapper(null) {
+		_undeployedPortlet = new PortletWrapper(null) {
 
 			@Override
 			public boolean isUndeployedPortlet() {
@@ -430,7 +430,7 @@ public class ComboServletTest {
 	private ServletContext _pluginServletContext;
 	private Portlet _portalPortlet;
 	private ServletContext _portalServletContext;
-	private Portlet _portletUndeployed;
+	private Portlet _undeployedPortlet;
 	private final PrefsProps _prefsProps = Mockito.mock(PrefsProps.class);
 	private Portlet _testPortlet;
 
