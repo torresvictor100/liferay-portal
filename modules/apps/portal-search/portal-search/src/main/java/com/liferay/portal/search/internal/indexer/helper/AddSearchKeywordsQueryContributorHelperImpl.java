@@ -82,7 +82,7 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 		}
 
 		List<KeywordQueryContributor> filteredKeywordQueryContributors =
-			keywordQueryContributorsRegistry.filterKeywordQueryContributor(
+			keywordQueryContributorsRegistry.filterKeywordQueryContributors(
 				getStrings(
 					"search.full.query.clause.contributors.excludes",
 					searchContext),

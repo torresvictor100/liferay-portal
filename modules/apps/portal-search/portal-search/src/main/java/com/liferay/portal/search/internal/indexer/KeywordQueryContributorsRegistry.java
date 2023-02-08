@@ -24,7 +24,7 @@ import java.util.List;
  */
 public interface KeywordQueryContributorsRegistry {
 
-	public List<KeywordQueryContributor> filterKeywordQueryContributor(
+	public List<KeywordQueryContributor> filterKeywordQueryContributors(
 		Collection<String> excludes, Collection<String> includes);
 
 }

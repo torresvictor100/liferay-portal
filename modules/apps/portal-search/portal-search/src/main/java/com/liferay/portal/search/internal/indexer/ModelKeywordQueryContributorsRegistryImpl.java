@@ -33,7 +33,7 @@ public class ModelKeywordQueryContributorsRegistryImpl
 	}
 
 	@Override
-	public List<KeywordQueryContributor> filterKeywordQueryContributor(
+	public List<KeywordQueryContributor> filterKeywordQueryContributors(
 		Collection<String> excludes, Collection<String> includes) {
 
 		List<KeywordQueryContributor> keywordQueryContributors =

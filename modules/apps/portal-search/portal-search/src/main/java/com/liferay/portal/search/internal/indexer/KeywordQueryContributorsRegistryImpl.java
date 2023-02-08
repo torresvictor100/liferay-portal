@@ -34,7 +34,7 @@ public class KeywordQueryContributorsRegistryImpl
 	implements KeywordQueryContributorsRegistry {
 
 	@Override
-	public List<KeywordQueryContributor> filterKeywordQueryContributor(
+	public List<KeywordQueryContributor> filterKeywordQueryContributors(
 		Collection<String> excludes, Collection<String> includes) {
 
 		return IncludeExcludeUtil.filter(

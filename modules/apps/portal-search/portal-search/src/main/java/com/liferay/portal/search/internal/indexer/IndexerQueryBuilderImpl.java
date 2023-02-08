@@ -136,7 +136,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 		contribute(
 			_modelKeywordQueryContributorsRegistry.
-				filterKeywordQueryContributor(
+				filterKeywordQueryContributors(
 					_getStrings(
 						"search.full.query.clause.contributors.excludes",
 						searchContext),
