@@ -110,15 +110,15 @@ public class ComboServletTest {
 			new String[] {".css", ".js"}
 		);
 
-		_portalServletContext = setUpPortalServletContext();
+		_portalServletContext = _setUpPortalServletContext();
 
-		_comboServlet = setUpComboServlet(_portalServletContext);
+		_comboServlet = _setUpComboServlet(_portalServletContext);
 
-		_portalPortlet = setUpPortalPortlet(_portalServletContext);
+		_portalPortlet = _setUpPortalPortlet(_portalServletContext);
 
 		_pluginServletContext = Mockito.spy(new MockServletContext());
 
-		setUpTestPortlet(_pluginServletContext);
+		_setUpTestPortlet(_pluginServletContext);
 
 		_portletUndeployed = new PortletWrapper(null) {
 
@@ -232,7 +232,7 @@ public class ComboServletTest {
 
 	@Test
 	public void testServiceWithoutPortletIdButWithProxy() throws Exception {
-		setUpProxy();
+		_setUpProxy();
 
 		_testService(
 			_portalServletContext, "/proxyPath/js/javascript.js",
@@ -243,7 +243,7 @@ public class ComboServletTest {
 	public void testServiceWithoutPortletIdButWithProxyAndContext()
 		throws Exception {
 
-		setUpProxy();
+		_setUpProxy();
 
 		_testService(
 			_portalServletContext, "/proxyPath/portal/js/javascript.js",
@@ -260,7 +260,7 @@ public class ComboServletTest {
 
 	@Test
 	public void testServiceWithPortletIdAndProxy() throws Exception {
-		setUpProxy();
+		_setUpProxy();
 
 		_testService(
 			_pluginServletContext,
@@ -270,7 +270,7 @@ public class ComboServletTest {
 
 	@Test
 	public void testServiceWithPortletIdAndProxyAndContext() throws Exception {
-		setUpProxy();
+		_setUpProxy();
 
 		_testService(
 			_pluginServletContext,
@@ -306,7 +306,7 @@ public class ComboServletTest {
 		Assert.assertTrue(valid);
 	}
 
-	protected ComboServlet setUpComboServlet(ServletContext portalServletContext)
+	private ComboServlet _setUpComboServlet(ServletContext portalServletContext)
 		throws ServletException {
 
 		ComboServlet comboServlet = new ComboServlet();
@@ -316,7 +316,7 @@ public class ComboServletTest {
 		return comboServlet;
 	}
 
-	protected Portlet setUpPortalPortlet(ServletContext portalServletContext) {
+	private Portlet _setUpPortalPortlet(ServletContext portalServletContext) {
 		PortletApp portletApp = new PortletAppImpl(StringPool.BLANK);
 
 		portletApp.setServletContext(portalServletContext);
@@ -346,7 +346,7 @@ public class ComboServletTest {
 		};
 	}
 
-	protected ServletContext setUpPortalServletContext() {
+	private ServletContext _setUpPortalServletContext() {
 		MockServletContext mockServletContext = Mockito.spy(
 			new MockServletContext());
 
@@ -355,14 +355,14 @@ public class ComboServletTest {
 		return mockServletContext;
 	}
 
-	protected void setUpProxy() {
+	private void _setUpProxy() {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "PORTAL_PROXY_PATH", "/proxyPath");
 
 		_portalUtil.setPortal(new PortalImpl());
 	}
 
-	protected Portlet setUpTestPortlet(ServletContext pluginServletContext) {
+	private Portlet _setUpTestPortlet(ServletContext pluginServletContext) {
 		PortletApp portletApp = new PortletAppImpl(StringPool.BLANK);
 
 		portletApp.setServletContext(pluginServletContext);
