@@ -221,7 +221,7 @@ public class IndividualSegmentsCheckerTest {
 	}
 
 	private  Http _geHttp(
-		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
+		Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
 
 		return (Http)ProxyUtil.newProxyInstance(
 			Http.class.getClassLoader(), new Class<?>[] {Http.class},
@@ -237,11 +237,16 @@ public class IndividualSegmentsCheckerTest {
 				try {
 					String location = options.getLocation();
 
-					String endpoint = location.substring(
-						location.lastIndexOf("/api"),
-						_getLastPosition(location));
+					int index = location.length();
 
-					if (mockRequest.containsKey(endpoint)) {
+					if (location.contains("?")) {
+						index = location.indexOf("?");
+					}
+
+					String endpoint = location.substring(
+						location.lastIndexOf("/api"), index);
+
+					if (unsafeSuppliers.containsKey(endpoint)) {
 						Http.Response httpResponse = new Http.Response();
 
 						httpResponse.setResponseCode(200);
@@ -249,7 +254,7 @@ public class IndividualSegmentsCheckerTest {
 						options.setResponse(httpResponse);
 
 						UnsafeSupplier<String, Exception> unsafeSupplier =
-							mockRequest.get(endpoint);
+							unsafeSuppliers.get(endpoint);
 
 						return unsafeSupplier.get();
 					}
@@ -272,14 +277,6 @@ public class IndividualSegmentsCheckerTest {
 					throw new RuntimeException(throwable);
 				}
 			});
-	}
-
-	private int _getLastPosition(String location) {
-		if (location.contains("?")) {
-			return location.indexOf("?");
-		}
-
-		return location.length();
 	}
 
 	private Object _individualSegmentsChecker;
