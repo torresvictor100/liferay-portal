@@ -945,7 +945,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				<dirset
 					dir="${project.dir}/workspaces"
 				>
-					<include name="*-workspace" />
+					<include name="sample*-workspace" />
 				</dirset>
 			</path>
 			<sequential>
@@ -964,7 +964,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 				<local name="artifact.id" />
 
-				<property name="artifact.id" value="com.liferay.workspaces.${processed.dir.name}" />
+				<property name="artifact.id" value="com.liferay.${processed.dir.name}" />
 
 				<delete dir="${user.home}/.m2/repository/com/liferay/workspaces/${artifact.id}" />
 				<delete file="${project.dir}/dist/${artifact.id}.pom" />
@@ -979,7 +979,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 					/>
 				</zip>
 
-				<artifact:pom artifactId="${artifact.id}" groupId="com.liferay.workspaces" id="${artifact.id}.pom" packaging="zip" version="${tstamp.value}" />
+				<artifact:pom artifactId="${artifact.id}" groupId="com.liferay.workspace" id="${artifact.id}.pom" packaging="zip" version="${tstamp.value}" />
 
 				<artifact:writepom file="dist/${artifact.id}.pom" pomRefId="${artifact.id}.pom" />
 
