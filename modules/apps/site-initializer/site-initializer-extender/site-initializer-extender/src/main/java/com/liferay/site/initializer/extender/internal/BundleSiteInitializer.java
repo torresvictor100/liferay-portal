@@ -2430,27 +2430,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			Page<ListTypeDefinition> listTypeDefinitionsPage =
-				listTypeDefinitionResource.getListTypeDefinitionsPage(
-					null, null,
-					listTypeDefinitionResource.toFilter(
-						StringBundler.concat(
-							"name eq '", listTypeDefinition.getName(), "'")),
-					null, null);
-
-			ListTypeDefinition existingListTypeDefinition =
-				listTypeDefinitionsPage.fetchFirstItem();
-
-			if (existingListTypeDefinition == null) {
-				listTypeDefinition =
-					listTypeDefinitionResource.postListTypeDefinition(
+			listTypeDefinition =
+				listTypeDefinitionResource.
+					putListTypeDefinitionByExternalReferenceCode(
+						listTypeDefinition.getExternalReferenceCode(),
 						listTypeDefinition);
-			}
-			else {
-				listTypeDefinition =
-					listTypeDefinitionResource.putListTypeDefinition(
-						existingListTypeDefinition.getId(), listTypeDefinition);
-			}
 
 			listTypeDefinitionIdsStringUtilReplaceValues.put(
 				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
