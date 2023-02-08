@@ -186,30 +186,30 @@ public class IndividualSegmentsCheckerTest {
 				_individualSegmentsChecker, "checkIndividualSegments",
 				new Class<?>[0]);
 
-			List<SegmentsEntry> segmentsEntryList =
+			List<SegmentsEntry> segmentsEntries =
 				_segmentsEntryLocalService.getSegmentsEntriesBySource(
 					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(
-				segmentsEntryList.toString(), 1, segmentsEntryList.size());
+				segmentsEntries.toString(), 1, segmentsEntries.size());
 
-			SegmentsEntry segmentsEntry = segmentsEntryList.get(0);
+			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
 			Assert.assertEquals(StringPool.BLANK, segmentsEntry.getCriteria());
 			Assert.assertEquals(
 				"Test segment",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 
-			List<SegmentsEntryRel> segmentsEntryRelList =
+			List<SegmentsEntryRel> segmentsEntryRels =
 				_segmentsEntryRelLocalService.getSegmentsEntryRels(
 					segmentsEntry.getSegmentsEntryId());
 
 			Assert.assertEquals(
-				segmentsEntryRelList.toString(), 1,
-				segmentsEntryRelList.size());
+				segmentsEntryRels.toString(), 1,
+				segmentsEntryRels.size());
 
-			SegmentsEntryRel segmentsEntryRel = segmentsEntryRelList.get(0);
+			SegmentsEntryRel segmentsEntryRel = segmentsEntryRels.get(0);
 
 			Assert.assertEquals(
 				_user.getUserId(), segmentsEntryRel.getClassPK());
