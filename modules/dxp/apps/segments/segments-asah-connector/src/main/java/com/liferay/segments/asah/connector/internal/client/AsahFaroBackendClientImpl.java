@@ -328,10 +328,10 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			MultivaluedMap<String, Object> parameters, String path)
 		throws Exception {
 
+		Http.Options httpOptions = new Http.Options();
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
-
-		Http.Options httpOptions = new Http.Options();
 
 		httpOptions.setHeaders(_getHeaders(analyticsConfiguration));
 
@@ -349,6 +349,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		httpOptions.setLocation(url);
+
 		httpOptions.setMethod(method);
 
 		return httpOptions;
