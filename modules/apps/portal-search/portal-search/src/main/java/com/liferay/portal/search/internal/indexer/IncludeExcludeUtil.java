@@ -39,11 +39,9 @@ public class IncludeExcludeUtil {
 	}
 
 	private static <T> List<T> _exclude(
-		List<T> includeExcludeList, Collection<String> ids,
-		Function<T, String> function) {
+		List<T> list, Collection<String> ids, Function<T, String> function) {
 
-		return _filter(
-			includeExcludeList, ids, t -> !isPresent(t, ids, function));
+		return _filter(list, ids, t -> !isPresent(t, ids, function));
 	}
 
 	private static <T> List<T> _filter(
