@@ -37,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -222,7 +221,8 @@ public class ComboServletTest {
 	@Test
 	public void testServiceWithoutPortletIdButWithContext() throws Exception {
 		_testService(
-			"/js/javascript.js", "/portal/js/javascript.js", _portalServletContext);
+			"/js/javascript.js", "/portal/js/javascript.js",
+			_portalServletContext);
 	}
 
 	@Test
@@ -230,7 +230,8 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			"/js/javascript.js", "/proxyPath/js/javascript.js", _portalServletContext);
+			"/js/javascript.js", "/proxyPath/js/javascript.js",
+			_portalServletContext);
 	}
 
 	@Test
@@ -240,7 +241,8 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			"/js/javascript.js", "/proxyPath/portal/js/javascript.js", _portalServletContext);
+			"/js/javascript.js", "/proxyPath/portal/js/javascript.js",
+			_portalServletContext);
 	}
 
 	@Test
@@ -419,8 +421,8 @@ public class ComboServletTest {
 	private ServletContext _pluginServletContext;
 	private Portlet _portalPortlet;
 	private ServletContext _portalServletContext;
-	private Portlet _undeployedPortlet;
 	private final PrefsProps _prefsProps = Mockito.mock(PrefsProps.class);
 	private Portlet _testPortlet;
+	private Portlet _undeployedPortlet;
 
 }
