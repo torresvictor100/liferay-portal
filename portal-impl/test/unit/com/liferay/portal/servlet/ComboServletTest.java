@@ -75,6 +75,16 @@ public class ComboServletTest {
 
 	@Before
 	public void setUp() throws ServletException {
+		_mockHttpServletRequest = new MockHttpServletRequest();
+
+		_mockHttpServletRequest.setLocalAddr("localhost");
+		_mockHttpServletRequest.setLocalPort(8080);
+		_mockHttpServletRequest.setScheme("http");
+
+		_mockHttpServletResponse = new MockHttpServletResponse();
+		_pluginServletContext = Mockito.spy(new MockServletContext());
+		_portalServletContext = _setUpPortalServletContext();
+
 		_portalUtil.setPortal(_portalImpl);
 
 		ReflectionTestUtil.setFieldValue(
@@ -110,15 +120,6 @@ public class ComboServletTest {
 			new String[] {".css", ".js"}
 		);
 
-		_portalServletContext = _setUpPortalServletContext();
-
-		_comboServlet = _setUpComboServlet(_portalServletContext);
-		_portalPortlet = _setUpPortalPortlet(_portalServletContext);
-
-		_pluginServletContext = Mockito.spy(new MockServletContext());
-
-		_testPortlet = _setUpTestPortlet(_pluginServletContext);
-
 		_undeployedPortlet = new PortletWrapper(null) {
 
 			@Override
@@ -128,13 +129,9 @@ public class ComboServletTest {
 
 		};
 
-		_mockHttpServletRequest = new MockHttpServletRequest();
-
-		_mockHttpServletRequest.setLocalAddr("localhost");
-		_mockHttpServletRequest.setLocalPort(8080);
-		_mockHttpServletRequest.setScheme("http");
-
-		_mockHttpServletResponse = new MockHttpServletResponse();
+		_comboServlet = _setUpComboServlet(_portalServletContext);
+		_portalPortlet = _setUpPortalPortlet(_portalServletContext);
+		_testPortlet = _setUpTestPortlet(_pluginServletContext);
 	}
 
 	@Test
