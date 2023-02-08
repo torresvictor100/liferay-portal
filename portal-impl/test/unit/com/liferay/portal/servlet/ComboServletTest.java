@@ -222,8 +222,7 @@ public class ComboServletTest {
 	@Test
 	public void testServiceWithoutPortletIdButWithContext() throws Exception {
 		_testService(
-			_portalServletContext, "/portal/js/javascript.js",
-			"/js/javascript.js");
+			"/js/javascript.js", "/portal/js/javascript.js", _portalServletContext);
 	}
 
 	@Test
@@ -231,8 +230,7 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			_portalServletContext, "/proxyPath/js/javascript.js",
-			"/js/javascript.js");
+			"/js/javascript.js", "/proxyPath/js/javascript.js", _portalServletContext);
 	}
 
 	@Test
@@ -242,16 +240,15 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			_portalServletContext, "/proxyPath/portal/js/javascript.js",
-			"/js/javascript.js");
+			"/js/javascript.js", "/proxyPath/portal/js/javascript.js", _portalServletContext);
 	}
 
 	@Test
 	public void testServiceWithPortletIdAndContext() throws Exception {
 		_testService(
-			_pluginServletContext,
+			"/portal/js/javascript.js",
 			_TEST_PORTLET_ID + ":/portal/js/javascript.js",
-			"/portal/js/javascript.js");
+			_pluginServletContext);
 	}
 
 	@Test
@@ -259,9 +256,9 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			_pluginServletContext,
+			"/js/javascript.js",
 			_TEST_PORTLET_ID + ":/proxyPath/js/javascript.js",
-			"/js/javascript.js");
+			_pluginServletContext);
 	}
 
 	@Test
@@ -269,9 +266,9 @@ public class ComboServletTest {
 		_setUpProxy();
 
 		_testService(
-			_pluginServletContext,
+			"/portal/js/javascript.js",
 			_TEST_PORTLET_ID + ":/proxyPath/portal/js/javascript.js",
-			"/portal/js/javascript.js");
+			_pluginServletContext);
 	}
 
 	@Test
@@ -389,8 +386,7 @@ public class ComboServletTest {
 	}
 
 	private void _testService(
-			ServletContext servletContext, String queryString,
-			String expectedPath)
+			String path, String queryString, ServletContext servletContext)
 		throws Exception {
 
 		LanguageUtil languageUtil = new LanguageUtil();
@@ -408,7 +404,7 @@ public class ComboServletTest {
 		Mockito.verify(
 			servletContext
 		).getRequestDispatcher(
-			expectedPath
+			path
 		);
 
 		Mockito.reset(servletContext);
