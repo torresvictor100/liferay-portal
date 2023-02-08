@@ -34,13 +34,17 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.asah.connector.test.util.MockHttpUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.util.Map;
+import java.util.Objects;
 import java.util.List;
 
 import org.junit.After;
@@ -121,7 +125,7 @@ public class IndividualSegmentsCheckerTest {
 
 			ReflectionTestUtil.setFieldValue(
 				asahFaroBackendClient, "_http",
-				MockHttpUtil.geHttp(
+				_geHttp(
 					HashMapBuilder.
 						<String, UnsafeSupplier<String, Exception>>put(
 							"/api/1.0/individual-segments",
@@ -214,6 +218,68 @@ public class IndividualSegmentsCheckerTest {
 			Assert.assertEquals(
 				_user.getUserId(), segmentsEntryRel.getClassPK());
 		}
+	}
+
+	private  Http _geHttp(
+		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
+
+		return (Http)ProxyUtil.newProxyInstance(
+			Http.class.getClassLoader(), new Class<?>[] {Http.class},
+			(proxy, method, args) -> {
+				if (!Objects.equals("URLtoString", method.getName()) ||
+					(args.length != 1) || !(args[0] instanceof Http.Options)) {
+
+					return null;
+				}
+
+				Http.Options options = (Http.Options)args[0];
+
+				try {
+					String location = options.getLocation();
+
+					String endpoint = location.substring(
+						location.lastIndexOf("/api"),
+						_getLastPosition(location));
+
+					if (mockRequest.containsKey(endpoint)) {
+						Http.Response httpResponse = new Http.Response();
+
+						httpResponse.setResponseCode(200);
+
+						options.setResponse(httpResponse);
+
+						UnsafeSupplier<String, Exception> unsafeSupplier =
+							mockRequest.get(endpoint);
+
+						return unsafeSupplier.get();
+					}
+
+					Http.Response httpResponse = new Http.Response();
+
+					httpResponse.setResponseCode(400);
+
+					options.setResponse(httpResponse);
+
+					return "error";
+				}
+				catch (Throwable throwable) {
+					Http.Response httpResponse = new Http.Response();
+
+					httpResponse.setResponseCode(400);
+
+					options.setResponse(httpResponse);
+
+					throw new RuntimeException(throwable);
+				}
+			});
+	}
+
+	private int _getLastPosition(String location) {
+		if (location.contains("?")) {
+			return location.indexOf("?");
+		}
+
+		return location.length();
 	}
 
 	private Object _individualSegmentsChecker;
