@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectEntryValuesException extends PortalException {
 
-	public static class AccountEntryObjectFieldUnmodifiable
+	public static class UnmodifiableAccountEntryObjectField
 		extends ObjectEntryValuesException {
 
-		public AccountEntryObjectFieldUnmodifiable(String objectFieldName) {
+		public UnmodifiableAccountEntryObjectField(String objectFieldName) {
 			super(
 				StringBundler.concat(
 					"The object field ", objectFieldName,

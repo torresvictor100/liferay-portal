@@ -3426,7 +3426,7 @@ public class ObjectEntryLocalServiceImpl
 					GetterUtil.getLong(entry.getValue()))) {
 
 				throw new ObjectEntryValuesException.
-					AccountEntryObjectFieldUnmodifiable(objectField.getName());
+					UnmodifiableAccountEntryObjectField(objectField.getName());
 			}
 		}
 		else if (StringUtil.equals(
