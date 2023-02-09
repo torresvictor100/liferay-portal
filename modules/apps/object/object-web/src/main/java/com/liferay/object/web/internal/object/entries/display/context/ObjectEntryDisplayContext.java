@@ -522,6 +522,19 @@ public class ObjectEntryDisplayContext {
 		return false;
 	}
 
+	public boolean isShowObjectEntryForm() throws PortalException {
+		if ((getObjectEntry() == null) || (getObjectLayoutTab() == null)) {
+			return true;
+		}
+
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return GetterUtil.getBoolean(
+			httpServletRequest.getAttribute(
+				ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB));
+	}
+
 	public String renderDDMForm(PageContext pageContext)
 		throws PortalException {
 
@@ -571,19 +584,6 @@ public class ObjectEntryDisplayContext {
 		return _ddmFormRenderer.render(
 			ddmForm, _getDDMFormLayout(ddmForm, objectLayoutTab),
 			ddmFormRenderingContext);
-	}
-
-	public boolean isShowObjectEntryForm() throws PortalException {
-		if ((getObjectEntry() == null) || (getObjectLayoutTab() == null)) {
-			return true;
-		}
-
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		return GetterUtil.getBoolean(
-			httpServletRequest.getAttribute(
-				ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB));
 	}
 
 	private void _addDDMFormFields(
