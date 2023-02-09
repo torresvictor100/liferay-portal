@@ -185,10 +185,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (!hasTable("JournalContentSearch")) {
-			return;
-		}
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select privateLayout, layoutId, portletId from " +
 					"JournalContentSearch where groupId = ? and articleId = " +
