@@ -17,7 +17,6 @@ package com.liferay.journal.web.internal.messaging;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -43,45 +41,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
-	immediate = true,
-	property = "model.class.name=com.liferay.journal.configuration.JournalServiceConfiguration",
-	service = {
-		CheckArticleMessageListener.class, ConfigurationModelListener.class
-	}
+	immediate = true, service = CheckArticleMessageListener.class
 )
-public class CheckArticleMessageListener
-	extends BaseMessageListener implements ConfigurationModelListener {
-
-	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		JournalServiceConfiguration journalServiceConfiguration =
-			ConfigurableUtil.createConfigurable(
-				JournalServiceConfiguration.class, properties);
-
-		_registerSchedulerEntry(journalServiceConfiguration);
-	}
+public class CheckArticleMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		JournalServiceConfiguration journalServiceConfiguration =
 			ConfigurableUtil.createConfigurable(
 				JournalServiceConfiguration.class, properties);
-
-		_registerSchedulerEntry(journalServiceConfiguration);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		_journalArticleLocalService.checkArticles();
-	}
-
-	private void _registerSchedulerEntry(
-		JournalServiceConfiguration journalServiceConfiguration) {
 
 		Class<?> clazz = getClass();
 
@@ -96,6 +64,16 @@ public class CheckArticleMessageListener
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
+
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		_journalArticleLocalService.checkArticles();
 	}
 
 	@Reference
