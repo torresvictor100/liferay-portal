@@ -746,8 +746,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				if (logger.isWarnEnabled()) {
 					logger.warn(
-						"{}.\nUnable to get driver version for Chrome {}",
-						ioException.getMessage(), chromeMajorVersion);
+						"Unable to get driver version for Chrome {}: {}",
+						chromeMajorVersion, ioException.getMessage());
 				}
 			}
 		}
