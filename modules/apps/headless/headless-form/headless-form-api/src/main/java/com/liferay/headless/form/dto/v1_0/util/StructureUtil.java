@@ -359,13 +359,13 @@ public class StructureUtil {
 					TransformUtil.transformToArray(
 						ddmStructure.getDDMFormFields(true),
 						ddmFormField -> {
-							if (ddmFormFieldNames.contains(
+							if (!ddmFormFieldNames.contains(
 									ddmFormField.getName())) {
 
-								return ddmFormField;
+								return null;
 							}
 
-							return null;
+							return ddmFormField;
 						},
 						DDMFormField.class),
 					ddmFormField -> _toFormField(
