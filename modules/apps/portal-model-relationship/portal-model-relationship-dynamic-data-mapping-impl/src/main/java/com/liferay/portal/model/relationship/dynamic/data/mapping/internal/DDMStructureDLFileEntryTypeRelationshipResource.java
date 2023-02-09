@@ -60,13 +60,13 @@ public class DDMStructureDLFileEntryTypeRelationshipResource
 			_ddmStructureLinkLocalService.getStructureLinks(
 				structure.getStructureId()),
 			ddmStructureLink -> {
-				if (ddmStructureLink.getClassNameId() == classNameId) {
-					return _dlFileEntryTypeLocalService.fetchFileEntryType(
-						ddmStructureLink.getClassPK());
+				if (ddmStructureLink.getClassNameId() != classNameId) {
+					return null;
 				}
 
-				return null;
-			});
+				return _dlFileEntryTypeLocalService.fetchFileEntryType(
+					ddmStructureLink.getClassPK());
+		});
 	}
 
 	@Reference

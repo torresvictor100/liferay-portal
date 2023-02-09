@@ -67,12 +67,12 @@ public class DDMStructureJournalRelationshipResource
 			_ddmStructureLinkLocalService.getStructureLinks(
 				structure.getStructureId()),
 			structureLink -> {
-				if (structureLink.getClassNameId() == classNameId) {
-					return _journalFolderLocalService.fetchFolder(
-						structureLink.getClassPK());
+				if (structureLink.getClassNameId() != classNameId) {
+					return null;
 				}
 
-				return null;
+				return _journalFolderLocalService.fetchFolder(
+					structureLink.getClassPK());
 			});
 	}
 
