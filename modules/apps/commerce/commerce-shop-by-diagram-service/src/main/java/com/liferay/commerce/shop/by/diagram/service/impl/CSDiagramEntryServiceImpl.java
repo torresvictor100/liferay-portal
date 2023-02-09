@@ -97,7 +97,7 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 			OrderByComparator<CSDiagramEntry> orderByComparator)
 		throws PortalException {
 
-		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cProduct.getPublishedCPDefinitionId(),
@@ -111,7 +111,7 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 	public int getCProductCSDiagramEntriesCount(long cProductId)
 		throws PortalException {
 
-		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cProduct.getPublishedCPDefinitionId(),
@@ -188,13 +188,13 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 			sequence, sku, serviceContext);
 	}
 
-	@Reference
-	protected CProductLocalService cProductLocalService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
 	)
 	private ModelResourcePermission<CPDefinition>
 		_cpDefinitionModelResourcePermission;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 }
