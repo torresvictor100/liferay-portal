@@ -78,11 +78,11 @@ public class DLFileEntryTypeDLRelationshipResource
 					_log.warn(portalException);
 				}
 
-				throw new NoSuchElementException("No FileEntry present");
+				throw new NoSuchElementException();
 			}
 		}
 
-		throw new NoSuchElementException("No FileEntry present");
+		throw new NoSuchElementException();
 	}
 
 	private List<Folder> _getFolders(DLFileEntryType fileEntryType) {
