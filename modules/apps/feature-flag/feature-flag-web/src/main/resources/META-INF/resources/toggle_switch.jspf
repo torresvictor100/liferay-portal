@@ -19,8 +19,6 @@ String labelOff = LanguageUtil.get(request, "disabled");
 String labelOn = LanguageUtil.get(request, "enabled");
 
 String inputName = featureFlagDisplay.getKey() + "-toggle";
-
-boolean disabled = !featureFlagDisplay.isDependenciesFulfilled();
 %>
 
 <label class="simple-toggle-switch toggle-switch">
@@ -40,7 +38,7 @@ boolean disabled = !featureFlagDisplay.isDependenciesFulfilled();
 	module="js/FeatureFlagToggle"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"disabled", disabled
+			"disabled", !featureFlagDisplay.isDependenciesFulfilled()
 		).put(
 			"featureFlagKey", featureFlagDisplay.getKey()
 		).put(
