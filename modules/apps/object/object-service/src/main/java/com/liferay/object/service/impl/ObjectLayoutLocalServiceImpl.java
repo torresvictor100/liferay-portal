@@ -463,10 +463,10 @@ public class ObjectLayoutLocalServiceImpl
 			_objectLayoutTabLocalService.getObjectLayoutObjectLayoutTabs(
 				objectLayoutId);
 
+		_deleteObjectLayoutBoxes(objectLayoutTabs);
+
 		_objectLayoutTabLocalService.deleteObjectLayoutObjectLayoutTabs(
 			objectLayoutId);
-
-		_deleteObjectLayoutBoxes(objectLayoutTabs);
 	}
 
 	private List<ObjectLayoutBox> _getObjectLayoutBoxes(
