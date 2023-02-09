@@ -272,7 +272,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	</clay:content-row>
 
 	<c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">
-		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" /></div>
+		<div class="sheet-text"><liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" /></div>
 	</c:if>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
@@ -517,7 +517,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	</clay:content-row>
 
 	<c:if test="<%= groups.isEmpty() && siteRoles.isEmpty() %>">
-		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" /></div>
+		<div class="sheet-text"><liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" /></div>
 	</c:if>
 
 	<c:if test="<%= !groups.isEmpty() %>">
