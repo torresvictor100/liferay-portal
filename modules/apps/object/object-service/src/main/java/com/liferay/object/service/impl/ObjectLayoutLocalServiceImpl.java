@@ -425,12 +425,12 @@ public class ObjectLayoutLocalServiceImpl
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
+				objectLayoutTab.getObjectLayoutTabId());
+
 			_deleteObjectLayoutRows(
 				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
 					objectLayoutTab.getObjectLayoutTabId()));
-
-			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
-				objectLayoutTab.getObjectLayoutTabId());
 		}
 	}
 
