@@ -75,25 +75,56 @@ public class ObjectLayoutTabLocalServiceImpl
 	}
 
 	@Override
-	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId) {
-		List<ObjectLayoutTab> objectLayoutTabs =
-			getObjectLayoutObjectLayoutTabs(objectLayoutId);
+	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId)
+		throws PortalException {
 
-		objectLayoutTabPersistence.removeByObjectLayoutId(objectLayoutId);
+		for (ObjectLayoutTab objectLayoutTab :
+				objectLayoutTabPersistence.findByObjectLayoutId(
+					objectLayoutId)) {
 
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			ServiceRegistration<?> serviceRegistration =
-				_serviceRegistrationMap.get(
-					_getServiceRegistrationMapKey(objectLayoutTab));
+			deleteObjectLayoutTab(objectLayoutTab);
+		}
+	}
 
-			if (serviceRegistration == null) {
-				return;
-			}
+	@Override
+	public ObjectLayoutTab deleteObjectLayoutTab(long objectLayoutTabId)
+		throws PortalException {
 
+		ObjectLayoutTab objectLayoutTab =
+			objectLayoutTabPersistence.findByPrimaryKey(objectLayoutTabId);
+
+		return deleteObjectLayoutTab(objectLayoutTab);
+	}
+
+	@Override
+	public ObjectLayoutTab deleteObjectLayoutTab(
+		ObjectLayoutTab objectLayoutTab) {
+
+		objectLayoutTabPersistence.remove(objectLayoutTab);
+
+		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
+			_getServiceRegistrationMapKey(objectLayoutTab));
+
+		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
 
-			_serviceRegistrationMap.remove(
+			_serviceRegistrations.remove(
 				_getServiceRegistrationMapKey(objectLayoutTab));
+		}
+
+		return objectLayoutTab;
+	}
+
+	@Override
+	public void deleteObjectRelationshipObjectLayoutTabs(
+			long objectRelationshipId)
+		throws PortalException {
+
+		for (ObjectLayoutTab objectLayoutTab :
+				objectLayoutTabPersistence.findByObjectRelationshipId(
+					objectRelationshipId)) {
+
+			deleteObjectLayoutTab(objectLayoutTab);
 		}
 	}
 
@@ -105,7 +136,7 @@ public class ObjectLayoutTabLocalServiceImpl
 	}
 
 	@Override
-	public void registryObjectLayoutTabScreenNavigationCategories(
+	public void registerObjectLayoutTabScreenNavigationCategories(
 		ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
@@ -115,7 +146,7 @@ public class ObjectLayoutTabLocalServiceImpl
 		while (objectLayoutTabIterator.hasNext()) {
 			ObjectLayoutTab objectLayoutTab = objectLayoutTabIterator.next();
 
-			_serviceRegistrationMap.computeIfAbsent(
+			_serviceRegistrations.computeIfAbsent(
 				_getServiceRegistrationMapKey(objectLayoutTab),
 				serviceRegistrationMapKey -> _bundleContext.registerService(
 					new String[] {
@@ -148,7 +179,7 @@ public class ObjectLayoutTabLocalServiceImpl
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrationMap =
+	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
 
 	@Reference

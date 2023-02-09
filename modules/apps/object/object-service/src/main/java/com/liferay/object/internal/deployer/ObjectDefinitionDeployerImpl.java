@@ -382,7 +382,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		_objectLayoutTabLocalService.
-			registryObjectLayoutTabScreenNavigationCategories(
+			registerObjectLayoutTabScreenNavigationCategories(
 				objectDefinition, objectLayout.getObjectLayoutTabs());
 
 		return serviceRegistrations;

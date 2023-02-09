@@ -413,7 +413,7 @@ public class ObjectLayoutLocalServiceImpl
 
 		if (objectLayout.isDefaultObjectLayout()) {
 			_objectLayoutTabLocalService.
-				registryObjectLayoutTabScreenNavigationCategories(
+				registerObjectLayoutTabScreenNavigationCategories(
 					_objectDefinitionPersistence.fetchByPrimaryKey(
 						objectDefinitionId),
 					objectLayoutTabs);
@@ -459,7 +459,9 @@ public class ObjectLayoutLocalServiceImpl
 		}
 	}
 
-	private void _deleteObjectLayoutTabs(long objectLayoutId) {
+	private void _deleteObjectLayoutTabs(long objectLayoutId)
+		throws PortalException {
+
 		List<ObjectLayoutTab> objectLayoutTabs =
 			_objectLayoutTabLocalService.getObjectLayoutObjectLayoutTabs(
 				objectLayoutId);
