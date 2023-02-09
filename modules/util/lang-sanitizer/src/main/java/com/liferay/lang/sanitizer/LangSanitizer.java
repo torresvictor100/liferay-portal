@@ -273,7 +273,7 @@ public class LangSanitizer {
 			sb.append("\tOriginal Content: ");
 			sb.append(_originalContent);
 			sb.append(System.lineSeparator());
-			sb.append("\tSantized Content: ");
+			sb.append("\tSanitized Content: ");
 			sb.append(_santizedContent);
 
 			return sb.toString();
