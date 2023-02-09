@@ -16,6 +16,7 @@ package com.liferay.object.internal.layout.tab.screen.navigation.category;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
 
@@ -66,7 +67,8 @@ public class ObjectLayoutTabScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		httpServletRequest.setAttribute("regularObjectLayoutTab", Boolean.TRUE);
+		httpServletRequest.setAttribute(
+			ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB, Boolean.TRUE);
 	}
 
 	private final ObjectDefinition _objectDefinition;

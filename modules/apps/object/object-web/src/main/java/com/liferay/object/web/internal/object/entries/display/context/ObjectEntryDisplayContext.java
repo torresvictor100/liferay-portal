@@ -582,7 +582,8 @@ public class ObjectEntryDisplayContext {
 			_objectRequestHelper.getRequest();
 
 		return GetterUtil.getBoolean(
-			httpServletRequest.getAttribute("regularObjectLayoutTab"));
+			httpServletRequest.getAttribute(
+				ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB));
 	}
 
 	private void _addDDMFormFields(
