@@ -204,7 +204,6 @@ public class IndexerPostProcessorRegistryTest {
 
 			List<String> expectedClassNames = Arrays.asList(
 				TestSampleModelIndexerPostProcessor.class.getName());
-
 			List<String> actualClassNames = TransformUtil.transformToList(
 				indexer.getIndexerPostProcessors(),
 				indexerPostProcessor -> {
