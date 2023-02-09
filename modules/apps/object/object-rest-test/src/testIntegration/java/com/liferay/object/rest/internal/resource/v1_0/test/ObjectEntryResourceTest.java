@@ -540,7 +540,7 @@ public class ObjectEntryResourceTest {
 			"%20'", String.valueOf(relatedObjectEntryId),
 			StringPool.APOSTROPHE);
 
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
@@ -570,17 +570,17 @@ public class ObjectEntryResourceTest {
 				FilterOperator filterOperator)
 		throws Exception {
 
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, filterOperator,
 			_objectDefinition1, objectRelationship, _OBJECT_FIELD_NAME_2,
 			_OBJECT_FIELD_VALUE_2);
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, filterOperator,
 			_objectDefinition2, objectRelationship, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
 			FilterOperator filterOperator, ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship,
@@ -631,14 +631,14 @@ public class ObjectEntryResourceTest {
 		}
 		else {
 			throw new NotSupportedException(
-				"Operation " + filterOperator.name() + "is not supported");
+				"Filter " + filterOperator.name() + " is not supported");
 		}
 
-		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+		_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
+	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
 			String endpoint, String expectedObjectFieldName,
 			String expectedObjectFieldValue)
 		throws Exception {
