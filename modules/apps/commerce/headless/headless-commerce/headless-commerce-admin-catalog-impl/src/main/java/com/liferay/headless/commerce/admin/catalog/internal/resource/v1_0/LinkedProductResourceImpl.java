@@ -53,11 +53,11 @@ public class LinkedProductResourceImpl
 			Pagination pagination)
 		throws Exception {
 
+		int cProductCSDiagramEntriesCount =
+			_csDiagramEntryService.getCProductCSDiagramEntriesCount(productId);
 		int entryCProductCPDefinitionGroupedEntriesCount =
 			_cpDefinitionGroupedEntryService.
 				getEntryCProductCPDefinitionGroupedEntriesCount(productId);
-		int cProductCSDiagramEntriesCount =
-			_csDiagramEntryService.getCProductCSDiagramEntriesCount(productId);
 
 		return Page.of(
 			ListUtil.concat(

@@ -33,6 +33,7 @@ import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.LinkedProductDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.LinkedProductResource;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -81,7 +82,7 @@ public class LinkedProductResourceImpl
 			commerceChannel.getGroupId(),
 			cProduct.getPublishedCPDefinitionId());
 
-		List<LinkedProduct> linkedProductList = ListUtil.concat(
+		List<LinkedProduct> linkedProducts = ListUtil.concat(
 			transform(
 				_cpDefinitionGroupedEntryService.
 					getEntryCProductCPDefinitionGroupedEntries(
@@ -113,27 +114,25 @@ public class LinkedProductResourceImpl
 						CSDiagramCPTypeConstants.NAME, contextUriInfo,
 						contextUser))));
 
-		return Page.of(linkedProductList, pagination, linkedProductList.size());
+		return Page.of(linkedProducts, pagination, linkedProducts.size());
 	}
 
 	private Long _getSelectedAccountId(
 			Long accountId, CommerceChannel commerceChannel)
 		throws Exception {
 
-		int countUserCommerceAccounts =
-			_commerceAccountHelper.countUserCommerceAccounts(
-				contextUser.getUserId(), commerceChannel.getGroupId());
+		int count = _commerceAccountHelper.countUserCommerceAccounts(
+			contextUser.getUserId(), commerceChannel.getGroupId());
 
-		if (countUserCommerceAccounts > 1) {
+		if (count > 1) {
 			if (accountId == null) {
 				MultivaluedMap<String, String> queryParameters =
 					contextUriInfo.getQueryParameters();
 
-				String queryParameterAccountId = queryParameters.getFirst(
-					"accountId");
+				String accountIdString = queryParameters.getFirst("accountId");
 
-				if (queryParameterAccountId != null) {
-					accountId = Long.valueOf(queryParameterAccountId);
+				if (accountIdString != null) {
+					accountId = GetterUtil.getLong(accountIdString);
 				}
 				else {
 					throw new NoSuchAccountException();

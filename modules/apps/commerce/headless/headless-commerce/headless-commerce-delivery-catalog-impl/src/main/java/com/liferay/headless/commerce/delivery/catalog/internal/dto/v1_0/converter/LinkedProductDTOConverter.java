@@ -88,6 +88,22 @@ public class LinkedProductDTOConverter
 			String productTypeName)
 		throws Exception {
 
+		if (CSDiagramCPTypeConstants.NAME.equals(productTypeName)) {
+			CSDiagramEntry csDiagramEntry =
+				_csDiagramEntryLocalService.getCSDiagramEntry(id);
+
+			if (_commerceProductViewPermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), accountId,
+					commerceChannelGroupId,
+					csDiagramEntry.getCPDefinitionId())) {
+
+				return _cpDefinitionLocalService.getCPDefinition(
+					csDiagramEntry.getCPDefinitionId());
+			}
+
+			return null;
+		}
+
 		if (GroupedCPTypeConstants.NAME.equals(productTypeName)) {
 			CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
 				_cpDefinitionGroupedEntryLocalService.
@@ -100,21 +116,6 @@ public class LinkedProductDTOConverter
 
 				return _cpDefinitionLocalService.getCPDefinition(
 					cpDefinitionGroupedEntry.getCPDefinitionId());
-			}
-
-			return null;
-		}
-		else if (CSDiagramCPTypeConstants.NAME.equals(productTypeName)) {
-			CSDiagramEntry csDiagramEntry =
-				_csDiagramEntryLocalService.getCSDiagramEntry(id);
-
-			if (_commerceProductViewPermission.contains(
-					PermissionThreadLocal.getPermissionChecker(), accountId,
-					commerceChannelGroupId,
-					csDiagramEntry.getCPDefinitionId())) {
-
-				return _cpDefinitionLocalService.getCPDefinition(
-					csDiagramEntry.getCPDefinitionId());
 			}
 
 			return null;
