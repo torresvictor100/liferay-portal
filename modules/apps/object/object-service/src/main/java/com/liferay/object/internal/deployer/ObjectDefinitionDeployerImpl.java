@@ -377,13 +377,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectLayoutLocalService.fetchDefaultObjectLayout(
 				objectDefinition.getObjectDefinitionId());
 
-		if (objectLayout == null) {
-			return serviceRegistrations;
+		if (objectLayout != null) {
+			_objectLayoutTabLocalService.
+				registerObjectLayoutTabScreenNavigationCategories(
+					objectDefinition, objectLayout.getObjectLayoutTabs());
 		}
-
-		_objectLayoutTabLocalService.
-			registerObjectLayoutTabScreenNavigationCategories(
-				objectDefinition, objectLayout.getObjectLayoutTabs());
 
 		return serviceRegistrations;
 	}
