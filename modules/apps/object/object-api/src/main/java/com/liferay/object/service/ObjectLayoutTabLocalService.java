@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -67,6 +66,10 @@ public interface ObjectLayoutTabLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutTabLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout tab local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutTabLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId, long objectRelationshipId,
+			Map<Locale, String> nameMap, int priority)
+		throws PortalException;
 
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
@@ -80,10 +83,6 @@ public interface ObjectLayoutTabLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayoutTab addObjectLayoutTab(ObjectLayoutTab objectLayoutTab);
-
-	public ObjectLayoutTab addObjectLayoutTab(
-		User user, long objectLayoutId, long objectRelationshipId,
-		Map<Locale, String> nameMap, int priority);
 
 	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
@@ -100,7 +99,8 @@ public interface ObjectLayoutTabLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId);
+	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId)
+		throws PortalException;
 
 	/**
 	 * Deletes the object layout tab with the primary key from the database. Also notifies the appropriate model listeners.
@@ -130,6 +130,10 @@ public interface ObjectLayoutTabLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public ObjectLayoutTab deleteObjectLayoutTab(
 		ObjectLayoutTab objectLayoutTab);
+
+	public void deleteObjectRelationshipObjectLayoutTabs(
+			long objectRelationshipId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -299,7 +303,7 @@ public interface ObjectLayoutTabLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void registryObjectLayoutTabScreenNavigationCategories(
+	public void registerObjectLayoutTabScreenNavigationCategories(
 		ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs);
 

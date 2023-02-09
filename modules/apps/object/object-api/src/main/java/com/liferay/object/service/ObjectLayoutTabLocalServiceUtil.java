@@ -45,6 +45,14 @@ public class ObjectLayoutTabLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutTabLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId, long objectRelationshipId,
+			Map<java.util.Locale, String> nameMap, int priority)
+		throws PortalException {
+
+		return getService().addObjectLayoutTab(
+			userId, objectLayoutId, objectRelationshipId, nameMap, priority);
+	}
 
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
@@ -60,15 +68,6 @@ public class ObjectLayoutTabLocalServiceUtil {
 		ObjectLayoutTab objectLayoutTab) {
 
 		return getService().addObjectLayoutTab(objectLayoutTab);
-	}
-
-	public static ObjectLayoutTab addObjectLayoutTab(
-		com.liferay.portal.kernel.model.User user, long objectLayoutId,
-		long objectRelationshipId, Map<java.util.Locale, String> nameMap,
-		int priority) {
-
-		return getService().addObjectLayoutTab(
-			user, objectLayoutId, objectRelationshipId, nameMap, priority);
 	}
 
 	/**
@@ -93,7 +92,9 @@ public class ObjectLayoutTabLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId) {
+	public static void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId)
+		throws PortalException {
+
 		getService().deleteObjectLayoutObjectLayoutTabs(objectLayoutId);
 	}
 
@@ -128,6 +129,14 @@ public class ObjectLayoutTabLocalServiceUtil {
 		ObjectLayoutTab objectLayoutTab) {
 
 		return getService().deleteObjectLayoutTab(objectLayoutTab);
+	}
+
+	public static void deleteObjectRelationshipObjectLayoutTabs(
+			long objectRelationshipId)
+		throws PortalException {
+
+		getService().deleteObjectRelationshipObjectLayoutTabs(
+			objectRelationshipId);
 	}
 
 	/**
@@ -343,11 +352,11 @@ public class ObjectLayoutTabLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void registryObjectLayoutTabScreenNavigationCategories(
+	public static void registerObjectLayoutTabScreenNavigationCategories(
 		com.liferay.object.model.ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
-		getService().registryObjectLayoutTabScreenNavigationCategories(
+		getService().registerObjectLayoutTabScreenNavigationCategories(
 			objectDefinition, objectLayoutTabs);
 	}
 

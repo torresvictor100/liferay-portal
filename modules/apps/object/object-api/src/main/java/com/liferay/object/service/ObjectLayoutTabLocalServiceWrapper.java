@@ -37,6 +37,16 @@ public class ObjectLayoutTabLocalServiceWrapper
 		_objectLayoutTabLocalService = objectLayoutTabLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId, long objectRelationshipId,
+			java.util.Map<java.util.Locale, String> nameMap, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutTabLocalService.addObjectLayoutTab(
+			userId, objectLayoutId, objectRelationshipId, nameMap, priority);
+	}
+
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
 	 *
@@ -52,16 +62,6 @@ public class ObjectLayoutTabLocalServiceWrapper
 		com.liferay.object.model.ObjectLayoutTab objectLayoutTab) {
 
 		return _objectLayoutTabLocalService.addObjectLayoutTab(objectLayoutTab);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectLayoutTab addObjectLayoutTab(
-		com.liferay.portal.kernel.model.User user, long objectLayoutId,
-		long objectRelationshipId,
-		java.util.Map<java.util.Locale, String> nameMap, int priority) {
-
-		return _objectLayoutTabLocalService.addObjectLayoutTab(
-			user, objectLayoutId, objectRelationshipId, nameMap, priority);
 	}
 
 	/**
@@ -90,7 +90,9 @@ public class ObjectLayoutTabLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId) {
+	public void deleteObjectLayoutObjectLayoutTabs(long objectLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_objectLayoutTabLocalService.deleteObjectLayoutObjectLayoutTabs(
 			objectLayoutId);
 	}
@@ -131,6 +133,15 @@ public class ObjectLayoutTabLocalServiceWrapper
 
 		return _objectLayoutTabLocalService.deleteObjectLayoutTab(
 			objectLayoutTab);
+	}
+
+	@Override
+	public void deleteObjectRelationshipObjectLayoutTabs(
+			long objectRelationshipId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectLayoutTabLocalService.deleteObjectRelationshipObjectLayoutTabs(
+			objectRelationshipId);
 	}
 
 	/**
@@ -387,13 +398,13 @@ public class ObjectLayoutTabLocalServiceWrapper
 	}
 
 	@Override
-	public void registryObjectLayoutTabScreenNavigationCategories(
+	public void registerObjectLayoutTabScreenNavigationCategories(
 		com.liferay.object.model.ObjectDefinition objectDefinition,
 		java.util.List<com.liferay.object.model.ObjectLayoutTab>
 			objectLayoutTabs) {
 
 		_objectLayoutTabLocalService.
-			registryObjectLayoutTabScreenNavigationCategories(
+			registerObjectLayoutTabScreenNavigationCategories(
 				objectDefinition, objectLayoutTabs);
 	}
 
