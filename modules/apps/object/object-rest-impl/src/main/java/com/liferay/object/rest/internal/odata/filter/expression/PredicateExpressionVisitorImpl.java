@@ -509,8 +509,7 @@ public class PredicateExpressionVisitorImpl
 
 	private Predicate _getPredicateForRelationships(
 		Object left,
-		UnsafeBiFunction<String, Long, Predicate, Exception>
-			getRelatedObjectFieldPredicateUnsafeBiFunction) {
+		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
 
 		String leftString = (String)left;
 
@@ -527,7 +526,7 @@ public class PredicateExpressionVisitorImpl
 			try {
 				return _getPredicateForRelationships(
 					objectRelationship,
-					getRelatedObjectFieldPredicateUnsafeBiFunction.apply(
+					unsafeBiFunction.apply(
 						objectFieldName,
 						_getRelatedObjectDefinitionId(
 							_objectDefinitionId, objectRelationship)));
