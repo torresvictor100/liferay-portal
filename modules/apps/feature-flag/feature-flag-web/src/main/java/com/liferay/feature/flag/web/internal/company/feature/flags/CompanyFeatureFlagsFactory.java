@@ -114,7 +114,7 @@ public class CompanyFeatureFlagsFactory {
 						else {
 							_log.error(
 								StringBundler.concat(
-									"Skipping adding circular dependency ",
+									"Skipping circular dependency ",
 									dependencyKey, " for feature flag ",
 									featureFlag.getKey()));
 						}
