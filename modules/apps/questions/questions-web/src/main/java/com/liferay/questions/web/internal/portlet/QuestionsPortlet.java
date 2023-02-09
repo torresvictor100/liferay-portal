@@ -114,19 +114,10 @@ public class QuestionsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType(),
-			new URLItemSelectorReturnType());
-
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			"EDITOR_NAME_selectItem", itemSelectorCriterion);
+		Company company = themeDisplay.getCompany();
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
+			QuestionsWebKeys.COMPANY_NAME, company.getName());
 
 		Properties properties = _portal.getPortalProperties();
 
@@ -151,12 +142,21 @@ public class QuestionsPortlet extends MVCPortlet {
 
 		String lowestRank = minParts.get(0);
 
-		Company company = themeDisplay.getCompany();
+		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType(),
+			new URLItemSelectorReturnType());
+
+		PortletURL portletURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			"EDITOR_NAME_selectItem", itemSelectorCriterion);
 
 		renderRequest.setAttribute(
-			QuestionsWebKeys.COMPANY_NAME, company.getName());
-
-		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
+			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
 
 		renderRequest.setAttribute(
 			QuestionsWebKeys.FLAGS_PROPERTIES,
