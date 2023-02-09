@@ -580,11 +580,13 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_VALUE_1);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			String expectedObjectFieldName, String expectedObjectFieldValue,
-			FilterOperator filterOperator, ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship,
-			String relatedObjectFieldName, String relatedObjectFieldValue)
+	private void
+			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
+				String expectedObjectFieldName, String expectedObjectFieldValue,
+				FilterOperator filterOperator,
+				ObjectDefinition objectDefinition,
+				ObjectRelationship objectRelationship,
+				String relatedObjectFieldName, String relatedObjectFieldValue)
 		throws Exception {
 
 		String endpoint = objectDefinition.getRESTContextPath() + "?filter=";
@@ -638,9 +640,10 @@ public class ObjectEntryResourceTest {
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
-			String endpoint, String expectedObjectFieldName,
-			String expectedObjectFieldValue)
+	private void
+			_testFilterObjectEntriesByRelatedObjectEntriesUsingAFilterOperator(
+				String endpoint, String expectedObjectFieldName,
+				String expectedObjectFieldValue)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
