@@ -1,8 +1,8 @@
-${id}:
-    name: ${name}
-    type: globalJS
-    url: global.js
 assemble:
     - from: assets
       include: "**/*"
       into: static
+${id}:
+    name: ${name}
+    type: globalJS
+    url: global.js
