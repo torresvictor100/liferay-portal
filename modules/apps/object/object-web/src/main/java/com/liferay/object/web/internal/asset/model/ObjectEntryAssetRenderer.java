@@ -16,10 +16,10 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

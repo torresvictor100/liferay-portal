@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.constants;
+package com.liferay.object.constants;
 
 /**
  * @author Jorge Ferrer
