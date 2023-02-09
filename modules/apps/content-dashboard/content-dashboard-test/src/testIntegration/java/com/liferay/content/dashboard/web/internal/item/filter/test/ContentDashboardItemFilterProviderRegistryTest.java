@@ -95,12 +95,12 @@ public class ContentDashboardItemFilterProviderRegistryTest {
 			},
 			new HashMapDictionary<>());
 
+		boolean found = false;
+
 		List<ContentDashboardItemFilterProvider>
 			contentDashboardItemFilterProviders = ReflectionTestUtil.invoke(
 				_contentDashboardItemFilterProviderRegistry,
 				"getContentDashboardItemFilterProviders", new Class<?>[0]);
-
-		boolean containsMockFilter = false;
 
 		for (ContentDashboardItemFilterProvider
 				contentDashboardItemFilterProvider :
@@ -110,13 +110,13 @@ public class ContentDashboardItemFilterProviderRegistryTest {
 					contentDashboardItemFilterProvider.getKey(),
 					"mockContentDashboardItemFilter")) {
 
-				containsMockFilter = true;
+				found = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(containsMockFilter);
+		Assert.assertTrue(found);
 	}
 
 	private BundleContext _bundleContext;

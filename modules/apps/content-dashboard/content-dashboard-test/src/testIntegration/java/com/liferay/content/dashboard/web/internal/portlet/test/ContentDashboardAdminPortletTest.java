@@ -872,7 +872,6 @@ public class ContentDashboardAdminPortletTest {
 
 			_assertContainsTitle(
 				results, journalArticle1.getTitle(LocaleUtil.US));
-
 			_assertContainsTitle(
 				results, journalArticle2.getTitle(LocaleUtil.US));
 		}
@@ -939,7 +938,6 @@ public class ContentDashboardAdminPortletTest {
 		List<Object> results = searchContainer.getResults();
 
 		_assertContainsTitle(results, journalArticle1.getTitle(LocaleUtil.US));
-
 		_assertContainsTitle(results, journalArticle2.getTitle(LocaleUtil.US));
 	}
 
@@ -1174,7 +1172,6 @@ public class ContentDashboardAdminPortletTest {
 		List<Object> results = searchContainer.getResults();
 
 		_assertContainsTitle(results, journalArticle1.getTitle(LocaleUtil.US));
-
 		_assertContainsTitle(results, journalArticle2.getTitle(LocaleUtil.US));
 	}
 

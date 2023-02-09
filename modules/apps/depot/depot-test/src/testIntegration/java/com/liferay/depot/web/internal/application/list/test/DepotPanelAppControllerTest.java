@@ -206,18 +206,18 @@ public class DepotPanelAppControllerTest {
 	private void _assertPanelAppsContain(
 		List<PanelApp> panelApps, String portletId) {
 
-		boolean containsPorletId = false;
+		boolean found = false;
 
 		for (PanelApp panelApp : panelApps) {
 			if (Objects.equals(portletId, panelApp.getPortletId())) {
-				containsPorletId = true;
+				found = true;
 
 				break;
 			}
 		}
 
 		Assert.assertTrue(
-			"Panel apps do not contain portlet " + portletId, containsPorletId);
+			"Panel apps do not contain portlet " + portletId, found);
 	}
 
 	@DeleteAfterTestRun

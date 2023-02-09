@@ -103,19 +103,19 @@ public class UpdateMembershipsMVCActionCommandTest {
 				_user, new long[] {_depotEntry.getGroupId()}, null),
 			null);
 
-		boolean match = false;
+		boolean found = false;
 
 		for (long groupId :
 				_userLocalService.getGroupPrimaryKeys(_user.getUserId())) {
 
 			if (groupId == _depotEntry.getGroupId()) {
-				match = true;
+				found = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(match);
+		Assert.assertTrue(found);
 	}
 
 	@Test
@@ -161,19 +161,19 @@ public class UpdateMembershipsMVCActionCommandTest {
 				_user, null, new long[] {_depotEntry.getGroupId()}),
 			null);
 
-		boolean match = false;
+		boolean found = false;
 
 		for (long groupId :
 				_userLocalService.getGroupPrimaryKeys(_user.getUserId())) {
 
 			if (groupId == _depotEntry.getGroupId()) {
-				match = true;
+				found = true;
 
 				break;
 			}
 		}
 
-		Assert.assertFalse(match);
+		Assert.assertFalse(found);
 
 		Assert.assertEquals(
 			0,
