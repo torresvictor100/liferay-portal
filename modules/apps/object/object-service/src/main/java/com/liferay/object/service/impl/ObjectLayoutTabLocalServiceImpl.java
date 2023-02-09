@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -140,11 +138,8 @@ public class ObjectLayoutTabLocalServiceImpl
 		ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
-		Iterator<ObjectLayoutTab> objectLayoutTabIterator =
-			ListUtil.reverseIterator(objectLayoutTabs);
-
-		while (objectLayoutTabIterator.hasNext()) {
-			ObjectLayoutTab objectLayoutTab = objectLayoutTabIterator.next();
+		for (int i = objectLayoutTabs.size() - 1; i >= 0; i--) {
+			ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(i);
 
 			_serviceRegistrations.computeIfAbsent(
 				_getServiceRegistrationKey(objectLayoutTab),
@@ -170,9 +165,7 @@ public class ObjectLayoutTabLocalServiceImpl
 		_bundleContext = bundleContext;
 	}
 
-	private String _getServiceRegistrationKey(
-		ObjectLayoutTab objectLayoutTab) {
-
+	private String _getServiceRegistrationKey(ObjectLayoutTab objectLayoutTab) {
 		return StringBundler.concat(
 			objectLayoutTab.getCompanyId(), StringPool.POUND,
 			objectLayoutTab.getObjectLayoutTabId());
