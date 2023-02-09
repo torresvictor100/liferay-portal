@@ -23,7 +23,9 @@ import com.liferay.object.service.base.ObjectLayoutTabLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -37,6 +39,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
@@ -50,15 +53,19 @@ public class ObjectLayoutTabLocalServiceImpl
 
 	@Override
 	public ObjectLayoutTab addObjectLayoutTab(
-		User user, long objectLayoutId, long objectRelationshipId,
-		Map<Locale, String> nameMap, int priority) {
+			long userId, long objectLayoutId, long objectRelationshipId,
+			Map<Locale, String> nameMap, int priority)
+		throws PortalException {
 
 		ObjectLayoutTab objectLayoutTab = objectLayoutTabPersistence.create(
 			counterLocalService.increment());
 
+		User user = _userLocalService.getUser(userId);
+
 		objectLayoutTab.setCompanyId(user.getCompanyId());
 		objectLayoutTab.setUserId(user.getUserId());
 		objectLayoutTab.setUserName(user.getFullName());
+
 		objectLayoutTab.setObjectLayoutId(objectLayoutId);
 		objectLayoutTab.setObjectRelationshipId(objectRelationshipId);
 		objectLayoutTab.setNameMap(nameMap);
@@ -143,5 +150,8 @@ public class ObjectLayoutTabLocalServiceImpl
 	private BundleContext _bundleContext;
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrationMap =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

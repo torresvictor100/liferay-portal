@@ -387,7 +387,8 @@ public class ObjectLayoutLocalServiceImpl
 
 		ObjectLayoutTab objectLayoutTab =
 			_objectLayoutTabLocalService.addObjectLayoutTab(
-				user, objectLayoutId, objectRelationshipId, nameMap, priority);
+				user.getUserId(), objectLayoutId, objectRelationshipId, nameMap,
+				priority);
 
 		objectLayoutTab.setObjectLayoutBoxes(
 			_addObjectLayoutBoxes(
