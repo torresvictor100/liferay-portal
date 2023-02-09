@@ -3419,10 +3419,10 @@ public class ObjectEntryLocalServiceImpl
 				return;
 			}
 
-			Map<String, Serializable> originalValues = objectEntry.getValues();
+			Map<String, Serializable> values = objectEntry.getValues();
 
 			if (!Objects.equals(
-					GetterUtil.getLong(originalValues.get(entry.getKey())),
+					GetterUtil.getLong(values.get(entry.getKey())),
 					GetterUtil.getLong(entry.getValue()))) {
 
 				throw new ObjectEntryValuesException.
