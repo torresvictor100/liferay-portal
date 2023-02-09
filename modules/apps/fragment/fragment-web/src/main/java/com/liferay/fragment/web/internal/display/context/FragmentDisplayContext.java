@@ -706,14 +706,13 @@ public class FragmentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		List<FragmentCollectionContributor>
-			sortedFragmentCollectionContributors = ListUtil.sort(
-				fragmentCollectionContributors,
-				new FragmentCollectionContributorNameComparator(
-					_themeDisplay.getLocale()));
+		fragmentCollectionContributors = ListUtil.sort(
+			fragmentCollectionContributors,
+			new FragmentCollectionContributorNameComparator(
+				_themeDisplay.getLocale()));
 
 		FragmentCollectionContributor fragmentCollectionContributor =
-			sortedFragmentCollectionContributors.get(0);
+			fragmentCollectionContributors.get(0);
 
 		return fragmentCollectionContributor.getFragmentCollectionKey();
 	}
