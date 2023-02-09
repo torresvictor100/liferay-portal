@@ -444,18 +444,10 @@ public class AggregationFilteringTest {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setGroupIds(
+			TransformUtil.transformToLongArray(_groups, Group::getGroupId));
 		searchContext.setKeywords(keywords);
 		searchContext.setUserId(TestPropsValues.getUserId());
-
-		long[] groupIds = new long[_groups.size()];
-
-		for (int i = 0; i < _groups.size(); i++) {
-			Group group = _groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		searchContext.setGroupIds(groupIds);
 
 		return searchContext;
 	}
