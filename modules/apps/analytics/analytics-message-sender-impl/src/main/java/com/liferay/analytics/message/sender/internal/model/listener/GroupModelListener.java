@@ -45,10 +45,8 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 
 	@Override
 	public long[] getMembershipIds(User user) throws Exception {
-		List<Group> groups = user.getSiteGroups();
-
-		return (long[])TransformUtil.transformToPrimitiveArray(
-			groups, Group::getGroupId, long[].class);
+		return TransformUtil.transformToLongArray(
+			user.getSiteGroups(), Group::getGroupId);
 	}
 
 	@Override
