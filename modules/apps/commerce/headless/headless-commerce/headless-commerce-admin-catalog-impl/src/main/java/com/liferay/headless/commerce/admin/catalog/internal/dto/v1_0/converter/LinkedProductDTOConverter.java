@@ -72,20 +72,20 @@ public class LinkedProductDTOConverter
 	private CPDefinition _getCPDefinition(long id, String productTypeName)
 		throws Exception {
 
-		if (GroupedCPTypeConstants.NAME.equals(productTypeName)) {
+		if (CSDiagramCPTypeConstants.NAME.equals(productTypeName)) {
+			CSDiagramEntry csDiagramEntry =
+				_csDiagramEntryService.getCSDiagramEntry(id);
+
+			return _cpDefinitionService.getCPDefinition(
+				csDiagramEntry.getCPDefinitionId());
+		}
+		else if (GroupedCPTypeConstants.NAME.equals(productTypeName)) {
 			CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
 				_cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntry(
 					id);
 
 			return _cpDefinitionService.getCPDefinition(
 				cpDefinitionGroupedEntry.getCPDefinitionId());
-		}
-		else if (CSDiagramCPTypeConstants.NAME.equals(productTypeName)) {
-			CSDiagramEntry csDiagramEntry =
-				_csDiagramEntryService.getCSDiagramEntry(id);
-
-			return _cpDefinitionService.getCPDefinition(
-				csDiagramEntry.getCPDefinitionId());
 		}
 
 		throw new CPDefinitionProductTypeNameException();
