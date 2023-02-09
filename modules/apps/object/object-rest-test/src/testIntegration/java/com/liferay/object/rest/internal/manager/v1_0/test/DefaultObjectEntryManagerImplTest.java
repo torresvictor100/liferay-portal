@@ -1570,7 +1570,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertFailure(
 			"The object field r_oneToManyRelationshipName_accountEntryId is " +
-				"unmodifiable because it is the account entry restrictor.",
+				"unmodifiable because it is the account entry restrictor",
 			() -> _objectEntryManager.updateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition3,
 				objectEntry1.getId(),

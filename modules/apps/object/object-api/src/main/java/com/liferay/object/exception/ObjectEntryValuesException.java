@@ -31,7 +31,7 @@ public class ObjectEntryValuesException extends PortalException {
 				StringBundler.concat(
 					"The object field ", objectFieldName,
 					" is unmodifiable because it is the account entry ",
-					"restrictor."));
+					"restrictor"));
 		}
 
 	}
