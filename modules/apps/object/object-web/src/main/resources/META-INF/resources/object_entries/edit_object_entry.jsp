@@ -43,7 +43,7 @@ ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab()
 			<liferay-util:param name="objectLayoutTabId" value="<%= String.valueOf(objectLayoutTab.getObjectLayoutTabId()) %>" />
 		</liferay-util:include>
 	</c:when>
-	<c:when test="<%= objectEntryDisplayContext.showObjectEntryForm() %>">
+	<c:when test="<%= objectEntryDisplayContext.isShowObjectEntryForm() %>">
 		<liferay-util:include page="/object_entries/object_entry/form.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="externalReferenceCode" value="<%= externalReferenceCode %>" />
 		</liferay-util:include>

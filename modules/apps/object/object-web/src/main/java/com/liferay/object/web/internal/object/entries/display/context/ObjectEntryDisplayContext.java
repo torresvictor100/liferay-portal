@@ -573,7 +573,7 @@ public class ObjectEntryDisplayContext {
 			ddmFormRenderingContext);
 	}
 
-	public boolean showObjectEntryForm() throws PortalException {
+	public boolean isShowObjectEntryForm() throws PortalException {
 		if ((getObjectEntry() == null) || (getObjectLayoutTab() == null)) {
 			return true;
 		}
