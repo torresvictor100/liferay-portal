@@ -35,7 +35,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
-import com.liferay.object.rest.dto.v1_0.util.ObjectEntryUtil;
+import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -432,7 +432,7 @@ public class ObjectEntryDTOConverter
 					new FileEntry() {
 						{
 							id = dlFileEntry.getFileEntryId();
-							link = ObjectEntryUtil.toLink(
+							link = LinkUtil.toLink(
 								_dlAppService, dlFileEntry, _dlURLHelper,
 								objectDefinition.getExternalReferenceCode(),
 								objectEntry.getExternalReferenceCode(),

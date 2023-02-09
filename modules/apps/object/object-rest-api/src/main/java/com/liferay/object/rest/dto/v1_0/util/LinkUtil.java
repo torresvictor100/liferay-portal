@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Portal;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectEntryUtil {
+public class LinkUtil {
 
 	public static Link toLink(
 		DLAppService dlAppService, DLFileEntry dlFileEntry,
@@ -74,7 +74,6 @@ public class ObjectEntryUtil {
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(LinkUtil.class);
 
 }

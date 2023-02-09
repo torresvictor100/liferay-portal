@@ -27,7 +27,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.dto.v1_0.util.ObjectEntryUtil;
+import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -206,7 +206,7 @@ public class ObjectEntryRowInfoItemRenderer
 							return StringPool.BLANK;
 						}
 
-						return ObjectEntryUtil.toLink(
+						return LinkUtil.toLink(
 							_dlAppService, dlFileEntry, _dlURLHelper,
 							objectDefinition.getExternalReferenceCode(),
 							objectEntry.getExternalReferenceCode(), _portal);
