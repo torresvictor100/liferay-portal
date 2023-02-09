@@ -141,15 +141,15 @@ public class QuestionsPortlet extends MVCPortlet {
 			StringUtil.split(ranks),
 			Comparator.comparing(
 				rank -> {
-					List<String> rankSplit = StringUtil.split(
+					List<String> rankParts = StringUtil.split(
 						rank, CharPool.EQUAL);
 
-					return rankSplit.get(1);
+					return rankParts.get(1);
 				}));
 
-		List<String> minSplit = StringUtil.split(min, CharPool.EQUAL);
+		List<String> minParts = StringUtil.split(min, CharPool.EQUAL);
 
-		String lowestRank = minSplit.get(0);
+		String lowestRank = minParts.get(0);
 
 		Company company = themeDisplay.getCompany();
 

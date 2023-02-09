@@ -64,12 +64,12 @@ public class QuestionsConfigurationModelListener
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
 		try {
-			Enumeration<String> keyEnumeration = properties.keys();
-
 			Map<String, Object> propertiesMap = new HashMap<>();
 
-			while (keyEnumeration.hasMoreElements()) {
-				String key = keyEnumeration.nextElement();
+			Enumeration<String> enumeration = properties.keys();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
 
 				propertiesMap.put(key, properties.get(key));
 			}
