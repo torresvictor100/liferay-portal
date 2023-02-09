@@ -1158,9 +1158,6 @@ public class BundleSiteInitializerTest {
 			ObjectDefinition objectDefinition, ServiceContext serviceContext)
 		throws Exception {
 
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition("User");
-
 		ObjectRelationshipResource.Builder objectRelationshipResourceBuilder =
 			_objectRelationshipResourceFactory.create();
 
@@ -1168,6 +1165,9 @@ public class BundleSiteInitializerTest {
 			objectRelationshipResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition("User");
 
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
