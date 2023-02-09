@@ -571,20 +571,19 @@ public class ObjectEntryResourceTest {
 		throws Exception {
 
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
-			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, objectRelationship,
-			_objectDefinition1, filterOperator, _OBJECT_FIELD_NAME_2,
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1, filterOperator,
+			_objectDefinition1, objectRelationship, _OBJECT_FIELD_NAME_2,
 			_OBJECT_FIELD_VALUE_2);
-
 		_testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
-			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, objectRelationship,
-			_objectDefinition2, filterOperator, _OBJECT_FIELD_NAME_1,
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2, filterOperator,
+			_objectDefinition2, objectRelationship, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 	}
 
 	private void _testFilterObjectEntriesByRelatedObjectEntriesUsingAnOperator(
 			String expectedObjectFieldName, String expectedObjectFieldValue,
+			FilterOperator filterOperator, ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship,
-			ObjectDefinition objectDefinition, FilterOperator filterOperator,
 			String relatedObjectFieldName, String relatedObjectFieldValue)
 		throws Exception {
 
