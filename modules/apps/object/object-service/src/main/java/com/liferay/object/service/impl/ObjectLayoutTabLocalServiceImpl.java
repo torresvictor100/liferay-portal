@@ -103,13 +103,13 @@ public class ObjectLayoutTabLocalServiceImpl
 		objectLayoutTabPersistence.remove(objectLayoutTab);
 
 		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
-			_getServiceRegistrationMapKey(objectLayoutTab));
+			_getServiceRegistrationKey(objectLayoutTab));
 
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
 
 			_serviceRegistrations.remove(
-				_getServiceRegistrationMapKey(objectLayoutTab));
+				_getServiceRegistrationKey(objectLayoutTab));
 		}
 
 		return objectLayoutTab;
@@ -147,8 +147,8 @@ public class ObjectLayoutTabLocalServiceImpl
 			ObjectLayoutTab objectLayoutTab = objectLayoutTabIterator.next();
 
 			_serviceRegistrations.computeIfAbsent(
-				_getServiceRegistrationMapKey(objectLayoutTab),
-				serviceRegistrationMapKey -> _bundleContext.registerService(
+				_getServiceRegistrationKey(objectLayoutTab),
+				serviceRegistrationKey -> _bundleContext.registerService(
 					new String[] {
 						ScreenNavigationCategory.class.getName(),
 						ScreenNavigationEntry.class.getName()
@@ -170,7 +170,7 @@ public class ObjectLayoutTabLocalServiceImpl
 		_bundleContext = bundleContext;
 	}
 
-	private String _getServiceRegistrationMapKey(
+	private String _getServiceRegistrationKey(
 		ObjectLayoutTab objectLayoutTab) {
 
 		return StringBundler.concat(
