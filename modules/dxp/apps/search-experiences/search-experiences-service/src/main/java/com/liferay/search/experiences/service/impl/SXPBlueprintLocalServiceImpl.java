@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.service.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -27,9 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
@@ -63,17 +60,15 @@ public class SXPBlueprintLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
-		_validateExternalReferenceCode(
-			user.getCompanyId(), externalReferenceCode);
-
 		_validate(titleMap, serviceContext);
 
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.create(
 			counterLocalService.increment());
 
 		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
+
+		User user = _userLocalService.getUser(userId);
+
 		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
@@ -207,25 +202,6 @@ public class SXPBlueprintLocalServiceImpl
 		}
 
 		_sxpBlueprintValidator.validate(titleMap);
-	}
-
-	private void _validateExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		SXPBlueprint sxpBlueprint = fetchSXPBlueprintByExternalReferenceCode(
-			externalReferenceCode, companyId);
-
-		if (sxpBlueprint != null) {
-			throw new DuplicateSXPBlueprintExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate blueprint external reference code ",
-					externalReferenceCode, " in company ", companyId));
-		}
 	}
 
 	@Reference
