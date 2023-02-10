@@ -71,12 +71,10 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		modifiedFacetBuilder.setOrder(
 			modifiedFacetPortletPreferences.getOrder());
-
 		modifiedFacetBuilder.setRangesJSONArray(
 			_dateRangeFactory.replaceAliases(
 				modifiedFacetPortletPreferences.getRangesJSONArray(),
 				CalendarFactoryUtil.getCalendar(), _jsonFactory));
-
 		modifiedFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
