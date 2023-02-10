@@ -274,22 +274,6 @@ public class JournalConverterImpl implements JournalConverter {
 		return repetitions;
 	}
 
-	private Element _getParentElement(Element element, String name) {
-		for (Element dynamicElement : element.elements("dynamic-element")) {
-			if (Objects.equals(dynamicElement.attributeValue("name"), name)) {
-				return element;
-			}
-
-			Element parentElement = _getParentElement(dynamicElement, name);
-
-			if (parentElement != null) {
-				return parentElement;
-			}
-		}
-
-		return null;
-	}
-
 	private String _getAvailableLocales(Fields ddmFields) {
 		Set<Locale> availableLocales = ddmFields.getAvailableLocales();
 
@@ -358,7 +342,9 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	private List<Element> _getDynamicElementElements(Element element, String name) {
+	private List<Element> _getDynamicElementElements(
+		Element element, String name) {
+
 		Element parentElement = _getParentElement(element, name);
 
 		if (parentElement == null) {
@@ -499,6 +485,22 @@ public class JournalConverterImpl implements JournalConverter {
 			LocaleUtil.fromLanguageId(
 				dynamicContentElement.attributeValue("language-id")),
 			ddmFormField.getDataType(), value.trim());
+	}
+
+	private Element _getParentElement(Element element, String name) {
+		for (Element dynamicElement : element.elements("dynamic-element")) {
+			if (Objects.equals(dynamicElement.attributeValue("name"), name)) {
+				return element;
+			}
+
+			Element parentElement = _getParentElement(dynamicElement, name);
+
+			if (parentElement != null) {
+				return parentElement;
+			}
+		}
+
+		return null;
 	}
 
 	private String _getSelectValue(Element dynamicContentElement) {
