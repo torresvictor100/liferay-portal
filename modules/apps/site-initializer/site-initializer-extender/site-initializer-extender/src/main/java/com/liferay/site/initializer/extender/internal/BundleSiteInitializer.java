@@ -80,6 +80,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
@@ -249,6 +250,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		ListTypeDefinitionService listTypeDefinitionService,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
@@ -323,6 +325,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
+		_listTypeDefinitionService = listTypeDefinitionService;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_notificationTemplateResourceFactory =
 			notificationTemplateResourceFactory;
@@ -4717,6 +4720,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+
+	private final ListTypeDefinitionService _listTypeDefinitionService;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;

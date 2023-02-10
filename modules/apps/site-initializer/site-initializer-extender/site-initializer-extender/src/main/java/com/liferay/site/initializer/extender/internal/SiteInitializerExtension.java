@@ -44,6 +44,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
@@ -129,7 +130,8 @@ public class SiteInitializerExtension {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
-		 ListTypeEntryLocalService listTypeEntryLocalService,
+		ListTypeDefinitionService listTypeDefinitionService,
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
 		ObjectActionLocalService objectActionLocalService,
@@ -185,7 +187,7 @@ public class SiteInitializerExtension {
 			layoutPageTemplateStructureRelLocalService, layoutSetLocalService,
 			layoutUtilityPageEntryLocalService, listTypeDefinitionResource,
 			listTypeDefinitionResourceFactory, listTypeEntryResource,
-			listTypeEntryResourceFactory,listTypeEntryLocalService, notificationTemplateResourceFactory,
+			listTypeEntryResourceFactory,listTypeDefinitionService,listTypeEntryLocalService, notificationTemplateResourceFactory,
 			objectActionLocalService, objectDefinitionLocalService,
 			objectDefinitionResourceFactory, objectEntryLocalService,
 			objectEntryManager, objectFieldLocalService,
