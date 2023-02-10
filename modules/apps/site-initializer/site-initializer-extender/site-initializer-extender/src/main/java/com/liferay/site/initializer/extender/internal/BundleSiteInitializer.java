@@ -80,6 +80,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -247,6 +249,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
 		ObjectActionLocalService objectActionLocalService,
@@ -320,6 +323,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_notificationTemplateResourceFactory =
 			notificationTemplateResourceFactory;
 		_objectActionLocalService = objectActionLocalService;
@@ -4713,6 +4717,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
 	private final ObjectActionLocalService _objectActionLocalService;
