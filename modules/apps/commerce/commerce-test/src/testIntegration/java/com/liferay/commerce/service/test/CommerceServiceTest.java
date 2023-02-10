@@ -81,7 +81,6 @@ public class CommerceServiceTest {
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -93,7 +92,6 @@ public class CommerceServiceTest {
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
 		_user = UserTestUtil.addUser(_company);
 	}
 

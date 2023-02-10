@@ -247,14 +247,14 @@ public class AddToCartTag extends IncludeTag {
 
 		setServletContext(ServletContextUtil.getServletContext());
 
-		_commerceOrderHttpHelper =
-			ServletContextUtil.getCommerceOrderHttpHelper();
-		_commerceOrderPortletResourcePermission =
-			ServletContextUtil.getCommerceOrderPortletResourcePermission();
 		_commerceInventoryEngine =
 			ServletContextUtil.getCommerceInventoryEngine();
+		_commerceOrderHttpHelper =
+			ServletContextUtil.getCommerceOrderHttpHelper();
 		_commerceOrderItemLocalService =
 			ServletContextUtil.getCommerceOrderItemLocalService();
+		_commerceOrderPortletResourcePermission =
+			ServletContextUtil.getCommerceOrderPortletResourcePermission();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
