@@ -2421,7 +2421,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						listTypeDefinition);
 
 			}
-			ListTypeEntry[] ts = listTypeDefinition.getListTypeEntries();
+			ListTypeEntry[] listTypeEntries = listTypeDefinition.getListTypeEntries();
 
 
 
@@ -2452,26 +2452,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
 					String.valueOf(jsonArray.getJSONObject(i)));
 
-				Page<ListTypeEntry> listTypeEntriesPage =
-					listTypeEntryResource.
-						getListTypeDefinitionListTypeEntriesPage(
-							listTypeDefinition.getId(), null, null,
-							listTypeEntryResource.toFilter(
-								StringBundler.concat(
-									"key eq '", listTypeEntry.getKey(), "'")),
-							null, null);
+				for(ListTypeEntry listTypeEntrie: listTypeEntries){
 
-				ListTypeEntry existingListTypeEntry =
-					listTypeEntriesPage.fetchFirstItem();
+					if (listTypeEntrie.getKey().equals(listTypeEntry.getKey())) {
+						System.out.println("to sendo chemado ");
+						listTypeEntryResource.putListTypeEntry(listTypeEntrie.getId(),listTypeEntry );
+					}
+					else {
+						System.out.println("to sendo chemado ");
+						listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+							listTypeEntrie.getId(), listTypeEntry);
 
-				if (existingListTypeEntry == null) {
-					listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-						listTypeDefinition.getId(), listTypeEntry);
+					}
+
 				}
-				else {
-					listTypeEntryResource.putListTypeEntry(
-						existingListTypeEntry.getId(), listTypeEntry);
-				}
+
+
+
 			}
 		}
 
