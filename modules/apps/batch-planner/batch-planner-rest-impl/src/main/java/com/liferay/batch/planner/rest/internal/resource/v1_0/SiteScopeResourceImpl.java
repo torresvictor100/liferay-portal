@@ -18,6 +18,7 @@ import com.liferay.batch.planner.rest.dto.v1_0.SiteScope;
 import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.SiteScopeResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -77,11 +78,7 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 		if (entityScopes.contains("site")) {
 			for (Group group :
 					_groupService.getUserSitesGroups(
-						new String[] {
-							Company.class.getName(), Group.class.getName(),
-							Organization.class.getName()
-						},
-						-1)) {
+						_CLASS_NAMES, QueryUtil.ALL_POS)) {
 
 				if (Objects.equals(group.getDescriptiveName(), "Global")) {
 					continue;
@@ -99,6 +96,11 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 
 		return siteScopes;
 	}
+
+	private static final String[] _CLASS_NAMES = {
+		Company.class.getName(), Group.class.getName(),
+		Organization.class.getName()
+	};
 
 	@Reference
 	private GroupService _groupService;
