@@ -410,7 +410,6 @@ public class JournalConverterUtilTest {
 
 		Fields expectedFields = _getRemovedNestedFields(
 			ddmStructure.getStructureId());
-
 		Fields actualFields = _journalConverter.getDDMFields(
 			ddmStructure,
 			read("test-journal-content-removed-nested-field.xml"));
