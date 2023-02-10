@@ -209,7 +209,7 @@ public class MockLiferayPortletURL implements LiferayPortletURL, RenderURL {
 	}
 
 	@Override
-	public void setFragmentIdentifier(String s) {
+	public void setFragmentIdentifier(String fragment) {
 	}
 
 	@Override
