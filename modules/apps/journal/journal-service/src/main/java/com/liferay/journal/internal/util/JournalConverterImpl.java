@@ -156,7 +156,7 @@ public class JournalConverterImpl implements JournalConverter {
 			DDMStructure ddmStructure, Element element)
 		throws PortalException {
 
-		List<Element> dynamicElementElements = _getDynamicElements(
+		List<Element> dynamicElementElements = _getDynamicElementElements(
 			element, ddmFormField.getName());
 
 		if (dynamicElementElements == null) {
@@ -274,13 +274,13 @@ public class JournalConverterImpl implements JournalConverter {
 		return repetitions;
 	}
 
-	private Element _findParentElement(Element element, String name) {
+	private Element _getParentElement(Element element, String name) {
 		for (Element dynamicElement : element.elements("dynamic-element")) {
 			if (Objects.equals(dynamicElement.attributeValue("name"), name)) {
 				return element;
 			}
 
-			Element parentElement = _findParentElement(dynamicElement, name);
+			Element parentElement = _getParentElement(dynamicElement, name);
 
 			if (parentElement != null) {
 				return parentElement;
@@ -358,8 +358,8 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	private List<Element> _getDynamicElements(Element element, String name) {
-		Element parentElement = _findParentElement(element, name);
+	private List<Element> _getDynamicElementElements(Element element, String name) {
+		Element parentElement = _getParentElement(element, name);
 
 		if (parentElement == null) {
 			return null;
