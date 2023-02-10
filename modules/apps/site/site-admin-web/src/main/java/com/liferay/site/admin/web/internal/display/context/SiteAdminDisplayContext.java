@@ -184,7 +184,6 @@ public class SiteAdminDisplayContext {
 			_liferayPortletRequest, getPortletURL());
 
 		groupSearch.setId("sites");
-
 		groupSearch.setOrderByCol("descriptive-name");
 
 		ThemeDisplay themeDisplay =
