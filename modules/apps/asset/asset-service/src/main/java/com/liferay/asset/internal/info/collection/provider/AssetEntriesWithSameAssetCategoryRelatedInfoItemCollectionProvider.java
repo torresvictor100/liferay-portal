@@ -403,7 +403,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			String[] specificAssetCategoryJSONObjects = configuration.get(
 				"specificAssetCategoryJSONObject");
 
-			JSONObject specificAssetCategoryJSONObject;
+			JSONObject specificAssetCategoryJSONObject = null;
 
 			try {
 				specificAssetCategoryJSONObject = _jsonFactory.createJSONObject(
