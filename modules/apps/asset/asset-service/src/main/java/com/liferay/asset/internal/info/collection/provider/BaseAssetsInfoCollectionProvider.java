@@ -38,13 +38,13 @@ public abstract class BaseAssetsInfoCollectionProvider {
 			AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
 				companyId, true));
 		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setGroupIds(new long[] {groupId});
-		assetEntryQuery.setListable(null);
 
 		if (pagination != null) {
-			assetEntryQuery.setStart(pagination.getStart());
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
+
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setListable(null);
 
 		assetEntryQuery.setOrderByCol1(
 			(sort1 != null) ? sort1.getFieldName() : Field.MODIFIED_DATE);
@@ -54,6 +54,10 @@ public abstract class BaseAssetsInfoCollectionProvider {
 			(sort1 != null) ? _getOrderByType(sort1) : "DESC");
 		assetEntryQuery.setOrderByType1(
 			(sort2 != null) ? _getOrderByType(sort2) : "DESC");
+
+		if (pagination != null) {
+			assetEntryQuery.setStart(pagination.getStart());
+		}
 
 		return assetEntryQuery;
 	}
