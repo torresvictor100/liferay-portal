@@ -44,6 +44,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
@@ -143,7 +145,7 @@ public class SiteInitializerExtender
 				_layoutSetLocalService, _layoutsImporter,
 				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
-				_listTypeEntryResource, _listTypeEntryResourceFactory,
+				_listTypeEntryResource, _listTypeEntryResourceFactory,_listTypeEntryLocalService,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -256,7 +258,7 @@ public class SiteInitializerExtender
 				_layoutSetLocalService, _layoutsImporter,
 				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
-				_listTypeEntryResource, _listTypeEntryResourceFactory,
+				_listTypeEntryResource, _listTypeEntryResourceFactory,_listTypeEntryLocalService,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -393,6 +395,8 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private NotificationTemplateResource.Factory
