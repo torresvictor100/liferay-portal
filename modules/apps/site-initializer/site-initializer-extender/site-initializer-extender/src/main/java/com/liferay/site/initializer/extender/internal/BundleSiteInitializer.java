@@ -2437,11 +2437,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			listTypeDefinition =
-				listTypeDefinitionResource.
-					putListTypeDefinitionByExternalReferenceCode(
-						listTypeDefinition.getExternalReferenceCode(),
+
+			com.liferay.list.type.model.ListTypeDefinition listTypeDefinition2 = _listTypeDefinitionService.fetchListTypeDefinitionByExternalReferenceCode(listTypeDefinition.getExternalReferenceCode() , serviceContext.getCompanyId());
+
+			if(listTypeDefinition2 == null){
+				listTypeDefinition =
+					listTypeDefinitionResource.
+						putListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinition.getExternalReferenceCode(),
+							listTypeDefinition);
+			}else{
+				listTypeDefinition =
+					listTypeDefinitionResource.patchListTypeDefinition(listTypeDefinition2.getListTypeDefinitionId(),
 						listTypeDefinition);
+
+			}
+			ListTypeEntry[] ts = listTypeDefinition.getListTypeEntries();
+
+
 
 			listTypeDefinitionIdsStringUtilReplaceValues.put(
 				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
