@@ -1,5 +1,5 @@
 assemble:
-    - from: build/buildTheme
+    - from: buildbuildTheme
       include: "css/*.css"
       into: static
 sample-theme-css:
