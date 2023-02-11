@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample.minimal.workspace;
+package com.sample;
 
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
