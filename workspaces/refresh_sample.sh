@@ -95,6 +95,60 @@ function refresh_sample_minimal_workspace {
 	init_workspace sample-minimal-workspace
 
 	#
+	# Sample custom element 2 client extension
+	#
+
+	rm -fr sample-minimal-workspace/client-extensions/sample-custom-element-2
+
+	../tools/create_remote_app.sh sample-custom-element-2 react
+
+	mkdir -p sample-custom-element-2/src/common/components
+
+	cat <<EOF > sample-custom-element-2/src/common/components/DadJoke.js
+import React from 'react';
+
+class DadJoke extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.oAuth2Client = props.oAuth2Client;
+		this.state = {"joke": ""};
+	}
+
+	componentDidMount() {
+		this._request = this.oAuth2Client.fetch(
+			'/dad-joke'
+		).then(response => response.text()
+		).then(text => {
+			this._request = null;
+			this.setState({"joke": text});
+		});
+	}
+
+	componentWillUnmount() {
+		if (this._request) {
+			this._request.cancel();
+		}
+	}
+
+	render() {
+		if (this.state === null) {
+			return <div>Loading...</div>
+		}
+		else {
+			return <div>{this.state.joke}</div>
+		}
+	}
+}
+
+export default DadJoke;
+EOF
+
+	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" sample-custom-element-2/package.json
+
+	mv sample-custom-element-2 sample-minimal-workspace/client-extensions
+
+	#
 	# Sample default workspace
 	#
 
