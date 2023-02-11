@@ -87,8 +87,8 @@ public class DLFolderNameConstraintResolver
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Could not delete DLFolder: " +
-							sourceDLFolder.getName(),
+						"Unable to delete source document library folder " +
+							sourceDLFolder.getFolderId(),
 						portalException);
 				}
 			}
