@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample.minimal.workspace;
+package com.sample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -166,7 +166,8 @@ public class SampleRestController {
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private static final Log _log = LogFactory.getLog(SampleRestController.class);
+	private static final Log _log = LogFactory.getLog(
+		SampleRestController.class);
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;

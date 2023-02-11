@@ -1,4 +1,4 @@
-sample-iframe-1:
+sample-iframe-counter-app:
     name: Counter App
     type: iframe
     url: https://arnab-datta.github.io/counter-app
