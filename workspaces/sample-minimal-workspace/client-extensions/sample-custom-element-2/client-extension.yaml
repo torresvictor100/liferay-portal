@@ -5,8 +5,8 @@ assemble:
 sample-custom-element-2:
     cssURLs:
         - static/css/main.*.css
-    friendlyURLMapping: sample-custom-element2
-    htmlElementName: sample-custom-element2
+    friendlyURLMapping: sample-custom-element-2
+    htmlElementName: sample-custom-element-2
     instanceable: false
     name: Sample Custom Element 2
     portletCategoryName: category.client-extensions

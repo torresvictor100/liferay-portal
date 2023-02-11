@@ -23,7 +23,7 @@
 			"react-app/jest"
 		]
 	},
-	"name": "sample-custom-element2",
+	"name": "sample-custom-element-2",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
