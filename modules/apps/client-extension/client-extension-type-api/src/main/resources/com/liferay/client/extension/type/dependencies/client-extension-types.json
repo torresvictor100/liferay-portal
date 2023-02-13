@@ -254,6 +254,11 @@
 				"type": "CETProperty.Type.String"
 			},
 			{
+				"default": "false",
+				"name": "enableSVG4Everybody",
+				"type": "CETProperty.Type.Boolean"
+			},
+			{
 				"name": "name",
 				"type": "CETProperty.Type.String"
 			},
@@ -265,11 +270,6 @@
 			{
 				"name": "type",
 				"type": "CETProperty.Type.String"
-			},
-			{
-				"default": "false",
-				"name": "enableSVG4Everybody",
-				"type": "CETProperty.Type.Boolean"
 			},
 			{
 				"default": "",
