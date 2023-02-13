@@ -37,12 +37,11 @@ public class VerifyLayout extends VerifyProcess {
 
 	private String _getReservedLayoutFriendlyURLS() {
 		String reservedLayoutFriendlyURLS = "";
-		String likeClause;
 
 		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
 			 i++) {
 
-			likeClause = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
+			String likeClause = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 
 			if (PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i].contains(
 					StringPool.STAR)) {
