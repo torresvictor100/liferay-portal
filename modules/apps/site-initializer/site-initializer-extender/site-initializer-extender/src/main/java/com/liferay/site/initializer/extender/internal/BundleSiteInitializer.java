@@ -2447,26 +2447,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			Page<ListTypeDefinition> listTypeDefinitionsPage =
-				listTypeDefinitionResource.getListTypeDefinitionsPage(
-					null, null,
-					listTypeDefinitionResource.toFilter(
-						StringBundler.concat(
-							"name eq '", listTypeDefinition.getName(), "'")),
-					null, null);
+			com.liferay.list.type.model.ListTypeDefinition
+				listTypeDefinitionModel =
+					_listTypeDefinitionService.
+						fetchListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinition.getExternalReferenceCode(),
+							serviceContext.getCompanyId());
 
-			ListTypeDefinition existingListTypeDefinition =
-				listTypeDefinitionsPage.fetchFirstItem();
-
-			if (existingListTypeDefinition == null) {
+			if (listTypeDefinitionModel == null) {
 				listTypeDefinition =
-					listTypeDefinitionResource.postListTypeDefinition(
-						listTypeDefinition);
+					listTypeDefinitionResource.
+						putListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinition.getExternalReferenceCode(),
+							listTypeDefinition);
 			}
 			else {
 				listTypeDefinition =
-					listTypeDefinitionResource.putListTypeDefinition(
-						existingListTypeDefinition.getId(), listTypeDefinition);
+					listTypeDefinitionResource.patchListTypeDefinition(
+						listTypeDefinitionModel.getListTypeDefinitionId(),
+						listTypeDefinition);
 			}
 
 			listTypeDefinitionIdsStringUtilReplaceValues.put(
@@ -2496,25 +2495,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
 					String.valueOf(jsonArray.getJSONObject(i)));
 
-				Page<ListTypeEntry> listTypeEntriesPage =
-					listTypeEntryResource.
-						getListTypeDefinitionListTypeEntriesPage(
-							listTypeDefinition.getId(), null, null,
-							listTypeEntryResource.toFilter(
-								StringBundler.concat(
-									"key eq '", listTypeEntry.getKey(), "'")),
-							null, null);
+				com.liferay.list.type.model.ListTypeEntry listTypeEntryModel =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						listTypeDefinition.getId(), listTypeEntry.getKey());
 
-				ListTypeEntry existingListTypeEntry =
-					listTypeEntriesPage.fetchFirstItem();
-
-				if (existingListTypeEntry == null) {
-					listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-						listTypeDefinition.getId(), listTypeEntry);
+				if (listTypeEntryModel != null) {
+					listTypeEntryResource.putListTypeEntry(
+						listTypeEntryModel.getListTypeEntryId(), listTypeEntry);
 				}
 				else {
-					listTypeEntryResource.putListTypeEntry(
-						existingListTypeEntry.getId(), listTypeEntry);
+					listTypeEntryResource.postListTypeDefinitionListTypeEntry(
+						listTypeDefinition.getId(), listTypeEntry);
 				}
 			}
 		}
