@@ -117,7 +117,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		_errorMessages = new ArrayList<>();
 
 		_updateFriendlyURL(_layout1.getPlid(), _FRIENDLY_URL_1);
-
 		_updateFriendlyURL(_layout2.getPlid(), _FRIENDLY_URL_2);
 	}
 
@@ -137,7 +136,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		_updateFriendlyURL(
 			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
-
 		_updateFriendlyURL(
 			_layout2.getPlid(), StringPool.FORWARD_SLASH + _keyword2);
 
@@ -174,7 +172,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		_updateFriendlyURL(
 			_layout1.getPlid(), StringPool.FORWARD_SLASH + _keyword1);
-
 		_updateFriendlyURL(
 			_layout2.getPlid(),
 			StringPool.FORWARD_SLASH + StringUtil.replace(_keyword1, '_', "a"));
