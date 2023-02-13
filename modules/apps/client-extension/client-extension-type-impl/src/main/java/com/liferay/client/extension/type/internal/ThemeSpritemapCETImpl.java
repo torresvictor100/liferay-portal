@@ -72,7 +72,7 @@ public class ThemeSpritemapCETImpl
 	}
 
 	@Override
-	public boolean getEnableSVG4Everybody() {
+	public boolean isEnableSVG4Everybody() {
 		return getBoolean("enableSVG4Everybody");
 	}
 

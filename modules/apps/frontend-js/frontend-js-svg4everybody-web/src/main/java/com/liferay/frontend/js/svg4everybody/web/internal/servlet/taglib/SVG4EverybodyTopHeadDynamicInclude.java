@@ -97,7 +97,7 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		if (cdnHostEnabled ||
 			((themeSpritemapCET != null) &&
-			 themeSpritemapCET.getEnableSVG4Everybody())) {
+			 themeSpritemapCET.isEnableSVG4Everybody())) {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 

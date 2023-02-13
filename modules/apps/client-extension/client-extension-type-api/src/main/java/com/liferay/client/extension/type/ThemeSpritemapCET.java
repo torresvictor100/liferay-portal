@@ -30,7 +30,7 @@ public interface ThemeSpritemapCET extends CET {
 		defaultValue = "false", name = "enableSVG4Everybody",
 		type = CETProperty.Type.Boolean
 	)
-	public boolean getEnableSVG4Everybody();
+	public boolean isEnableSVG4Everybody();
 
 	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
