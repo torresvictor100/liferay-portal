@@ -72,11 +72,6 @@ public class ThemeSpritemapCETImpl
 	}
 
 	@Override
-	public boolean isEnableSVG4Everybody() {
-		return getBoolean("enableSVG4Everybody");
-	}
-
-	@Override
 	public String getType() {
 		return ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP;
 	}
@@ -89,6 +84,11 @@ public class ThemeSpritemapCETImpl
 	@Override
 	public boolean hasProperties() {
 		return false;
+	}
+
+	@Override
+	public boolean isEnableSVG4Everybody() {
+		return getBoolean("enableSVG4Everybody");
 	}
 
 	@Override
