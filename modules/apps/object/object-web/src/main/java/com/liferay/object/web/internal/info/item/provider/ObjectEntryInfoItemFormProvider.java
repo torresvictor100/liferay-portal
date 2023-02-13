@@ -18,7 +18,7 @@ import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.FileInfoFieldType;
-import com.liferay.info.field.type.MultipleSelectInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -219,8 +219,8 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			finalStep.attribute(
-				MultipleSelectInfoFieldType.OPTIONS,
-				_getMultipleSelectInfoFieldTypeOptions(objectField));
+				MultiselectInfoFieldType.OPTIONS,
+				_getMultiselectInfoFieldTypeOptions(objectField));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -440,10 +440,10 @@ public class ObjectEntryInfoItemFormProvider
 			objectFieldSetting.getValue(), defaultMaxLength);
 	}
 
-	private List<MultipleSelectInfoFieldType.Option>
-		_getMultipleSelectInfoFieldTypeOptions(ObjectField objectField) {
+	private List<MultiselectInfoFieldType.Option>
+		_getMultiselectInfoFieldTypeOptions(ObjectField objectField) {
 
-		List<MultipleSelectInfoFieldType.Option> options = new ArrayList<>();
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
 
 		List<ListTypeEntry> listTypeEntries =
 			_listTypeEntryLocalService.getListTypeEntries(
@@ -451,7 +451,7 @@ public class ObjectEntryInfoItemFormProvider
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			options.add(
-				new MultipleSelectInfoFieldType.Option(
+				new MultiselectInfoFieldType.Option(
 					Objects.equals(
 						objectField.getDefaultValue(), listTypeEntry.getKey()),
 					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),

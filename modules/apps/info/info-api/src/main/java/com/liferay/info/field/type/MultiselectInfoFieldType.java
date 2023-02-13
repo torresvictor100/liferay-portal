@@ -22,14 +22,13 @@ import java.util.Locale;
 /**
  * @author Víctor Galán
  */
-public class MultipleSelectInfoFieldType implements InfoFieldType {
+public class MultiselectInfoFieldType implements InfoFieldType {
 
-	public static final MultipleSelectInfoFieldType INSTANCE =
-		new MultipleSelectInfoFieldType();
+	public static final MultiselectInfoFieldType INSTANCE =
+		new MultiselectInfoFieldType();
 
-	public static final Attribute
-		<MultipleSelectInfoFieldType, Collection<Option>> OPTIONS =
-			new Attribute<>();
+	public static final Attribute<MultiselectInfoFieldType, Collection<Option>>
+		OPTIONS = new Attribute<>();
 
 	@Override
 	public String getName() {
@@ -74,7 +73,7 @@ public class MultipleSelectInfoFieldType implements InfoFieldType {
 
 	}
 
-	private MultipleSelectInfoFieldType() {
+	private MultiselectInfoFieldType() {
 	}
 
 }

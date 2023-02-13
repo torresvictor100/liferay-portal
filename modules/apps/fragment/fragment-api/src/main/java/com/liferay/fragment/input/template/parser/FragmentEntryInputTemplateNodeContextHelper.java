@@ -23,7 +23,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.field.type.MultipleSelectInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -305,22 +305,22 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			}
 		}
 		else if (infoField.getInfoFieldType() instanceof
-					MultipleSelectInfoFieldType) {
+					MultiselectInfoFieldType) {
 
 			List<InputTemplateNode.Option> options = new ArrayList<>();
 
-			List<MultipleSelectInfoFieldType.Option>
-				multipleSelectInfoFieldTypeOptions =
-					(List<MultipleSelectInfoFieldType.Option>)
+			List<MultiselectInfoFieldType.Option>
+				multiselectInfoFieldTypeOptions =
+					(List<MultiselectInfoFieldType.Option>)
 						infoField.getAttribute(
-							MultipleSelectInfoFieldType.OPTIONS);
+							MultiselectInfoFieldType.OPTIONS);
 
-			if (multipleSelectInfoFieldTypeOptions == null) {
-				multipleSelectInfoFieldTypeOptions = Collections.emptyList();
+			if (multiselectInfoFieldTypeOptions == null) {
+				multiselectInfoFieldTypeOptions = Collections.emptyList();
 			}
 
-			for (MultipleSelectInfoFieldType.Option option :
-					multipleSelectInfoFieldTypeOptions) {
+			for (MultiselectInfoFieldType.Option option :
+					multiselectInfoFieldTypeOptions) {
 
 				options.add(
 					new InputTemplateNode.Option(
