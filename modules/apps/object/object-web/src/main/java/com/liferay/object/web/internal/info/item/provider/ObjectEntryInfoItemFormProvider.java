@@ -440,8 +440,8 @@ public class ObjectEntryInfoItemFormProvider
 			objectFieldSetting.getValue(), defaultMaxLength);
 	}
 
-	private List<MultipleSelectInfoFieldType.Option> _getMultipleSelectInfoFieldTypeOptions(
-		ObjectField objectField) {
+	private List<MultipleSelectInfoFieldType.Option>
+		_getMultipleSelectInfoFieldTypeOptions(ObjectField objectField) {
 
 		List<MultipleSelectInfoFieldType.Option> options = new ArrayList<>();
 
