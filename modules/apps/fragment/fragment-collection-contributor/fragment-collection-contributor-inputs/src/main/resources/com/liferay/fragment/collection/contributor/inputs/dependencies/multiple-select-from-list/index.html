@@ -1,6 +1,6 @@
-<div class="multi-select-list">
+<div class="multiselect-list">
 	<div class="custom-checkbox custom-control mb-0">
-		<fieldset aria-describedby="${fragmentEntryLinkNamespace}-multi-select-list-help-text" class="multi-select-list-fieldset">
+		<fieldset aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" class="multiselect-list-fieldset">
 			<legend class="font-weight-semi-bold mb-1 text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]">
 				${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 			</legend>
@@ -22,7 +22,7 @@
 			[/#list]
 
 			[#if configuration.numberOfOptions < options?size]
-				<button class="btn btn-secondary btn-sm mt-1 multi-select-list-button" type="button">
+				<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" type="button">
 					${languageUtil.get(locale, "show-all")}
 				</button>
 			[/#if]
@@ -34,7 +34,7 @@
 	[/#if]
 </div>
 
-<template class="multi-select-list-option-template">
+<template class="multiselect-list-option-template">
 	<div class="custom-control mb-0">
 		<input class="custom-control-input" ${input.required?then('required', '')} name="${input.name}" type="checkbox" />
 

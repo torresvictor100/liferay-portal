@@ -69,7 +69,7 @@ public class InputsFragmentCollectionContributor
 			fragmentEntry ->
 				!Objects.equals(
 					fragmentEntry.getFragmentEntryKey(),
-					"INPUTS-multi-select-list") &&
+					"INPUTS-multiselect-list") &&
 				!Objects.equals(
 					fragmentEntry.getFragmentEntryKey(),
 					"INPUTS-rich-text-input") &&

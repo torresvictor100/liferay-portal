@@ -293,7 +293,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (infoFieldType instanceof MultipleSelectInfoFieldType) {
-			return "INPUTS-multi-select-list";
+			return "INPUTS-multiselect-list";
 		}
 
 		if (infoFieldType instanceof NumberInfoFieldType) {

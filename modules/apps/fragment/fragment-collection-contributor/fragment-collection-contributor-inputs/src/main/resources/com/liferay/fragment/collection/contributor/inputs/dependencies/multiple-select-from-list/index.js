@@ -1,7 +1,7 @@
 const options = input.attributes.options || [];
 const numberOfOptions = configuration.numberOfOptions;
 
-const fieldSet = fragmentElement.querySelector('.multi-select-list-fieldset');
+const fieldSet = fragmentElement.querySelector('.multiselect-list-fieldset');
 
 const allInputs = Array.from(
 	fragmentElement.querySelectorAll('.custom-control-input')
@@ -25,12 +25,12 @@ fieldSet.addEventListener('change', () => {
 });
 
 if (numberOfOptions < options.length) {
-	const button = fragmentElement.querySelector('.multi-select-list-button');
+	const button = fragmentElement.querySelector('.multiselect-list-button');
 
 	const missionOptions = options.slice(numberOfOptions);
 
 	const template = fragmentElement.querySelector(
-		'.multi-select-list-option-template'
+		'.multiselect-list-option-template'
 	);
 
 	button.addEventListener('click', () => {
