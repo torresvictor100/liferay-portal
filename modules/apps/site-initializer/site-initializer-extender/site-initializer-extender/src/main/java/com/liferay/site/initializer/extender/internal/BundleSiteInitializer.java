@@ -2452,7 +2452,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						listTypeDefinition);
 
 			}
-			ListTypeEntry[] listTypeEntries = listTypeDefinition.getListTypeEntries();
 
 
 
@@ -2483,20 +2482,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
 					String.valueOf(jsonArray.getJSONObject(i)));
 
-				for(ListTypeEntry listTypeEntrie: listTypeEntries){
+				com.liferay.list.type.model.ListTypeEntry listTypeEntry1 = _listTypeEntryLocalService.fetchListTypeEntry(listTypeDefinition.getId() ,listTypeEntry.getKey());
 
-					if (listTypeEntrie.getKey().equals(listTypeEntry.getKey())) {
-						System.out.println("to sendo chemado ");
-						listTypeEntryResource.putListTypeEntry(listTypeEntrie.getId(),listTypeEntry );
+
+
+
+
+					if (listTypeEntry1 != null ) {
+						System.out.println("to sendo chemado " + " ! = null" + listTypeEntry1.getKey());
+						listTypeEntryResource.putListTypeEntry(listTypeEntry1.getListTypeEntryId(),listTypeEntry );
 					}
 					else {
-						System.out.println("to sendo chemado ");
+						System.out.println("to sendo chemado " + " == null"  + listTypeDefinition.getId());
 						listTypeEntryResource.postListTypeDefinitionListTypeEntry(
-							listTypeEntrie.getId(), listTypeEntry);
+							listTypeDefinition.getId() , listTypeEntry);
 
 					}
 
-				}
+
 
 
 

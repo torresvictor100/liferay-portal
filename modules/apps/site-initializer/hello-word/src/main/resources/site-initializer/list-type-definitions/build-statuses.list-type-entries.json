@@ -20,6 +20,7 @@
 	{
 		"key": "DEACTIVATED",
 		"name": "Deactivated",
+		"externalReferenceCode": "Deactivated",
 		"name_i18n": {
 			"en-US": "deactivated"
 		},
