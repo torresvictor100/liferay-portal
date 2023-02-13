@@ -220,7 +220,7 @@ public class ObjectEntryInfoItemFormProvider
 
 			finalStep.attribute(
 				MultipleSelectInfoFieldType.OPTIONS,
-				_getMultipleSelectOptions(objectField));
+				_getMultipleSelectInfoFieldTypeOptions(objectField));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -440,7 +440,7 @@ public class ObjectEntryInfoItemFormProvider
 			objectFieldSetting.getValue(), defaultMaxLength);
 	}
 
-	private List<MultipleSelectInfoFieldType.Option> _getMultipleSelectOptions(
+	private List<MultipleSelectInfoFieldType.Option> _getMultipleSelectInfoFieldTypeOptions(
 		ObjectField objectField) {
 
 		List<MultipleSelectInfoFieldType.Option> options = new ArrayList<>();
