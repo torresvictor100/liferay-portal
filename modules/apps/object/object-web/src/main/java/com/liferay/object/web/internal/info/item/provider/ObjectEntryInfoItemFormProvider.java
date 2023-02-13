@@ -49,6 +49,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -220,7 +221,16 @@ public class ObjectEntryInfoItemFormProvider
 
 			finalStep.attribute(
 				MultiselectInfoFieldType.OPTIONS,
-				_getMultiselectInfoFieldTypeOptions(objectField));
+				TransformUtil.transform(
+					_listTypeEntryLocalService.getListTypeEntries(
+						objectField.getListTypeDefinitionId()),
+					listTypeEntry -> new MultiselectInfoFieldType.Option(
+						Objects.equals(
+							objectField.getDefaultValue(),
+							listTypeEntry.getKey()),
+						new FunctionInfoLocalizedValue<>(
+							listTypeEntry::getName),
+						listTypeEntry.getKey())));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -438,27 +448,6 @@ public class ObjectEntryInfoItemFormProvider
 
 		return GetterUtil.getLong(
 			objectFieldSetting.getValue(), defaultMaxLength);
-	}
-
-	private List<MultiselectInfoFieldType.Option>
-		_getMultiselectInfoFieldTypeOptions(ObjectField objectField) {
-
-		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
-
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId());
-
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			options.add(
-				new MultiselectInfoFieldType.Option(
-					Objects.equals(
-						objectField.getDefaultValue(), listTypeEntry.getKey()),
-					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
-					listTypeEntry.getKey()));
-		}
-
-		return options;
 	}
 
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
