@@ -32,7 +32,7 @@ public class MultiselectInfoFieldType implements InfoFieldType {
 
 	@Override
 	public String getName() {
-		return "multiple-select";
+		return "multiselect";
 	}
 
 	public static class Option {
