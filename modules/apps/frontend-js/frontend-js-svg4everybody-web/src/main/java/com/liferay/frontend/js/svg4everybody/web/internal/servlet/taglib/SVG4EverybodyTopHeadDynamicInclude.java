@@ -95,33 +95,34 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(
 			themeDisplay.getLayout());
 
-		if (cdnHostEnabled ||
-			((themeSpritemapCET != null) &&
-			 themeSpritemapCET.isEnableSVG4Everybody())) {
+		if (!cdnHostEnabled &&
+			((themeSpritemapCET == null) ||
+			 !themeSpritemapCET.isEnableSVG4Everybody())) {
 
-			PrintWriter printWriter = httpServletResponse.getWriter();
+			return;
+		}
 
-			AbsolutePortalURLBuilder absolutePortalURLBuilder =
-				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-					httpServletRequest);
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			for (String jsFileName : _JS_FILE_NAMES) {
-				printWriter.print(
-					"<script data-senna-track=\"permanent\" src=\"");
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
 
-				BundleScriptAbsolutePortalURLBuilder
-					bundleScriptAbsolutePortalURLBuilder =
-						absolutePortalURLBuilder.forBundleScript(
-							_bundleContext.getBundle(), jsFileName);
+		for (String jsFileName : _JS_FILE_NAMES) {
+			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
 
-				if (!cdnDynamicResourcesEnabled) {
-					bundleScriptAbsolutePortalURLBuilder.ignoreCDNHost();
-				}
+			BundleScriptAbsolutePortalURLBuilder
+				bundleScriptAbsolutePortalURLBuilder =
+					absolutePortalURLBuilder.forBundleScript(
+						_bundleContext.getBundle(), jsFileName);
 
-				printWriter.print(bundleScriptAbsolutePortalURLBuilder.build());
-
-				printWriter.println("\" type=\"text/javascript\"></script>");
+			if (!cdnDynamicResourcesEnabled) {
+				bundleScriptAbsolutePortalURLBuilder.ignoreCDNHost();
 			}
+
+			printWriter.print(bundleScriptAbsolutePortalURLBuilder.build());
+
+			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
 	}
 
