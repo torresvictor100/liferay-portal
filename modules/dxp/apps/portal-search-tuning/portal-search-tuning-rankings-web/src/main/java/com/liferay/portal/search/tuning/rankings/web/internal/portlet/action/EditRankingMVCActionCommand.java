@@ -328,7 +328,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		String oldName,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		List<String> stripUpdateSpecialStrings = TransformUtil.transform(
+		List<String> strings = TransformUtil.transform(
 			editRankingMVCActionRequest.getAliases(),
 			alias -> {
 				if (_isUpdateSpecial(alias)) {
@@ -338,11 +338,11 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				return null;
 			});
 
-		if (stripUpdateSpecialStrings.isEmpty()) {
+		if (strings.isEmpty()) {
 			return oldName;
 		}
 
-		return stripUpdateSpecialStrings.get(0);
+		return strings.get(0);
 	}
 
 	private String[] _getRankingDocumentIds(

@@ -151,10 +151,10 @@ public class SingleIndexToMultipleIndexImporterImpl
 		Map<String, List<Document>> documentsMap = new HashMap<>();
 
 		for (Document document : documents) {
-			List<Document> documentList = documentsMap.computeIfAbsent(
+			List<Document> curDocuments = documentsMap.computeIfAbsent(
 				document.getString("index"), key -> new ArrayList<>());
 
-			documentList.add(document);
+			curDocuments.add(document);
 		}
 
 		return documentsMap;
@@ -171,10 +171,10 @@ public class SingleIndexToMultipleIndexImporterImpl
 			return;
 		}
 
+		boolean result = true;
+
 		Map<String, List<Document>> documentsMap = _groupDocumentByIndex(
 			documents);
-
-		boolean result = true;
 
 		for (Map.Entry<String, List<Document>> entry :
 				documentsMap.entrySet()) {
