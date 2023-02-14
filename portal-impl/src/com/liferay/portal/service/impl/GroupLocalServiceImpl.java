@@ -5257,8 +5257,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		int counter, String groupKey, int groupKeyMaxLength,
 		String stagingGroupKeySuffix) {
 
-		String createdStagingGroupKeyAddition =
-			counter + stagingGroupKeySuffix;
+		String createdStagingGroupKeyAddition = counter + stagingGroupKeySuffix;
 
 		groupKey = groupKey.substring(
 			0, groupKeyMaxLength - createdStagingGroupKeyAddition.length());
