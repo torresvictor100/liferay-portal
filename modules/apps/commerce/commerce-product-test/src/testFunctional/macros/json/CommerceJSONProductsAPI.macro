@@ -624,7 +624,7 @@ definition {
 
 		var commaInSpecification = MathUtil.isGreaterThan(${count}, ${specificationLabelsCount});
 
-		while (("" == "true")) {
+		while ((${commaInSpecification} == "true")) {
 			var productSpecifications = StringUtil.replaceFirst(${productSpecifications}, ",", "&comma;");
 			var count = ${count} - 1;
 
