@@ -5257,12 +5257,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		int counter, String groupKey, int groupKeyMaxLength,
 		String stagingGroupKeySuffix) {
 
-		String createdStagingGroupKeyAddition = counter + stagingGroupKeySuffix;
+		String suffix = counter + stagingGroupKeySuffix;
 
-		groupKey = groupKey.substring(
-			0, groupKeyMaxLength - createdStagingGroupKeyAddition.length());
+		groupKey = groupKey.substring(0, groupKeyMaxLength - suffix.length());
 
-		groupKey = groupKey.concat(createdStagingGroupKeyAddition);
+		groupKey = groupKey.concat(suffix);
 
 		return groupKey;
 	}
