@@ -27,7 +27,7 @@ public class KaleoActionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"UPDATE KaleoAction SET type_ = '" + ActionType.SCRIPT.name() +
+			"update KaleoAction set type_ = '" + ActionType.SCRIPT.name() +
 				"'");
 	}
 
