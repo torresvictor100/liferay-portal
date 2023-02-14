@@ -70,7 +70,6 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 		long fromCTCollectionId = ParamUtil.getLong(
 			actionRequest, "fromCTCollectionId");
-
 		long toCTCollectionId = ParamUtil.getLong(
 			actionRequest, "toCTCollectionId");
 
@@ -87,7 +86,6 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 				CTCollection fromCTCollection =
 					_ctCollectionLocalService.getCTCollection(
 						fromCTCollectionId);
-
 				CTCollection toCTCollection =
 					_ctCollectionLocalService.getCTCollection(toCTCollectionId);
 
@@ -123,9 +121,9 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 			ResourceURL statusURL = liferayPortletResponse.createResourceURL();
 
-			statusURL.setResourceID("/change_tracking/get_publication_status");
 			statusURL.setParameter(
 				"ctProcessId", String.valueOf(ctProcess.getCtProcessId()));
+			statusURL.setResourceID("/change_tracking/get_publication_status");
 
 			jsonObject.put("statusURL", statusURL.toString());
 

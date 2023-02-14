@@ -187,7 +187,6 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 		_ctCollectionModelResourcePermission.check(
 			getPermissionChecker(), fromCTCollectionId, ActionKeys.UPDATE);
-
 		_ctCollectionModelResourcePermission.check(
 			getPermissionChecker(), toCTCollectionId, ActionKeys.UPDATE);
 

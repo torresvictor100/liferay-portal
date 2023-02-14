@@ -94,7 +94,7 @@ public class CTPublishBackgroundTaskExecutor
 		long toCTCollectionId = GetterUtil.getLong(
 			taskContextMap.get("toCTCollectionId"));
 
-		String toCTCollectionName;
+		String toCTCollectionName = null;
 
 		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			toCTCollectionName = "Production";
@@ -125,9 +125,9 @@ public class CTPublishBackgroundTaskExecutor
 			}
 		}
 
-		long[] ctEntryIds = (long[])taskContextMap.get("ctEntryIds");
-
 		List<CTEntry> ctEntries = null;
+
+		long[] ctEntryIds = (long[])taskContextMap.get("ctEntryIds");
 
 		if (ctEntryIds != null) {
 			ctEntries = _ctCollectionLocalService.getRelatedCTEntries(
