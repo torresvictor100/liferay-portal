@@ -388,26 +388,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (staging) {
 			int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
 				Group.class.getName(), "groupKey");
-			String stagingGroupKeyAddition = "-staging";
+			String stagingGroupKeySuffix = "-staging";
 
 			if (groupKey.length() <=
-					(groupKeyMaxLength - stagingGroupKeyAddition.length())) {
+					(groupKeyMaxLength - stagingGroupKeySuffix.length())) {
 
-				groupKey = groupKey.concat(stagingGroupKeyAddition);
+				groupKey = groupKey.concat(stagingGroupKeySuffix);
 			}
 			else {
 				int counter = 1;
 
 				groupKey = _createLongStagingGroupKey(
 					counter, groupKey, groupKeyMaxLength,
-					stagingGroupKeyAddition);
+					stagingGroupKeySuffix);
 
 				while (fetchGroup(user.getCompanyId(), groupKey) != null) {
 					counter++;
 
 					groupKey = _createLongStagingGroupKey(
 						counter, groupKey, groupKeyMaxLength,
-						stagingGroupKeyAddition);
+						stagingGroupKeySuffix);
 				}
 			}
 
@@ -5255,10 +5255,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	private String _createLongStagingGroupKey(
 		int counter, String groupKey, int groupKeyMaxLength,
-		String stagingGroupKeyAddition) {
+		String stagingGroupKeySuffix) {
 
 		String createdStagingGroupKeyAddition =
-			counter + stagingGroupKeyAddition;
+			counter + stagingGroupKeySuffix;
 
 		groupKey = groupKey.substring(
 			0, groupKeyMaxLength - createdStagingGroupKeyAddition.length());
