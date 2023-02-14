@@ -298,8 +298,8 @@ public class CommercePriceListHierarchyDiscoveryImpl
 		}
 
 		for (CommercePriceList commercePriceList : commercePriceLists) {
-			if (commercePriceList.getCommercePriceListId() !=
-					commerceChannelAccountEntryRel.getClassPK()) {
+			if (commerceChannelAccountEntryRel.getClassPK() !=
+					commercePriceList.getCommercePriceListId()) {
 
 				continue;
 			}
