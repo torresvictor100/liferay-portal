@@ -2,11 +2,11 @@ assemble:
     - from: build
       include: "static/**/*"
       into: static
-publisher-dashboard:
+liferay-marketplace-custom-element:
     cssURLs:
         - static/css/main.*.css
-    friendlyURLMapping: publisher-dashboard
-    htmlElementName: publisher-dashboard
+    friendlyURLMapping: liferay-marketplace-custom-element
+    htmlElementName: liferay-marketplace-custom-element
     instanceable: false
     name: Publisher Dashboard
     portletCategoryName: category.client-extensions
