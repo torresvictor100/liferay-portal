@@ -398,14 +398,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			else {
 				int counter = 1;
 
-				groupKey = _createLongStagingGroupKey(
+				groupKey = _getGroupKey(
 					counter, groupKey, groupKeyMaxLength,
 					stagingGroupKeySuffix);
 
 				while (fetchGroup(user.getCompanyId(), groupKey) != null) {
 					counter++;
 
-					groupKey = _createLongStagingGroupKey(
+					groupKey = _getGroupKey(
 						counter, groupKey, groupKeyMaxLength,
 						stagingGroupKeySuffix);
 				}
@@ -5253,7 +5253,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected File publicLARFile;
 
-	private String _createLongStagingGroupKey(
+	private String _getGroupKey(
 		int counter, String groupKey, int groupKeyMaxLength,
 		String stagingGroupKeySuffix) {
 
