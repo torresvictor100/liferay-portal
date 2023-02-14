@@ -5253,19 +5253,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected File publicLARFile;
 
-	private String _getGroupKey(
-		int counter, String groupKey, int groupKeyMaxLength,
-		String stagingGroupKeySuffix) {
-
-		String suffix = counter + stagingGroupKeySuffix;
-
-		groupKey = groupKey.substring(0, groupKeyMaxLength - suffix.length());
-
-		groupKey = groupKey.concat(suffix);
-
-		return groupKey;
-	}
-
 	private Collection<Group> _filterGroups(
 		String actionId, Collection<Group> groups) {
 
@@ -5295,6 +5282,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return filteredGroups;
+	}
+
+	private String _getGroupKey(
+		int counter, String groupKey, int groupKeyMaxLength,
+		String stagingGroupKeySuffix) {
+
+		String suffix = counter + stagingGroupKeySuffix;
+
+		groupKey = groupKey.substring(0, groupKeyMaxLength - suffix.length());
+
+		groupKey = groupKey.concat(suffix);
+
+		return groupKey;
 	}
 
 	private Map<Locale, String> _normalizeNameMap(Map<Locale, String> nameMap) {
