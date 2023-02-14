@@ -94,7 +94,7 @@ public class CTPublishBackgroundTaskExecutor
 		long toCTCollectionId = GetterUtil.getLong(
 			taskContextMap.get("toCTCollectionId"));
 
-		String toCTCollectionName = null;
+		String toCTCollectionName;
 
 		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			toCTCollectionName = "Production";
