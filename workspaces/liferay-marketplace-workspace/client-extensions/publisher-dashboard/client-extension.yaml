@@ -9,7 +9,7 @@ publisher-dashboard:
     htmlElementName: publisher-dashboard
     instanceable: false
     name: Publisher Dashboard
-    portletCategoryName: category.remote-apps
+    portletCategoryName: category.client-extensions
     type: customElement
     urls:
         - static/js/main.*.js
