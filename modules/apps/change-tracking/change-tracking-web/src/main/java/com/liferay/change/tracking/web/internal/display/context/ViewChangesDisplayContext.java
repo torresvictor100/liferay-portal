@@ -77,7 +77,6 @@ import java.io.Serializable;
 
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -296,28 +295,16 @@ public class ViewChangesDisplayContext {
 			"ctCollectionId", _ctCollection.getCtCollectionId()
 		).put(
 			"ctCollections",
-			() -> {
-				List<CTCollection> ctCollectionList =
-					_ctCollectionLocalService.getCTCollections(
-						_themeDisplay.getCompanyId(),
-						WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null);
-
-				List<Map<String, String>> ctCollectionJsonList =
-					new ArrayList<>();
-
-				for (CTCollection ctCollection : ctCollectionList) {
-					ctCollectionJsonList.add(
-						HashMapBuilder.put(
-							"ctCollectionId",
-							String.valueOf(ctCollection.getCtCollectionId())
-						).put(
-							"name", ctCollection.getName()
-						).build());
-				}
-
-				return JSONFactoryUtil.createJSONArray(ctCollectionJsonList);
-			}
+			JSONUtil.toJSONArray(
+				_ctCollectionLocalService.getCTCollections(
+					_themeDisplay.getCompanyId(),
+					WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null),
+				ctCollection -> JSONUtil.put(
+					"ctCollectionId", ctCollection.getCtCollectionId()
+				).put(
+					"name", ctCollection.getName()
+				))
 		).put(
 			"ctMappingInfos",
 			() -> {
