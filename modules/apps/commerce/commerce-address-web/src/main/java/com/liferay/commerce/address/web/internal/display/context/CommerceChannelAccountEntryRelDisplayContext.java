@@ -262,27 +262,27 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 	}
 
 	private long[] _getFilteredCommerceChannelIds() throws PortalException {
-		CommerceChannelAccountEntryRel requestCommerceChannelAccountEntryRel =
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
+
+		if (commerceChannelAccountEntryRel == null) {
+			return new long[0];
+		}
 
 		return TransformUtil.transformToLongArray(
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null),
-			commerceChannelAccountEntryRel -> {
-				long commerceChannelId =
-					commerceChannelAccountEntryRel.getCommerceChannelId();
-
-				if ((requestCommerceChannelAccountEntryRel != null) &&
-					(commerceChannelId ==
-						requestCommerceChannelAccountEntryRel.
-							getCommerceChannelId())) {
+			curCommerceChannelAccountEntryRel -> {
+				if (commerceChannelAccountEntryRel.getCommerceChannelId() ==
+						curCommerceChannelAccountEntryRel.
+							getCommerceChannelId()) {
 
 					return null;
 				}
 
-				return commerceChannelId;
+				return commerceChannelAccountEntryRel.getCommerceChannelId();
 			});
 	}
 
