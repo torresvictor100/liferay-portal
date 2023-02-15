@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UpgradeLogContext implements LogContext {
 
 	public static void clearContext() {
-		_contexts.clear();
+		_context.clear();
 	}
 
 	public static LogContext getInstance() {
@@ -45,17 +45,17 @@ public class UpgradeLogContext implements LogContext {
 	}
 
 	public static void setContext(String component) {
-		_contexts.put("component", component);
+		_context.put("component", component);
 	}
 
 	@Override
 	public Map<String, String> getContext(String logName) {
 		if (_isUpgradeClass(logName)) {
-			if (_contexts.isEmpty()) {
+			if (_context.isEmpty()) {
 				return _defaultContext;
 			}
 
-			return _contexts;
+			return _context;
 		}
 
 		return Collections.emptyMap();
@@ -97,7 +97,7 @@ public class UpgradeLogContext implements LogContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeLogContext.class);
 
-	private static final ConcurrentHashMap<String, String> _contexts =
+	private static final ConcurrentHashMap<String, String> _context =
 		new ConcurrentHashMap<>();
 
 	private final Class<?>[] _baseUpgradeClasses = new Class<?>[] {

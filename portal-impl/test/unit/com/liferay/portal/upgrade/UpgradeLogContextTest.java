@@ -49,7 +49,7 @@ public class UpgradeLogContextTest {
 	public static void setUpClass() throws Exception {
 		_logContext = UpgradeLogContext.getInstance();
 
-		_context = ReflectionTestUtil.getFieldValue(_logContext, "_contexts");
+		_context = ReflectionTestUtil.getFieldValue(_logContext, "_context");
 
 		_defaultContext = ReflectionTestUtil.getFieldValue(
 			_logContext, "_defaultContext");
