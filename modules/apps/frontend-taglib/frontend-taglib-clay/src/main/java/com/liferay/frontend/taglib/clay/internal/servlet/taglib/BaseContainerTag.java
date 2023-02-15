@@ -72,13 +72,13 @@ public class BaseContainerTag extends AttributesTagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			_includeBody = processStartTag();
+			_tagAction = processStartTag();
 
 			if (_hasBodyContent()) {
 				processStartBodyTag();
 			}
 
-			return _includeBody;
+			return _tagAction;
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -277,10 +277,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_elementClasses = null;
 		_hydratedContainerElement = "div";
 		_id = null;
-		_includeBody = EVAL_BODY_INCLUDE;
 		_namespace = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
+		_tagAction = EVAL_BODY_INCLUDE;
 	}
 
 	protected void doClearTag() {
@@ -482,7 +482,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	private boolean _hasBodyContent() {
-		if ((_includeBody == EVAL_BODY_INCLUDE) &&
+		if ((_tagAction == EVAL_BODY_INCLUDE) &&
 			(getHydratedModuleName() != null)) {
 
 			return true;
@@ -546,9 +546,9 @@ public class BaseContainerTag extends AttributesTagSupport {
 	private String _elementClasses;
 	private String _hydratedContainerElement = "div";
 	private String _id;
-	private int _includeBody = EVAL_BODY_INCLUDE;
 	private String _namespace;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;
+	private int _tagAction = EVAL_BODY_INCLUDE;
 
 }
