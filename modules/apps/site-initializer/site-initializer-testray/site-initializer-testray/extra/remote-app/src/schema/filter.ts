@@ -232,6 +232,8 @@ const filterSchema = {
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.priority, {
+				name: 'caseToCaseResult/priority',
+				removeQuoteMark: true,
 				type: 'select',
 			}),
 			overrides(baseFilters.team, {
