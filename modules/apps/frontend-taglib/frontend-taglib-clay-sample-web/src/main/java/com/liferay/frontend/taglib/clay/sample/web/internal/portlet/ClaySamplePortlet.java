@@ -69,7 +69,6 @@ public class ClaySamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.CLAY_SAMPLE_DISPLAY_CONTEXT,
 			new ClaySampleDisplayContext());
-
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT,
 			new DropdownsDisplayContext());
