@@ -49,9 +49,10 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 		_unsyncPrintWriter.write(
 			"{\"actions\":\n{\"createBatch\": {\"href\": \"");
 		_unsyncPrintWriter.write(
-			_ACTION_TEMPLATE + batchEngineImportConfiguration.getClassName());
+			"/o/headless-batch-engine/v1.0/import-task/");
+		_unsyncPrintWriter.write(batchEngineImportConfiguration.getClassName());
 		_unsyncPrintWriter.write(
-			"\",\"method\": \"POST\"}},\n\"configuration\":\n");
+			"\", \"method\": \"POST\"}},\n\"configuration\":\n");
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineImportConfiguration));
 		_unsyncPrintWriter.write(",\n");
@@ -89,9 +90,6 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 			_itemsStarted = true;
 		}
 	}
-
-	private static final String _ACTION_TEMPLATE =
-		"/o/headless-batch-engine/v1.0/import-task/";
 
 	private boolean _itemsStarted;
 	private final ObjectWriter _objectWriter;
