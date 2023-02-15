@@ -81,7 +81,8 @@ public class DDMExpressionEvaluatorVisitor
 	public DDMExpressionEvaluatorVisitor(
 		DDMExpressionActionHandler ddmExpressionActionHandler,
 		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
-		Map<String, DDMExpressionFunctionFactory> ddmExpressionFunctionFactories,
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactories,
 		DDMExpressionObserver ddmExpressionObserver,
 		DDMExpressionParameterAccessor ddmExpressionParameterAccessor,
 		Map<String, Object> variables) {

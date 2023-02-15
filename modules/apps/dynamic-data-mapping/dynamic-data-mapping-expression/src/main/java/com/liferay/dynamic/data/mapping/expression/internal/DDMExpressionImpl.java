@@ -52,12 +52,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		try {
 			DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
 				new DDMExpressionEvaluatorVisitor(
-					_ddmExpressionActionHandler,
-					_ddmExpressionFieldAccessor,
-					_ddmExpressionFunctionFactories,
-					_ddmExpressionObserver,
-					_ddmExpressionParameterAccessor,
-					_variables);
+					_ddmExpressionActionHandler, _ddmExpressionFieldAccessor,
+					_ddmExpressionFunctionFactories, _ddmExpressionObserver,
+					_ddmExpressionParameterAccessor, _variables);
 
 			return (T)_expressionContext.accept(ddmExpressionEvaluatorVisitor);
 		}
