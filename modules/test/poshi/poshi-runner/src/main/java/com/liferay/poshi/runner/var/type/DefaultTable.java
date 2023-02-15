@@ -24,22 +24,21 @@ import java.util.regex.Pattern;
  */
 public class DefaultTable implements Table {
 
-	public DefaultTable(List<List<String>> table) {
-		this(table, false, false);
+	public DefaultTable(List<List<String>> rows) {
+		this(rows, false, false);
 	}
 
 	public DefaultTable(
-		List<List<String>> table, boolean hasRowNames, boolean hasColumnNames) {
+		List<List<String>> rows, boolean hasRowNames, boolean hasColumnNames) {
 
 		if (hasColumnNames && hasRowNames) {
 			throw new IllegalArgumentException(
 				"Table must contain either row names or column names");
 		}
 
+		_rows = rows;
 		_hasRowNames = hasRowNames;
 		_hasColumnNames = hasColumnNames;
-
-		_rows = table;
 	}
 
 	public DefaultTable(String rawTableString) {

@@ -449,11 +449,11 @@ public class PoshiRunnerExecutor {
 			}
 		}
 		else if (element.attributeValue("table") != null) {
-			DefaultTable table =
+			DefaultTable defaultTable =
 				(DefaultTable)PoshiVariablesUtil.replaceCommandVars(
 					element.attributeValue("table"));
 
-			List<List<String>> rows = table.getRows();
+			List<List<String>> rows = defaultTable.getRows();
 
 			Iterator<?> iterator = rows.iterator();
 
