@@ -542,9 +542,8 @@ public class DDMExpressionEvaluatorVisitor
 		throws NoSuchMethodException {
 
 		Class<?> clazz = null;
-		Class<?>[] classes = _getInterfaces(ddmExpressionFunctionClass);
 
-		for (Class<?> curClazz : classes) {
+		for (Class<?> curClazz : _getInterfaces(ddmExpressionFunctionClass)) {
 			if (_isDDMExpressionFunctionNestedFunction(
 					curClazz, parametersTotal)) {
 
