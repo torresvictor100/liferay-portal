@@ -86,7 +86,7 @@ export default function render(
 
 		container.classList.add('lfr-tooltip-scope');
 
-		if (renderData._hasBodyContent) {
+		if (renderData.hasBodyContent) {
 			const children = container.querySelectorAll(
 				'.tag-body-content > *'
 			);

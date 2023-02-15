@@ -316,8 +316,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 			props.put("defaultEventHandler", defaultEventHandler);
 		}
 
-		props.put("_hasBodyContent", _hasBodyContent());
-
+		props.put("hasBodyContent", _hasBodyContent());
 		props.put("id", getId());
 
 		props.putAll(getDynamicAttributes());
