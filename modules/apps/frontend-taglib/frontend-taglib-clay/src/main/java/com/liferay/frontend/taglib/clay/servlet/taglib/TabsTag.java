@@ -135,8 +135,6 @@ public class TabsTag extends BaseContainerTag {
 
 			String itemCssClass = "nav-link";
 
-			String label = (String)tabsItem.get("label");
-
 			Boolean active = (Boolean)tabsItem.get("active");
 
 			if ((active != null) && active) {
@@ -146,6 +144,8 @@ public class TabsTag extends BaseContainerTag {
 			if (Validator.isNotNull(tabsItem.get("disabled"))) {
 				itemCssClass = itemCssClass + " disabled";
 			}
+
+			String label = (String)tabsItem.get("label");
 
 			if (Validator.isNotNull(tabsItem.get("href"))) {
 				LinkTag linkTag = new LinkTag();
