@@ -79,20 +79,19 @@ public class DDMExpressionEvaluatorVisitor
 	extends DDMExpressionBaseVisitor<Object> {
 
 	public DDMExpressionEvaluatorVisitor(
-		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactories,
-		Map<String, Object> variables,
 		DDMExpressionActionHandler ddmExpressionActionHandler,
 		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
+		Map<String, DDMExpressionFunctionFactory> ddmExpressionFunctionFactories,
 		DDMExpressionObserver ddmExpressionObserver,
-		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor,
+		Map<String, Object> variables) {
 
-		_ddmExpressionFunctionFactories = ddmExpressionFunctionFactories;
-		_variables = variables;
 		_ddmExpressionActionHandler = ddmExpressionActionHandler;
 		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
+		_ddmExpressionFunctionFactories = ddmExpressionFunctionFactories;
 		_ddmExpressionObserver = ddmExpressionObserver;
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
+		_variables = variables;
 	}
 
 	@Override
