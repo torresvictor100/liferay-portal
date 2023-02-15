@@ -1373,7 +1373,7 @@ definition {
 					value1 = "Knowledge base is empty.");
 			}
 			else if (isSet(suggestions)) {
-				AssertTextEquals(
+				AssertTextEquals.assertPartialText(
 					locator1 = "Message#EMPTY_INFO",
 					value1 = "There are no suggestions.");
 			}
