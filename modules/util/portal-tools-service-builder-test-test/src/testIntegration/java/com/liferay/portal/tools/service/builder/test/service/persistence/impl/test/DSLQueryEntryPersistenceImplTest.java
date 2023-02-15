@@ -349,7 +349,6 @@ public class DSLQueryEntryPersistenceImplTest {
 					DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId.
 						ascending()
 				)));
-
 		Assert.assertEquals(
 			Arrays.asList(2L, 1L, 0L),
 			_dslQueryEntryPersistence.dslQuery(
