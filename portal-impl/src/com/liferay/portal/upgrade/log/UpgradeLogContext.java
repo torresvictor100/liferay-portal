@@ -52,7 +52,7 @@ public class UpgradeLogContext implements LogContext {
 	public Map<String, String> getContext(String logName) {
 		if (_isUpgradeClass(logName)) {
 			if (_contexts.isEmpty()) {
-				return _default_context;
+				return _defaultContext;
 			}
 
 			return _contexts;
@@ -104,7 +104,7 @@ public class UpgradeLogContext implements LogContext {
 		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 		UpgradeStep.class
 	};
-	private final Map<String, String> _default_context =
+	private final Map<String, String> _defaultContext =
 		Collections.singletonMap("component", "framework");
 	private final Set<String> _upgradeClassNames = SetUtil.fromArray(
 		DBUpgrader.class.getName(), LoggingTimer.class.getName(),

@@ -52,7 +52,7 @@ public class UpgradeLogContextTest {
 		_context = ReflectionTestUtil.getFieldValue(_logContext, "_contexts");
 
 		_defaultContext = ReflectionTestUtil.getFieldValue(
-			_logContext, "_default_context");
+			_logContext, "_defaultContext");
 	}
 
 	@Test
