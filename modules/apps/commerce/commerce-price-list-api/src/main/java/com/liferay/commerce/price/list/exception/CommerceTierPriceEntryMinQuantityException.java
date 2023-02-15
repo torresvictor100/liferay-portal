@@ -19,22 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTierPriceEntryQuantityException extends PortalException {
+public class CommerceTierPriceEntryMinQuantityException
+	extends PortalException {
 
-	public CommerceTierPriceEntryQuantityException() {
+	public CommerceTierPriceEntryMinQuantityException() {
 	}
 
-	public CommerceTierPriceEntryQuantityException(String msg) {
+	public CommerceTierPriceEntryMinQuantityException(String msg) {
 		super(msg);
 	}
 
-	public CommerceTierPriceEntryQuantityException(
+	public CommerceTierPriceEntryMinQuantityException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public CommerceTierPriceEntryQuantityException(Throwable throwable) {
+	public CommerceTierPriceEntryMinQuantityException(Throwable throwable) {
 		super(throwable);
 	}
 

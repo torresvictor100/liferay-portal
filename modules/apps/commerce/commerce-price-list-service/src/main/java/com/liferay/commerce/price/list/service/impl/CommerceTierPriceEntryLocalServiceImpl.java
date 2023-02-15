@@ -18,7 +18,7 @@ import com.liferay.commerce.price.list.exception.CommercePriceEntryDisplayDateEx
 import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDateException;
 import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryExpirationDateException;
-import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryQuantityException;
+import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuantityException;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
@@ -1010,7 +1010,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		if (minQuantity <= 0) {
-			throw new CommerceTierPriceEntryQuantityException();
+			throw new CommerceTierPriceEntryMinQuantityException();
 		}
 
 		CommercePriceEntry commercePriceEntry =
