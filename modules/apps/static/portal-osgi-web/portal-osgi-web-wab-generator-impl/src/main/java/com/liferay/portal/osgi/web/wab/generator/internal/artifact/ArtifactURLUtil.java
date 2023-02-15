@@ -64,12 +64,12 @@ public class ArtifactURLUtil {
 	}
 
 	public static URL transform(URL artifact) throws Exception {
+		String contextName = null;
+
 		String path = artifact.getPath();
 
 		String fileExtension = path.substring(
 			path.lastIndexOf(CharPool.PERIOD) + 1);
-
-		String contextName = null;
 
 		if (fileExtension.equals("war")) {
 			try (ZipFile zipFile = new ZipFile(new File(artifact.toURI()))) {
@@ -112,7 +112,7 @@ public class ArtifactURLUtil {
 			}
 		}
 		catch (IOException ioException) {
-			_log.error("Path " + path + " is not a valid zip", ioException);
+			_log.error("Path " + path + " is not a valid ZIP", ioException);
 		}
 
 		return false;
