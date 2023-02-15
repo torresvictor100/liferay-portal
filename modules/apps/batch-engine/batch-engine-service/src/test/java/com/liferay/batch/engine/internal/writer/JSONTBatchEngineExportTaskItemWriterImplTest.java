@@ -75,7 +75,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("{\"actions\":{\"createBatch\": {\"href\": ");
+		sb.append("{\"actions\":\n{\"createBatch\": {\"href\": ");
 		sb.append("\"/o/headless-batch-engine/v1.0/import-task/");
 		sb.append(batchEngineImportConfiguration.getClassName());
 		sb.append("\", \"method\": \"POST\"}},");
