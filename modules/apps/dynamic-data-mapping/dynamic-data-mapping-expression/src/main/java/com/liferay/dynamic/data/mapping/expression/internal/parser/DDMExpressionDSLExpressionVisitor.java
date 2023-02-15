@@ -288,7 +288,7 @@ public class DDMExpressionDSLExpressionVisitor
 
 		if (variableValue == null) {
 			throw new IllegalStateException(
-				String.format("variable %s not defined", variable));
+				String.format("Variable \"%s\" not defined", variable));
 		}
 
 		return variableValue;
