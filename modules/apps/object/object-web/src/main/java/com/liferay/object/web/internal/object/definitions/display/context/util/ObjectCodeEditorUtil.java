@@ -29,7 +29,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -153,15 +152,15 @@ public class ObjectCodeEditorUtil {
 			"field_name * field_name2",
 			"multiply-numeric-fields-to-create-an-expression", "times");
 
-		public static List<HashMap<String, String>> getItems(Locale locale) {
+		public static List<Map<String, String>> getItems(Locale locale) {
 			return getItems(null, locale);
 		}
 
-		public static List<HashMap<String, String>> getItems(
+		public static List<Map<String, String>> getItems(
 			Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
 			Locale locale) {
 
-			List<HashMap<String, String>> values = new ArrayList<>();
+			List<Map<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionOperator ddmExpressionOperator : values()) {
 				if ((ddmExpressionOperatorPredicate == null) ||
@@ -200,7 +199,7 @@ public class ObjectCodeEditorUtil {
 	}
 
 	private static Map<String, Object> _createCodeEditorElement(
-		List<HashMap<String, String>> items, String key, Locale locale) {
+		List<Map<String, String>> items, String key, Locale locale) {
 
 		return HashMapBuilder.<String, Object>put(
 			"items", items
@@ -325,8 +324,8 @@ public class ObjectCodeEditorUtil {
 				"that-can-be-used-with-other-validation-functions",
 			"sum");
 
-		public static List<HashMap<String, String>> getItems(Locale locale) {
-			List<HashMap<String, String>> values = new ArrayList<>();
+		public static List<Map<String, String>> getItems(Locale locale) {
+			List<Map<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
 				if (StringUtil.equals(
