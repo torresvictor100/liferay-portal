@@ -17,7 +17,7 @@ package com.liferay.segments.asah.connector.internal.expression;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionBaseVisitor;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionParser;
@@ -58,8 +58,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 		throw new UnsupportedOperationException(
 			StringBundler.concat(
 				"Trying to create a filter by count expression with  ",
-				String.valueOf(left.getClass()), " and ",
-				String.valueOf(right.getClass())));
+				left.getClass(), " and ", right.getClass()));
 	}
 
 	@Override
