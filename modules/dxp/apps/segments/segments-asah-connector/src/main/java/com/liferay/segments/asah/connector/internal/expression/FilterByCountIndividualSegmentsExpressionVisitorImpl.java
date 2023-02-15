@@ -14,10 +14,10 @@
 
 package com.liferay.segments.asah.connector.internal.expression;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionBaseVisitor;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionParser;
