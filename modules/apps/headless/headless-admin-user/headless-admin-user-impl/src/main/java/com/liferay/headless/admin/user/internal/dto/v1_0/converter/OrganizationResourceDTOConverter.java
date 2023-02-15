@@ -152,7 +152,8 @@ public class OrganizationResourceDTOConverter
 									return null;
 								}
 
-								Map<String, String> countries = new HashMap<>();
+								Map<String, String> countryNames =
+									new HashMap<>();
 
 								Country country = _countryService.getCountry(
 									organization.getCountryId());
@@ -161,12 +162,12 @@ public class OrganizationResourceDTOConverter
 										_language.getCompanyAvailableLocales(
 											organization.getCompanyId())) {
 
-									countries.put(
+									countryNames.put(
 										LocaleUtil.toBCP47LanguageId(locale),
 										country.getName());
 								}
 
-								return countries;
+								return countryNames;
 							});
 						setAddressRegion(
 							() -> {

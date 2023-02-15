@@ -65,7 +65,7 @@ public class PostalAddressUtil {
 							return null;
 						}
 
-						Map<String, String> countries = new HashMap<>();
+						Map<String, String> countryNames = new HashMap<>();
 
 						Country country = address.getCountry();
 
@@ -73,12 +73,12 @@ public class PostalAddressUtil {
 								LanguageUtil.getCompanyAvailableLocales(
 									companyId)) {
 
-							countries.put(
+							countryNames.put(
 								LocaleUtil.toBCP47LanguageId(locale),
 								country.getName());
 						}
 
-						return countries;
+						return countryNames;
 					});
 				setAddressRegion(
 					() -> {
