@@ -50,7 +50,6 @@ public class UpgradeLogContextTest {
 		_logContext = UpgradeLogContext.getInstance();
 
 		_context = ReflectionTestUtil.getFieldValue(_logContext, "_context");
-
 		_defaultContext = ReflectionTestUtil.getFieldValue(
 			_logContext, "_defaultContext");
 	}
@@ -139,9 +138,7 @@ public class UpgradeLogContextTest {
 
 	private void _testInitialContextStatus() {
 		Assert.assertTrue(_context.isEmpty());
-
 		Assert.assertFalse(_defaultContext.isEmpty());
-
 		Assert.assertNotSame(_context, _defaultContext);
 	}
 
