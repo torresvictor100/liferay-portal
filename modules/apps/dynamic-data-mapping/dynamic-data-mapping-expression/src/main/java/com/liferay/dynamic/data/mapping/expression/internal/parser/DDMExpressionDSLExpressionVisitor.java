@@ -394,12 +394,11 @@ public class DDMExpressionDSLExpressionVisitor
 	}
 
 	private Expression<?> _getExpression(Object object) {
-		if (object instanceof Expression) {
-			return (Expression<?>)object;
-		}
-
 		if (object instanceof BigDecimal) {
 			object = _getBigDecimal((Comparable<?>)object);
+		}
+		else if (object instanceof Expression) {
+			return (Expression<?>)object;
 		}
 
 		return new Scalar<>(object);
