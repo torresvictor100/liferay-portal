@@ -249,8 +249,9 @@ public class BundleSiteInitializerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 		ServiceContextThreadLocal.popServiceContext();
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 
 		// TODO We should not need to delete the object definition manually
 		// because of DataGuardTestRule. However,
