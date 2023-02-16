@@ -1050,7 +1050,7 @@ public class BundleSiteInitializerTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
 				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					"test-layout-utility-page-entry", group.getGroupId());
+					"test-layout-utility-page-entry", _group.getGroupId());
 
 		Assert.assertNotNull(layoutUtilityPageEntry);
 		Assert.assertEquals(
