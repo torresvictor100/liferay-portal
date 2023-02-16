@@ -51,11 +51,8 @@ public class JournalArticleContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		String bodyClass = jsonObject.getString("bodyClass");
-
-		bodyClass += " h-100";
-
-		jsonObject.put("bodyClass", bodyClass);
+		jsonObject.put(
+			"bodyClass", jsonObject.getString("bodyClass") + " h-100");
 
 		JSONArray contentsCSSJSONArray = jsonObject.getJSONArray("contentsCss");
 
