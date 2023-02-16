@@ -1975,6 +1975,23 @@ public class BundleSiteInitializerTest {
 			workflowDefinitionLink2.getWorkflowDefinitionName());
 	}
 
+	private Bundle _getBundle(String location) throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BundleSiteInitializerTest.class);
+
+		try (InputStream inputStream =
+				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			bundle = bundleContext.installBundle(location, inputStream);
+		}
+
+		bundle.start();
+
+		return bundle;
+	}
+
 	private Configuration _getFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
 			Serializable scopePK)
@@ -1999,23 +2016,6 @@ public class BundleSiteInitializerTest {
 				"Unable to retrieve factory configuration " + factoryPid,
 				exception);
 		}
-	}
-
-	private Bundle _getBundle(String location) throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			BundleSiteInitializerTest.class);
-
-		try (InputStream inputStream =
-				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			bundle = bundleContext.installBundle(location, inputStream);
-		}
-
-		bundle.start();
-
-		return bundle;
 	}
 
 	private File _getTempDir(String location) throws Exception {
