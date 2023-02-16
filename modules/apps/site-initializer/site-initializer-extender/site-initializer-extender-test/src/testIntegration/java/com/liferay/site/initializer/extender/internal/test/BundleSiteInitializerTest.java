@@ -289,9 +289,9 @@ public class BundleSiteInitializerTest {
 
 	@Test
 	public void testInitializeFromBundle() throws Exception {
-		Bundle bundle1 = _getTestBundle(
+		Bundle bundle1 = _getBundle(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
-		Bundle bundle2 = _getTestBundle(
+		Bundle bundle2 = _getBundle(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
 		try {
@@ -310,9 +310,9 @@ public class BundleSiteInitializerTest {
 
 	@Test
 	public void testInitializeFromFile() throws Exception {
-		File tempDir1 = _getTestDir(
+		File tempDir1 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
-		File tempDir2 = _getTestDir(
+		File tempDir2 = _getTempDir(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
 		try {
@@ -2001,18 +2001,24 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
-	private Bundle _getTestBundle(String location) throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(
+	private Bundle _getBundle(String location) throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
 			BundleSiteInitializerTest.class);
 
-		Bundle bundle = _installBundle(testBundle.getBundleContext(), location);
+		try (InputStream inputStream =
+				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			bundle = bundleContext.installBundle(location, inputStream);
+		}
 
 		bundle.start();
 
 		return bundle;
 	}
 
-	private File _getTestDir(String location) throws Exception {
+	private File _getTempDir(String location) throws Exception {
 		File tempFile = FileUtil.createTempFile();
 
 		FileUtil.write(
@@ -2026,16 +2032,6 @@ public class BundleSiteInitializerTest {
 		tempFile.delete();
 
 		return tempDir1;
-	}
-
-	private Bundle _installBundle(BundleContext bundleContext, String location)
-		throws Exception {
-
-		try (InputStream inputStream =
-				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
-
-			return bundleContext.installBundle(location, inputStream);
-		}
 	}
 
 	private void _test1(SiteInitializer siteInitializer) throws Exception {
