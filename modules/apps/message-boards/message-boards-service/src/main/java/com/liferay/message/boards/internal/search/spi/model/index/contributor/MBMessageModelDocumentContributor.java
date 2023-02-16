@@ -106,12 +106,12 @@ public class MBMessageModelDocumentContributor
 		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
 			boolean answered = false;
 
-			for (MBMessage message :
+			for (MBMessage childMBMessage :
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),
 						WorkflowConstants.STATUS_APPROVED)) {
 
-				if (message.isAnswer()) {
+				if (childMBMessage.isAnswer()) {
 					answered = true;
 
 					break;
@@ -119,6 +119,7 @@ public class MBMessageModelDocumentContributor
 			}
 
 			document.addKeyword("answered", answered);
+
 			document.addKeyword(
 				"childMessagesCount",
 				_mbMessageLocalService.getChildMessagesCount(
