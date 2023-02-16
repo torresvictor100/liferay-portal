@@ -310,22 +310,22 @@ public class BundleSiteInitializerTest {
 
 	@Test
 	public void testInitializeFromFile() throws Exception {
-		File tempFolder1 = _getTestFile(
+		File tempDir1 = _getTestDir(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
-		File tempFolder2 = _getTestFile(
+		File tempDir2 = _getTestDir(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
 		try {
 			_test1(
 				_siteInitializerFactory.create(
-					new File(tempFolder1, "site-initializer"), null));
+					new File(tempDir1, "site-initializer"), null));
 			_test2(
 				_siteInitializerFactory.create(
-					new File(tempFolder2, "site-initializer"), null));
+					new File(tempDir2, "site-initializer"), null));
 		}
 		finally {
-			FileUtil.deltree(tempFolder1);
-			FileUtil.deltree(tempFolder2);
+			FileUtil.deltree(tempDir1);
+			FileUtil.deltree(tempDir2);
 		}
 	}
 
@@ -2012,20 +2012,20 @@ public class BundleSiteInitializerTest {
 		return bundle;
 	}
 
-	private File _getTestFile(String location) throws Exception {
+	private File _getTestDir(String location) throws Exception {
 		File tempFile = FileUtil.createTempFile();
 
 		FileUtil.write(
 			tempFile,
 			BundleSiteInitializerTest.class.getResourceAsStream(location));
 
-		File tempFolder1 = FileUtil.createTempFolder();
+		File tempDir1 = FileUtil.createTempFolder();
 
-		FileUtil.unzip(tempFile, tempFolder1);
+		FileUtil.unzip(tempFile, tempDir1);
 
 		tempFile.delete();
 
-		return tempFolder1;
+		return tempDir1;
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)
