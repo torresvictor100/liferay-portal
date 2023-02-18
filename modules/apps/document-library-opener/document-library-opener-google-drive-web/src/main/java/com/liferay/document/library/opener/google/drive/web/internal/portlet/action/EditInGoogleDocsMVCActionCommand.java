@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
@@ -128,7 +126,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 	private void _executeCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			long fileEntryId)
-		throws IOException, PortalException {
+		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
