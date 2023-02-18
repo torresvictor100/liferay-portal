@@ -126,7 +126,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
 				<c:choose>
 					<c:when test="<%= cur > 1 %>">
-						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
+						<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
 					</c:when>
 					<c:otherwise>
 						<div class="page-link">
