@@ -328,22 +328,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		_testGetUserAccountWithInheritedRoles(
+			group,
 			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
-			group, user);
+			user);
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		_testGetUserAccountWithInheritedRoles(
+			organization.getGroup(),
 			() -> _organizationLocalService.addUserOrganization(
 				user.getUserId(), organization),
-			organization.getGroup(), user);
+			user);
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_testGetUserAccountWithInheritedRoles(
+			userGroup.getGroup(),
 			() -> _userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup),
-			userGroup.getGroup(), user);
+			user);
 	}
 
 	@Override
@@ -1441,8 +1444,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _testGetUserAccountWithInheritedRoles(
-			UnsafeRunnable<Exception> associateUserUnsafeRunnable, Group group,
-			User user)
+			Group group, UnsafeRunnable<Exception> unsafeRunnable, User user)
 		throws Exception {
 
 		Role inheritedRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -1451,7 +1453,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Assert.assertFalse(_hasRole(inheritedRole, user));
 
-		associateUserUnsafeRunnable.run();
+		unsafeRunnable.run();
 
 		Assert.assertTrue(_hasRole(inheritedRole, user));
 	}
