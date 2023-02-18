@@ -69,15 +69,16 @@ public class CommerceDiscountOrderTypeRelLocalServiceImpl
 			throw new DuplicateCommerceDiscountOrderTypeRelException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		commerceDiscountOrderTypeRel =
 			commerceDiscountOrderTypeRelPersistence.create(
 				counterLocalService.increment());
 
+		User user = _userLocalService.getUser(userId);
+
 		commerceDiscountOrderTypeRel.setCompanyId(user.getCompanyId());
 		commerceDiscountOrderTypeRel.setUserId(user.getUserId());
 		commerceDiscountOrderTypeRel.setUserName(user.getFullName());
+
 		commerceDiscountOrderTypeRel.setCommerceDiscountId(commerceDiscountId);
 		commerceDiscountOrderTypeRel.setCommerceOrderTypeId(
 			commerceOrderTypeId);

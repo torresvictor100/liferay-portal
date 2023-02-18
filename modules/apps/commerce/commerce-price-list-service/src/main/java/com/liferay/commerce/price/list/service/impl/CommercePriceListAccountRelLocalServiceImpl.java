@@ -60,15 +60,16 @@ public class CommercePriceListAccountRelLocalServiceImpl
 			throw new DuplicateCommercePriceListAccountRelException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		commercePriceListAccountRel =
 			commercePriceListAccountRelPersistence.create(
 				counterLocalService.increment());
 
+		User user = _userLocalService.getUser(userId);
+
 		commercePriceListAccountRel.setCompanyId(user.getCompanyId());
 		commercePriceListAccountRel.setUserId(user.getUserId());
 		commercePriceListAccountRel.setUserName(user.getFullName());
+
 		commercePriceListAccountRel.setCommerceAccountId(commerceAccountId);
 		commercePriceListAccountRel.setCommercePriceListId(commercePriceListId);
 		commercePriceListAccountRel.setOrder(order);

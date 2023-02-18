@@ -61,19 +61,17 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 			throw new DuplicateCommerceDiscountCommerceAccountGroupRelException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
-		long commerceDiscountCommerceAccountGroupRelId =
-			counterLocalService.increment();
-
 		commerceDiscountCommerceAccountGroupRel =
 			commerceDiscountCommerceAccountGroupRelPersistence.create(
-				commerceDiscountCommerceAccountGroupRelId);
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
 
 		commerceDiscountCommerceAccountGroupRel.setCompanyId(
 			user.getCompanyId());
 		commerceDiscountCommerceAccountGroupRel.setUserId(user.getUserId());
 		commerceDiscountCommerceAccountGroupRel.setUserName(user.getFullName());
+
 		commerceDiscountCommerceAccountGroupRel.setCommerceDiscountId(
 			commerceDiscountId);
 		commerceDiscountCommerceAccountGroupRel.setCommerceAccountGroupId(

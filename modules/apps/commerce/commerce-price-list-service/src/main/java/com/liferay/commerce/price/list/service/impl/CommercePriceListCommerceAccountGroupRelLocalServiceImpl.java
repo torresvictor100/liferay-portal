@@ -63,19 +63,21 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 			throw new DuplicateCommercePriceListCommerceAccountGroupRelException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		commercePriceListCommerceAccountGroupRel =
 			commercePriceListCommerceAccountGroupRelPersistence.create(
 				counterLocalService.increment());
 
 		commercePriceListCommerceAccountGroupRel.setUuid(
 			serviceContext.getUuid());
+
+		User user = _userLocalService.getUser(userId);
+
 		commercePriceListCommerceAccountGroupRel.setCompanyId(
 			user.getCompanyId());
 		commercePriceListCommerceAccountGroupRel.setUserId(user.getUserId());
 		commercePriceListCommerceAccountGroupRel.setUserName(
 			user.getFullName());
+
 		commercePriceListCommerceAccountGroupRel.setCommercePriceListId(
 			commercePriceListId);
 		commercePriceListCommerceAccountGroupRel.setCommerceAccountGroupId(

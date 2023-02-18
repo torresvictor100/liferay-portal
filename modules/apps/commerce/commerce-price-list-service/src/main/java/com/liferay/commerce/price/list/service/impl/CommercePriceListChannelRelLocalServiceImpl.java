@@ -60,15 +60,16 @@ public class CommercePriceListChannelRelLocalServiceImpl
 			throw new DuplicateCommercePriceListChannelRelException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		commercePriceListChannelRel =
 			commercePriceListChannelRelPersistence.create(
 				counterLocalService.increment());
 
+		User user = _userLocalService.getUser(userId);
+
 		commercePriceListChannelRel.setCompanyId(user.getCompanyId());
 		commercePriceListChannelRel.setUserId(user.getUserId());
 		commercePriceListChannelRel.setUserName(user.getFullName());
+
 		commercePriceListChannelRel.setCommerceChannelId(commerceChannelId);
 		commercePriceListChannelRel.setCommercePriceListId(commercePriceListId);
 		commercePriceListChannelRel.setOrder(order);
