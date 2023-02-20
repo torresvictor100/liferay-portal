@@ -145,6 +145,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 
 			if (name.equals("scopeIds")) {
 				List<Long> groupIds = new ArrayList<>();
+
 				String[] parts = value.split(StringPool.COMMA);
 
 				for (String part : parts) {
