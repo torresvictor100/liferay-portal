@@ -82,7 +82,7 @@ public class UserNotificationEventCleanerMessageListener
 			return;
 		}
 
-		long limitDayTime =
+		long timestamp =
 			System.currentTimeMillis() -
 				TimeUnit.DAY.toMillis(_userNotificationEventDaysLimit);
 
@@ -99,9 +99,8 @@ public class UserNotificationEventCleanerMessageListener
 				Property timestampProperty = PropertyFactoryUtil.forName(
 					"timestamp");
 
-				dynamicQuery.add(timestampProperty.lt(limitDayTime));
+				dynamicQuery.add(timestampProperty.lt(timestamp));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(UserNotificationEvent userNotificationEvent) ->
 				_userNotificationEventLocalService.deleteUserNotificationEvent(
