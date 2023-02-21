@@ -130,9 +130,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		DLFolder dlFolder = dlFolderPersistence.create(folderId);
 
 		dlFolder.setUuid(serviceContext.getUuid());
+		dlFolder.setExternalReferenceCode(externalReferenceCode);
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(user.getCompanyId());
-		dlFolder.setExternalReferenceCode(externalReferenceCode);
 		dlFolder.setUserId(user.getUserId());
 		dlFolder.setUserName(user.getFullName());
 		dlFolder.setRepositoryId(repositoryId);
