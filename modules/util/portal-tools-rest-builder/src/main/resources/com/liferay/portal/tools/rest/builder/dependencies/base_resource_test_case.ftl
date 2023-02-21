@@ -2330,7 +2330,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		for (String expectedActionName : expectedActions.keySet()) {
 			Map action = actions.get(expectedActionName);
 
-			Assert.assertNotNull(expectedActionName + " action is missing", action);
+			Assert.assertNotNull(expectedActionName + " action is null", action);
 
 			Map expectedAction = expectedActions.get(expectedActionName);
 
