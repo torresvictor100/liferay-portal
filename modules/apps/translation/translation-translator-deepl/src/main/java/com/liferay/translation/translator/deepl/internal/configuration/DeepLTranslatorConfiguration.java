@@ -51,6 +51,6 @@ public interface DeepLTranslatorConfiguration {
 		deflt = "https://api-free.deepl.com/v2/languages",
 		name = "validate-language-url[deepl-translation]", required = false
 	)
-	public String validateLanguageUrl();
+	public String validateLanguageURL();
 
 }

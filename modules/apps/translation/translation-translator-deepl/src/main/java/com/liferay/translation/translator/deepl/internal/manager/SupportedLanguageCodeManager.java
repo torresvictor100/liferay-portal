@@ -55,7 +55,7 @@ public class SupportedLanguageCodeManager {
 			List<SupportedLanguageCode> supportedLanguageCodes =
 				_toSupportedLanguageCodes(
 					deepLTranslatorConfiguration.authKey(), "target",
-					deepLTranslatorConfiguration.validateLanguageUrl());
+					deepLTranslatorConfiguration.validateLanguageURL());
 
 			supportedLanguageCodes.forEach(
 				supportedLanguageCode -> languageCodes.add(

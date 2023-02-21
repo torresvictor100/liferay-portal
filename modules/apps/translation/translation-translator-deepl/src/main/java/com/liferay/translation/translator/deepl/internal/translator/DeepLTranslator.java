@@ -65,7 +65,7 @@ public class DeepLTranslator implements Translator {
 			!Validator.isBlank(deepLTranslatorConfiguration.authKey()) &&
 			!Validator.isBlank(deepLTranslatorConfiguration.url()) &&
 			!Validator.isBlank(
-				deepLTranslatorConfiguration.validateLanguageUrl())) {
+				deepLTranslatorConfiguration.validateLanguageURL())) {
 
 			return true;
 		}
