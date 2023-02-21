@@ -2327,12 +2327,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		Map<String, Map> actions = page.getActions();
 
-		for (String expectedActionName : expectedActions.keySet()) {
-			Map action = actions.get(expectedActionName);
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
 
-			Assert.assertNotNull(expectedActionName + " action is null", action);
+			Assert.assertNotNull(key + " does not contain an action", action);
 
-			Map expectedAction = expectedActions.get(expectedActionName);
+			Map expectedAction = expectedActions.get(key);
 
 			Assert.assertEquals(expectedAction.get("method"), action.get("method"));
 			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
