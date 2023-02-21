@@ -147,7 +147,7 @@ public class DeepLTranslator implements Translator {
 	private List<String> _getSupportedLanguageCodes() throws PortalException {
 		Http.Options options = new Http.Options();
 
-		options.addPart("target", "target");
+		options.addPart("type", "target");
 
 		return JSONUtil.toList(
 			_jsonFactory.createJSONArray(
