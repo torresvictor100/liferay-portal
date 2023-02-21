@@ -2308,6 +2308,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#if>
 
+	protected void assertValid(Page<${schemaClientJavaType}> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
 	protected void assertValid(Page<${schemaClientJavaType}> page, Map<String, Map> expectedActions) {
 		boolean valid = false;
 
@@ -2333,10 +2337,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			Assert.assertEquals(expectedAction.get("method"), action.get("method"));
 			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
 		}
-	}
-
-	protected void assertValid(Page<${schemaClientJavaType}> page) {
-		assertValid(page, Collections.emptyMap());
 	}
 
 	<#list relatedSchemaNames as relatedSchemaName>
