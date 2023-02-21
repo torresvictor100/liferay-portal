@@ -340,6 +340,12 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return content;
 	}
 
+	private String _getDescription(ObjectRelationship objectRelationship) {
+		return StringBundler.concat(
+			"Information about the relationship ", objectRelationship.getName(),
+			" can be embedded with \"nestedFields\".");
+	}
+
 	private ApiResponses _getObjectRelationshipApiResponses(
 		Operation operation, String schemaName) {
 
@@ -506,13 +512,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private Schema _getSchema(
 		ObjectRelationship objectRelationship, String schemaName) {
 
-		ObjectSchema schema = new ObjectSchema();
+		ObjectSchema objectSchema = new ObjectSchema();
 
-		String description = StringBundler.concat(
-			"Information about the relationship ", objectRelationship.getName(),
-			" can be embedded with \"nestedFields\".");
-
-		schema.set$ref(schemaName);
+		objectSchema.set$ref(schemaName);
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -523,18 +525,17 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			 (objectRelationship.getObjectDefinitionId1() ==
 				 _objectDefinition.getObjectDefinitionId()))) {
 
-			ArraySchema arraySchema = new ArraySchema();
-
-			arraySchema.setItems(schema);
-
-			arraySchema.setDescription(description);
-
-			return arraySchema;
+			return new ArraySchema() {
+				{
+					setDescription(_getDescription(objectRelationship));
+					setItems(objectSchema);
+				}
+			};
 		}
 
-		schema.setDescription(description);
+		objectSchema.setDescription(_getDescription(objectRelationship));
 
-		return schema;
+		return objectSchema;
 	}
 
 	private void _setSchemaDescription(
@@ -549,15 +550,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			Components components = openAPI.getComponents();
 
-			Map<String, Schema> schemaMap = components.getSchemas();
+			Map<String, Schema> schemas = components.getSchemas();
 
-			Schema schema = schemaMap.get(relatedSchemaName);
+			Schema schema = schemas.get(relatedSchemaName);
 
-			schema.setDescription(
-				StringBundler.concat(
-					"Information about the relationship ",
-					objectRelationship.getName(),
-					" can be embedded with \"nestedFields\"."));
+			schema.setDescription(_getDescription(objectRelationship));
 		}
 	}
 
