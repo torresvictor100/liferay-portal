@@ -77,19 +77,16 @@ public class DeepLTranslator implements Translator {
 		}
 
 		List<String> supportedLanguageCodes = _getSupportedLanguageCodes();
-
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
 		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
-			_log.error(
+			throw new TranslatorException(
 				StringBundler.concat(
 					"Target language code ", targetLanguageCode,
 					" is not among the supported langauge codes: ",
 					StringUtil.merge(
 						supportedLanguageCodes, StringPool.COMMA_AND_SPACE)));
-
-			return translatorPacket;
 		}
 
 		Map<String, String> translatedFieldsMap = _translate(
