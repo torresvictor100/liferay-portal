@@ -40,8 +40,6 @@ import com.liferay.translation.translator.deepl.internal.model.Translation;
 
 import java.io.IOException;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,9 +82,7 @@ public class DeepLTranslator implements Translator {
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
-		if (!_isSupportedLanguageCode(
-				supportedLanguageCodes, targetLanguageCode)) {
-
+		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
 			_log.error(
 				StringBundler.concat(
 					"Target language code ", targetLanguageCode,
@@ -219,22 +215,6 @@ public class DeepLTranslator implements Translator {
 		}
 
 		throw new TranslatorException("HTTP response status " + status);
-	}
-
-	private boolean _isSupportedLanguageCode(
-		List<String> supportedLanguageCodes, String languageCode) {
-
-		if (Collections.disjoint(
-				supportedLanguageCodes, Arrays.asList(languageCode))) {
-
-			_log.error(
-				"DeepL does not support " + languageCode +
-					". Abort processing translation.");
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private String _translate(
