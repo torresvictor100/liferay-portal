@@ -147,6 +147,7 @@ public class DeepLTranslator implements Translator {
 		Http.Options options = new Http.Options();
 
 		options.addPart("type", "target");
+		options.setMethod(Http.Method.GET);
 
 		return JSONUtil.toList(
 			_jsonFactory.createJSONArray(
@@ -166,7 +167,6 @@ public class DeepLTranslator implements Translator {
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 		options.addPart("auth_key", _deepLTranslatorConfiguration.authKey());
 		options.setLocation(url);
-		options.setMethod(Http.Method.POST);
 
 		try {
 			json = _http.URLtoString(options);
@@ -200,6 +200,7 @@ public class DeepLTranslator implements Translator {
 		options.addPart("source_lang", sourceLanguageId);
 		options.addPart("target_lang", targetLanguageId);
 		options.addPart("text", text);
+		options.setMethod(Http.Method.POST);
 
 		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
 			_invoke(options, _deepLTranslatorConfiguration.url()));
