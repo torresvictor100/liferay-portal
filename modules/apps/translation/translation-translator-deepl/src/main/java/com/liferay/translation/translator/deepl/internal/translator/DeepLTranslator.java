@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,7 +37,6 @@ import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-import com.liferay.translation.translator.deepl.internal.model.Translation;
 
 import java.io.IOException;
 
@@ -95,7 +95,6 @@ public class DeepLTranslator implements Translator {
 
 		String sourceLanguageCode = _getLanguageCode(
 			translatorPacket.getSourceLanguageId());
-
 		Map<String, String> translatedFieldsMap = new HashMap<>();
 
 		Map<String, String> fieldsMap = translatorPacket.getFieldsMap();
@@ -155,30 +154,7 @@ public class DeepLTranslator implements Translator {
 				_invoke(
 					options,
 					_deepLTranslatorConfiguration.validateLanguageURL())),
-			customFieldJSONObject -> customFieldJSONObject.getString(
-				"language"),
-			_log);
-	}
-
-	private List<Translation> _getTranslations(
-			String sourceLanguageId, String targetLanguageId, String text)
-		throws PortalException {
-
-		Http.Options options = new Http.Options();
-
-		options.addPart("source_lang", sourceLanguageId);
-		options.addPart("target_lang", targetLanguageId);
-		options.addPart("text", text);
-
-		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-			_invoke(options, _deepLTranslatorConfiguration.url()));
-
-		return JSONUtil.toList(
-			responseJSONObject.getJSONArray("translations"),
-			jsonObject -> new Translation(
-				jsonObject.getString("detected_source_language"),
-				jsonObject.getString("text")),
-			_log);
+			jsonObject -> jsonObject.getString("language"), _log);
 	}
 
 	private String _invoke(Http.Options options, String url)
@@ -218,19 +194,27 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _translate(
-			String sourceLanguageCode, String targetLanguageCode, String text)
+			String sourceLanguageId, String targetLanguageId, String text)
 		throws PortalException {
 
 		if (Validator.isBlank(text)) {
 			return text;
 		}
 
-		List<Translation> translations = _getTranslations(
-			sourceLanguageCode, targetLanguageCode, text);
+		Http.Options options = new Http.Options();
 
-		Translation translation = translations.get(0);
+		options.addPart("source_lang", sourceLanguageId);
+		options.addPart("target_lang", targetLanguageId);
+		options.addPart("text", text);
 
-		return translation.getText();
+		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+			_invoke(options, _deepLTranslatorConfiguration.url()));
+
+		JSONArray jsonArray = responseJSONObject.getJSONArray("translations");
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		return jsonObject.getString("text");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
