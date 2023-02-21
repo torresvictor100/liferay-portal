@@ -92,18 +92,10 @@ public class DeepLTranslator implements Translator {
 			return translatorPacket;
 		}
 
-		String sourceLanguageCode = _getLanguageCode(
-			translatorPacket.getSourceLanguageId());
-		Map<String, String> translatedFieldsMap = new HashMap<>();
-
-		Map<String, String> fieldsMap = translatorPacket.getFieldsMap();
-
-		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
-			translatedFieldsMap.put(
-				entry.getKey(),
-				_translate(
-					sourceLanguageCode, targetLanguageCode, entry.getValue()));
-		}
+		Map<String, String> translatedFieldsMap = _translate(
+			translatorPacket.getFieldsMap(),
+			_getLanguageCode(translatorPacket.getSourceLanguageId()),
+			targetLanguageCode);
 
 		return new TranslatorPacket() {
 
@@ -185,6 +177,23 @@ public class DeepLTranslator implements Translator {
 		}
 
 		throw new TranslatorException("HTTP response status " + status);
+	}
+
+	private Map<String, String> _translate(
+			Map<String, String> fieldsMap, String sourceLanguageCode,
+			String targetLanguageCode)
+		throws PortalException {
+
+		Map<String, String> translatedFieldsMap = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
+			translatedFieldsMap.put(
+				entry.getKey(),
+				_translate(
+					sourceLanguageCode, targetLanguageCode, entry.getValue()));
+		}
+
+		return translatedFieldsMap;
 	}
 
 	private String _translate(
