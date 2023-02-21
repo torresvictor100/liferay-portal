@@ -90,8 +90,8 @@ public class DeepLTranslator implements Translator {
 
 			_log.error(
 				StringBundler.concat(
-					"No target language available for ", targetLanguageCode,
-					". Supported languages are: ",
+					"Target language code ", targetLanguageCode,
+					" is not among the supported langauge codes: ",
 					StringUtil.merge(
 						supportedLanguageCodes, StringPool.COMMA_AND_SPACE)));
 
@@ -109,9 +109,7 @@ public class DeepLTranslator implements Translator {
 			translatedFieldsMap.put(
 				entry.getKey(),
 				_translate(
-					_deepLTranslatorConfiguration.url(),
-					_deepLTranslatorConfiguration.authKey(), entry.getValue(),
-					sourceLanguageCode, targetLanguageCode));
+					sourceLanguageCode, targetLanguageCode, entry.getValue()));
 		}
 
 		return new TranslatorPacket() {
@@ -212,13 +210,11 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private List<Translation> _getTranslateResponse(
-			String authKey, String text, String sourceLanguageId,
-			String targetLanguageId, String url)
+			String sourceLanguageId, String targetLanguageId, String text)
 		throws IOException, PortalException {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_getTranslation(
-				authKey, text, sourceLanguageId, targetLanguageId, url));
+			_getTranslation(sourceLanguageId, targetLanguageId, text));
 
 		return JSONUtil.toList(
 			jsonObject.getJSONArray("translations"),
@@ -229,8 +225,7 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _getTranslation(
-			String authKey, String text, String sourceLanguageId,
-			String targetLanguageId, String url)
+			String sourceLanguageId, String targetLanguageId, String text)
 		throws IOException, PortalException {
 
 		Http.Options options = new Http.Options();
@@ -238,16 +233,16 @@ public class DeepLTranslator implements Translator {
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
-		options.addPart("auth_key", authKey);
+		options.addPart("auth_key", _deepLTranslatorConfiguration.authKey());
 		options.addPart("source_lang", sourceLanguageId);
 		options.addPart("target_lang", targetLanguageId);
 		options.addPart("text", text);
 
 		options.setLocation(
 			URLBuilder.create(
-				url
+				_deepLTranslatorConfiguration.url()
 			).addParameter(
-				"auth_key", authKey
+				"auth_key", _deepLTranslatorConfiguration.authKey()
 			).build());
 
 		options.setMethod(Http.Method.POST);
@@ -284,8 +279,7 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _translate(
-			String url, String authKey, String text, String sourceLanguageCode,
-			String targetLanguageCode)
+			String sourceLanguageCode, String targetLanguageCode, String text)
 		throws PortalException {
 
 		try {
@@ -294,7 +288,7 @@ public class DeepLTranslator implements Translator {
 			}
 
 			List<Translation> translations = _getTranslateResponse(
-				authKey, text, sourceLanguageCode, targetLanguageCode, url);
+				sourceLanguageCode, targetLanguageCode, text);
 
 			Translation translation = translations.get(0);
 
