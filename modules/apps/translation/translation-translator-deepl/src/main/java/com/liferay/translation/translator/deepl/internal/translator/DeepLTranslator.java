@@ -147,10 +147,9 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _getLanguageCode(String languageId) {
-		List<String> list = Arrays.asList(
-			StringUtil.split(languageId, CharPool.UNDERLINE));
+		String[] parts = StringUtil.split(languageId, CharPool.UNDERLINE);
 
-		return StringUtil.toUpperCase(list.get(0));
+		return StringUtil.toUpperCase(parts[0]);
 	}
 
 	private String _getSupportedLanguageCode(
