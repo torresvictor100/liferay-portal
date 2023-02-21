@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -62,7 +61,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
-import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.sql.Timestamp;
 
@@ -294,12 +292,6 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
 
-		long assetVocabularyId = _getAssetVocabularyId(
-			assetCategory, taxonomyCategory);
-
-		long parentAssetCategoryId = _getParentAssetCategoryId(
-			assetCategory, taxonomyCategory, assetVocabularyId);
-
 		if (!ArrayUtil.contains(
 				assetCategory.getAvailableLanguageIds(),
 				contextAcceptLanguage.getPreferredLanguageId())) {
@@ -314,27 +306,25 @@ public class TaxonomyCategoryResourceImpl
 						assetCategory.getAvailableLanguageIds())));
 		}
 
-		assetCategory.setDescriptionMap(
-			LocalizedMapUtil.patchLocalizedMap(
-				assetCategory.getDescriptionMap(),
-				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getDescription(),
-				taxonomyCategory.getDescription_i18n()));
-		assetCategory.setTitleMap(
-			LocalizedMapUtil.patchLocalizedMap(
-				assetCategory.getTitleMap(),
-				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()));
-
-		AssetCategoryPermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			assetCategory.getCategoryId(), ActionKeys.UPDATE);
+		long assetVocabularyId = _getAssetVocabularyId(
+			assetCategory, taxonomyCategory);
 
 		return _toTaxonomyCategory(
-			_assetCategoryLocalService.updateCategory(
-				contextUser.getUserId(), assetCategory.getCategoryId(),
-				parentAssetCategoryId, assetCategory.getTitleMap(),
-				assetCategory.getDescriptionMap(), assetVocabularyId,
+			_assetCategoryService.updateCategory(
+				assetCategory.getCategoryId(),
+				_getParentAssetCategoryId(
+					assetCategory, assetVocabularyId, taxonomyCategory),
+				LocalizedMapUtil.patchLocalizedMap(
+					assetCategory.getTitleMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getName(),
+					taxonomyCategory.getName_i18n()),
+				LocalizedMapUtil.patchLocalizedMap(
+					assetCategory.getDescriptionMap(),
+					contextAcceptLanguage.getPreferredLocale(),
+					taxonomyCategory.getDescription(),
+					taxonomyCategory.getDescription_i18n()),
+				assetVocabularyId,
 				_merge(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
@@ -471,11 +461,10 @@ public class TaxonomyCategoryResourceImpl
 			(taxonomyCategory.getTaxonomyVocabularyId() !=
 				assetCategory.getVocabularyId())) {
 
-			AssetVocabulary existingAssetVocabulary =
-				_assetVocabularyService.getVocabulary(
-					taxonomyCategory.getTaxonomyVocabularyId());
+			_assetVocabularyService.getVocabulary(
+				taxonomyCategory.getTaxonomyVocabularyId());
 
-			return existingAssetVocabulary.getVocabularyId();
+			return taxonomyCategory.getTaxonomyVocabularyId();
 		}
 
 		return assetCategory.getVocabularyId();
@@ -504,8 +493,8 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	private long _getParentAssetCategoryId(
-			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory,
-			long vocabularyId)
+			AssetCategory assetCategory, long assetVocabularyId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		ParentTaxonomyCategory parentTaxonomyCategory =
@@ -518,15 +507,15 @@ public class TaxonomyCategoryResourceImpl
 				_assetCategoryLocalService.getAssetCategory(
 					parentTaxonomyCategory.getId());
 
-			if (vocabularyId != existingAssetCategory.getVocabularyId()) {
+			if (assetVocabularyId != existingAssetCategory.getVocabularyId()) {
 				throw new BadRequestException(
 					StringBundler.concat(
-						"TaxonomyCategory ", assetCategory.getCategoryId(),
-						" must have its parent TaxonomyCategory in the same ",
-						"Vocabulary"));
+						"Taxonomy category ", assetCategory.getCategoryId(),
+						" and its parent taxonomy category must belong to the ",
+						" same taxonomy vocabulary"));
 			}
 
-			return existingAssetCategory.getCategoryId();
+			return parentTaxonomyCategory.getId();
 		}
 		else if (parentTaxonomyCategory == null) {
 			return assetCategory.getParentCategoryId();
@@ -690,7 +679,7 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory, taxonomyCategory);
 
 		long parentAssetCategoryId = _getParentAssetCategoryId(
-			assetCategory, taxonomyCategory, assetVocabularyId);
+			assetCategory, assetVocabularyId, taxonomyCategory);
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),

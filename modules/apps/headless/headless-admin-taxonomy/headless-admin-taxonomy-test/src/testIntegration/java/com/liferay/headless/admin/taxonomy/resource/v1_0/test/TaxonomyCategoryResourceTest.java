@@ -55,12 +55,12 @@ public class TaxonomyCategoryResourceTest
 	public void testPatchTaxonomyCategory() throws Exception {
 		super.testPatchTaxonomyCategory();
 
-		// Patch a TaxonomyCategory to a different TaxonomyVocabulary
+		// Patch parent taxonomy category
 
 		TaxonomyCategory taxonomyCategory =
 			testPatchTaxonomyCategory_addTaxonomyCategory();
 
-		AssetVocabulary assetVocabulary = _createAssetVocabulary();
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
 
 		taxonomyCategoryResource.patchTaxonomyCategory(
 			taxonomyCategory.getId(),
@@ -70,7 +70,7 @@ public class TaxonomyCategoryResourceTest
 				}
 			});
 
-		final TaxonomyCategory patchParentTaxonomyCategory =
+		TaxonomyCategory patchParentTaxonomyCategory =
 			taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 				assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 
@@ -99,6 +99,9 @@ public class TaxonomyCategoryResourceTest
 		Assert.assertEquals(
 			parentTaxonomyCategory.getId(),
 			Long.valueOf(patchParentTaxonomyCategory.getId()));
+
+		// TODO LPS-173137 Two unhappy paths
+
 	}
 
 	@Override
@@ -245,7 +248,7 @@ public class TaxonomyCategoryResourceTest
 		return testGetTaxonomyCategory_addTaxonomyCategory();
 	}
 
-	private AssetVocabulary _createAssetVocabulary() throws Exception {
+	private AssetVocabulary _addAssetVocabulary() throws Exception {
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
