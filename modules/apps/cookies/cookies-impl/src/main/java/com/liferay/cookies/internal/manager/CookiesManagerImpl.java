@@ -15,6 +15,7 @@
 package com.liferay.cookies.internal.manager;
 
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -554,7 +554,7 @@ public class CookiesManagerImpl implements CookiesManager {
 				CookiesPreferenceHandlingConfiguration.class);
 		}
 		catch (PortalException portalException) {
-			throw new SystemException(portalException);
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
