@@ -136,7 +136,6 @@ public class CookiesManagerImplTest {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 				_mockHttpServletRequest));
-
 		Assert.assertNull(
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
@@ -164,7 +163,6 @@ public class CookiesManagerImplTest {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
 				_mockHttpServletRequest));
-
 		Assert.assertNull(
 			CookiesManagerUtil.getCookieValue(
 				cookie.getName(), _mockHttpServletRequest));
@@ -191,7 +189,6 @@ public class CookiesManagerImplTest {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
 				_mockHttpServletRequest));
-
 		Assert.assertNotNull(
 			CookiesManagerUtil.getCookieValue(
 				cookie.getName(), _mockHttpServletRequest));
@@ -342,7 +339,6 @@ public class CookiesManagerImplTest {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 				_mockHttpServletRequest));
-
 		Assert.assertNotNull(
 			CookiesManagerUtil.getCookieValue(
 				cookie.getName(), _mockHttpServletRequest));
