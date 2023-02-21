@@ -304,10 +304,10 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 				for (BackgroundTask backgroundTask : backgroundTasks) {
 					int status = backgroundTask.getStatus();
 
-					if ((status == BackgroundTaskConstants.STATUS_QUEUED) ||
+					if ((status ==
+							BackgroundTaskConstants.STATUS_IN_PROGRESS) ||
 						(status == BackgroundTaskConstants.STATUS_NEW) ||
-						(status ==
-							BackgroundTaskConstants.STATUS_IN_PROGRESS)) {
+						(status == BackgroundTaskConstants.STATUS_QUEUED)) {
 
 						continue;
 					}
