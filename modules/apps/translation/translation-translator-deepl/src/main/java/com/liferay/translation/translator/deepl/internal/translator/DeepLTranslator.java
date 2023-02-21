@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.url.URLBuilder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -166,12 +165,7 @@ public class DeepLTranslator implements Translator {
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 		options.addPart("auth_key", _deepLTranslatorConfiguration.authKey());
-		options.setLocation(
-			URLBuilder.create(
-				url
-			).addParameter(
-				"auth_key", _deepLTranslatorConfiguration.authKey()
-			).build());
+		options.setLocation(url);
 		options.setMethod(Http.Method.POST);
 
 		try {
