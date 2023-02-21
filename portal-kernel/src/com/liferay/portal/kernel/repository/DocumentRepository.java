@@ -192,6 +192,9 @@ public interface DocumentRepository extends CapabilityProvider {
 			String externalReferenceCode)
 		throws PortalException {
 
+		// TODO LPS-154730 Fix bad pattern from
+		// getFileEntryByExternalReferenceCode
+
 		try {
 			return getFolder(GetterUtil.getLongStrict(externalReferenceCode));
 		}
