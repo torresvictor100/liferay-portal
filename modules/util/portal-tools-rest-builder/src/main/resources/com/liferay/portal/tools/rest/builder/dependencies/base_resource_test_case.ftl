@@ -557,12 +557,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 							Assert.assertEquals(1, page.getTotalCount());
 
 							assertEquals(Arrays.asList(irrelevant${schemaName}), (List<${schemaName}>)page.getItems());
-							assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
-								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-									irrelevant${javaMethodParameter.parameterName?cap_first}
-									<#sep>, </#sep>
-								</#list>
-							));
+							assertValid(
+								page,
+								test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
+									<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+										irrelevant${javaMethodParameter.parameterName?cap_first}<#sep>, </#sep>
+									</#list>
+								));
 						}
 					</#if>
 
@@ -607,16 +608,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertContains(${schemaVarName}2, (List<${schemaName}>)page.getItems());
 						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-								${javaMethodParameter.parameterName}
-								<#sep>, </#sep>
+								${javaMethodParameter.parameterName}<#sep>, </#sep>
 							</#list>
 						));
 					<#else>
 						assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
 						assertValid(page, test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-								${javaMethodParameter.parameterName}
-								<#sep>, </#sep>
+								${javaMethodParameter.parameterName}<#sep>, </#sep>
 							</#list>
 						));
 					</#if>
@@ -652,8 +651,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				protected Map<String, Map> test${javaMethodSignature.methodName?cap_first}_getExpectedActions(
 					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}
-						<#sep>, </#sep>
+						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}<#sep>, </#sep>
 					</#list>
 				) throws Exception {
 
@@ -3053,6 +3051,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
 			/>
 		</#if>
+
 		<#sep>, </#sep>
 	</#list>
 
