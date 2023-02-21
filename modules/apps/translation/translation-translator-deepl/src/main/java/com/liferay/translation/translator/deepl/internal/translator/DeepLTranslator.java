@@ -202,14 +202,14 @@ public class DeepLTranslator implements Translator {
 		options.addPart("text", text);
 		options.setMethod(Http.Method.POST);
 
-		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_invoke(options, _deepLTranslatorConfiguration.url()));
 
-		JSONArray jsonArray = responseJSONObject.getJSONArray("translations");
+		JSONArray jsonArray = jsonObject.getJSONArray("translations");
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+		JSONObject translationJSONObject = jsonArray.getJSONObject(0);
 
-		return jsonObject.getString("text");
+		return translationJSONObject.getString("text");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
