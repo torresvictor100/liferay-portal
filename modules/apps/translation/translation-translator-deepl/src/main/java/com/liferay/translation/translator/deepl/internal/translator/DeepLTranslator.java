@@ -71,16 +71,7 @@ public class DeepLTranslator implements Translator {
 			_configurationProvider.getCompanyConfiguration(
 				DeepLTranslatorConfiguration.class, companyId);
 
-		if (deepLTranslatorConfiguration.enabled() &&
-			!Validator.isBlank(deepLTranslatorConfiguration.authKey()) &&
-			!Validator.isBlank(deepLTranslatorConfiguration.url()) &&
-			!Validator.isBlank(
-				deepLTranslatorConfiguration.validateLanguageURL())) {
-
-			return true;
-		}
-
-		return false;
+		return deepLTranslatorConfiguration.enabled();
 	}
 
 	@Override
