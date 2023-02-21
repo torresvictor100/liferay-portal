@@ -36,12 +36,10 @@ import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-import com.liferay.translation.translator.deepl.internal.model.SupportedLanguageCode;
 import com.liferay.translation.translator.deepl.internal.model.Translation;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -196,26 +194,14 @@ public class DeepLTranslator implements Translator {
 		throws PortalException {
 
 		try {
-			List<String> languageCodes = new ArrayList<>();
-
-			List<SupportedLanguageCode> supportedLanguageCodes =
-				JSONUtil.toList(
-					_jsonFactory.createJSONArray(
-						_getSupportedLanguageCode(
-							deepLTranslatorConfiguration.authKey(), "target",
-							deepLTranslatorConfiguration.
-								validateLanguageURL())),
-					customFieldJSONObject -> new SupportedLanguageCode(
-						customFieldJSONObject.getString("language"),
-						customFieldJSONObject.getString("name"),
-						customFieldJSONObject.getBoolean("supports_formality")),
-					_log);
-
-			supportedLanguageCodes.forEach(
-				supportedLanguageCode -> languageCodes.add(
-					supportedLanguageCode.getLanguageCode()));
-
-			return languageCodes;
+			return JSONUtil.toList(
+				_jsonFactory.createJSONArray(
+					_getSupportedLanguageCode(
+						deepLTranslatorConfiguration.authKey(), "target",
+						deepLTranslatorConfiguration.validateLanguageURL())),
+				customFieldJSONObject -> customFieldJSONObject.getString(
+					"language"),
+				_log);
 		}
 		catch (IOException ioException) {
 			_log.error(
