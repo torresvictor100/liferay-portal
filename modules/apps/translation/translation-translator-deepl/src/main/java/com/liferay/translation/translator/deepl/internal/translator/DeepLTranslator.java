@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -200,9 +199,17 @@ public class DeepLTranslator implements Translator {
 			List<String> languageCodes = new ArrayList<>();
 
 			List<SupportedLanguageCode> supportedLanguageCodes =
-				_toSupportedLanguageCodes(
-					deepLTranslatorConfiguration.authKey(), "target",
-					deepLTranslatorConfiguration.validateLanguageURL());
+				JSONUtil.toList(
+					_jsonFactory.createJSONArray(
+						_getSupportedLanguageCode(
+							deepLTranslatorConfiguration.authKey(), "target",
+							deepLTranslatorConfiguration.
+								validateLanguageURL())),
+					customFieldJSONObject -> new SupportedLanguageCode(
+						customFieldJSONObject.getString("language"),
+						customFieldJSONObject.getString("name"),
+						customFieldJSONObject.getBoolean("supports_formality")),
+					_log);
 
 			supportedLanguageCodes.forEach(
 				supportedLanguageCode -> languageCodes.add(
@@ -289,22 +296,6 @@ public class DeepLTranslator implements Translator {
 		}
 
 		return true;
-	}
-
-	private List<SupportedLanguageCode> _toSupportedLanguageCodes(
-			String authKey, String target, String url)
-		throws IOException, PortalException {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			_getSupportedLanguageCode(authKey, target, url));
-
-		return JSONUtil.toList(
-			jsonArray,
-			customFieldJSONObject -> new SupportedLanguageCode(
-				customFieldJSONObject.getString("language"),
-				customFieldJSONObject.getString("name"),
-				customFieldJSONObject.getBoolean("supports_formality")),
-			_log);
 	}
 
 	private String _translate(
