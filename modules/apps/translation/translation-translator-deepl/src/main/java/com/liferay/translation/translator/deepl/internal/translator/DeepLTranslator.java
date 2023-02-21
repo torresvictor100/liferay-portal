@@ -79,8 +79,7 @@ public class DeepLTranslator implements Translator {
 			return translatorPacket;
 		}
 
-		List<String> supportedLanguageCodes = _getSupportedLanguageCodes(
-			_deepLTranslatorConfiguration);
+		List<String> supportedLanguageCodes = _getSupportedLanguageCodes();
 
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
@@ -150,104 +149,65 @@ public class DeepLTranslator implements Translator {
 		return StringUtil.toUpperCase(parts[0]);
 	}
 
-	private String _getSupportedLanguageCode(
-			String authKey, String target, String url)
-		throws IOException, PortalException {
-
+	private List<String> _getSupportedLanguageCodes() throws PortalException {
 		Http.Options options = new Http.Options();
 
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE,
-			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
-		options.addPart("auth_key", authKey);
-		options.addPart("target", target);
-
-		options.setLocation(
-			URLBuilder.create(
-				url
-			).addParameter(
-				"auth_key", authKey
-			).build());
-
-		options.setMethod(Http.Method.POST);
-
-		String supportedLanguageCode = _http.URLtoString(options);
-
-		Http.Response response = options.getResponse();
-
-		Response.Status status = Response.Status.fromStatusCode(
-			response.getResponseCode());
-
-		if (status == Response.Status.OK) {
-			return supportedLanguageCode;
-		}
-
-		throw new TranslatorException(
-			"The status is " + status + ". Please retry after a while.");
-	}
-
-	private List<String> _getSupportedLanguageCodes(
-			DeepLTranslatorConfiguration deepLTranslatorConfiguration)
-		throws PortalException {
-
-		try {
-			return JSONUtil.toList(
-				_jsonFactory.createJSONArray(
-					_getSupportedLanguageCode(
-						deepLTranslatorConfiguration.authKey(), "target",
-						deepLTranslatorConfiguration.validateLanguageURL())),
-				customFieldJSONObject -> customFieldJSONObject.getString(
-					"language"),
-				_log);
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Failed to call supported language list." +
-					System.lineSeparator() + ioException.getLocalizedMessage());
-
-			return Collections.emptyList();
-		}
-	}
-
-	private List<Translation> _getTranslateResponse(
-			String sourceLanguageId, String targetLanguageId, String text)
-		throws IOException, PortalException {
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_getTranslation(sourceLanguageId, targetLanguageId, text));
+		options.addPart("target", "target");
 
 		return JSONUtil.toList(
-			jsonObject.getJSONArray("translations"),
-			customFieldJSONObject -> new Translation(
-				customFieldJSONObject.getString("detected_source_language"),
-				customFieldJSONObject.getString("text")),
+			_jsonFactory.createJSONArray(
+				_invoke(
+					options,
+					_deepLTranslatorConfiguration.validateLanguageURL())),
+			customFieldJSONObject -> customFieldJSONObject.getString(
+				"language"),
 			_log);
 	}
 
-	private String _getTranslation(
+	private List<Translation> _getTranslations(
 			String sourceLanguageId, String targetLanguageId, String text)
-		throws IOException, PortalException {
+		throws PortalException {
 
 		Http.Options options = new Http.Options();
+
+		options.addPart("source_lang", sourceLanguageId);
+		options.addPart("target_lang", targetLanguageId);
+		options.addPart("text", text);
+
+		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+			_invoke(options, _deepLTranslatorConfiguration.url()));
+
+		return JSONUtil.toList(
+			responseJSONObject.getJSONArray("translations"),
+			jsonObject -> new Translation(
+				jsonObject.getString("detected_source_language"),
+				jsonObject.getString("text")),
+			_log);
+	}
+
+	private String _invoke(Http.Options options, String url)
+		throws PortalException {
+
+		String json = null;
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 		options.addPart("auth_key", _deepLTranslatorConfiguration.authKey());
-		options.addPart("source_lang", sourceLanguageId);
-		options.addPart("target_lang", targetLanguageId);
-		options.addPart("text", text);
-
 		options.setLocation(
 			URLBuilder.create(
-				_deepLTranslatorConfiguration.url()
+				url
 			).addParameter(
 				"auth_key", _deepLTranslatorConfiguration.authKey()
 			).build());
-
 		options.setMethod(Http.Method.POST);
 
-		String translation = _http.URLtoString(options);
+		try {
+			json = _http.URLtoString(options);
+		}
+		catch (IOException ioException) {
+			throw new TranslatorException(ioException);
+		}
 
 		Http.Response response = options.getResponse();
 
@@ -255,11 +215,10 @@ public class DeepLTranslator implements Translator {
 			response.getResponseCode());
 
 		if (status == Response.Status.OK) {
-			return translation;
+			return json;
 		}
 
-		throw new TranslatorException(
-			"The status is " + status + ". Please retry after a while.");
+		throw new TranslatorException("HTTP response status " + status);
 	}
 
 	private boolean _isSupportedLanguageCode(
@@ -282,23 +241,16 @@ public class DeepLTranslator implements Translator {
 			String sourceLanguageCode, String targetLanguageCode, String text)
 		throws PortalException {
 
-		try {
-			if (Validator.isBlank(text)) {
-				return text;
-			}
-
-			List<Translation> translations = _getTranslateResponse(
-				sourceLanguageCode, targetLanguageCode, text);
-
-			Translation translation = translations.get(0);
-
-			return translation.getText();
+		if (Validator.isBlank(text)) {
+			return text;
 		}
-		catch (IOException ioException) {
-			throw new TranslatorException(
-				"DeepL translator returns original text. " +
-					ioException.getLocalizedMessage());
-		}
+
+		List<Translation> translations = _getTranslations(
+			sourceLanguageCode, targetLanguageCode, text);
+
+		Translation translation = translations.get(0);
+
+		return translation.getText();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
