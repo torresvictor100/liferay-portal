@@ -1193,16 +1193,13 @@ public class EditAssetListDisplayContext {
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			getAssetListEntrySegmentsEntryRels();
 
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-		assetListEntrySegmentsEntryRels = ListUtil.copy(
-			assetListEntrySegmentsEntryRels);
-
 		Collections.sort(
-			assetListEntrySegmentsEntryRels,
+			new ArrayList<>(assetListEntrySegmentsEntryRels),
 			Comparator.comparingInt(
 				AssetListEntrySegmentsEntryRel::getPriority));
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
 		return JSONUtil.toJSONArray(
 			assetListEntrySegmentsEntryRels,
