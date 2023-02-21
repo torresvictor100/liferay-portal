@@ -188,7 +188,7 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _translate(
-			String sourceLanguageId, String targetLanguageId, String text)
+			String sourceLanguageCode, String targetLanguageCode, String text)
 		throws PortalException {
 
 		if (Validator.isBlank(text)) {
@@ -197,8 +197,8 @@ public class DeepLTranslator implements Translator {
 
 		Http.Options options = new Http.Options();
 
-		options.addPart("source_lang", sourceLanguageId);
-		options.addPart("target_lang", targetLanguageId);
+		options.addPart("source_lang", sourceLanguageCode);
+		options.addPart("target_lang", targetLanguageCode);
 		options.addPart("text", text);
 		options.setMethod(Http.Method.POST);
 
