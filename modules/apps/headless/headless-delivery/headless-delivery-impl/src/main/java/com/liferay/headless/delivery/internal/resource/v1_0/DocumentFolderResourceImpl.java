@@ -305,7 +305,8 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			return _updateDocumentFolder(folder, documentFolder);
 		}
 
-		return _addDocumentFolder(externalReferenceCode, siteId, 0L, documentFolder);
+		return _addDocumentFolder(
+			externalReferenceCode, siteId, 0L, documentFolder);
 	}
 
 	@Override
