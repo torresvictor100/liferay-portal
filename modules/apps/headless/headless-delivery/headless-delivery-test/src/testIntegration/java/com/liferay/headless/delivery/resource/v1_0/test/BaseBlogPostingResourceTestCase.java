@@ -514,7 +514,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantBlogPosting),
 				(List<BlogPosting>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteBlogPostingsPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		BlogPosting blogPosting1 = testGetSiteBlogPostingsPage_addBlogPosting(
@@ -531,11 +534,30 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(blogPosting1, blogPosting2),
 			(List<BlogPosting>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteBlogPostingsPage_getExpectedActions(siteId));
 
 		blogPostingResource.deleteBlogPosting(blogPosting1.getId());
 
 		blogPostingResource.deleteBlogPosting(blogPosting2.getId());
+	}
+
+	protected Map<String, Map> testGetSiteBlogPostingsPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1669,6 +1691,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected void assertValid(Page<BlogPosting> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<BlogPosting> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<BlogPosting> blogPostings = page.getItems();
@@ -1683,6 +1711,20 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected void assertValid(Rating rating) {

@@ -282,7 +282,10 @@ public abstract class BaseMappedProductResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMappedProduct),
 				(List<MappedProduct>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductByExternalReferenceCodeMappedProductsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		MappedProduct mappedProduct1 =
@@ -303,11 +306,24 @@ public abstract class BaseMappedProductResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(mappedProduct1, mappedProduct2),
 			(List<MappedProduct>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductByExternalReferenceCodeMappedProductsPage_getExpectedActions(
+				externalReferenceCode));
 
 		mappedProductResource.deleteMappedProduct(mappedProduct1.getId());
 
 		mappedProductResource.deleteMappedProduct(mappedProduct2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetProductByExternalReferenceCodeMappedProductsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -694,7 +710,10 @@ public abstract class BaseMappedProductResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMappedProduct),
 				(List<MappedProduct>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductIdMappedProductsPage_getExpectedActions(
+					irrelevantProductId));
 		}
 
 		MappedProduct mappedProduct1 =
@@ -713,11 +732,23 @@ public abstract class BaseMappedProductResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(mappedProduct1, mappedProduct2),
 			(List<MappedProduct>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductIdMappedProductsPage_getExpectedActions(productId));
 
 		mappedProductResource.deleteMappedProduct(mappedProduct1.getId());
 
 		mappedProductResource.deleteMappedProduct(mappedProduct2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetProductIdMappedProductsPage_getExpectedActions(
+				Long productId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1244,6 +1275,12 @@ public abstract class BaseMappedProductResourceTestCase {
 	}
 
 	protected void assertValid(Page<MappedProduct> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<MappedProduct> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MappedProduct> mappedProducts = page.getItems();
@@ -1258,6 +1295,20 @@ public abstract class BaseMappedProductResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

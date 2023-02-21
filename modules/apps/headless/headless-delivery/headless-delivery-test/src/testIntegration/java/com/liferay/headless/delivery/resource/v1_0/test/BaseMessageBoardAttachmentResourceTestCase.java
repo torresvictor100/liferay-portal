@@ -58,6 +58,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -394,7 +395,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardAttachment),
 				(List<MessageBoardAttachment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMessageBoardMessageMessageBoardAttachmentsPage_getExpectedActions(
+					irrelevantMessageBoardMessageId));
 		}
 
 		MessageBoardAttachment messageBoardAttachment1 =
@@ -415,13 +419,37 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
 			(List<MessageBoardAttachment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getExpectedActions(
+				messageBoardMessageId));
 
 		messageBoardAttachmentResource.deleteMessageBoardAttachment(
 			messageBoardAttachment1.getId());
 
 		messageBoardAttachmentResource.deleteMessageBoardAttachment(
 			messageBoardAttachment2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardMessageMessageBoardAttachmentsPage_getExpectedActions(
+				Long messageBoardMessageId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments/batch".
+				replace(
+					"{messageBoardMessageId}",
+					String.valueOf(messageBoardMessageId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected MessageBoardAttachment
@@ -514,7 +542,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardAttachment),
 				(List<MessageBoardAttachment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMessageBoardThreadMessageBoardAttachmentsPage_getExpectedActions(
+					irrelevantMessageBoardThreadId));
 		}
 
 		MessageBoardAttachment messageBoardAttachment1 =
@@ -535,13 +566,37 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
 			(List<MessageBoardAttachment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getExpectedActions(
+				messageBoardThreadId));
 
 		messageBoardAttachmentResource.deleteMessageBoardAttachment(
 			messageBoardAttachment1.getId());
 
 		messageBoardAttachmentResource.deleteMessageBoardAttachment(
 			messageBoardAttachment2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getExpectedActions(
+				Long messageBoardThreadId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments/batch".
+				replace(
+					"{messageBoardThreadId}",
+					String.valueOf(messageBoardThreadId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	protected MessageBoardAttachment
@@ -987,6 +1042,12 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	protected void assertValid(Page<MessageBoardAttachment> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<MessageBoardAttachment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MessageBoardAttachment> messageBoardAttachments =
@@ -1002,6 +1063,20 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

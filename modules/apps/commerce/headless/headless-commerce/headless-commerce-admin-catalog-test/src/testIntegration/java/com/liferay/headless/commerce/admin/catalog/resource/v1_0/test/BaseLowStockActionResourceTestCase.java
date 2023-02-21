@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -211,7 +212,15 @@ public abstract class BaseLowStockActionResourceTestCase {
 
 		assertContains(lowStockAction1, (List<LowStockAction>)page.getItems());
 		assertContains(lowStockAction2, (List<LowStockAction>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetLowStockActionsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map> testGetLowStockActionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected LowStockAction testGetLowStockActionsPage_addLowStockAction(
@@ -328,6 +337,12 @@ public abstract class BaseLowStockActionResourceTestCase {
 	}
 
 	protected void assertValid(Page<LowStockAction> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<LowStockAction> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<LowStockAction> lowStockActions = page.getItems();
@@ -342,6 +357,20 @@ public abstract class BaseLowStockActionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

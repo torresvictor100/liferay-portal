@@ -250,7 +250,10 @@ public abstract class BaseContentTemplateResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentTemplate),
 				(List<ContentTemplate>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryContentTemplatesPage_getExpectedActions(
+					irrelevantAssetLibraryId));
 		}
 
 		ContentTemplate contentTemplate1 =
@@ -269,7 +272,20 @@ public abstract class BaseContentTemplateResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentTemplate1, contentTemplate2),
 			(List<ContentTemplate>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryContentTemplatesPage_getExpectedActions(
+				assetLibraryId));
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryContentTemplatesPage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -621,7 +637,10 @@ public abstract class BaseContentTemplateResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentTemplate),
 				(List<ContentTemplate>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteContentTemplatesPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		ContentTemplate contentTemplate1 =
@@ -640,7 +659,17 @@ public abstract class BaseContentTemplateResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentTemplate1, contentTemplate2),
 			(List<ContentTemplate>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteContentTemplatesPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map>
+			testGetSiteContentTemplatesPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1321,6 +1350,12 @@ public abstract class BaseContentTemplateResourceTestCase {
 	}
 
 	protected void assertValid(Page<ContentTemplate> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<ContentTemplate> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ContentTemplate> contentTemplates =
@@ -1336,6 +1371,20 @@ public abstract class BaseContentTemplateResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

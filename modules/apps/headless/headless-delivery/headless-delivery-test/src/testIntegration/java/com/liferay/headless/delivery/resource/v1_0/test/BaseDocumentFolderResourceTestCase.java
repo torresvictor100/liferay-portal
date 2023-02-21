@@ -251,7 +251,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocumentFolder),
 				(List<DocumentFolder>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryDocumentFoldersPage_getExpectedActions(
+					irrelevantAssetLibraryId));
 		}
 
 		DocumentFolder documentFolder1 =
@@ -270,11 +273,33 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(documentFolder1, documentFolder2),
 			(List<DocumentFolder>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryDocumentFoldersPage_getExpectedActions(
+				assetLibraryId));
 
 		documentFolderResource.deleteDocumentFolder(documentFolder1.getId());
 
 		documentFolderResource.deleteDocumentFolder(documentFolder2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryDocumentFoldersPage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-folders/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1032,7 +1057,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocumentFolder),
 				(List<DocumentFolder>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDocumentFolderDocumentFoldersPage_getExpectedActions(
+					irrelevantParentDocumentFolderId));
 		}
 
 		DocumentFolder documentFolder1 =
@@ -1052,11 +1080,24 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(documentFolder1, documentFolder2),
 			(List<DocumentFolder>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDocumentFolderDocumentFoldersPage_getExpectedActions(
+				parentDocumentFolderId));
 
 		documentFolderResource.deleteDocumentFolder(documentFolder1.getId());
 
 		documentFolderResource.deleteDocumentFolder(documentFolder2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetDocumentFolderDocumentFoldersPage_getExpectedActions(
+				Long parentDocumentFolderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1436,7 +1477,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocumentFolder),
 				(List<DocumentFolder>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteDocumentFoldersPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		DocumentFolder documentFolder1 =
@@ -1455,11 +1499,30 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(documentFolder1, documentFolder2),
 			(List<DocumentFolder>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteDocumentFoldersPage_getExpectedActions(siteId));
 
 		documentFolderResource.deleteDocumentFolder(documentFolder1.getId());
 
 		documentFolderResource.deleteDocumentFolder(documentFolder2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteDocumentFoldersPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-folders/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1927,22 +1990,33 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			204,
 			documentFolderResource.
 				deleteSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					documentFolder.getSiteId(),
+					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						documentFolder),
 					documentFolder.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					documentFolder.getSiteId(),
+					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						documentFolder),
 					documentFolder.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					documentFolder.getSiteId(),
+					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						documentFolder),
 					documentFolder.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+				DocumentFolder documentFolder)
+		throws Exception {
+
+		return documentFolder.getSiteId();
 	}
 
 	protected DocumentFolder
@@ -1963,11 +2037,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					postDocumentFolder.getSiteId(),
+					testGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						postDocumentFolder),
 					postDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(postDocumentFolder, getDocumentFolder);
 		assertValid(getDocumentFolder);
+	}
+
+	protected Long testGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+			DocumentFolder documentFolder)
+		throws Exception {
+
+		return documentFolder.getSiteId();
 	}
 
 	protected DocumentFolder
@@ -1997,8 +2079,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" + documentFolder.getSiteId() +
-												"\"");
+											"\"" +
+												testGraphQLGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+													documentFolder) + "\"");
+
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2010,6 +2094,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/documentsFolderByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+				DocumentFolder documentFolder)
+		throws Exception {
+
+		return documentFolder.getSiteId();
 	}
 
 	@Test
@@ -2059,7 +2151,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder putDocumentFolder =
 			documentFolderResource.
 				putSiteDocumentsFolderByExternalReferenceCode(
-					postDocumentFolder.getSiteId(),
+					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						postDocumentFolder),
 					postDocumentFolder.getExternalReferenceCode(),
 					randomDocumentFolder);
 
@@ -2069,7 +2162,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					putDocumentFolder.getSiteId(),
+					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						putDocumentFolder),
 					putDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(randomDocumentFolder, getDocumentFolder);
@@ -2081,7 +2175,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		putDocumentFolder =
 			documentFolderResource.
 				putSiteDocumentsFolderByExternalReferenceCode(
-					newDocumentFolder.getSiteId(),
+					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						newDocumentFolder),
 					newDocumentFolder.getExternalReferenceCode(),
 					newDocumentFolder);
 
@@ -2091,7 +2186,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					putDocumentFolder.getSiteId(),
+					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+						putDocumentFolder),
 					putDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(newDocumentFolder, getDocumentFolder);
@@ -2099,6 +2195,13 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Assert.assertEquals(
 			newDocumentFolder.getExternalReferenceCode(),
 			putDocumentFolder.getExternalReferenceCode());
+	}
+
+	protected Long testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
+			DocumentFolder documentFolder)
+		throws Exception {
+
+		return documentFolder.getSiteId();
 	}
 
 	protected DocumentFolder
@@ -2436,6 +2539,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected void assertValid(Page<DocumentFolder> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<DocumentFolder> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DocumentFolder> documentFolders = page.getItems();
@@ -2450,6 +2559,20 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
