@@ -248,7 +248,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 
 		Folder folder = _dlAppService.getFolder(parentDocumentFolderId);
 
-		return _addFolder(
+		return _addDocumentFolder(
 			documentFolder.getExternalReferenceCode(), folder.getGroupId(),
 			folder.getFolderId(), documentFolder);
 	}
@@ -258,7 +258,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return _addFolder(
+		return _addDocumentFolder(
 			documentFolder.getExternalReferenceCode(), siteId, 0L,
 			documentFolder);
 	}
@@ -305,7 +305,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			return _updateDocumentFolder(folder, documentFolder);
 		}
 
-		return _addFolder(externalReferenceCode, siteId, 0L, documentFolder);
+		return _addDocumentFolder(externalReferenceCode, siteId, 0L, documentFolder);
 	}
 
 	@Override
@@ -325,7 +325,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 		return DLFolder.class.getName();
 	}
 
-	private DocumentFolder _addFolder(
+	private DocumentFolder _addDocumentFolder(
 			String externalReferenceCode, Long groupId, Long parentFolderId,
 			DocumentFolder documentFolder)
 		throws Exception {
