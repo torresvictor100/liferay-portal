@@ -258,7 +258,7 @@ public class RelatedObjectEntryResourceImpl
 
 		if (!relatedObjectDefinition.isActive()) {
 			throw new NoSuchObjectDefinitionException(
-				"No active object definition found for the relationship " +
+				"No active object definition found for relationship " +
 					objectRelationship.getName());
 		}
 
