@@ -3289,6 +3289,27 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
+	public List<Long> getGroupIdsByUrlTitle(long companyId, String urlTitle) {
+		return journalArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				FriendlyURLEntryLocalizationTable.INSTANCE.groupId
+			).from(
+				FriendlyURLEntryLocalizationTable.INSTANCE
+			).where(
+				FriendlyURLEntryLocalizationTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					FriendlyURLEntryLocalizationTable.INSTANCE.classNameId.eq(
+						_portal.getClassNameId(JournalArticle.class.getName())
+					).and(
+						FriendlyURLEntryLocalizationTable.INSTANCE.urlTitle.eq(
+							urlTitle)
+					)
+				)
+			));
+	}
+
+	@Override
 	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys) {
 
@@ -3371,29 +3392,6 @@ public class JournalArticleLocalServiceImpl
 		long resourcePrimKey) {
 
 		return journalArticlePersistence.findByR_I(resourcePrimKey, true);
-	}
-
-	@Override
-	public List<Long> getGroupIdsByUrlTitle(
-		long companyId, String urlTitle) {
-
-		return journalArticlePersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				FriendlyURLEntryLocalizationTable.INSTANCE.groupId
-			).from(
-				FriendlyURLEntryLocalizationTable.INSTANCE
-			).where(
-				FriendlyURLEntryLocalizationTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					FriendlyURLEntryLocalizationTable.INSTANCE.classNameId.eq(
-						_portal.getClassNameId(JournalArticle.class.getName())
-					).and(
-						FriendlyURLEntryLocalizationTable.INSTANCE.urlTitle.eq(
-							urlTitle)
-					)
-				)
-			));
 	}
 
 	/**
