@@ -43,7 +43,8 @@ public class NoSuchOptionValueRelExceptionMapper
 			noSuchCPDefinitionOptionValueRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "CPDefinitionOptionValueRel not found");
+			Response.Status.NOT_FOUND,
+			noSuchCPDefinitionOptionValueRelException.getMessage());
 	}
 
 }

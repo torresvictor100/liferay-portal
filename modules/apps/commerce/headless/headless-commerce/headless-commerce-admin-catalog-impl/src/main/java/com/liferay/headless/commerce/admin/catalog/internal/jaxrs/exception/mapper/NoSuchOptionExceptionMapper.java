@@ -41,7 +41,8 @@ public class NoSuchOptionExceptionMapper
 	protected Problem getProblem(
 		NoSuchCPOptionException noSuchCPOptionException) {
 
-		return new Problem(Response.Status.CONFLICT, "CPOption not found");
+		return new Problem(
+			Response.Status.NOT_FOUND, noSuchCPOptionException.getMessage());
 	}
 
 }
