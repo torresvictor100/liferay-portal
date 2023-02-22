@@ -179,6 +179,25 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataRegistry.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			if (systemObjectDefinitionMetadata == null) {
+				return;
+			}
+
+			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
+			_disposeComponentInstances(
+				jaxRsApplicationDescriptor.getRESTContextPath());
+
+			return;
+		}
+
 		String restContextPath = objectDefinition.getRESTContextPath();
 
 		Map<Long, ObjectDefinition> objectDefinitions =
@@ -238,14 +257,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return;
 		}
 
-		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(restContextPath);
-
-		if (componentInstances != null) {
-			for (ComponentInstance componentInstance : componentInstances) {
-				componentInstance.dispose();
-			}
-		}
+		_disposeComponentInstances(restContextPath);
 
 		ServiceRegistration<?> serviceRegistration1 =
 			_applicationServiceRegistrations.remove(restContextPath);
@@ -278,6 +290,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectFieldLocalService, _objectRelationshipService,
 			_objectScopeProviderRegistry,
 			_systemObjectDefinitionMetadataRegistry);
+	}
+
+	private void _disposeComponentInstances(String restContextPath) {
+		List<ComponentInstance> componentInstances =
+			_componentInstancesMap.remove(restContextPath);
+
+		if (componentInstances != null) {
+			for (ComponentInstance componentInstance : componentInstances) {
+				componentInstance.dispose();
+			}
+		}
 	}
 
 	private void _excludeScopedMethods(
