@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
-%>
-
 <c:choose>
 	<c:when test='<%= ParamUtil.getBoolean(request, "showGroupSelector") %>'>
 		<liferay-item-selector:group-selector />
@@ -27,6 +23,8 @@ LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSel
 	<c:otherwise>
 
 		<%
+        LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
+
 		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getSelectedItemSelectorViewRenderer();
 
 		itemSelectorViewRenderer.renderHTML(pageContext);
