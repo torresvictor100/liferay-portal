@@ -1603,6 +1603,9 @@ public interface JournalArticleLocalService
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getGroupIdsByUrlTitle(long companyId, String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1647,10 +1650,6 @@ public interface JournalArticleLocalService
 	public JournalArticle getJournalArticleByUuidAndGroupId(
 			String uuid, long groupId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getJournalArticleGroupIdsByUrlTitle(
-		long companyId, String urlTitle);
 
 	/**
 	 * Returns a range of all the journal articles.

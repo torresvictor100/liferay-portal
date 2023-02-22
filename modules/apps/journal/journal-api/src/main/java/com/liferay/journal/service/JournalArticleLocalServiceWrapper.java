@@ -2044,6 +2044,14 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Long> getGroupIdsByUrlTitle(
+		long companyId, String urlTitle) {
+
+		return _journalArticleLocalService.getGroupIdsByUrlTitle(
+			companyId, urlTitle);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -2111,14 +2119,6 @@ public class JournalArticleLocalServiceWrapper
 
 		return _journalArticleLocalService.getJournalArticleByUuidAndGroupId(
 			uuid, groupId);
-	}
-
-	@Override
-	public java.util.List<Long> getJournalArticleGroupIdsByUrlTitle(
-		long companyId, String urlTitle) {
-
-		return _journalArticleLocalService.getJournalArticleGroupIdsByUrlTitle(
-			companyId, urlTitle);
 	}
 
 	/**
