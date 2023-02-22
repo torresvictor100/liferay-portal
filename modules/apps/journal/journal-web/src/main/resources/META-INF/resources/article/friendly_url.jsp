@@ -20,15 +20,13 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
-
-String friendlyURLDuplicatedWarningMessage = journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage();
 %>
 
-<c:if test="<%= Validator.isNotNull(friendlyURLDuplicatedWarningMessage) %>">
+<c:if test="<%= Validator.isNotNull(journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage()) %>">
 	<clay:alert
 		dismissible="<%= true %>"
 		displayType="warning"
-		message="<%= friendlyURLDuplicatedWarningMessage %>"
+		message="<%= journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage() %>"
 	/>
 </c:if>
 

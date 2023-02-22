@@ -685,14 +685,9 @@ public class JournalEditArticleDisplayContext {
 			return _friendlyURLDuplicatedWarningMessage;
 		}
 
-		List<Locale> friendlyURLDuplicatedLocales = new ArrayList<>();
-		Map<String, List<Long>> friendlyURLGroupIdsMap = new HashMap<>();
-
-		Map<Locale, String> friendlyURLMap = _article.getFriendlyURLMap();
+		List<Long> excludedGroupIds = new ArrayList<>();
 
 		Group group = _themeDisplay.getScopeGroup();
-
-		List<Long> excludedGroupIds = new ArrayList<>();
 
 		excludedGroupIds.add(group.getGroupId());
 
@@ -705,13 +700,17 @@ public class JournalEditArticleDisplayContext {
 			excludedGroupIds.add(stagingGroup.getGroupId());
 		}
 
+		List<Locale> friendlyURLDuplicatedLocales = new ArrayList<>();
+		Map<String, List<Long>> friendlyURLGroupIdsMap = new HashMap<>();
+
+		Map<Locale, String> friendlyURLMap = _article.getFriendlyURLMap();
+
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
 				entry.getValue(),
 				key -> ListUtil.remove(
-					JournalArticleLocalServiceUtil.
-						getGroupIdsByUrlTitle(
-							_themeDisplay.getCompanyId(), key),
+					JournalArticleLocalServiceUtil.getGroupIdsByUrlTitle(
+						_themeDisplay.getCompanyId(), key),
 					excludedGroupIds));
 
 			if (!groupIds.isEmpty() &&
@@ -731,7 +730,7 @@ public class JournalEditArticleDisplayContext {
 
 		Collections.reverse(friendlyURLDuplicatedLocales);
 
-		String friendlyURLDuplicatedWarningMessage;
+		String friendlyURLDuplicatedWarningMessage = null;
 
 		if (friendlyURLDuplicatedLocales.size() > 3) {
 			friendlyURLDuplicatedWarningMessage = LanguageUtil.format(

@@ -427,8 +427,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		Map<String, String> friendlyURLWarningMessages =
-			_getFriendlyURLWarningMessagesMap(
-				actionRequest, friendlyURLMap, article.getFriendlyURLMap());
+			_getFriendlyURLWarningMessages(
+				actionRequest, article.getFriendlyURLMap(), friendlyURLMap);
 
 		for (Map.Entry<String, String> entry :
 				friendlyURLWarningMessages.entrySet()) {
@@ -447,20 +447,16 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Map<String, String> _getFriendlyURLWarningMessagesMap(
-		ActionRequest actionRequest, Map<Locale, String> originalFriendlyURLMap,
-		Map<Locale, String> currentFriendlyURLMap) {
+	private Map<String, String> _getFriendlyURLWarningMessages(
+		ActionRequest actionRequest, Map<Locale, String> currentFriendlyURLMap,
+		Map<Locale, String> originalFriendlyURLMap) {
 
-		List<String> friendlyURLChangedMessages = new ArrayList<>();
-		List<Locale> friendlyURLDuplicatedLocales = new ArrayList<>();
-		Map<String, List<Long>> friendlyURLGroupIdsMap = new HashMap<>();
+		List<Long> excludedGroupIds = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
-
-		List<Long> excludedGroupIds = new ArrayList<>();
 
 		excludedGroupIds.add(group.getGroupId());
 
@@ -473,6 +469,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			excludedGroupIds.add(stagingGroup.getGroupId());
 		}
 
+		List<String> friendlyURLChangedMessages = new ArrayList<>();
+		List<Locale> friendlyURLDuplicatedLocales = new ArrayList<>();
+		Map<String, List<Long>> friendlyURLGroupIdsMap = new HashMap<>();
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
@@ -506,9 +505,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
 				currentFriendlyURL,
 				key -> ListUtil.remove(
-					_journalArticleLocalService.
-						getGroupIdsByUrlTitle(
-							themeDisplay.getCompanyId(), key),
+					_journalArticleLocalService.getGroupIdsByUrlTitle(
+						themeDisplay.getCompanyId(), key),
 					excludedGroupIds));
 
 			if (!groupIds.isEmpty() &&
