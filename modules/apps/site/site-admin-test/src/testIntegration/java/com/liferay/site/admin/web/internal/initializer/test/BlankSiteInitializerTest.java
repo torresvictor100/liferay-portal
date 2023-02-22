@@ -74,7 +74,7 @@ public class BlankSiteInitializerTest {
 	}
 
 	@Test
-	public void testCreateBlankSite() throws PortalException {
+	public void testInitialize() throws PortalException {
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
 				"blank-site-initializer");
