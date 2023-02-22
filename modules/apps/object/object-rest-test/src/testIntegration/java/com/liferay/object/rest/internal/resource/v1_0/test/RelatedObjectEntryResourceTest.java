@@ -242,7 +242,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		// Inactive Object Definition
+		// Inactive object definition
 
 		_objectDefinition.setActive(false);
 
@@ -300,7 +300,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		// Inactive Object Definition
+		// Inactive object definition
 
 		_objectDefinition.setActive(false);
 
@@ -407,7 +407,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		// Inactive Object Definition
+		// Inactive object definition
 
 		_objectRelationship = _addObjectRelationship(
 			StringUtil.randomId(), _objectDefinition.getObjectDefinitionId(),
@@ -567,7 +567,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		// Inactive Object Definition
+		// Inactive object definition
 
 		String objectFieldValue = RandomTestUtil.randomString();
 
