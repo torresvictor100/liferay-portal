@@ -974,7 +974,7 @@ public class PoshiRunnerExecutor {
 
 		if (liferaySeleniumMethod == null) {
 			throw new RuntimeException(
-				"Selenium method does not exist: " + selenium);
+				"Nonexistent Selenium method: " + selenium);
 		}
 
 		List<String> arguments = new ArrayList<>();
