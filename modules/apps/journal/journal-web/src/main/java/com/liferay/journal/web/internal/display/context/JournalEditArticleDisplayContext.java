@@ -710,7 +710,7 @@ public class JournalEditArticleDisplayContext {
 				entry.getValue(),
 				key -> ListUtil.remove(
 					JournalArticleLocalServiceUtil.
-						getJournalArticleGroupIdsByUrlTitle(
+						getGroupIdsByUrlTitle(
 							_themeDisplay.getCompanyId(), key),
 					excludedGroupIds));
 

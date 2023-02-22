@@ -507,7 +507,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				currentFriendlyURL,
 				key -> ListUtil.remove(
 					_journalArticleLocalService.
-						getJournalArticleGroupIdsByUrlTitle(
+						getGroupIdsByUrlTitle(
 							themeDisplay.getCompanyId(), key),
 					excludedGroupIds));
 

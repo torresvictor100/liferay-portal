@@ -3374,7 +3374,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getJournalArticleGroupIdsByUrlTitle(
+	public List<Long> getGroupIdsByUrlTitle(
 		long companyId, String urlTitle) {
 
 		return journalArticlePersistence.dslQuery(
