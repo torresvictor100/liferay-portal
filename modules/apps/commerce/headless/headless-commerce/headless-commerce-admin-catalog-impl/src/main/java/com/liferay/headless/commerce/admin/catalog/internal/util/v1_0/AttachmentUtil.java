@@ -200,7 +200,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentBase64.getNeverExpire(), false),
 			getTitleMap(null, attachmentBase64.getTitle()),
-			_getOptions(
+			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
 				cpOptionService, attachmentBase64.getOptions(), classPK,
 				serviceContext.getCompanyId()),
@@ -260,7 +260,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentUrl.getNeverExpire(), false),
 			getTitleMap(null, attachmentUrl.getTitle()),
-			_getOptions(
+			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
 				cpOptionService, attachmentUrl.getOptions(), classPK,
 				serviceContext.getCompanyId()),
@@ -327,7 +327,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachment.getNeverExpire(), false),
 			getTitleMap(null, attachment.getTitle()),
-			_getOptions(
+			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
 				cpOptionService, attachment.getOptions(), classPK,
 				serviceContext.getCompanyId()),
@@ -420,7 +420,7 @@ public class AttachmentUtil {
 		}
 	}
 
-	private static String _getOptions(
+	private static String _getJSON(
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
 		CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
 		CPOptionService cpOptionService, Map<String, String> options,
