@@ -625,6 +625,12 @@ public class ObjectDefinitionLocalServiceImpl
 					ServiceReference<ObjectDefinitionDeployer> serviceReference,
 					ObjectDefinitionDeployer objectDefinitionDeployer) {
 
+					for (ObjectDefinition objectDefinition :
+							_getObjectDefinitions()) {
+
+						objectDefinitionDeployer.undeploy(objectDefinition);
+					}
+
 					Map<Long, List<ServiceRegistration<?>>>
 						serviceRegistrationsMap =
 							_serviceRegistrationsMaps.remove(
