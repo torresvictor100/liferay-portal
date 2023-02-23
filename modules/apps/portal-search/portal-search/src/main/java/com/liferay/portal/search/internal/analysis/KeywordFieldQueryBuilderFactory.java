@@ -30,7 +30,7 @@ public class KeywordFieldQueryBuilderFactory
 
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String fieldName) {
-		if (queryPreProcessConfiguration.isKeywordField(fieldName)) {
+		if (queryPreProcessConfiguration.isKeywordFieldName(fieldName)) {
 			return keywordFieldQueryBuilder;
 		}
 

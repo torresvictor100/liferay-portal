@@ -38,23 +38,24 @@ import org.osgi.service.component.annotations.Component;
 public class KeywordFieldQueryBuilder implements FieldQueryBuilder {
 
 	public Query build(String field, String value) {
-		TermQuery termQuery = new TermQueryImpl(field, value);
-
-		if (_boost != null) {
-			termQuery.setBoost(_boost);
-		}
-
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		try {
 			booleanQuery.add(
 				new WildcardQueryImpl(field, value + StringPool.STAR),
 				BooleanClauseOccur.MUST);
-			booleanQuery.add(termQuery, BooleanClauseOccur.SHOULD);
 		}
 		catch (ParseException parseException) {
 			throw new SystemException(parseException);
 		}
+
+		TermQuery termQuery = new TermQueryImpl(field, value);
+
+		if (_boost != null) {
+			termQuery.setBoost(_boost);
+		}
+
+		booleanQuery.add(termQuery, BooleanClauseOccur.SHOULD);
 
 		return booleanQuery;
 	}

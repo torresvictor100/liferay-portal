@@ -17,10 +17,10 @@ package com.liferay.portal.search.internal.query;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,8 +38,8 @@ public class QueryPreProcessConfigurationImpl
 	implements QueryPreProcessConfiguration {
 
 	@Override
-	public boolean isKeywordField(String fieldName) {
-		return _keywordFields.contains(fieldName);
+	public boolean isKeywordFieldName(String fieldName) {
+		return _keywordFieldNames.contains(fieldName);
 	}
 
 	@Override
@@ -75,15 +75,16 @@ public class QueryPreProcessConfigurationImpl
 				fieldNamePattern, Pattern.compile(fieldNamePattern));
 		}
 
-		String[] keywordFields = queryPreProcessConfiguration.keywordFields();
+		String[] keywordFieldNames =
+			queryPreProcessConfiguration.keywordFieldNames();
 
-		for (String keywordField : keywordFields) {
-			_keywordFields.add(keywordField);
+		for (String keywordFieldName : keywordFieldNames) {
+			_keywordFieldNames.add(keywordFieldName);
 		}
 	}
 
 	private final Map<String, Pattern> _fieldNamePatterns =
 		new LinkedHashMap<>();
-	private final List<String> _keywordFields = new LinkedList<>();
+	private final Set<String> _keywordFieldNames = new HashSet<>();
 
 }

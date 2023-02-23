@@ -41,8 +41,8 @@ public interface QueryPreProcessConfiguration {
 
 	@Meta.AD(
 		deflt = "assetTagNames|entryClassPK|extension|fileEntryTypeId|screenName",
-		name = "keyword-fields", required = false
+		name = "keyword-field-names", required = false
 	)
-	public String[] keywordFields();
+	public String[] keywordFieldNames();
 
 }
