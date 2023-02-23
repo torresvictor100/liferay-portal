@@ -306,9 +306,10 @@ public class TaxonomyCategoryResourceTest
 			Long.valueOf(patchParentTaxonomyCategory.getId()));
 	}
 
-	private void _testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
-			TaxonomyCategory irrelevantTaxonomyCategory,
-			TaxonomyCategory taxonomyCategory)
+	private void
+			_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
+				TaxonomyCategory irrelevantTaxonomyCategory,
+				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		assertHttpResponseStatusCode(
