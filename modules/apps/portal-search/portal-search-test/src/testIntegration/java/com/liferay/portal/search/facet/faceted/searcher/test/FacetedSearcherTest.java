@@ -98,10 +98,13 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		User user = addUser(group, tag);
 
-		String[] regexSymbols = {"*", "(", ")", "[", "]", "{", "}"};
+		String[] regexSymbols = {"(", ")", "*", "[", "]", "{", "}"};
 
 		for (String regexSymbol : regexSymbols) {
-			_testSearchByQuotedRegexSymbol(user, regexSymbol, tag);
+			assertTags(
+				tag, toMap(user, tag),
+				getSearchContext(
+					StringBundler.concat("\"", tag, regexSymbol, "\"")));
 		}
 	}
 
@@ -138,24 +141,6 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		group.setActive(false);
 
 		GroupLocalServiceUtil.updateGroup(group);
-	}
-
-	private void _testSearchByQuotedRegexSymbol(
-			User user, String regexSymbol, String tag)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("\"");
-		sb.append(tag);
-		sb.append(regexSymbol);
-		sb.append("\"");
-
-		SearchContext searchContext = getSearchContext(sb.toString());
-
-		Map<String, String> expected = toMap(user, tag);
-
-		assertTags(tag, expected, searchContext);
 	}
 
 }
