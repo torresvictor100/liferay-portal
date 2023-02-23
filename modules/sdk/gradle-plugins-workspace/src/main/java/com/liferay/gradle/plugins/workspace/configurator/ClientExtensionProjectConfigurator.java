@@ -561,7 +561,7 @@ public class ClientExtensionProjectConfigurator
 			}
 			catch (Exception exception) {
 				throw new GradleException(
-					"Failed parsing client-extension.properties file",
+					"Unable to parse client-extension.properties file",
 					exception);
 			}
 		}
