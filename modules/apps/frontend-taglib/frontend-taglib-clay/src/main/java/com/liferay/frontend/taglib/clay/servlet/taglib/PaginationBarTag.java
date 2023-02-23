@@ -399,6 +399,7 @@ public class PaginationBarTag extends BaseContainerTag {
 			IconTag iconTag = new IconTag();
 
 			iconTag.setSymbol("angle-right");
+
 			iconTag.doTag(pageContext);
 
 			jspWriter.write("</div>");
