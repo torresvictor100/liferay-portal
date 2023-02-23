@@ -145,7 +145,7 @@ public class TaxonomyCategoryResourceTest
 					}
 				}));
 
-		// Patch parent taxonomy category in a different taxonomy vocabulary
+		// Patch parent taxonomy category with a different taxonomy vocabulary
 
 		_assetVocabulary = _addAssetVocabulary();
 
@@ -194,7 +194,6 @@ public class TaxonomyCategoryResourceTest
 		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
 
 		taxonomyCategory.setId(String.valueOf(RandomTestUtil.randomLong()));
-
 		taxonomyCategory.setTaxonomyVocabularyId(
 			_assetVocabulary.getVocabularyId());
 
