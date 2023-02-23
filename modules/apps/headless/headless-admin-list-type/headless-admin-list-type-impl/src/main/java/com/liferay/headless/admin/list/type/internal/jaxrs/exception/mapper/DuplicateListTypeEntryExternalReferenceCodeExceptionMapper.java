@@ -48,9 +48,4 @@ public class DuplicateListTypeEntryExternalReferenceCodeExceptionMapper
 			duplicateListTypeEntryExternalReferenceCodeException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }
