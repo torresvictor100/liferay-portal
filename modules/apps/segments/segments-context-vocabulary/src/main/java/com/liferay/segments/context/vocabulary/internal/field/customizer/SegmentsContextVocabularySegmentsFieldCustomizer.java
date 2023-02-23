@@ -92,11 +92,11 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 
 		Group group = _groupLocalService.fetchCompanyGroup(companyId);
 
-		AssetVocabulary groupVocabulary =
+		AssetVocabulary groupAssetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				group.getGroupId(), assetVocabulary);
 
-		if (groupVocabulary == null) {
+		if (groupAssetVocabulary == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -108,7 +108,7 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 		}
 
 		return TransformUtil.transform(
-			groupVocabulary.getCategories(),
+			groupAssetVocabulary.getCategories(),
 			assetCategory -> new Field.Option(
 				assetCategory.getTitle(locale), assetCategory.getName()));
 	}
