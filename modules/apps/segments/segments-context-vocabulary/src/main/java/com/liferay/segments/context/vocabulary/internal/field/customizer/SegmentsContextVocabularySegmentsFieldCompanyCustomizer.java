@@ -100,8 +100,8 @@ public class SegmentsContextVocabularySegmentsFieldCompanyCustomizer
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"No vocabulary was found with name ", assetVocabulary,
-						" in company ", companyId));
+						"No asset vocabulary was found with name ",
+						assetVocabulary, " in company ", companyId));
 			}
 
 			return Collections.emptyList();
