@@ -113,10 +113,10 @@ public class OrganizationFixture {
 	}
 
 	public List<String> getCountryNames(Organization organization) {
+		Set<String> countryNames = new HashSet<>();
+
 		Country country = _countryService.fetchCountry(
 			organization.getCountryId());
-
-		Set<String> countryNames = new HashSet<>();
 
 		for (Locale locale : _language.getAvailableLocales()) {
 			countryNames.add(StringUtil.toLowerCase(country.getName(locale)));
