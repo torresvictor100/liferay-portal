@@ -62,6 +62,10 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Language language = Mockito.mock(Language.class);
@@ -91,10 +95,6 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 		);
 
 		languageUtil.setLanguage(language);
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test
