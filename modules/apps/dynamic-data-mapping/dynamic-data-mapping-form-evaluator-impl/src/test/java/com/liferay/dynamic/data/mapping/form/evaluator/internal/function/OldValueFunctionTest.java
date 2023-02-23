@@ -40,18 +40,18 @@ public class OldValueFunctionTest {
 
 		ddmExpressionParameterAccessor.setGetObjectFieldsOldValuesSupplier(
 			() -> HashMapBuilder.<String, Object>put(
-				"objectField1", "objectFieldValue1"
+				"aaa", "AAA"
 			).put(
-				"objectField2", "objectFieldValue2"
+				"bbb", "BBB"
 			).build());
 
 		_oldValueFunction.setDDMExpressionParameterAccessor(
 			ddmExpressionParameterAccessor);
 
 		Assert.assertEquals(
-			"objectFieldValue1", _oldValueFunction.apply("objectField1"));
+			"AAA", _oldValueFunction.apply("aaa"));
 		Assert.assertEquals(
-			"objectFieldValue2", _oldValueFunction.apply("objectField2"));
+			"BBB", _oldValueFunction.apply("bbb"));
 		Assert.assertNull(
 			_oldValueFunction.apply(RandomTestUtil.randomString()));
 	}
