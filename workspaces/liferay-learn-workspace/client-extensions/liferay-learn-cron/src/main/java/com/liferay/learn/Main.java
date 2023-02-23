@@ -132,12 +132,6 @@ public class Main {
 			markdownImportDirFile.getCanonicalPath(),
 			GetterUtil.getBoolean(System.getenv("OFFLINE")));
 
-		if (!main.validateUUIDs()) {
-			System.err.println(
-				"Invalid UUIDs found - stopping upload to Liferay");
-			System.exit(1);
-		}
-
 		main.uploadToLiferay();
 	}
 
@@ -185,6 +179,13 @@ public class Main {
 					site.getId(), "journal", liferayDataDefinitionKey);
 
 		_liferayContentStructureId = dataDefinition.getId();
+
+		if (!_validateUUIDs()) {
+			System.err.println(
+				"Invalid UUIDs found - stopping upload to Liferay");
+
+			System.exit(1);
+		}
 	}
 
 	public void uploadToLiferay() throws Exception {
@@ -400,60 +401,6 @@ public class Main {
 
 			System.exit(1);
 		}
-	}
-
-	public boolean validateUUIDs() throws Exception {
-		Set<String> uuids = new HashSet<>();
-
-		for (String fileName : _fileNames) {
-			if (!fileName.contains("/en/") || !fileName.endsWith(".md")) {
-				continue;
-			}
-
-			File englishFile = new File(fileName);
-
-			String englishText = _processMarkdown(
-				FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
-				englishFile);
-
-			String uuid = _getUuid(englishText);
-
-			if (Validator.isNull(uuid)) {
-				System.err.println("Nonexistent UUID for file " + fileName);
-
-				return false;
-			}
-
-			if (uuids.contains(uuid)) {
-				System.err.println(
-					StringBundler.concat(
-						"Duplicate UUID ", uuid, " found in file ", fileName));
-
-				return false;
-			}
-
-			uuids.add(uuid);
-
-			File japaneseFile = new File(
-				StringUtil.replace(fileName, "/en/", "/ja/"));
-
-			if (japaneseFile.exists()) {
-				String japaneseText = _processMarkdown(
-					FileUtils.readFileToString(
-						japaneseFile, StandardCharsets.UTF_8),
-					japaneseFile);
-
-				if (Validator.isNotNull(_getUuid(japaneseText))) {
-					System.err.println(
-						"UUID found in translated file " +
-							japaneseFile.getPath());
-
-					return false;
-				}
-			}
-		}
-
-		return true;
 	}
 
 	private void _addFileNames(String fileName) {
@@ -1802,6 +1749,60 @@ public class Main {
 		structuredContent.setViewableBy(StructuredContent.ViewableBy.ANYONE);
 
 		return structuredContent;
+	}
+
+	private boolean _validateUUIDs() throws Exception {
+		Set<String> uuids = new HashSet<>();
+
+		for (String fileName : _fileNames) {
+			if (!fileName.contains("/en/") || !fileName.endsWith(".md")) {
+				continue;
+			}
+
+			File englishFile = new File(fileName);
+
+			String englishText = _processMarkdown(
+				FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
+				englishFile);
+
+			String uuid = _getUuid(englishText);
+
+			if (Validator.isNull(uuid)) {
+				System.err.println("Nonexistent UUID for file " + fileName);
+
+				return false;
+			}
+
+			if (uuids.contains(uuid)) {
+				System.err.println(
+					StringBundler.concat(
+						"Duplicate UUID ", uuid, " found in file ", fileName));
+
+				return false;
+			}
+
+			uuids.add(uuid);
+
+			File japaneseFile = new File(
+				StringUtil.replace(fileName, "/en/", "/ja/"));
+
+			if (japaneseFile.exists()) {
+				String japaneseText = _processMarkdown(
+					FileUtils.readFileToString(
+						japaneseFile, StandardCharsets.UTF_8),
+					japaneseFile);
+
+				if (Validator.isNotNull(_getUuid(japaneseText))) {
+					System.err.println(
+						"UUID found in translated file " +
+							japaneseFile.getPath());
+
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private void _visit(Image image) throws Exception {
