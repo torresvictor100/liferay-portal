@@ -64,11 +64,11 @@ public class TaxonomyCategoryResourceTest
 			testPatchTaxonomyCategory_addTaxonomyCategory(),
 			_addAssetVocabulary());
 
-		_testPatchTaxonomyCategoryWithinExistentParentTaxonomyCategory(
+		_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
 			randomTaxonomyCategory(),
 			testPatchTaxonomyCategory_addTaxonomyCategory());
 
-		_testPatchTaxonomyCategoryWithinExistentParentTaxonomyVocabulary(
+		_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyVocabulary(
 			testPatchTaxonomyCategory_addTaxonomyCategory(),
 			_randomTaxonomyVocabulary());
 
@@ -306,7 +306,7 @@ public class TaxonomyCategoryResourceTest
 			Long.valueOf(patchParentTaxonomyCategory.getId()));
 	}
 
-	private void _testPatchTaxonomyCategoryWithinExistentParentTaxonomyCategory(
+	private void _testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
 			TaxonomyCategory irrelevantTaxonomyCategory,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -329,7 +329,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	private void
-			_testPatchTaxonomyCategoryWithinExistentParentTaxonomyVocabulary(
+			_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyVocabulary(
 				TaxonomyCategory taxonomyCategory,
 				TaxonomyVocabulary irrelevantTaxonomyVocabulary)
 		throws Exception {
