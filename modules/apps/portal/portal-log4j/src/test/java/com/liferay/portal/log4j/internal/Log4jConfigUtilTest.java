@@ -579,7 +579,7 @@ public class Log4jConfigUtilTest {
 		try {
 			Log4jConfigUtil.getCompanyLogDirectory(companyId);
 
-			Assert.fail("Should throw IllegalStateException");
+			Assert.fail();
 		}
 		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
