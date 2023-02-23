@@ -46,30 +46,31 @@ public class A11yConfigurationUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		Configuration oldConfiguration = configurations[0];
+		Configuration ffA11yConfiguration = configurations[0];
 
-		Dictionary<String, Object> oldProperties =
-			oldConfiguration.getProperties();
+		Dictionary<String, Object> ffA11yProperties =
+			ffA11yConfiguration.getProperties();
 
-		if (GetterUtil.getBoolean(oldProperties.get("enable"))) {
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				A11yConfiguration.class.getName(), "?");
+		if (GetterUtil.getBoolean(ffA11yProperties.get("enable"))) {
+			Configuration a11yConfiguration =
+				_configurationAdmin.getConfiguration(
+					A11yConfiguration.class.getName(), "?");
 
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
+			Dictionary<String, Object> a11yProperties =
+				a11yConfiguration.getProperties();
 
-			if (properties == null) {
-				properties = new HashMapDictionary<>();
+			if (a11yProperties == null) {
+				a11yProperties = new HashMapDictionary<>();
 			}
 
-			if (!GetterUtil.getBoolean(properties.get("enable"))) {
-				properties.put("enable", true);
+			if (!GetterUtil.getBoolean(a11yProperties.get("enable"))) {
+				a11yProperties.put("enable", true);
 
-				configuration.update(properties);
+				a11yConfiguration.update(a11yProperties);
 			}
 		}
 
-		oldConfiguration.delete();
+		ffA11yConfiguration.delete();
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;
