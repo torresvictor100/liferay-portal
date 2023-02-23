@@ -76,7 +76,8 @@ public class DLFileEntryKeywordQueryContributor
 			try {
 				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
 
-				_addKeywordsToFileNameBooleanQuery(fileNameBooleanQuery, keywords);
+				_addKeywordsToFileNameBooleanQuery(
+					fileNameBooleanQuery, keywords);
 
 				booleanQuery.add(
 					_getMatchQuery(
