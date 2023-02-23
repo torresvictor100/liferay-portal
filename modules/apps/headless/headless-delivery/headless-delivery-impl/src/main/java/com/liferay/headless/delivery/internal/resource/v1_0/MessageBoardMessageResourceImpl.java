@@ -78,7 +78,9 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -410,6 +412,8 @@ public class MessageBoardMessageResourceImpl
 
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			messageBoardMessageId);
+		messageBoardMessage.setShowAsAnswer( false);
+
 
 		return _updateMessageBoardMessage(mbMessage, messageBoardMessage);
 	}
