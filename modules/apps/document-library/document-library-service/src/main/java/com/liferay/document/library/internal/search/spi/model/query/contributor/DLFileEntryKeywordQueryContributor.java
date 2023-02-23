@@ -76,7 +76,7 @@ public class DLFileEntryKeywordQueryContributor
 			try {
 				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
 
-				_addKeywordsToQuery(fileNameBooleanQuery, keywords);
+				_addKeywordsToFileNameBooleanQuery(fileNameBooleanQuery, keywords);
 
 				booleanQuery.add(
 					_getMatchQuery(
@@ -100,7 +100,7 @@ public class DLFileEntryKeywordQueryContributor
 	@Reference
 	protected QueryHelper queryHelper;
 
-	private void _addKeywordsToQuery(
+	private void _addKeywordsToFileNameBooleanQuery(
 			BooleanQuery fileNameBooleanQuery, String keywords)
 		throws ParseException {
 
@@ -122,7 +122,8 @@ public class DLFileEntryKeywordQueryContributor
 				"");
 
 			if (Validator.isNotNull(remainingKeywords)) {
-				_addKeywordsToQuery(fileNameBooleanQuery, remainingKeywords);
+				_addKeywordsToFileNameBooleanQuery(
+					fileNameBooleanQuery, remainingKeywords);
 			}
 		}
 	}
