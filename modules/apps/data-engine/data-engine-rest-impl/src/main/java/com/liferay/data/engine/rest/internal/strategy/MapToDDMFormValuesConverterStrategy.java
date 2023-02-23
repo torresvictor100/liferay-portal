@@ -88,19 +88,20 @@ public interface MapToDDMFormValuesConverterStrategy {
 		else {
 			String languageId = LanguageUtil.getLanguageId(locale);
 
-			if (!localizedValues.containsKey(languageId)) {
+			Object object = localizedValues.get(languageId);
+
+			if (object == null) {
 				return localizedValue;
 			}
 
-			if (localizedValues.get(languageId) instanceof Collection) {
+			if (object instanceof Collection) {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-					(Collection<?>)localizedValues.get(languageId));
+					(Collection<?>)object);
 
 				localizedValue.addString(locale, jsonArray.toString());
 			}
-			else if (localizedValues.get(languageId) instanceof Object[]) {
-				JSONArray jsonArray = JSONUtil.putAll(
-					(Object[])localizedValues.get(languageId));
+			else if (object instanceof Object[]) {
+				JSONArray jsonArray = JSONUtil.putAll((Object[])object);
 
 				localizedValue.addString(locale, jsonArray.toString());
 			}
