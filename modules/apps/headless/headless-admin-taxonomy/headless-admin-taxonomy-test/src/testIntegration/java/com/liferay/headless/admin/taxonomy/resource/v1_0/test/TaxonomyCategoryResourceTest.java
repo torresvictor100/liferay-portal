@@ -63,11 +63,9 @@ public class TaxonomyCategoryResourceTest
 		_testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(
 			testPatchTaxonomyCategory_addTaxonomyCategory(),
 			_addAssetVocabulary());
-
 		_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
 			randomTaxonomyCategory(),
 			testPatchTaxonomyCategory_addTaxonomyCategory());
-
 		_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyVocabulary(
 			testPatchTaxonomyCategory_addTaxonomyCategory(),
 			_randomTaxonomyVocabulary());
@@ -308,7 +306,7 @@ public class TaxonomyCategoryResourceTest
 
 	private void
 			_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyCategory(
-				TaxonomyCategory irrelevantTaxonomyCategory,
+				TaxonomyCategory randomTaxonomyCategory,
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -322,7 +320,7 @@ public class TaxonomyCategoryResourceTest
 							{
 								setId(
 									Long.valueOf(
-										irrelevantTaxonomyCategory.getId()));
+										randomTaxonomyCategory.getId()));
 							}
 						};
 					}
@@ -332,7 +330,7 @@ public class TaxonomyCategoryResourceTest
 	private void
 			_testPatchTaxonomyCategoryWithNonexistentParentTaxonomyVocabulary(
 				TaxonomyCategory taxonomyCategory,
-				TaxonomyVocabulary irrelevantTaxonomyVocabulary)
+				TaxonomyVocabulary randomTaxonomyVocabulary)
 		throws Exception {
 
 		assertHttpResponseStatusCode(
@@ -341,8 +339,7 @@ public class TaxonomyCategoryResourceTest
 				taxonomyCategory.getId(),
 				new TaxonomyCategory() {
 					{
-						taxonomyVocabularyId =
-							irrelevantTaxonomyVocabulary.getId();
+						taxonomyVocabularyId = randomTaxonomyVocabulary.getId();
 					}
 				}));
 	}
@@ -352,9 +349,6 @@ public class TaxonomyCategoryResourceTest
 				TaxonomyCategory taxonomyCategory1,
 				TaxonomyCategory taxonomyCategory2)
 		throws Exception {
-
-		Long taxonomyVocabularyId1 =
-			taxonomyCategory1.getTaxonomyVocabularyId();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
@@ -370,12 +364,12 @@ public class TaxonomyCategoryResourceTest
 							parentTaxonomyCategory =
 								new ParentTaxonomyCategory() {
 									{
-										setId(
-											Long.valueOf(
-												taxonomyCategory2.getId()));
+										id = Long.valueOf(
+											taxonomyCategory2.getId());
 									}
 								};
-							taxonomyVocabularyId = taxonomyVocabularyId1;
+							taxonomyVocabularyId =
+								taxonomyCategory1.getTaxonomyVocabularyId();
 						}
 					}));
 		}
