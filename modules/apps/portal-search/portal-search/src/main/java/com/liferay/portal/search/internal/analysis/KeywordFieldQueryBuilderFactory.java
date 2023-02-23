@@ -17,13 +17,9 @@ package com.liferay.portal.search.internal.analysis;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
-import com.liferay.portal.search.index.IndexInformation;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Joshua Cords
@@ -40,13 +36,6 @@ public class KeywordFieldQueryBuilderFactory
 
 		return null;
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile IndexInformation indexInformation;
 
 	@Reference
 	protected KeywordFieldQueryBuilder keywordFieldQueryBuilder;
