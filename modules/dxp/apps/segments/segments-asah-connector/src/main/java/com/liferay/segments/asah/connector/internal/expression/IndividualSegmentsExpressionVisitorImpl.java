@@ -66,12 +66,12 @@ public class IndividualSegmentsExpressionVisitorImpl
 		@NotNull IndividualSegmentsExpressionParser.NotExpressionContext
 			notExpressionContext) {
 
+		Criteria resultCriteria = new Criteria();
+
 		Criteria criteria = visitChildren(
 			notExpressionContext.booleanUnaryExpression());
 
 		Criteria.Criterion criterion = criteria.getCriterion(_KEY);
-
-		Criteria resultCriteria = new Criteria();
 
 		resultCriteria.addCriterion(
 			_KEY, Criteria.Type.parse(criterion.getTypeValue()),
@@ -102,13 +102,13 @@ public class IndividualSegmentsExpressionVisitorImpl
 			IndividualSegmentsExpressionParser.ToFilterByCountExpressionContext
 				toFilterByCountExpressionContext) {
 
+		Criteria criteria = new Criteria();
+
 		IndividualSegmentsExpressionParser.FilterByCountExpressionContext
 			filterByCountExpressionContext =
 				(IndividualSegmentsExpressionParser.
 					FilterByCountExpressionContext)
 						toFilterByCountExpressionContext.getChild(0);
-
-		Criteria criteria = new Criteria();
 
 		criteria.addCriterion(
 			_KEY, Criteria.Type.ANALYTICS,
