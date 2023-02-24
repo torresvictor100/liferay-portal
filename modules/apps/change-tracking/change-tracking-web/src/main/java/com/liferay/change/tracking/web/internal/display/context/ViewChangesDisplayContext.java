@@ -247,15 +247,14 @@ public class ViewChangesDisplayContext {
 
 		boolean showHideable = ParamUtil.getBoolean(
 			_renderRequest, "showHideable");
-
 		Map<Long, String> typeNameCacheMap = new HashMap<>();
 
 		for (Map.Entry<Long, Set<Long>> entry :
 				classNameIdClassPKsMap.entrySet()) {
 
 			_populateEntryValues(
-				modelInfoMap, entry.getKey(), entry.getValue(),
-				typeNameCacheMap, showHideable);
+				modelInfoMap, entry.getKey(), entry.getValue(), showHideable,
+				typeNameCacheMap);
 		}
 
 		if (ctClosure != null) {
@@ -1067,8 +1066,8 @@ public class ViewChangesDisplayContext {
 
 	private <T extends BaseModel<T>> void _populateEntryValues(
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
-			Set<Long> classPKs, Map<Long, String> typeNameCacheMap,
-			boolean showHideable)
+			Set<Long> classPKs, boolean showHideable,
+			Map<Long, String> typeNameCacheMap)
 		throws Exception {
 
 		Map<Serializable, T> baseModelMap = null;
