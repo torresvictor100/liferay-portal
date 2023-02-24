@@ -653,10 +653,10 @@ public class SegmentsExperimentLocalServiceImpl
 	private void _validateSplit(Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws PortalException {
 
+		double segmentsExperienceIdSplitsSum = 0;
+
 		Collection<Double> segmentsExperienceIdSplitsValues =
 			segmentsExperienceIdSplitMap.values();
-
-		double segmentsExperienceIdSplitsSum = 0;
 
 		for (Double segmentsExperienceIdSplitsValue :
 				segmentsExperienceIdSplitsValues) {

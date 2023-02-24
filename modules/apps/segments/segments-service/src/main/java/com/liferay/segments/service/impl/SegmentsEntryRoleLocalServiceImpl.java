@@ -205,10 +205,10 @@ public class SegmentsEntryRoleLocalServiceImpl
 	}
 
 	private Set<Long> _getSiteRoleIdsSet(long segmentsEntryId) {
+		Set<Long> roleIds = new HashSet<>();
+
 		List<SegmentsEntryRole> segmentsEntryRoles = getSegmentsEntryRoles(
 			segmentsEntryId);
-
-		Set<Long> roleIds = new HashSet<>();
 
 		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
 			Role role = _roleLocalService.fetchRole(
