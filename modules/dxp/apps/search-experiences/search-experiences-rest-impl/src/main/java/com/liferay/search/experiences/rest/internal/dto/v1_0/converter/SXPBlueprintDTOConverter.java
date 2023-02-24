@@ -159,40 +159,40 @@ public class SXPBlueprintDTOConverter
 
 		try {
 			for (ElementInstance elementInstance : elementInstances) {
-				SXPElement elementInstanceSXPElement =
-					elementInstance.getSxpElement();
+				SXPElement sxpElement = elementInstance.getSxpElement();
 
-				Long elementInstanceSXPElementId =
-					(Long)elementInstanceSXPElement.getId();
+				Long sxpElementId = (Long)sxpElement.getId();
 
-				if (elementInstanceSXPElementId != null) {
-					com.liferay.search.experiences.model.SXPElement sxpElement =
-						_sxpElementLocalService.getSXPElement(
-							elementInstanceSXPElementId);
+				if (sxpElementId != null) {
+					com.liferay.search.experiences.model.SXPElement
+						serviceBuilderSXPElement =
+							_sxpElementLocalService.getSXPElement(sxpElementId);
 
-					elementInstanceSXPElement.setDescription(
+					sxpElement.setDescription(
 						_language.get(
-							locale, sxpElement.getDescription(locale)));
-					elementInstanceSXPElement.setTitle(
-						_language.get(locale, sxpElement.getTitle(locale)));
+							locale,
+							serviceBuilderSXPElement.getDescription(locale)));
+					sxpElement.setTitle(
+						_language.get(
+							locale, serviceBuilderSXPElement.getTitle(locale)));
 				}
 				else {
 					String descriptionXml = _localization.getXml(
-						elementInstanceSXPElement.getDescription_i18n(),
+						sxpElement.getDescription_i18n(),
 						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 						"Description");
 					String titleXml = _localization.getXml(
-						elementInstanceSXPElement.getTitle_i18n(),
+						sxpElement.getTitle_i18n(),
 						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 						"Title");
 
-					elementInstanceSXPElement.setDescription(
+					sxpElement.setDescription(
 						_language.get(
 							locale,
 							_localization.getLocalization(
 								descriptionXml,
 								LocaleUtil.toLanguageId(locale))));
-					elementInstanceSXPElement.setTitle(
+					sxpElement.setTitle(
 						_language.get(
 							locale,
 							_localization.getLocalization(
