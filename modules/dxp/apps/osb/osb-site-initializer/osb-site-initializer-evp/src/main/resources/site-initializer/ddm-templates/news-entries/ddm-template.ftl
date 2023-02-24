@@ -82,7 +82,7 @@
 
 		Liferay.Util.openModal({
 			  headerHTML: title.innerHTML,
-				bodyHTML: '<div style=" max-height: 600px; overflow: auto;" class="border-0">' + text + '</div>',
+				bodyHTML: '<div class="border-0" style=" max-height: 600px; overflow: auto;">' + text + '</div>',
 				size: 'lg',
 			  center: true,
 			  buttons: [
