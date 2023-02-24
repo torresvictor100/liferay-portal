@@ -37,7 +37,7 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 /**
  * @author Sam Ziemer
  */
-public class UpgradeConfigurationPid extends UpgradeProcess {
+public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

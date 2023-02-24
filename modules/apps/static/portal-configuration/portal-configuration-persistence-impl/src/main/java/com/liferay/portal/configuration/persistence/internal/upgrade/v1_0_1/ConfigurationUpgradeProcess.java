@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.persistence.internal.upgrade.v1_0_0;
+package com.liferay.portal.configuration.persistence.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -21,7 +21,7 @@ import java.sql.PreparedStatement;
 /**
  * @author Raymond Augé
  */
-public class UpgradeConfigurationRemoveK8SConfigs extends UpgradeProcess {
+public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
