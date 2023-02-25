@@ -73,7 +73,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 			if (paginationStartParameterName == null) {
 				throw new NoSuchElementException(
-					"Unable to locate search request builder in portlet id: " +
+					"Pagination start parameter name is null for portlet ID " +
 						portletSharedSearchSettings.getPortletId());
 			}
 
