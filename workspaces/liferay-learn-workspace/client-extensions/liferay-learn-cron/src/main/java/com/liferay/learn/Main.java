@@ -889,6 +889,16 @@ public class Main {
 	}
 
 	private void _initResourceBuilders(String authorization) throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			DataDefinitionResource.builder();
+
+		_dataDefinitionResource = dataDefinitionResourceBuilder.header(
+			"Authorization", authorization
+		).endpoint(
+			_liferayURL.getHost(), _liferayURL.getPort(),
+			_liferayURL.getProtocol()
+		).build();
+
 		DocumentFolderResource.Builder documentFolderResourceBuilder =
 			DocumentFolderResource.builder();
 
@@ -909,10 +919,9 @@ public class Main {
 			_liferayURL.getProtocol()
 		).build();
 
-		StructuredContentResource.Builder structuredContentResourceBuilder =
-			StructuredContentResource.builder();
+		SiteResource.Builder siteResourceBuilder = SiteResource.builder();
 
-		_structuredContentResource = structuredContentResourceBuilder.header(
+		_siteResource = siteResourceBuilder.header(
 			"Authorization", authorization
 		).endpoint(
 			_liferayURL.getHost(), _liferayURL.getPort(),
@@ -931,19 +940,10 @@ public class Main {
 				_liferayURL.getProtocol()
 			).build();
 
-		SiteResource.Builder siteResourceBuilder = SiteResource.builder();
+		StructuredContentResource.Builder structuredContentResourceBuilder =
+			StructuredContentResource.builder();
 
-		_siteResource = siteResourceBuilder.header(
-			"Authorization", authorization
-		).endpoint(
-			_liferayURL.getHost(), _liferayURL.getPort(),
-			_liferayURL.getProtocol()
-		).build();
-
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			DataDefinitionResource.builder();
-
-		_dataDefinitionResource = dataDefinitionResourceBuilder.header(
+		_structuredContentResource = structuredContentResourceBuilder.header(
 			"Authorization", authorization
 		).endpoint(
 			_liferayURL.getHost(), _liferayURL.getPort(),
