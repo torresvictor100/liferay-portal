@@ -586,6 +586,84 @@ public class Main {
 		return documentFolderId;
 	}
 
+	private JSONArray _getNavigationLinksJSONArray(
+			File navigationFile, File file, String text)
+		throws Exception {
+
+		JSONArray navigationLinksJSONArray = new JSONArray();
+
+		com.vladsch.flexmark.util.ast.Document document = _parser.parse(text);
+
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		snakeYamlFrontMatterVisitor.visit(document);
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+
+		if ((data == null) || !data.containsKey("toc")) {
+			return navigationLinksJSONArray;
+		}
+
+		Object toc = data.get("toc");
+
+		if (!(toc instanceof ArrayList)) {
+			return navigationLinksJSONArray;
+		}
+
+		for (Object tocEntry : (ArrayList)toc) {
+			if (!(tocEntry instanceof String)) {
+				continue;
+			}
+
+			Matcher matcher = _markdownLinkPattern.matcher((String)tocEntry);
+
+			if (matcher.find()) {
+				JSONObject linkJSONObject = new JSONObject();
+
+				linkJSONObject.put("title", matcher.group(1));
+				linkJSONObject.put("url", matcher.group(2));
+
+				navigationLinksJSONArray.put(linkJSONObject);
+
+				continue;
+			}
+
+			String tocFileName = (String)tocEntry;
+
+			String filePathString =
+				navigationFile.getParent() + File.separator + tocFileName;
+
+			File tocFile = new File(filePathString);
+
+			if (!tocFile.exists() || tocFile.isDirectory()) {
+				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
+
+				continue;
+			}
+
+			JSONObject linkJSONObject = new JSONObject();
+
+			linkJSONObject.put(
+				"title",
+				_getTitle(
+					FileUtils.readFileToString(
+						tocFile, StandardCharsets.UTF_8)));
+
+			Path filePath = Paths.get(file.getParent());
+			Path tocPath = Paths.get(tocFile.toURI());
+
+			linkJSONObject.put(
+				"url",
+				FilenameUtils.removeExtension(
+					String.valueOf(filePath.relativize(tocPath))));
+
+			navigationLinksJSONArray.put(linkJSONObject);
+		}
+
+		return navigationLinksJSONArray;
+	}
+
 	private JSONArray _getNavigationLinksJSONArray(File file, String text)
 		throws Exception {
 
@@ -1403,84 +1481,6 @@ public class Main {
 		_write(html, "build/html", file);
 
 		return html;
-	}
-
-	private JSONArray _getNavigationLinksJSONArray(
-			File navigationFile, File file, String text)
-		throws Exception {
-
-		JSONArray navigationLinksJSONArray = new JSONArray();
-
-		com.vladsch.flexmark.util.ast.Document document = _parser.parse(text);
-
-		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
-			new SnakeYamlFrontMatterVisitor();
-
-		snakeYamlFrontMatterVisitor.visit(document);
-
-		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
-
-		if ((data == null) || !data.containsKey("toc")) {
-			return navigationLinksJSONArray;
-		}
-
-		Object toc = data.get("toc");
-
-		if (!(toc instanceof ArrayList)) {
-			return navigationLinksJSONArray;
-		}
-
-		for (Object tocEntry : (ArrayList)toc) {
-			if (!(tocEntry instanceof String)) {
-				continue;
-			}
-
-			Matcher matcher = _markdownLinkPattern.matcher((String)tocEntry);
-
-			if (matcher.find()) {
-				JSONObject linkJSONObject = new JSONObject();
-
-				linkJSONObject.put("title", matcher.group(1));
-				linkJSONObject.put("url", matcher.group(2));
-
-				navigationLinksJSONArray.put(linkJSONObject);
-
-				continue;
-			}
-
-			String tocFileName = (String)tocEntry;
-
-			String filePathString =
-				navigationFile.getParent() + File.separator + tocFileName;
-
-			File tocFile = new File(filePathString);
-
-			if (!tocFile.exists() || tocFile.isDirectory()) {
-				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
-
-				continue;
-			}
-
-			JSONObject linkJSONObject = new JSONObject();
-
-			linkJSONObject.put(
-				"title",
-				_getTitle(
-					FileUtils.readFileToString(
-						tocFile, StandardCharsets.UTF_8)));
-
-			Path filePath = Paths.get(file.getParent());
-			Path tocPath = Paths.get(tocFile.toURI());
-
-			linkJSONObject.put(
-				"url",
-				FilenameUtils.removeExtension(
-					String.valueOf(filePath.relativize(tocPath))));
-
-			navigationLinksJSONArray.put(linkJSONObject);
-		}
-
-		return navigationLinksJSONArray;
 	}
 
 	private StructuredContent _toStructuredContent(String fileName)
