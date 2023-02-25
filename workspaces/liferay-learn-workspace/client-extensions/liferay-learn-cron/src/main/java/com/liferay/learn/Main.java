@@ -1456,29 +1456,26 @@ public class Main {
 			File tocFile = new File(filePathString);
 
 			if (!tocFile.exists() || tocFile.isDirectory()) {
-				_warn(
-					"Nonexistent or invalid toc file path " +
-						tocFile.getPath());
+				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
 
 				continue;
 			}
 
-			String tocText = FileUtils.readFileToString(
-				tocFile, StandardCharsets.UTF_8);
-
 			JSONObject linkJSONObject = new JSONObject();
 
-			linkJSONObject.put("title", _getTitle(tocText));
+			linkJSONObject.put(
+				"title",
+				_getTitle(
+					FileUtils.readFileToString(
+						tocFile, StandardCharsets.UTF_8)));
 
-			Path tocPath = Paths.get(tocFile.toURI());
 			Path filePath = Paths.get(file.getParent());
-
-			String relativeTOCFilePathString = String.valueOf(
-				filePath.relativize(tocPath));
+			Path tocPath = Paths.get(tocFile.toURI());
 
 			linkJSONObject.put(
 				"url",
-				FilenameUtils.removeExtension(relativeTOCFilePathString));
+				FilenameUtils.removeExtension(
+					String.valueOf(filePath.relativize(tocPath))));
 
 			navigationLinksJSONArray.put(linkJSONObject);
 		}
