@@ -251,10 +251,10 @@ public class Main {
 			}
 
 			try {
+				StructuredContent importedStructuredContent = null;
+
 				StructuredContent structuredContent = _toStructuredContent(
 					fileName);
-
-				StructuredContent importedStructuredContent;
 
 				if (externalReferenceCodeStructuredContents.containsKey(
 						structuredContent.getExternalReferenceCode())) {
