@@ -596,11 +596,10 @@ public class Main {
 			File parentMarkdownFile = _getParentMarkdownFile(file);
 
 			if (parentMarkdownFile != null) {
-				String parentText = FileUtils.readFileToString(
-					parentMarkdownFile, StandardCharsets.UTF_8);
-
 				navigationLinksJSONArray = _toNavigationLinksJSONArray(
-					parentMarkdownFile, file, parentText);
+					parentMarkdownFile, file,
+					FileUtils.readFileToString(
+						parentMarkdownFile, StandardCharsets.UTF_8));
 			}
 		}
 
