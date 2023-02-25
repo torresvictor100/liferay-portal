@@ -151,8 +151,6 @@ public class Main {
 
 		System.out.println("Liferay URL: " + _liferayURL);
 
-		_yaml = new Yaml();
-
 		_addFileNames(_markdownImportDirName);
 
 		_initFlexmark();
@@ -2007,7 +2005,7 @@ public class Main {
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
 	private final List<String> _warningMessages = new ArrayList<>();
-	private final Yaml _yaml;
+	private final Yaml _yaml = new Yaml();
 
 	private class GridCard {
 
