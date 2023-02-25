@@ -67,6 +67,9 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
+			Map<String, AcquisitionChannel> acquisitionChannels =
+				new HashMap<>();
+
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
@@ -87,16 +90,13 @@ public class AnalyticsReportsDataProvider {
 						Map.class, typeFactory.constructType(String.class),
 						typeFactory.constructType(Long.class)));
 
-			Collection<Long> values = acquisitionChannelValues.values();
-
 			Double total = 0.0;
+
+			Collection<Long> values = acquisitionChannelValues.values();
 
 			for (Long value : values) {
 				total += value;
 			}
-
-			Map<String, AcquisitionChannel> acquisitionChannels =
-				new HashMap<>();
 
 			for (Map.Entry<String, Long> entry :
 					acquisitionChannelValues.entrySet()) {
@@ -308,14 +308,14 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
+			Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
+				new HashMap<>();
+
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				getAcquisitionChannels(companyId, timeRange, url);
 
 			Collection<AcquisitionChannel> values =
 				acquisitionChannels.values();
-
-			Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
-				new HashMap<>();
 
 			for (TrafficChannel trafficChannel :
 					TransformUtil.transform(
@@ -336,12 +336,12 @@ public class AnalyticsReportsDataProvider {
 		long companyId, String url) {
 
 		try {
+			Map<String, TrafficSource> trafficSources = new HashMap<>();
+
 			String response = _asahFaroBackendClient.doGet(
 				companyId, "api/seo/1.0/traffic-sources?url=" + url);
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
-
-			Map<String, TrafficSource> trafficSources = new HashMap<>();
 
 			for (TrafficSource trafficSource :
 					(List<TrafficSource>)_objectMapper.readValue(
