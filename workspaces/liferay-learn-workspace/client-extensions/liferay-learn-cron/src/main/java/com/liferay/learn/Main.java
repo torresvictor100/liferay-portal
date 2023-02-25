@@ -726,10 +726,9 @@ public class Main {
 			return new ArrayList<>();
 		}
 
-		int page = 1;
 		List<StructuredContent> structuredContents = new ArrayList<>();
 
-		while (true) {
+		for (int page = 1;; page++) {
 			Page<StructuredContent> structuredContentsPage =
 				_structuredContentResource.getSiteStructuredContentsPage(
 					siteId, true, null, null, null, Pagination.of(page, 100),
@@ -740,8 +739,6 @@ public class Main {
 			if (structuredContentsPage.getLastPage() == page) {
 				break;
 			}
-
-			page++;
 		}
 
 		return structuredContents;
