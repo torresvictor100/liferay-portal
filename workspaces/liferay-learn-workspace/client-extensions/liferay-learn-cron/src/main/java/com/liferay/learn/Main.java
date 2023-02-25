@@ -1503,13 +1503,13 @@ public class Main {
 	private StructuredContent _toStructuredContent(String fileName)
 		throws Exception {
 
+		StructuredContent structuredContent = new StructuredContent();
+
 		File englishFile = new File(fileName);
 
 		String englishText = _processMarkdown(
 			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
 			englishFile);
-
-		StructuredContent structuredContent = new StructuredContent();
 
 		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
 			{
@@ -1703,7 +1703,6 @@ public class Main {
 						}
 					}
 				});
-
 			structuredContent.setDescription(_getDescription(englishText));
 		}
 
