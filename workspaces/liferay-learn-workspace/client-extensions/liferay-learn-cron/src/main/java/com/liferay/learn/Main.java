@@ -198,12 +198,12 @@ public class Main {
 				" structured contents");
 
 		Map<String, StructuredContent>
-			structuredContentsExternalReferenceCodeMap = new HashMap<>();
+			externalReferenceCodeStructuredContents = new HashMap<>();
 
-		Map<String, StructuredContent> structuredContentsFriendyUrlPathMap =
+		Map<String, StructuredContent> friendlyUrlPathStructuredContents =
 			new HashMap<>();
 
-		Map<Long, StructuredContent> structuredContentsStructuredContentIdMap =
+		Map<Long, StructuredContent> idStructuredContents =
 			new HashMap<>();
 
 		Set<Long> importedStructuredContentIds = new HashSet<>();
@@ -217,12 +217,12 @@ public class Main {
 				continue;
 			}
 
-			structuredContentsExternalReferenceCodeMap.put(
+			externalReferenceCodeStructuredContents.put(
 				structuredContent.getExternalReferenceCode(),
 				structuredContent);
-			structuredContentsFriendyUrlPathMap.put(
+			friendlyUrlPathStructuredContents.put(
 				structuredContent.getFriendlyUrlPath(), structuredContent);
-			structuredContentsStructuredContentIdMap.put(
+			idStructuredContents.put(
 				structuredContent.getId(), structuredContent);
 			existingStructuredContentIds.add(structuredContent.getId());
 		}
@@ -263,11 +263,11 @@ public class Main {
 
 				StructuredContent importedStructuredContent;
 
-				if (structuredContentsExternalReferenceCodeMap.containsKey(
+				if (externalReferenceCodeStructuredContents.containsKey(
 						externalReferenceCode)) {
 
 					StructuredContent siteStructuredContent =
-						structuredContentsExternalReferenceCodeMap.get(
+						externalReferenceCodeStructuredContents.get(
 							externalReferenceCode);
 
 					System.out.println(
@@ -284,11 +284,11 @@ public class Main {
 					updatedStructuredContentCount++;
 				}
 				else {
-					if (structuredContentsFriendyUrlPathMap.containsKey(
+					if (friendlyUrlPathStructuredContents.containsKey(
 							friendlyUrlPath)) {
 
 						StructuredContent siteStructuredContent =
-							structuredContentsFriendyUrlPathMap.get(
+							friendlyUrlPathStructuredContents.get(
 								friendlyUrlPath);
 
 						System.out.println(
@@ -344,7 +344,7 @@ public class Main {
 
 		for (Long existingStructuredContentId : existingStructuredContentIds) {
 			StructuredContent structuredContent =
-				structuredContentsStructuredContentIdMap.get(
+				idStructuredContents.get(
 					existingStructuredContentId);
 
 			try {
