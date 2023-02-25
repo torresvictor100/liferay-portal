@@ -1793,16 +1793,14 @@ public class Main {
 		String imageURL = _imageURLs.get(filePathString);
 
 		if (imageURL == null) {
+			Document importedDocument = null;
+
 			Document document = new Document() {
 				{
 					title = finalFile.getName();
 					viewableBy = Document.ViewableBy.ANYONE;
 				}
 			};
-
-			Map<String, File> multipartFiles = HashMapBuilder.<String, File>put(
-				"file", finalFile
-			).build();
 
 			long documentFolderId = _getDocumentFolderId(
 				FilenameUtils.getPathNoEndSeparator(
@@ -1811,7 +1809,9 @@ public class Main {
 			Map<String, Document> documentFolderDocuments =
 				_getDocumentFolderDocuments(documentFolderId);
 
-			Document importedDocument;
+			Map<String, File> multipartFiles = HashMapBuilder.<String, File>put(
+				"file", finalFile
+			).build();
 
 			if (documentFolderDocuments.containsKey(document.getTitle())) {
 				Document documentFolderDocument = documentFolderDocuments.get(
