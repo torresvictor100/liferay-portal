@@ -1509,12 +1509,6 @@ public class Main {
 			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
 			englishFile);
 
-		String uuid = _getUuid(englishText);
-
-		if (Validator.isNull(uuid)) {
-			throw new Exception("Nonexistent UUID for file " + fileName);
-		}
-
 		StructuredContent structuredContent = new StructuredContent();
 
 		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
@@ -1714,7 +1708,7 @@ public class Main {
 		}
 
 		structuredContent.setContentStructureId(_liferayContentStructureId);
-		structuredContent.setExternalReferenceCode(uuid);
+		structuredContent.setExternalReferenceCode(_getUuid(englishText));
 		structuredContent.setFriendlyUrlPath(_toFriendlyURLPath(englishFile));
 
 		if (!_offline) {
