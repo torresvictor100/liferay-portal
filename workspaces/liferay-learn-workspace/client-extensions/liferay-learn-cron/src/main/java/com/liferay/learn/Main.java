@@ -493,10 +493,9 @@ public class Main {
 			long documentFolderId)
 		throws Exception {
 
-		int page = 1;
 		Map<String, Document> documents = new HashMap<>();
 
-		while (true) {
+		for (int page = 1;; page++) {
 			Page<Document> documentsPage =
 				_documentResource.getDocumentFolderDocumentsPage(
 					documentFolderId, false, null, null, null,
@@ -509,8 +508,6 @@ public class Main {
 			if (documentsPage.getLastPage() == page) {
 				break;
 			}
-
-			page++;
 		}
 
 		return documents;
