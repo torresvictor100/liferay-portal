@@ -167,7 +167,8 @@ public class Main {
 
 			_liferaySiteId = site.getId();
 
-			System.out.println("Liferay site: " + site.getName());
+			System.out.println("Liferay site ID: " + site.getId());
+			System.out.println("Liferay site name: " + site.getName());
 
 			DataDefinition dataDefinition =
 				_dataDefinitionResource.
@@ -192,9 +193,8 @@ public class Main {
 			_getSiteStructuredContents(_liferaySiteId);
 
 		System.out.println(
-			siteStructuredContents.size() +
-				" existing structured contents were found in site with id " +
-					_liferaySiteId);
+			"Site has " + siteStructuredContents.size() +
+				" structured contents");
 
 		Map<String, StructuredContent>
 			structuredContentsExternalReferenceCodeMap = new HashMap<>();
