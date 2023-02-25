@@ -1762,7 +1762,7 @@ public class Main {
 			String uuid = _getUuid(englishText);
 
 			if (Validator.isNull(uuid)) {
-				System.err.println("Nonexistent UUID for file " + fileName);
+				System.err.println("Missing UUID in file " + fileName);
 
 				return false;
 			}
@@ -1770,7 +1770,7 @@ public class Main {
 			if (uuids.contains(uuid)) {
 				System.err.println(
 					StringBundler.concat(
-						"Duplicate UUID ", uuid, " found in file ", fileName));
+						"Duplicate UUID ", uuid, " in file ", fileName));
 
 				return false;
 			}
@@ -1788,8 +1788,7 @@ public class Main {
 
 				if (Validator.isNotNull(_getUuid(japaneseText))) {
 					System.err.println(
-						"UUID found in translated file " +
-							japaneseFile.getPath());
+						"Irrelevant UUID in file " + japaneseFile.getPath());
 
 					return false;
 				}
