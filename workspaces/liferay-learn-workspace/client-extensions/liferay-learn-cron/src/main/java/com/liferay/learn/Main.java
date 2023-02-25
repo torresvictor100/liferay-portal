@@ -149,7 +149,7 @@ public class Main {
 		_liferayURL = liferayURL;
 		_markdownImportDirName = markdownImportDirName;
 
-		System.out.println("Importing into " + _liferayURL);
+		System.out.println("Liferay URL: " + _liferayURL);
 
 		_yaml = new Yaml();
 
