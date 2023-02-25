@@ -451,8 +451,7 @@ public class Main {
 
 			linkJSONObject.put(
 				"url",
-				StringUtil.removeSubstring(
-					parentMarkdownFilePathString, ".md"));
+				StringUtil.removeLast(parentMarkdownFilePathString, ".md"));
 
 			file = parentMarkdownFile;
 
