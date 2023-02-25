@@ -125,10 +125,10 @@ public class Main {
 		Main main = new Main(
 			GetterUtil.getBoolean(System.getenv("LIFEARY_LEARN_CRON_DRY_RUN")),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_DATA_DEFINITION_KEY"),
-			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
+			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH"),
 			new URL(System.getenv("LIFEARY_LEARN_CRON_LIFERAY_URL")),
 			markdownImportDirFile.getCanonicalPath());
 
@@ -137,10 +137,9 @@ public class Main {
 
 	public Main(
 			boolean dryRun, String liferayDataDefinitionKey,
-			String liferaySiteFriendlyUrlPath,
 			String liferayLearnResourcesDomain, String liferayOAuthClientId,
-			String liferayOAuthClientSecret, URL liferayURL,
-			String markdownImportDirName)
+			String liferayOAuthClientSecret, String liferaySiteFriendlyUrlPath,
+			URL liferayURL, String markdownImportDirName)
 		throws Exception {
 
 		_dryRun = dryRun;
