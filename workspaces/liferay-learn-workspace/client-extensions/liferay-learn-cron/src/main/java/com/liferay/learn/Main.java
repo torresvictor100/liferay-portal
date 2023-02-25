@@ -967,23 +967,23 @@ public class Main {
 		GridCard currentGridCard = new GridCard();
 
 		for (String gridLine : gridLines) {
-			if (gridLine.startsWith(":gutter")) {
+			if (gridLine.equals(":::")) {
+				gridCards.add(currentGridCard);
+
+				currentGridCard = new GridCard();
 			}
 			else if (gridLine.startsWith(":::{grid-item-card}")) {
 				int index = gridLine.indexOf(StringPool.CLOSE_CURLY_BRACE);
 
 				currentGridCard.setTitle(gridLine.substring(index + 2));
 			}
+			else if (gridLine.startsWith(":gutter")) {
+			}
 			else if (gridLine.startsWith(":link:")) {
 				String link = gridLine.substring(7);
 
 				currentGridCard.setLink(
 					StringUtil.removeSubstring(link, ".md"));
-			}
-			else if (gridLine.equals(":::")) {
-				gridCards.add(currentGridCard);
-
-				currentGridCard = new GridCard();
 			}
 			else {
 				currentGridCard.addContentLine(gridLine);
