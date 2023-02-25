@@ -740,7 +740,6 @@ public class SingleLogoutProfileImpl
 					_userLocalService);
 
 				samlSloContext.setSamlSsoSessionId(samlSsoSessionId);
-				samlSloContext.setUserId(portal.getUserId(httpServletRequest));
 
 				if (messageContext != null) {
 					SAMLBindingContext samlBindingContext =
@@ -749,6 +748,8 @@ public class SingleLogoutProfileImpl
 					samlSloContext.setRelayState(
 						samlBindingContext.getRelayState());
 				}
+
+				samlSloContext.setUserId(portal.getUserId(httpServletRequest));
 
 				httpSession.setAttribute(
 					SamlWebKeys.SAML_SLO_CONTEXT, samlSloContext);
