@@ -253,18 +253,14 @@ public class Main {
 				StructuredContent structuredContent = _toStructuredContent(
 					fileName);
 
-				String externalReferenceCode =
-					structuredContent.getExternalReferenceCode();
-				String friendlyUrlPath = structuredContent.getFriendlyUrlPath();
-
 				StructuredContent importedStructuredContent;
 
 				if (externalReferenceCodeStructuredContents.containsKey(
-						externalReferenceCode)) {
+						structuredContent.getExternalReferenceCode())) {
 
 					StructuredContent siteStructuredContent =
 						externalReferenceCodeStructuredContents.get(
-							externalReferenceCode);
+							structuredContent.getExternalReferenceCode());
 
 					System.out.println(
 						"Updating existing structured content for " +
@@ -281,11 +277,11 @@ public class Main {
 				}
 				else {
 					if (friendlyUrlPathStructuredContents.containsKey(
-							friendlyUrlPath)) {
+							structuredContent.getFriendlyUrlPath())) {
 
 						StructuredContent siteStructuredContent =
 							friendlyUrlPathStructuredContents.get(
-								friendlyUrlPath);
+								structuredContent.getFriendlyUrlPath());
 
 						System.out.println(
 							StringBundler.concat(
