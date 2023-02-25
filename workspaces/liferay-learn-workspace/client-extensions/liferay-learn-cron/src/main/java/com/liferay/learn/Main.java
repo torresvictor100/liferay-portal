@@ -204,21 +204,22 @@ public class Main {
 			new HashMap<>();
 		Map<Long, StructuredContent> idStructuredContents = new HashMap<>();
 
-		for (StructuredContent structuredContent : siteStructuredContents) {
-			if (structuredContent.getContentStructureId() !=
+		for (StructuredContent siteStructuredContent : siteStructuredContents) {
+			if (siteStructuredContent.getContentStructureId() !=
 					_liferayContentStructureId) {
 
 				continue;
 			}
 
-			existingStructuredContentIds.add(structuredContent.getId());
+			existingStructuredContentIds.add(siteStructuredContent.getId());
 			externalReferenceCodeStructuredContents.put(
-				structuredContent.getExternalReferenceCode(),
-				structuredContent);
+				siteStructuredContent.getExternalReferenceCode(),
+				siteStructuredContent);
 			friendlyUrlPathStructuredContents.put(
-				structuredContent.getFriendlyUrlPath(), structuredContent);
+				siteStructuredContent.getFriendlyUrlPath(),
+				siteStructuredContent);
 			idStructuredContents.put(
-				structuredContent.getId(), structuredContent);
+				siteStructuredContent.getId(), siteStructuredContent);
 		}
 
 		Set<Long> importedStructuredContentIds = new HashSet<>();
