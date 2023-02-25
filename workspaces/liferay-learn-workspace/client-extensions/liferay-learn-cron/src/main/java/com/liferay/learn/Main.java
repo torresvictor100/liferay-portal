@@ -338,46 +338,42 @@ public class Main {
 
 			try {
 				System.out.println(
-					"Removing dangling Structured Content with Friendly URL " +
-						"Path " + structuredContent.getFriendlyUrlPath());
+					"Deleting orphaned structured content " +
+						structuredContent.getFriendlyUrlPath());
 
 				_structuredContentResource.deleteStructuredContent(
 					existingStructuredContentId);
 			}
 			catch (Exception exception) {
 				String errorMessage =
-					structuredContent.getFriendlyUrlPath() +
-						" could not be deleted." + exception.getMessage();
+					structuredContent.getFriendlyUrlPath() + ": " +
+						exception.getMessage();
 
 				System.out.println(errorMessage);
+
 				_errorMessages.add(errorMessage);
 			}
 		}
 
+		System.out.println(
+			addedStructuredContentCount + " structured contents were added.");
+		System.out.println(
+			existingStructuredContentIds.size() +
+				" structured contents were deleted.");
+		System.out.println(
+			updatedStructuredContentCount +
+				" structured contents were updated.");
+
 		if (!_warningMessages.isEmpty()) {
-			System.out.println(
-				_warningMessages.size() +
-					" structured contents had import warnings.");
+			System.out.println(_warningMessages.size() + " warning messages:");
 
 			for (String warningMessage : _warningMessages) {
 				System.out.println(warningMessage);
 			}
 		}
 
-		System.out.println(
-			addedStructuredContentCount +
-				" new structured contents were added.");
-		System.out.println(
-			updatedStructuredContentCount +
-				" existing structured contents were updated.");
-		System.out.println(
-			existingStructuredContentIds.size() +
-				" existing structured contents were deleted.");
-
 		if (!_errorMessages.isEmpty()) {
-			System.out.println(
-				_errorMessages.size() +
-					" structured contents had import errors.");
+			System.out.println(_errorMessages.size() + " error messages:");
 
 			for (String errorMessage : _errorMessages) {
 				System.out.println(errorMessage);
