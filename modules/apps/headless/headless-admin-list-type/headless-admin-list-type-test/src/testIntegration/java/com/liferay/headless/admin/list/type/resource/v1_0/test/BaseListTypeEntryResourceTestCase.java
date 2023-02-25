@@ -203,6 +203,446 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getIrrelevantExternalReferenceCode();
+
+		Page<ListTypeEntry> page =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantExternalReferenceCode != null) {
+			ListTypeEntry irrelevantListTypeEntry =
+				testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantListTypeEntry());
+
+			page =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						irrelevantExternalReferenceCode, null, null, null,
+						Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantListTypeEntry),
+				(List<ListTypeEntry>)page.getItems());
+			assertValid(
+				page,
+				testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		page =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(listTypeEntry1, listTypeEntry2),
+			(List<ListTypeEntry>)page.getItems());
+		assertValid(
+			page,
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExpectedActions(
+				externalReferenceCode));
+
+		listTypeEntryResource.deleteListTypeEntry(listTypeEntry1.getId());
+
+		listTypeEntryResource.deleteListTypeEntry(listTypeEntry2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
+
+		listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, listTypeEntry1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						externalReferenceCode, null, null,
+						getFilterString(entityField, "between", listTypeEntry1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						externalReferenceCode, null, null,
+						getFilterString(entityField, "eq", listTypeEntry1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						externalReferenceCode, null, null,
+						getFilterString(entityField, "eq", listTypeEntry1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		ListTypeEntry listTypeEntry3 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, randomListTypeEntry());
+
+		Page<ListTypeEntry> page1 =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 2), null);
+
+		List<ListTypeEntry> listTypeEntries1 =
+			(List<ListTypeEntry>)page1.getItems();
+
+		Assert.assertEquals(
+			listTypeEntries1.toString(), 2, listTypeEntries1.size());
+
+		Page<ListTypeEntry> page2 =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ListTypeEntry> listTypeEntries2 =
+			(List<ListTypeEntry>)page2.getItems();
+
+		Assert.assertEquals(
+			listTypeEntries2.toString(), 1, listTypeEntries2.size());
+
+		Page<ListTypeEntry> page3 =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(listTypeEntry1, listTypeEntry2, listTypeEntry3),
+			(List<ListTypeEntry>)page3.getItems());
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortDateTime()
+		throws Exception {
+
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanTestUtil.setProperty(
+					listTypeEntry1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortDouble()
+		throws Exception {
+
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanTestUtil.setProperty(
+					listTypeEntry1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					listTypeEntry2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortInteger()
+		throws Exception {
+
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanTestUtil.setProperty(
+					listTypeEntry1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					listTypeEntry2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortString()
+		throws Exception {
+
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				Class<?> clazz = listTypeEntry1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						listTypeEntry1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						listTypeEntry2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						listTypeEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						listTypeEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						listTypeEntry1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						listTypeEntry2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ListTypeEntry, ListTypeEntry, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
+
+		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
+		ListTypeEntry listTypeEntry2 = randomListTypeEntry();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, listTypeEntry1, listTypeEntry2);
+		}
+
+		listTypeEntry1 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, listTypeEntry1);
+
+		listTypeEntry2 =
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				externalReferenceCode, listTypeEntry2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> ascPage =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						externalReferenceCode, null, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(listTypeEntry1, listTypeEntry2),
+				(List<ListTypeEntry>)ascPage.getItems());
+
+			Page<ListTypeEntry> descPage =
+				listTypeEntryResource.
+					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+						externalReferenceCode, null, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(listTypeEntry2, listTypeEntry1),
+				(List<ListTypeEntry>)descPage.getItems());
+		}
+	}
+
+	protected ListTypeEntry
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
+				String externalReferenceCode, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
+		throws Exception {
+
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry postListTypeEntry =
+			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
+				randomListTypeEntry);
+
+		assertEquals(randomListTypeEntry, postListTypeEntry);
+		assertValid(postListTypeEntry);
+	}
+
+	protected ListTypeEntry
+			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
+				ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetListTypeDefinitionListTypeEntriesPage()
 		throws Exception {
 
@@ -794,430 +1234,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-		String irrelevantExternalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getIrrelevantExternalReferenceCode();
-
-		Page<ListTypeEntry> page =
-			listTypeEntryResource.
-				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-					externalReferenceCode, null, null, null,
-					Pagination.of(1, 10), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		if (irrelevantExternalReferenceCode != null) {
-			ListTypeEntry irrelevantListTypeEntry =
-				testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-					irrelevantExternalReferenceCode,
-					randomIrrelevantListTypeEntry());
-
-			page =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						irrelevantExternalReferenceCode, null, null, null,
-						Pagination.of(1, 2), null);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantListTypeEntry),
-				(List<ListTypeEntry>)page.getItems());
-			assertValid(page);
-		}
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		page =
-			listTypeEntryResource.
-				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-					externalReferenceCode, null, null, null,
-					Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(listTypeEntry1, listTypeEntry2),
-			(List<ListTypeEntry>)page.getItems());
-		assertValid(page);
-
-		listTypeEntryResource.deleteListTypeEntry(listTypeEntry1.getId());
-
-		listTypeEntryResource.deleteListTypeEntry(listTypeEntry2.getId());
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
-
-		listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, listTypeEntry1);
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> page =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null,
-						getFilterString(entityField, "between", listTypeEntry1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeEntry1),
-				(List<ListTypeEntry>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterDoubleEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> page =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null,
-						getFilterString(entityField, "eq", listTypeEntry1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeEntry1),
-				(List<ListTypeEntry>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterStringEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> page =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null,
-						getFilterString(entityField, "eq", listTypeEntry1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeEntry1),
-				(List<ListTypeEntry>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		ListTypeEntry listTypeEntry3 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		Page<ListTypeEntry> page1 =
-			listTypeEntryResource.
-				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-					externalReferenceCode, null, null, null,
-					Pagination.of(1, 2), null);
-
-		List<ListTypeEntry> listTypeEntries1 =
-			(List<ListTypeEntry>)page1.getItems();
-
-		Assert.assertEquals(
-			listTypeEntries1.toString(), 2, listTypeEntries1.size());
-
-		Page<ListTypeEntry> page2 =
-			listTypeEntryResource.
-				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-					externalReferenceCode, null, null, null,
-					Pagination.of(2, 2), null);
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<ListTypeEntry> listTypeEntries2 =
-			(List<ListTypeEntry>)page2.getItems();
-
-		Assert.assertEquals(
-			listTypeEntries2.toString(), 1, listTypeEntries2.size());
-
-		Page<ListTypeEntry> page3 =
-			listTypeEntryResource.
-				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-					externalReferenceCode, null, null, null,
-					Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(listTypeEntry1, listTypeEntry2, listTypeEntry3),
-			(List<ListTypeEntry>)page3.getItems());
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortDateTime()
-		throws Exception {
-
-		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, listTypeEntry1, listTypeEntry2) -> {
-				BeanTestUtil.setProperty(
-					listTypeEntry1, entityField.getName(),
-					DateUtils.addMinutes(new Date(), -2));
-			});
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortDouble()
-		throws Exception {
-
-		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
-			EntityField.Type.DOUBLE,
-			(entityField, listTypeEntry1, listTypeEntry2) -> {
-				BeanTestUtil.setProperty(
-					listTypeEntry1, entityField.getName(), 0.1);
-				BeanTestUtil.setProperty(
-					listTypeEntry2, entityField.getName(), 0.5);
-			});
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortInteger()
-		throws Exception {
-
-		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, listTypeEntry1, listTypeEntry2) -> {
-				BeanTestUtil.setProperty(
-					listTypeEntry1, entityField.getName(), 0);
-				BeanTestUtil.setProperty(
-					listTypeEntry2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSortString()
-		throws Exception {
-
-		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, listTypeEntry1, listTypeEntry2) -> {
-				Class<?> clazz = listTypeEntry1.getClass();
-
-				String entityFieldName = entityField.getName();
-
-				Method method = clazz.getMethod(
-					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						listTypeEntry1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						listTypeEntry2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						listTypeEntry1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-					BeanTestUtil.setProperty(
-						listTypeEntry2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()) +
-									"@liferay.com");
-				}
-				else {
-					BeanTestUtil.setProperty(
-						listTypeEntry1, entityFieldName,
-						"aaa" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-					BeanTestUtil.setProperty(
-						listTypeEntry2, entityFieldName,
-						"bbb" +
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()));
-				}
-			});
-	}
-
-	protected void
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithSort(
-				EntityField.Type type,
-				UnsafeTriConsumer
-					<EntityField, ListTypeEntry, ListTypeEntry, Exception>
-						unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 = randomListTypeEntry();
-		ListTypeEntry listTypeEntry2 = randomListTypeEntry();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(
-				entityField, listTypeEntry1, listTypeEntry2);
-		}
-
-		listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, listTypeEntry1);
-
-		listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, listTypeEntry2);
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> ascPage =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(listTypeEntry1, listTypeEntry2),
-				(List<ListTypeEntry>)ascPage.getItems());
-
-			Page<ListTypeEntry> descPage =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(listTypeEntry2, listTypeEntry1),
-				(List<ListTypeEntry>)descPage.getItems());
-		}
-	}
-
-	protected ListTypeEntry
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				String externalReferenceCode, ListTypeEntry listTypeEntry)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getIrrelevantExternalReferenceCode()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry()
-		throws Exception {
-
-		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
-
-		ListTypeEntry postListTypeEntry =
-			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
-				randomListTypeEntry);
-
-		assertEquals(randomListTypeEntry, postListTypeEntry);
-		assertValid(postListTypeEntry);
-	}
-
-	protected ListTypeEntry
-			testPostListTypeDefinitionByExternalReferenceCodeListTypeEntry_addListTypeEntry(
-				ListTypeEntry listTypeEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
