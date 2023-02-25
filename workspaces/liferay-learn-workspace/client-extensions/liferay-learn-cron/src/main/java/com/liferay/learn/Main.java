@@ -1329,7 +1329,7 @@ public class Main {
 
 			_warn(
 				"Invalid parameters found for raw directive block in " +
-					"markdown file " + markdownFile.getCanonicalPath());
+					markdownFile.getCanonicalPath());
 
 			return StringPool.BLANK;
 		}
