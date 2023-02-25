@@ -443,9 +443,8 @@ public class Main {
 					FileUtils.readFileToString(
 						parentMarkdownFile, StandardCharsets.UTF_8)));
 
-			Path parentMarkdownFilePath = Paths.get(parentMarkdownFile.toURI());
-
 			Path originalFilePath = Paths.get(originalFile.getParent());
+			Path parentMarkdownFilePath = Paths.get(parentMarkdownFile.toURI());
 
 			String parentMarkdownFilePathString = String.valueOf(
 				originalFilePath.relativize(parentMarkdownFilePath));
