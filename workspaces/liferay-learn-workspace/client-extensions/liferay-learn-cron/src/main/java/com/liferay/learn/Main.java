@@ -123,31 +123,32 @@ public class Main {
 			System.getenv("LIFEARY_LEARN_CRON_MARKDOWN_IMPORT_DIR"));
 
 		Main main = new Main(
+			GetterUtil.getBoolean(System.getenv("LIFEARY_LEARN_CRON_DRY_RUN")),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_DATA_DEFINITION_KEY"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv("LIFEARY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
 			new URL(System.getenv("LIFEARY_LEARN_CRON_LIFERAY_URL")),
-			markdownImportDirFile.getCanonicalPath(),
-			GetterUtil.getBoolean(System.getenv("LIFEARY_LEARN_CRON_OFFLINE")));
+			markdownImportDirFile.getCanonicalPath());
 
 		main.uploadToLiferay();
 	}
 
 	public Main(
-			String liferayDataDefinitionKey, String liferaySiteFriendlyUrlPath,
+			boolean dryRun, String liferayDataDefinitionKey,
+			String liferaySiteFriendlyUrlPath,
 			String liferayLearnResourcesDomain, String liferayOAuthClientId,
 			String liferayOAuthClientSecret, URL liferayURL,
-			String markdownImportDirName, boolean offline)
+			String markdownImportDirName)
 		throws Exception {
 
+		_dryRun = dryRun;
 		_liferayLearnResourcesDomain = liferayLearnResourcesDomain;
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
 		_markdownImportDirName = markdownImportDirName;
-		_offline = offline;
 
 		System.out.println("Importing into " + _liferayURL);
 
@@ -157,7 +158,7 @@ public class Main {
 
 		_initFlexmark();
 
-		if (_offline) {
+		if (_dryRun) {
 			_liferayContentStructureId = 0;
 			_liferaySiteId = 0;
 
@@ -239,7 +240,7 @@ public class Main {
 
 			System.out.println(fileName);
 
-			if (_offline) {
+			if (_dryRun) {
 				JSONObject jsonObject = new JSONObject(
 					_toStructuredContent(fileName));
 
@@ -728,7 +729,7 @@ public class Main {
 	private List<StructuredContent> _getSiteStructuredContents(long siteId)
 		throws Exception {
 
-		if (_offline) {
+		if (_dryRun) {
 			return new ArrayList<>();
 		}
 
@@ -1738,7 +1739,7 @@ public class Main {
 		structuredContent.setExternalReferenceCode(uuid);
 		structuredContent.setFriendlyUrlPath(_toFriendlyURLPath(englishFile));
 
-		if (!_offline) {
+		if (!_dryRun) {
 			structuredContent.setStructuredContentFolderId(
 				_getStructuredContentFolderId(
 					FilenameUtils.getPathNoEndSeparator(
@@ -1830,7 +1831,7 @@ public class Main {
 			return;
 		}
 
-		if (_offline) {
+		if (_dryRun) {
 			return;
 		}
 
@@ -1955,6 +1956,7 @@ public class Main {
 	private final Map<String, Long> _documentFolderIds = new HashMap<>();
 	private DocumentFolderResource _documentFolderResource;
 	private DocumentResource _documentResource;
+	private final boolean _dryRun;
 	private final List<String> _errorMessages = new ArrayList<>();
 	private final Set<String> _fileNames = new TreeSet<>();
 	private final Map<String, String> _imageURLs = new HashMap<>();
@@ -2002,7 +2004,6 @@ public class Main {
 			}));
 
 	private long _oauthExpirationMillis;
-	private final boolean _offline;
 	private Parser _parser;
 	private HtmlRenderer _renderer;
 	private SiteResource _siteResource;
