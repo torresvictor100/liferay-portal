@@ -353,7 +353,7 @@ public class SamlUtil {
 
 	public static AssertionConsumerService resolverAssertionConsumerService(
 		MessageContext<?> messageContext, String binding,
-		boolean dynamicAcsUrl) {
+		boolean dynamicACSURL) {
 
 		AuthnRequest authnRequest = getAuthnRequest(messageContext);
 
@@ -402,7 +402,7 @@ public class SamlUtil {
 			}
 		}
 
-		if (dynamicAcsUrl && Validator.isNotNull(assertionConsumerServiceURL)) {
+		if (dynamicACSURL && Validator.isNotNull(assertionConsumerServiceURL)) {
 			return OpenSamlUtil.buildAssertionConsumerService(
 				binding, -1, false, assertionConsumerServiceURL);
 		}
