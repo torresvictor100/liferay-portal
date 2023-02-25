@@ -264,7 +264,7 @@ public class Main {
 							structuredContent.getExternalReferenceCode());
 
 					System.out.println(
-						"Updating existing structured content for " +
+						"Updating structured content " +
 							structuredContent.getFriendlyUrlPath());
 
 					importedStructuredContent =
@@ -285,11 +285,8 @@ public class Main {
 								structuredContent.getFriendlyUrlPath());
 
 						System.out.println(
-							StringBundler.concat(
-								"Found existing structured content by ",
-								"friendly URL path for ",
-								structuredContent.getFriendlyUrlPath(),
-								" - deleting."));
+							"Deleting structured content " +
+								structuredContent.getFriendlyUrlPath());
 
 						_structuredContentResource.deleteStructuredContent(
 							siteStructuredContent.getId());
@@ -299,8 +296,9 @@ public class Main {
 					}
 
 					System.out.println(
-						"Posting new structured content for " +
+						"Adding structured content " +
 							structuredContent.getFriendlyUrlPath());
+
 					importedStructuredContent =
 						_structuredContentResource.
 							postStructuredContentFolderStructuredContent(
@@ -319,16 +317,15 @@ public class Main {
 						importedStructuredContent.getId());
 
 					throw new Exception(
-						"Friendly Url path was modified to " +
+						"Modified friendly URL path " +
 							importedStructuredContent.getFriendlyUrlPath());
 				}
 			}
 			catch (Exception exception) {
-				String errorMessage =
-					fileName + " could not be imported correctly: " +
-						exception.getMessage();
+				String errorMessage = fileName + ": " + exception.getMessage();
 
 				System.out.println(errorMessage);
+
 				_errorMessages.add(errorMessage);
 			}
 		}
