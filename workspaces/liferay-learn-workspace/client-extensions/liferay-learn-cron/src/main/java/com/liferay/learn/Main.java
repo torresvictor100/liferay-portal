@@ -1511,7 +1511,7 @@ public class Main {
 			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
 			englishFile);
 
-		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
+		ContentFieldValue englishContentContentFieldValue = new ContentFieldValue() {
 			{
 				data = _toHTML(englishFile, englishText);
 			}
@@ -1582,9 +1582,9 @@ public class Main {
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishContentFieldValue;
+							contentFieldValue = englishContentContentFieldValue;
 							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishContentFieldValue
+								"en-US", englishContentContentFieldValue
 							).put(
 								"ja-JP",
 								new ContentFieldValue() {
@@ -1678,7 +1678,7 @@ public class Main {
 					},
 					new ContentField() {
 						{
-							contentFieldValue = englishContentFieldValue;
+							contentFieldValue = englishContentContentFieldValue;
 							name = "content";
 						}
 					},
