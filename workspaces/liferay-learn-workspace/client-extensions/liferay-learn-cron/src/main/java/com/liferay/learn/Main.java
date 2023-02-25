@@ -1507,21 +1507,22 @@ public class Main {
 
 		File englishFile = new File(fileName);
 
-		String englishText = _processMarkdown(
-			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
-			englishFile);
-
-		ContentFieldValue englishContentContentFieldValue = new ContentFieldValue() {
-			{
-				data = _toHTML(englishFile, englishText);
-			}
-		};
-
 		ContentFieldValue englishBreadcrumbLinksContentFieldValue =
 			new ContentFieldValue() {
 				{
 					data = String.valueOf(
 						_getBreadcrumbLinksJSONArray(englishFile));
+				}
+			};
+
+		String englishText = _processMarkdown(
+			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
+			englishFile);
+
+		ContentFieldValue englishContentContentFieldValue =
+			new ContentFieldValue() {
+				{
+					data = _toHTML(englishFile, englishText);
 				}
 			};
 
@@ -1532,7 +1533,6 @@ public class Main {
 						_landingPageFiles.contains(englishFile));
 				}
 			};
-
 		ContentFieldValue englishNavigationLinksContentFieldValue =
 			new ContentFieldValue() {
 				{
@@ -1540,7 +1540,6 @@ public class Main {
 						_getNavigationLinksJSONArray(englishFile, englishText));
 				}
 			};
-
 		ContentFieldValue englishProductContentFieldValue =
 			new ContentFieldValue() {
 				{
@@ -1645,7 +1644,6 @@ public class Main {
 						}
 					}
 				});
-
 			structuredContent.setDescription_i18n(
 				HashMapBuilder.put(
 					"en-US", _getDescription(englishText)
