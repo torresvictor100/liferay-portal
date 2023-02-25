@@ -868,8 +868,6 @@ public class Main {
 	private void _initFlexmark() {
 		MutableDataSet mutableDataSet = new MutableDataSet(
 		).set(
-			AdmonitionExtension.TYPE_SVG_MAP, new HashMap<String, String>()
-		).set(
 			AdmonitionExtension.QUALIFIER_TYPE_MAP,
 			HashMapBuilder.put(
 				"error", "error"
@@ -882,6 +880,8 @@ public class Main {
 			).put(
 				"warning", "warning"
 			).build()
+		).set(
+			AdmonitionExtension.TYPE_SVG_MAP, new HashMap<String, String>()
 		).set(
 			AsideExtension.ALLOW_LEADING_SPACE, true
 		).set(
