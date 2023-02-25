@@ -1859,11 +1859,10 @@ public class Main {
 			}
 			catch (Exception exception) {
 				String errorMessage =
-					_markdownFile.getPath() +
-						" could not be imported correctly: " +
-							exception.getMessage();
+					_markdownFile.getPath() + ": " + exception.getMessage();
 
 				System.out.println(errorMessage);
+
 				_errorMessages.add(errorMessage);
 			}
 		}
@@ -1871,6 +1870,7 @@ public class Main {
 
 	private void _warn(String warningMessage) {
 		System.out.println(warningMessage);
+
 		_warningMessages.add(warningMessage);
 	}
 
@@ -1936,6 +1936,7 @@ public class Main {
 									exception.getMessage();
 
 						System.out.println(errorMessage);
+
 						_errorMessages.add(errorMessage);
 					}
 				}
