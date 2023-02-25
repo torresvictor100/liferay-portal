@@ -604,7 +604,7 @@ public class Main {
 		}
 
 		if (navigationLinksJSONArray.isEmpty()) {
-			_warn("Missing navigation in " + file.getPath());
+			_warn("Missing navigation for " + file.getPath());
 		}
 
 		return navigationLinksJSONArray;
@@ -678,8 +678,7 @@ public class Main {
 
 		if (!parentMarkdownFile.exists()) {
 			_warn(
-				"Nonexistent parent markdown file " +
-					parentMarkdownFile.getPath());
+				"Missing parent markdown for " + parentMarkdownFile.getPath());
 
 			return null;
 		}
