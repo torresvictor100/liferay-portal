@@ -320,11 +320,7 @@ public class Main {
 				}
 			}
 			catch (Exception exception) {
-				String errorMessage = fileName + ": " + exception.getMessage();
-
-				System.out.println(errorMessage);
-
-				_errorMessages.add(errorMessage);
+				_error(fileName + ": " + exception.getMessage());
 			}
 		}
 
@@ -343,13 +339,9 @@ public class Main {
 					existingStructuredContentId);
 			}
 			catch (Exception exception) {
-				String errorMessage =
+				_error(
 					structuredContent.getFriendlyUrlPath() + ": " +
-						exception.getMessage();
-
-				System.out.println(errorMessage);
-
-				_errorMessages.add(errorMessage);
+						exception.getMessage());
 			}
 		}
 
@@ -426,6 +418,12 @@ public class Main {
 		}
 
 		return line;
+	}
+
+	private void _error(String errorMessage) {
+		System.out.println(errorMessage);
+
+		_errorMessages.add(errorMessage);
 	}
 
 	private JSONArray _getBreadcrumbLinksJSONArray(File file) throws Exception {
@@ -1721,13 +1719,13 @@ public class Main {
 			String uuid = _getUuid(englishText);
 
 			if (Validator.isNull(uuid)) {
-				System.err.println("Missing UUID in " + fileName);
+				System.out.println("Missing UUID in " + fileName);
 
 				return false;
 			}
 
 			if (uuids.contains(uuid)) {
-				System.err.println(
+				System.out.println(
 					StringBundler.concat(
 						"Duplicate UUID ", uuid, " in ", fileName));
 
@@ -1746,7 +1744,7 @@ public class Main {
 					japaneseFile);
 
 				if (Validator.isNotNull(_getUuid(japaneseText))) {
-					System.err.println(
+					System.out.println(
 						"Irrelevant UUID in " + japaneseFile.getPath());
 
 					return false;
@@ -1858,12 +1856,7 @@ public class Main {
 							url.substring(1)));
 			}
 			catch (Exception exception) {
-				String errorMessage =
-					_markdownFile.getPath() + ": " + exception.getMessage();
-
-				System.out.println(errorMessage);
-
-				_errorMessages.add(errorMessage);
+				_error(_markdownFile.getPath() + ": " + exception.getMessage());
 			}
 		}
 	}
@@ -1930,14 +1923,9 @@ public class Main {
 						_visit(image);
 					}
 					catch (Exception exception) {
-						String errorMessage =
-							_markdownFile.getPath() +
-								" could not be imported correctly: " +
-									exception.getMessage();
-
-						System.out.println(errorMessage);
-
-						_errorMessages.add(errorMessage);
+						_error(
+							_markdownFile.getPath() + ": " +
+								exception.getMessage());
 					}
 				}
 
