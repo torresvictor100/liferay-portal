@@ -604,7 +604,7 @@ public class Main {
 		}
 
 		if (navigationLinksJSONArray.isEmpty()) {
-			_warn("Nonexistent navigation for markdown file " + file.getPath());
+			_warn("Missing navigation in " + file.getPath());
 		}
 
 		return navigationLinksJSONArray;
@@ -1725,7 +1725,7 @@ public class Main {
 			String uuid = _getUuid(englishText);
 
 			if (Validator.isNull(uuid)) {
-				System.err.println("Missing UUID in file " + fileName);
+				System.err.println("Missing UUID in " + fileName);
 
 				return false;
 			}
@@ -1733,7 +1733,7 @@ public class Main {
 			if (uuids.contains(uuid)) {
 				System.err.println(
 					StringBundler.concat(
-						"Duplicate UUID ", uuid, " in file ", fileName));
+						"Duplicate UUID ", uuid, " in ", fileName));
 
 				return false;
 			}
@@ -1751,7 +1751,7 @@ public class Main {
 
 				if (Validator.isNotNull(_getUuid(japaneseText))) {
 					System.err.println(
-						"Irrelevant UUID in file " + japaneseFile.getPath());
+						"Irrelevant UUID in " + japaneseFile.getPath());
 
 					return false;
 				}
