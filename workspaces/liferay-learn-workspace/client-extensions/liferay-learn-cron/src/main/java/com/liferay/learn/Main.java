@@ -589,14 +589,14 @@ public class Main {
 	private JSONArray _getNavigationLinksJSONArray(File file, String text)
 		throws Exception {
 
-		JSONArray navigationLinksJSONArray = _toNavigationLinksJSONArray(
+		JSONArray navigationLinksJSONArray = _getNavigationLinksJSONArray(
 			file, file, text);
 
 		if (navigationLinksJSONArray.isEmpty()) {
 			File parentMarkdownFile = _getParentMarkdownFile(file);
 
 			if (parentMarkdownFile != null) {
-				navigationLinksJSONArray = _toNavigationLinksJSONArray(
+				navigationLinksJSONArray = _getNavigationLinksJSONArray(
 					parentMarkdownFile, file,
 					FileUtils.readFileToString(
 						parentMarkdownFile, StandardCharsets.UTF_8));
@@ -1405,7 +1405,7 @@ public class Main {
 		return html;
 	}
 
-	private JSONArray _toNavigationLinksJSONArray(
+	private JSONArray _getNavigationLinksJSONArray(
 			File navigationFile, File file, String text)
 		throws Exception {
 
