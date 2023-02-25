@@ -2046,8 +2046,8 @@ public class Main {
 		}
 
 		@Override
-		public void visit(YamlFrontMatterBlock node) {
-			String yamlString = String.valueOf(node.getChars());
+		public void visit(YamlFrontMatterBlock yamlFrontMatterBlock) {
+			String yamlString = String.valueOf(yamlFrontMatterBlock.getChars());
 
 			yamlString = yamlString.replaceAll("---", "");
 
@@ -2055,7 +2055,7 @@ public class Main {
 		}
 
 		@Override
-		public void visit(YamlFrontMatterNode node) {
+		public void visit(YamlFrontMatterNode yamlFrontMatterNode) {
 		}
 
 		private Map<String, Object> _data;
