@@ -155,34 +155,30 @@ public class Main {
 
 		_initFlexmark();
 
+		if (!_validateUUIDs()) {
+			System.exit(1);
+		}
+
 		if (_dryRun) {
 			_liferayContentStructureId = 0;
 			_liferaySiteId = 0;
-
-			return;
 		}
+		else {
+			_initResourceBuilders(_getOAuthAuthorization());
 
-		_initResourceBuilders(_getOAuthAuthorization());
+			Site site = _siteResource.getSiteByFriendlyUrlPath(
+				liferaySiteFriendlyUrlPath);
 
-		Site site = _siteResource.getSiteByFriendlyUrlPath(
-			liferaySiteFriendlyUrlPath);
+			_liferaySiteId = site.getId();
 
-		_liferaySiteId = site.getId();
+			System.out.println("Importing into " + site.getName() + " site.");
 
-		System.out.println("Importing into " + site.getName() + " site.");
+			DataDefinition dataDefinition =
+				_dataDefinitionResource.
+					getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+						site.getId(), "journal", liferayDataDefinitionKey);
 
-		DataDefinition dataDefinition =
-			_dataDefinitionResource.
-				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-					site.getId(), "journal", liferayDataDefinitionKey);
-
-		_liferayContentStructureId = dataDefinition.getId();
-
-		if (!_validateUUIDs()) {
-			System.err.println(
-				"Invalid UUIDs found - stopping upload to Liferay");
-
-			System.exit(1);
+			_liferayContentStructureId = dataDefinition.getId();
 		}
 	}
 
