@@ -1087,11 +1087,10 @@ public class Main {
 			String dirName = markdownFileName.substring(
 				_markdownImportDirName.length());
 
-			List<String> dirNameParts =
-				com.liferay.petra.string.StringUtil.split(
-					dirName, File.separatorChar);
+			String[] dirNameParts = StringUtil.split(
+				dirName, File.separatorChar);
 
-			if (dirNameParts.size() < 3) {
+			if (dirNameParts.length < 3) {
 				throw new Exception("Invalid directory " + dirName);
 			}
 
@@ -1099,11 +1098,11 @@ public class Main {
 
 			sb.append(_markdownImportDirName);
 			sb.append(File.separator);
-			sb.append(dirNameParts.get(0));
+			sb.append(dirNameParts[0]);
 			sb.append(File.separator);
-			sb.append(dirNameParts.get(1));
+			sb.append(dirNameParts[1]);
 			sb.append(File.separator);
-			sb.append(dirNameParts.get(2));
+			sb.append(dirNameParts[2]);
 			sb.append(includeFileName);
 
 			file = new File(sb.toString());
@@ -1186,26 +1185,23 @@ public class Main {
 			String value = matcher.group(2);
 
 			if (name.equals("lines")) {
-				List<String> lineRanges =
-					com.liferay.petra.string.StringUtil.split(
-						value, CharPool.COMMA);
+				for (String lineRange :
+						StringUtil.split(value, CharPool.COMMA)) {
 
-				for (String lineRange : lineRanges) {
 					Tuple tuple = null;
 
-					List<String> lineRangeParts =
-						com.liferay.petra.string.StringUtil.split(
-							lineRange, CharPool.DASH);
+					String[] lineRangeParts = StringUtil.split(
+						lineRange, CharPool.DASH);
 
-					if (lineRangeParts.size() == 1) {
+					if (lineRangeParts.length == 1) {
 						tuple = new Tuple(
-							GetterUtil.getInteger(lineRangeParts.get(0)),
-							GetterUtil.getInteger(lineRangeParts.get(0)));
+							GetterUtil.getInteger(lineRangeParts[0]),
+							GetterUtil.getInteger(lineRangeParts[0]));
 					}
-					else if (lineRangeParts.size() == 2) {
+					else if (lineRangeParts.length == 2) {
 						tuple = new Tuple(
-							GetterUtil.getInteger(lineRangeParts.get(0)),
-							GetterUtil.getInteger(lineRangeParts.get(1)));
+							GetterUtil.getInteger(lineRangeParts[0]),
+							GetterUtil.getInteger(lineRangeParts[1]));
 					}
 					else {
 						throw new Exception(
