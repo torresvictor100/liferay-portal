@@ -435,12 +435,13 @@ public class Main {
 		File parentMarkdownFile;
 
 		while ((parentMarkdownFile = _getParentMarkdownFile(file)) != null) {
-			String parentText = FileUtils.readFileToString(
-				parentMarkdownFile, StandardCharsets.UTF_8);
-
 			JSONObject linkJSONObject = new JSONObject();
 
-			linkJSONObject.put("title", _getTitle(parentText));
+			linkJSONObject.put(
+				"title",
+				_getTitle(
+					FileUtils.readFileToString(
+						parentMarkdownFile, StandardCharsets.UTF_8)));
 
 			Path parentMarkdownFilePath = Paths.get(parentMarkdownFile.toURI());
 
