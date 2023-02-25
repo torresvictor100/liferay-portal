@@ -1847,16 +1847,15 @@ public class Main {
 
 		if (url.contains(".zip") && url.startsWith("./")) {
 			try {
-				String markdownFilePath = _markdownFile.getParent();
+				String markdownFilePathString = _markdownFile.getParent();
 
-				String dirName = markdownFilePath.substring(
+				String dirName = markdownFilePathString.substring(
 					_markdownImportDirName.length());
 
 				link.setUrl(
 					BasedSequence.of(
-						StringBundler.concat(
-							_liferayLearnResourcesDomain, dirName,
-							url.substring(1))));
+						_liferayLearnResourcesDomain + dirName +
+							url.substring(1)));
 			}
 			catch (Exception exception) {
 				String errorMessage =
