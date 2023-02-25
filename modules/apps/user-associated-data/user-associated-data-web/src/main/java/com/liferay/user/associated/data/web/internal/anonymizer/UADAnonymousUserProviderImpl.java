@@ -83,13 +83,13 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		}
 	}
 
-	private void _completeAnonymousUser(User anonymousUser) throws Exception {
+	private void _inactivateAnonymousUSer(User anonymousUser) throws Exception {
 		_userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 	}
 
-	private User _createAnonymousUser(long companyId) throws Exception {
+	private User _addAnonymousUser(long companyId) throws Exception {
 		long userId = _counterLocalService.increment();
 
 		User user = _userLocalService.createUser(userId);
@@ -177,7 +177,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			companyId);
 
 		if (configuration == null) {
-			User anonymousUser = _createAnonymousUser(companyId);
+			User anonymousUser = _addAnonymousUser(companyId);
 
 			_configurationProvider.saveCompanyConfiguration(
 				AnonymousUserConfiguration.class, companyId,
@@ -187,7 +187,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 					"userId", anonymousUser.getUserId()
 				).build());
 
-			_completeAnonymousUser(anonymousUser);
+			_inactivateAnonymousUSer(anonymousUser);
 
 			return anonymousUser;
 		}
@@ -205,13 +205,13 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			return anonymousUser;
 		}
 
-		anonymousUser = _createAnonymousUser(companyId);
+		anonymousUser = _addAnonymousUser(companyId);
 
 		properties.put("userId", anonymousUser.getUserId());
 
 		configuration.update(properties);
 
-		_completeAnonymousUser(anonymousUser);
+		_inactivateAnonymousUSer(anonymousUser);
 
 		return anonymousUser;
 	}
