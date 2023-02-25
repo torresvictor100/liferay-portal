@@ -171,7 +171,7 @@ public class Main {
 
 			_liferaySiteId = site.getId();
 
-			System.out.println("Importing into " + site.getName() + " site.");
+			System.out.println("Liferay site: " + site.getName());
 
 			DataDefinition dataDefinition =
 				_dataDefinitionResource.
