@@ -136,10 +136,10 @@ public class Main {
 	}
 
 	public Main(
-			String liferayDataDefinitionKey,
-			String liferayLearnResourcesDomain, String liferayOAuthClientId,
-			String liferayOAuthClientSecret, String liferaySiteFriendlyUrlPath,
-			URL liferayURL, String markdownImportDirName, boolean offline)
+			String liferayDataDefinitionKey, String liferayLearnResourcesDomain,
+			String liferayOAuthClientId, String liferayOAuthClientSecret,
+			String liferaySiteFriendlyUrlPath, URL liferayURL,
+			String markdownImportDirName, boolean offline)
 		throws Exception {
 
 		_liferayLearnResourcesDomain = liferayLearnResourcesDomain;
@@ -1944,7 +1944,6 @@ public class Main {
 	private final Map<String, Long> _documentFolderIds = new HashMap<>();
 	private DocumentFolderResource _documentFolderResource;
 	private DocumentResource _documentResource;
-	private final boolean _offline;
 	private final List<String> _errorMessages = new ArrayList<>();
 	private final Set<String> _fileNames = new TreeSet<>();
 	private final Map<String, String> _imageURLs = new HashMap<>();
@@ -1992,6 +1991,7 @@ public class Main {
 			}));
 
 	private long _oauthExpirationMillis;
+	private final boolean _offline;
 	private Parser _parser;
 	private HtmlRenderer _renderer;
 	private SiteResource _siteResource;
