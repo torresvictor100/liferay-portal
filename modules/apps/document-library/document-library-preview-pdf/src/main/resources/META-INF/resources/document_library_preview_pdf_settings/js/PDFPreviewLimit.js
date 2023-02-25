@@ -17,7 +17,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const PdfPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
+const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 	const [error, setError] = useState(false);
 	const [inputValue, setInputValue] = useState(value);
 
@@ -71,11 +71,11 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 	);
 };
 
-PdfPreviewLimit.propTypes = {
+PDFPreviewLimit.propTypes = {
 	maxLimitSize: PropTypes.number,
 	namespace: PropTypes.string.isRequired,
 	scopeLabel: PropTypes.string,
 	value: PropTypes.number,
 };
 
-export default PdfPreviewLimit;
+export default PDFPreviewLimit;

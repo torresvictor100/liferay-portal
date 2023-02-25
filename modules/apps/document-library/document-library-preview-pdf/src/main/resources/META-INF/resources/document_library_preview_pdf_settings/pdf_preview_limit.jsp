@@ -38,7 +38,7 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 			<span aria-hidden="true" class="loading-animation"></span>
 
 			<react:component
-				module="document_library_preview_pdf_settings/js/PdfPreviewLimit"
+				module="document_library_preview_pdf_settings/js/PDFPreviewLimit"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"maxLimitSize", pdfPreviewConfigurationDisplayContext.getMaxLimitSize()
