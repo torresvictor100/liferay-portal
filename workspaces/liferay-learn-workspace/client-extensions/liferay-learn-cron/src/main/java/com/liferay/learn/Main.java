@@ -188,6 +188,13 @@ public class Main {
 		long start = System.currentTimeMillis();
 
 		int addedStructuredContentCount = 0;
+		Set<Long> existingStructuredContentIds = new HashSet<>();
+		Map<String, StructuredContent> externalReferenceCodeStructuredContents =
+			new HashMap<>();
+		Map<String, StructuredContent> friendlyUrlPathStructuredContents =
+			new HashMap<>();
+		Map<Long, StructuredContent> idStructuredContents = new HashMap<>();
+		Set<Long> importedStructuredContentIds = new HashSet<>();
 		int updatedStructuredContentCount = 0;
 
 		List<StructuredContent> siteStructuredContents =
@@ -196,13 +203,6 @@ public class Main {
 		System.out.println(
 			"Site has " + siteStructuredContents.size() +
 				" structured contents");
-
-		Set<Long> existingStructuredContentIds = new HashSet<>();
-		Map<String, StructuredContent> externalReferenceCodeStructuredContents =
-			new HashMap<>();
-		Map<String, StructuredContent> friendlyUrlPathStructuredContents =
-			new HashMap<>();
-		Map<Long, StructuredContent> idStructuredContents = new HashMap<>();
 
 		for (StructuredContent siteStructuredContent : siteStructuredContents) {
 			if (siteStructuredContent.getContentStructureId() !=
@@ -221,8 +221,6 @@ public class Main {
 			idStructuredContents.put(
 				siteStructuredContent.getId(), siteStructuredContent);
 		}
-
-		Set<Long> importedStructuredContentIds = new HashSet<>();
 
 		for (String fileName : _fileNames) {
 			if (!fileName.contains("/en/") || !fileName.endsWith(".md")) {
