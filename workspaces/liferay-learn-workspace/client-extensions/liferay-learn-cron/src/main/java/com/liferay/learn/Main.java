@@ -155,10 +155,6 @@ public class Main {
 
 		_initFlexmark();
 
-		if (!_validateUUIDs()) {
-			System.exit(1);
-		}
-
 		if (_dryRun) {
 			_liferayContentStructureId = 0;
 			_liferaySiteId = 0;
@@ -183,6 +179,10 @@ public class Main {
 	}
 
 	public void uploadToLiferay() throws Exception {
+		if (!_validateUUIDs()) {
+			System.exit(1);
+		}
+
 		long start = System.currentTimeMillis();
 
 		int addedStructuredContentCount = 0;
