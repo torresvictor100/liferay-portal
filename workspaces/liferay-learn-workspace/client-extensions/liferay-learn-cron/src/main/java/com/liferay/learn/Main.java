@@ -84,6 +84,7 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -723,7 +724,7 @@ public class Main {
 		throws Exception {
 
 		if (_offline) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		List<StructuredContent> structuredContents = new ArrayList<>();
