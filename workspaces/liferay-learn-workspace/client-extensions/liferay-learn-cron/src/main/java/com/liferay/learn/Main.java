@@ -2032,11 +2032,6 @@ public class Main {
 	private class SnakeYamlFrontMatterVisitor
 		implements YamlFrontMatterVisitor {
 
-		public SnakeYamlFrontMatterVisitor() {
-			_yamlFrontMatterVisitor = new NodeVisitor(
-				YamlFrontMatterVisitorExt.VISIT_HANDLERS(this));
-		}
-
 		public Map<String, Object> getData() {
 			return _data;
 		}
@@ -2059,7 +2054,8 @@ public class Main {
 		}
 
 		private Map<String, Object> _data;
-		private final NodeVisitor _yamlFrontMatterVisitor;
+		private final NodeVisitor _yamlFrontMatterVisitor = new NodeVisitor(
+			YamlFrontMatterVisitorExt.VISIT_HANDLERS(this));
 
 	}
 
