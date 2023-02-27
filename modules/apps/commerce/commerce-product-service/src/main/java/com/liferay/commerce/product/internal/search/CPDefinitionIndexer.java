@@ -935,17 +935,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	}
 
 	private long[] _getUserCommerceCatalogIds(SearchContext searchContext) {
-		List<CommerceCatalog> commerceCatalogs =
+		return TransformUtil.transformToLongArray(
 			_commerceCatalogService.getCommerceCatalogs(
 				searchContext.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		if (commerceCatalogs.isEmpty()) {
-			return new long[0];
-		}
-
-		return TransformUtil.transformToLongArray(
-			commerceCatalogs, CommerceCatalog::getCommerceCatalogId);
+				QueryUtil.ALL_POS),
+			CommerceCatalog::getCommerceCatalogId);
 	}
 
 	private void _reindexCPDefinitions(long companyId) throws Exception {

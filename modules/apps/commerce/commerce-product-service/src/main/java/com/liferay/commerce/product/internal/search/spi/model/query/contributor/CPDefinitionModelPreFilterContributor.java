@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -73,17 +71,11 @@ public class CPDefinitionModelPreFilterContributor
 	}
 
 	private long[] _getCommerceCatalogIds(SearchContext searchContext) {
-		List<CommerceCatalog> commerceCatalogs =
+		return TransformUtil.transformToLongArray(
 			_commerceCatalogService.getCommerceCatalogs(
 				searchContext.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		if (commerceCatalogs.isEmpty()) {
-			return new long[0];
-		}
-
-		return TransformUtil.transformToLongArray(
-			commerceCatalogs, CommerceCatalog::getCommerceCatalogId);
+				QueryUtil.ALL_POS),
+			CommerceCatalog::getCommerceCatalogId);
 	}
 
 	private boolean _isIndexersSuppressed(SearchContext searchContext) {
