@@ -472,44 +472,6 @@ public class PredicateExpressionVisitorImpl
 		return entityModel;
 	}
 
-	private Predicate _getPredicate(
-		Object left, long objectDefinitionId,
-		BinaryExpression.Operation operation, Object right) {
-
-		Predicate predicate = null;
-
-		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			predicate = Predicate.and(
-				Predicate.withParentheses((Predicate)left),
-				Predicate.withParentheses((Predicate)right));
-		}
-		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			predicate = Predicate.or(
-				Predicate.withParentheses((Predicate)left),
-				Predicate.withParentheses((Predicate)right));
-		}
-		else {
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinitionId, String.valueOf(left));
-
-			if ((objectField != null) &&
-				StringUtil.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				predicate = _contains(left, right, objectDefinitionId);
-			}
-		}
-
-		if (predicate != null) {
-			return predicate;
-		}
-
-		return _getExpressionPredicate(
-			_getColumn(left, objectDefinitionId), operation,
-			_getValue(left, objectDefinitionId, right));
-	}
-
 	private Predicate _getObjectRelationshipPredicate(
 		Object left,
 		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
@@ -559,6 +521,44 @@ public class PredicateExpressionVisitorImpl
 
 		return objectRelatedModelsPredicateProvider.getPredicate(
 			objectRelationship, predicate);
+	}
+
+	private Predicate _getPredicate(
+		Object left, long objectDefinitionId,
+		BinaryExpression.Operation operation, Object right) {
+
+		Predicate predicate = null;
+
+		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+			predicate = Predicate.and(
+				Predicate.withParentheses((Predicate)left),
+				Predicate.withParentheses((Predicate)right));
+		}
+		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
+			predicate = Predicate.or(
+				Predicate.withParentheses((Predicate)left),
+				Predicate.withParentheses((Predicate)right));
+		}
+		else {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinitionId, String.valueOf(left));
+
+			if ((objectField != null) &&
+				StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				predicate = _contains(left, right, objectDefinitionId);
+			}
+		}
+
+		if (predicate != null) {
+			return predicate;
+		}
+
+		return _getExpressionPredicate(
+			_getColumn(left, objectDefinitionId), operation,
+			_getValue(left, objectDefinitionId, right));
 	}
 
 	private long _getRelatedObjectDefinitionId(
