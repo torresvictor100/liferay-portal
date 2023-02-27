@@ -282,14 +282,14 @@ public class Main {
 							friendlyUrlPathStructuredContents.get(
 								structuredContent.getFriendlyUrlPath());
 
+						importedStructuredContentIds.add(
+							siteStructuredContent.getId());
+
 						System.out.println(
 							"Deleting structured content " +
 								structuredContent.getFriendlyUrlPath());
 
 						_structuredContentResource.deleteStructuredContent(
-							siteStructuredContent.getId());
-
-						importedStructuredContentIds.add(
 							siteStructuredContent.getId());
 					}
 
