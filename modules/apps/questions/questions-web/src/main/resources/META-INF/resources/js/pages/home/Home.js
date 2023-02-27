@@ -176,12 +176,9 @@ export default withRouter(({history, isHomePath}) => {
 									>
 										<ClayCard>
 											<ClayCard.Body>
-												<ClayCard.Description
-													className="text-dark"
-													displayType="title"
-												>
-													{section.title}
-												</ClayCard.Description>
+												<span>
+												{section.title}
+												</span>
 
 												<ClayCard.Description
 													className="c-mt-3 flex-grow-1"
