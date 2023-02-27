@@ -298,16 +298,16 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 			return EdmPrimitiveTypeKind.Double.getFullQualifiedName();
 		}
-		else if (Objects.equals(
-					entityField.getType(), EntityField.Type.STRING)) {
-
-			return EdmPrimitiveTypeKind.String.getFullQualifiedName();
-		}
 		else if (Objects.equals(entityField.getType(), EntityField.Type.ID) ||
 				 Objects.equals(
 					 entityField.getType(), EntityField.Type.INTEGER)) {
 
 			return EdmPrimitiveTypeKind.Int64.getFullQualifiedName();
+		}
+		else if (Objects.equals(
+					entityField.getType(), EntityField.Type.STRING)) {
+
+			return EdmPrimitiveTypeKind.String.getFullQualifiedName();
 		}
 
 		return null;
