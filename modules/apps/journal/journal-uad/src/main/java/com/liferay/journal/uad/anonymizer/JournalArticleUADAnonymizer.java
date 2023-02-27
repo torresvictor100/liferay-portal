@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 public class JournalArticleUADAnonymizer
 	extends BaseJournalArticleUADAnonymizer {
 
+    @Override
 	protected AssetEntry fetchAssetEntry(JournalArticle journalArticle) {
 		return assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),
