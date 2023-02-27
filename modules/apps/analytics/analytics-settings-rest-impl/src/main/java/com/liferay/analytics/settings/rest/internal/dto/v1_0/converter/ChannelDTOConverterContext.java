@@ -34,7 +34,6 @@ public class ChannelDTOConverterContext extends DefaultDTOConverterContext {
 		super(false, new HashMap<>(), null, id, locale, null, null);
 
 		_analyticsChannelIds = analyticsChannelIds;
-
 		_analyticsDataSourceId = GetterUtil.getLong(analyticsDataSourceId);
 	}
 
