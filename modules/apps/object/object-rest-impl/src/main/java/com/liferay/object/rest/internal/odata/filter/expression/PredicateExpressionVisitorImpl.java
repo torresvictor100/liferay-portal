@@ -99,7 +99,7 @@ public class PredicateExpressionVisitorImpl
 		Predicate predicate = null;
 
 		if (_isComplexProperExpression(left)) {
-			predicate = _getPredicateForRelationships(
+			predicate = _getObjectRelationshipPredicate(
 				left,
 				(objectFieldName, relatedObjectDefinitionId) -> _getPredicate(
 					objectFieldName, relatedObjectDefinitionId, operation,
@@ -137,7 +137,7 @@ public class PredicateExpressionVisitorImpl
 			complexPropertyExpression.getPropertyExpression();
 
 		if (propertyExpression instanceof CollectionPropertyExpression) {
-			return _getPredicateForRelationships(
+			return _getObjectRelationshipPredicate(
 				complexPropertyExpression.toString(),
 				(objectFieldName, relatedObjectDefinitionId) ->
 					_visitCollectionPropertyExpression(
@@ -175,7 +175,7 @@ public class PredicateExpressionVisitorImpl
 			Predicate predicate = null;
 
 			if (_isComplexProperExpression(left)) {
-				predicate = _getPredicateForRelationships(
+				predicate = _getObjectRelationshipPredicate(
 					left,
 					(objectFieldName, relatedObjectDefinitionId) ->
 						_getInPredicate(
@@ -258,7 +258,7 @@ public class PredicateExpressionVisitorImpl
 
 			if (type == MethodExpression.Type.CONTAINS) {
 				if (_isComplexProperExpression(left)) {
-					predicate = _getPredicateForRelationships(
+					predicate = _getObjectRelationshipPredicate(
 						left,
 						(objectFieldName, relatedObjectDefinitionId) ->
 							_contains(
@@ -276,7 +276,7 @@ public class PredicateExpressionVisitorImpl
 			}
 			else if (type == MethodExpression.Type.STARTS_WITH) {
 				if (_isComplexProperExpression(left)) {
-					predicate = _getPredicateForRelationships(
+					predicate = _getObjectRelationshipPredicate(
 						left,
 						(objectFieldName, relatedObjectDefinitionId) ->
 							_startsWith(
@@ -510,7 +510,7 @@ public class PredicateExpressionVisitorImpl
 			_getValue(left, objectDefinitionId, right));
 	}
 
-	private Predicate _getPredicateForRelationships(
+	private Predicate _getObjectRelationshipPredicate(
 		Object left,
 		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
 
@@ -527,7 +527,7 @@ public class PredicateExpressionVisitorImpl
 			String objectFieldName = leftStringParts[1];
 
 			try {
-				return _getPredicateForRelationships(
+				return _getObjectRelationshipPredicate(
 					objectRelationship,
 					unsafeBiFunction.apply(
 						objectFieldName,
@@ -542,7 +542,7 @@ public class PredicateExpressionVisitorImpl
 		return null;
 	}
 
-	private Predicate _getPredicateForRelationships(
+	private Predicate _getObjectRelationshipPredicate(
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws Exception {
 
