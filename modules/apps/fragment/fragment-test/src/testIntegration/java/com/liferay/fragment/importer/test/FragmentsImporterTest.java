@@ -607,12 +607,12 @@ public class FragmentsImporterTest {
 
 		FragmentCollection fragmentCollection = fragmentCollections.get(0);
 
-		List<String> expectedFragmentsEntries = _fragmentEntryTypes.get(type);
-
 		List<FragmentEntry> actualFragmentEntries = ListUtil.filter(
 			_fragmentEntryLocalService.getFragmentEntries(
 				fragmentCollection.getFragmentCollectionId()),
 			fragmentEntry -> fragmentEntry.getType() == type);
+
+		List<String> expectedFragmentsEntries = _fragmentEntryTypes.get(type);
 
 		Assert.assertEquals(
 			actualFragmentEntries.toString(), expectedFragmentsEntries.size(),
