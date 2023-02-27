@@ -77,7 +77,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		}
 
 		_forceFailure = false;
-
 		_verifyProcessRun = false;
 	}
 
@@ -86,7 +85,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		_forceFailure = true;
 
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(true, true)) {
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -95,7 +94,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable1 = _executeInitialUpgradeProcess();
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(true, true)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -106,14 +105,14 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, true)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
 	@Test
 	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessDuringInitialDeployment() {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(true, true)) {
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -122,7 +121,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable1 = _upgradePortal();
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(true, true)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -132,7 +131,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -143,7 +142,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -152,7 +151,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				true, false)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -162,7 +161,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
@@ -172,7 +171,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
@@ -183,7 +182,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -192,7 +191,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				false, true)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
@@ -202,7 +201,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -212,7 +211,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
@@ -223,7 +222,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			_checkResult(true);
+			_assertVerify(true);
 		}
 	}
 
@@ -232,7 +231,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				false, false)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
@@ -242,11 +241,11 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			_checkResult(false);
+			_assertVerify(false);
 		}
 	}
 
-	private void _checkResult(boolean verifyProcessRun) {
+	private void _assertVerify(boolean verifyProcessRun) {
 		Assert.assertEquals(verifyProcessRun, _verifyProcessRun);
 
 		if (!verifyProcessRun) {
