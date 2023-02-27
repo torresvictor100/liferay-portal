@@ -438,15 +438,13 @@ public class HttpImpl implements Http {
 		if ((maxConnectionsPerHost > 0) &&
 			(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
 
-			HttpRoute httpRoute = new HttpRoute(
-				new HttpHost(uri.getHost(), uri.getPort()));
-
 			PoolingHttpClientConnectionManager
 				poolingHttpClientConnectionManager =
 					_getPoolingHttpClientConnectionManager();
 
 			poolingHttpClientConnectionManager.setMaxPerRoute(
-				httpRoute, maxConnectionsPerHost);
+				new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
+				maxConnectionsPerHost);
 		}
 
 		if (timeout == 0) {
@@ -758,15 +756,15 @@ public class HttpImpl implements Http {
 					if (!hasRequestHeader(
 							requestBuilder, HttpHeaders.CONTENT_TYPE)) {
 
+						PoolingHttpClientConnectionManager
+							poolingHttpClientConnectionManager =
+								_getPoolingHttpClientConnectionManager();
+
 						ConnectionConfig.Builder connectionConfigBuilder =
 							ConnectionConfig.custom();
 
 						connectionConfigBuilder.setCharset(
 							Charset.forName(StringPool.UTF8));
-
-						PoolingHttpClientConnectionManager
-							poolingHttpClientConnectionManager =
-								_getPoolingHttpClientConnectionManager();
 
 						poolingHttpClientConnectionManager.setConnectionConfig(
 							targetHttpHost, connectionConfigBuilder.build());
