@@ -106,7 +106,8 @@ public class FormContextUtil {
 			{
 				enabled = _getBoolean(formPageContext, "enabled");
 
-				List<FormFieldContext> formFieldContextList = new ArrayList<>();
+				List<FormFieldContext> formFieldContextsList =
+					new ArrayList<>();
 
 				for (Map<String, Object> rowsMap :
 						_getMaps(formPageContext, "rows")) {
@@ -117,13 +118,13 @@ public class FormContextUtil {
 						for (Map<String, Object> fieldsMap :
 								_getMaps(columnsMap, "fields")) {
 
-							formFieldContextList.add(
+							formFieldContextsList.add(
 								_toFormFieldContext(fieldsMap));
 						}
 					}
 				}
 
-				formFieldContexts = formFieldContextList.toArray(
+				formFieldContexts = formFieldContextsList.toArray(
 					new FormFieldContext[0]);
 
 				showRequiredFieldsWarning = _getBoolean(
