@@ -94,7 +94,7 @@ public class SortPortletSharedSearchContributor
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(fieldValue + " is not a valid field name.");
+					_log.warn(fieldValue + " is an invalid field name");
 				}
 
 				if (_log.isDebugEnabled()) {
