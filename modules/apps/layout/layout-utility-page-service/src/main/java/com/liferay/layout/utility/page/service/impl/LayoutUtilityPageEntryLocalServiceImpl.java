@@ -84,6 +84,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.create(
 				counterLocalService.increment());
 
+		layoutUtilityPageEntry.setUuid(serviceContext.getUuid());
+
 		if (Validator.isNotNull(externalReferenceCode)) {
 			layoutUtilityPageEntry.setExternalReferenceCode(
 				externalReferenceCode);
@@ -93,7 +95,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				_getExternalReferenceCode(groupId, name));
 		}
 
-		layoutUtilityPageEntry.setUuid(serviceContext.getUuid());
 		layoutUtilityPageEntry.setGroupId(groupId);
 
 		User user = _userLocalService.getUser(userId);
