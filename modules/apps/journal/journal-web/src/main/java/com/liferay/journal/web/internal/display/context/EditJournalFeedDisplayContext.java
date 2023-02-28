@@ -48,10 +48,9 @@ public class EditJournalFeedDisplayContext {
 		_journalFeed = journalFeed;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
-
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

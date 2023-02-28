@@ -80,7 +80,6 @@ public class JournalFeedTypeUpgradeProcessTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			journalArticleClassNameId);
-
 		DDMTemplate rendererDDMTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			journalArticleClassNameId);

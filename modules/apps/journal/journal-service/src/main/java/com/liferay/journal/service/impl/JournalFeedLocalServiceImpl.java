@@ -207,6 +207,17 @@ public class JournalFeedLocalServiceImpl
 
 		journalFeedPersistence.remove(feed);
 
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			feed.getCompanyId(), JournalFeed.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, feed.getId());
+
+		// Asset
+
+		_assetEntryLocalService.deleteEntry(
+			JournalFeed.class.getName(), feed.getId());
+
 		// DDM Structure Link
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -218,20 +229,9 @@ public class JournalFeedLocalServiceImpl
 			_classNameLocalService.getClassNameId(JournalFeed.class),
 			feed.getPrimaryKey(), ddmStructure.getStructureId());
 
-		// Resources
-
-		_resourceLocalService.deleteResource(
-			feed.getCompanyId(), JournalFeed.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, feed.getId());
-
 		// Expando
 
 		_expandoValueLocalService.deleteValues(
-			JournalFeed.class.getName(), feed.getId());
-
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
 			JournalFeed.class.getName(), feed.getId());
 	}
 

@@ -83,10 +83,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("JournalFeed", "type_")) {
-			_createJournalFeedTypesAndAssetEntries();
+			_addJournalFeedTypesAndAssetEntries();
 		}
 		else {
-			_createJournalFeedAssetEntries();
+			_addJournalFeedAssetEntries();
 		}
 	}
 
@@ -126,7 +126,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _createJournalFeedAssetEntries() throws Exception {
+	private void _addJournalFeedAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = _portal.getClassNameId(
 				JournalFeed.class.getName());
@@ -155,7 +155,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _createJournalFeedAssetEntries(
+	private void _addJournalFeedAssetEntries(
 			long classNameId, long companyId, long defaultUserId,
 			Map<String, Long> journalFeedTypesMap)
 		throws Exception {
@@ -185,7 +185,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _createJournalFeedTypesAndAssetEntries() throws Exception {
+	private void _addJournalFeedTypesAndAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Locale localeThreadLocalDefaultLocale =
 				LocaleThreadLocal.getDefaultLocale();
@@ -264,7 +264,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 									userId));
 						}
 
-						_createJournalFeedAssetEntries(
+						_addJournalFeedAssetEntries(
 							journalFeedClassNameId, company.getCompanyId(),
 							userId, journalFeedTypesMap);
 					});
