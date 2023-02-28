@@ -18,7 +18,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -46,11 +45,7 @@ public class DuplicateSXPElementExternalReferenceCodeExceptionMapper
 		DuplicateSXPElementExternalReferenceCodeException
 			duplicateSXPElementExternalReferenceCodeException) {
 
-		return new Problem(
-			null, Response.Status.BAD_REQUEST,
-			duplicateSXPElementExternalReferenceCodeException.getMessage(),
-			DuplicateSXPElementExternalReferenceCodeException.class.
-				getSimpleName());
+		return new Problem(duplicateSXPElementExternalReferenceCodeException);
 	}
 
 }

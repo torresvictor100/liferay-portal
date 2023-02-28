@@ -18,7 +18,6 @@ import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeExc
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,11 +42,7 @@ public class DuplicateObjectFieldExternalReferenceCodeExceptionMapper
 		DuplicateObjectFieldExternalReferenceCodeException
 			duplicateObjectFieldExternalReferenceCodeException) {
 
-		return new Problem(
-			null, Response.Status.BAD_REQUEST,
-			duplicateObjectFieldExternalReferenceCodeException.getMessage(),
-			DuplicateObjectFieldExternalReferenceCodeException.class.
-				getSimpleName());
+		return new Problem(duplicateObjectFieldExternalReferenceCodeException);
 	}
 
 }
