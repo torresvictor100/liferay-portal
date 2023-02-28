@@ -1,9 +1,72 @@
-import {getCatalogs} from './api';
+import {
+	createProductSpecification,
+	createSpecification,
+	getCatalogs,
+	updateProductSpecification,
+} from './api';
 
 export async function getCatalogId() {
 	const response = await getCatalogs();
 
 	return response.items[0].id;
+}
+
+async function submitSpecification(
+	appId: string,
+	productId: number,
+	productSpecificationId: number,
+	key: string,
+	title: string,
+	value: string
+): Promise<number> {
+	const dataSpecification = await createSpecification({
+		body: {
+			key,
+			title: {en_US: title},
+		},
+	});
+	if (productSpecificationId) {
+		updateProductSpecification({
+			body: {
+				specificationKey: dataSpecification.key,
+				value: {en_US: value},
+			},
+			id: productSpecificationId,
+		});
+
+		return -1;
+	}
+	else {
+		const {id} = await createProductSpecification({
+			appId,
+			body: {
+				productId,
+				specificationId: dataSpecification.id,
+				specificationKey: dataSpecification.key,
+				value: {en_US: value},
+			},
+		});
+
+		return id;
+	}
+}
+
+export async function saveSpecification(
+	appId: string,
+	productId: number,
+	productSpecificationId: number,
+	key: string,
+	title: string,
+	value: string
+) {
+	return await submitSpecification(
+		appId,
+		productId,
+		productSpecificationId,
+		key,
+		title,
+		value
+	);
 }
 
 export async function submitFile(
@@ -19,7 +82,8 @@ export async function submitFile(
 		},
 		externalReferenceCode: appERC,
 	});
-	const file = await response.json();
+
+	response.json();
 }
 
 export function submitBase64EncodedFile(
