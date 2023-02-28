@@ -44,8 +44,10 @@ public class DuplicateObjectFieldExternalReferenceCodeExceptionMapper
 			duplicateObjectFieldExternalReferenceCodeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			duplicateObjectFieldExternalReferenceCodeException.getMessage());
+			null, Response.Status.BAD_REQUEST,
+			duplicateObjectFieldExternalReferenceCodeException.getMessage(),
+			DuplicateObjectFieldExternalReferenceCodeException.class.
+				getSimpleName());
 	}
 
 }

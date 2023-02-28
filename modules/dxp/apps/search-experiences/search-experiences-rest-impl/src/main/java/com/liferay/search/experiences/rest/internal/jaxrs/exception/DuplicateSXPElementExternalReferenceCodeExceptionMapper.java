@@ -47,8 +47,10 @@ public class DuplicateSXPElementExternalReferenceCodeExceptionMapper
 			duplicateSXPElementExternalReferenceCodeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			duplicateSXPElementExternalReferenceCodeException.getMessage());
+			null, Response.Status.BAD_REQUEST,
+			duplicateSXPElementExternalReferenceCodeException.getMessage(),
+			DuplicateSXPElementExternalReferenceCodeException.class.
+				getSimpleName());
 	}
 
 }
