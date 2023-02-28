@@ -39,21 +39,16 @@ public class WorkflowDefinitionLinkUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.setLong(
 				1,
-				_classNameLocalService.getClassNameId(_CLASS_NAME_RECORD_SET));
+				_classNameLocalService.getClassNameId(
+					"com.liferay.dynamic.data.lists.model.DDLRecordSet"));
 			preparedStatement.setLong(
 				2,
 				_classNameLocalService.getClassNameId(
-					_CLASS_NAME_FORM_INSTANCE));
+					"com.liferay.dynamic.data.mapping.model.DDMFormInstance"));
 
 			preparedStatement.execute();
 		}
 	}
-
-	private static final String _CLASS_NAME_FORM_INSTANCE =
-		"com.liferay.dynamic.data.mapping.model.DDMFormInstance";
-
-	private static final String _CLASS_NAME_RECORD_SET =
-		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 
 	private final ClassNameLocalService _classNameLocalService;
 
