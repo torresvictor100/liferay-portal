@@ -132,7 +132,7 @@ export default async function submitForm(
 
 	if (values.id) {
 		Liferay.Util.navigate(
-			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?edit-success=true`
+			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
 		);
 
 		return;
