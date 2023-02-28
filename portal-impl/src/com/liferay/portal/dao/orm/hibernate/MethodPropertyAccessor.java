@@ -40,13 +40,12 @@ public class MethodPropertyAccessor implements PropertyAccessStrategy {
 
 	@Override
 	public PropertyAccess buildPropertyAccess(
-		Class containerJavaType, String propertyName) {
+		Class clazz, String propertyName) {
 
 		return _propertyAccesses.computeIfAbsent(
 			StringBundler.concat(
-				containerJavaType.getName(), StringPool.POUND, propertyName),
-			key -> new MethodPropertyAccess(
-				this, containerJavaType, propertyName));
+				clazz.getName(), StringPool.POUND, propertyName),
+			key -> new MethodPropertyAccess(this, clazz, propertyName));
 	}
 
 	private static final Map<String, PropertyAccess> _propertyAccesses =

@@ -49,7 +49,7 @@ public class PrivateFieldPropertyAccessor implements PropertyAccessStrategy {
 
 	@Override
 	public PropertyAccess buildPropertyAccess(
-		Class containerJavaType, String propertyName) {
+		Class clazz, String propertyName) {
 
 		String fieldName;
 
@@ -62,9 +62,8 @@ public class PrivateFieldPropertyAccessor implements PropertyAccessStrategy {
 
 		return _propertyAccesses.computeIfAbsent(
 			StringBundler.concat(
-				containerJavaType.getName(), StringPool.POUND, propertyName),
-			key -> new FieldPropertyAccess(
-				new FieldHolder(containerJavaType, fieldName)));
+				clazz.getName(), StringPool.POUND, propertyName),
+			key -> new FieldPropertyAccess(new FieldHolder(clazz, fieldName)));
 	}
 
 	private static final Map<String, PropertyAccess> _propertyAccesses =
