@@ -355,6 +355,22 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 </liferay-frontend:edit-form>
 
 <aui:script>
+	function <portlet:namespace />openAssetCategorySelector() {
+		Liferay.Util.openSelectionModal({
+			onSelect: function (selectedItem) {
+				document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
+					selectedItem.classPK;
+				document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
+					selectedItem.title;
+				document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = false;
+			},
+			selectEventName: '<portlet:namespace />selectAssetCategory',
+			title: '<%= UnicodeLanguageUtil.get(request, "select-category") %>',
+			url:
+				'<%= editJournalFeedDisplayContext.getAssetCategoriesSelectorURL() %>>',
+		});
+	}
+
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
@@ -396,6 +412,14 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		});
 	}
 
+	function <portlet:namespace />removeAssetCategory() {
+		document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
+			'';
+		document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
+			'';
+		document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = true;
+	}
+
 	function <portlet:namespace />removeDDMStructure() {
 		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
 			'';
@@ -407,30 +431,6 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 			'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
 		submitForm(document.<portlet:namespace />fm, null, false, false);
-	}
-
-	function <portlet:namespace />openAssetCategorySelector() {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
-					selectedItem.classPK;
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
-					selectedItem.title;
-				document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = false;
-			},
-			selectEventName: '<portlet:namespace />selectAssetCategory',
-			title: '<%= UnicodeLanguageUtil.get(request, "select-category") %>',
-			url:
-				'<%= editJournalFeedDisplayContext.getAssetCategoriesSelectorURL() %>>',
-		});
-	}
-
-	function <portlet:namespace />removeAssetCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
-			'';
-		document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
-			'';
-		document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = true;
 	}
 
 	function <portlet:namespace />saveFeed() {
