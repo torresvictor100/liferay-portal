@@ -338,6 +338,7 @@ public abstract class Base${schemaName}ResourceImpl
 				${javaDataType} existing${schemaName} = ${javaMethodParameterName}(
 					<#list javaMethodParameters as javaMethodParameter>
 						${javaMethodParameter.parameterName}
+
 						<#sep>, </#sep>
 					</#list>
 				);
@@ -363,8 +364,10 @@ public abstract class Base${schemaName}ResourceImpl
 				return ${javaMethodParameterName}(
 					<#list javaMethodParameters as javaMethodParameter>
 						${javaMethodParameter.parameterName}
+
 						<#sep>, </#sep>
 					</#list>
+
 					, existing${schemaName}
 				);
 			<#else>
