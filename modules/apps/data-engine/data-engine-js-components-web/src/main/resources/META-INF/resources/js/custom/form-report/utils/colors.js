@@ -26,11 +26,10 @@ const COLORS = [
 ];
 
 const NAMED_COLORS = {
-	black: '#000000',
 	blueDark: '#272833',
-	gray: '#CDCED9',
-	lightBlue: '#4B9BFF',
-	white: '#FFFFFF',
+	gray: '#cdced9',
+	lightBlue: '#4b9bff',
+	white: '#ffffff',
 };
 
 export {NAMED_COLORS};
