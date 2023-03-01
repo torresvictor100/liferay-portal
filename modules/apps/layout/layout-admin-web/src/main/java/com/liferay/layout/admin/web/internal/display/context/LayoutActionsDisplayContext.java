@@ -253,28 +253,19 @@ public class LayoutActionsDisplayContext {
 	}
 
 	private String _getPreviewLayoutURL(Layout layout) {
-		String getPagePreviewURL =
-			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
-				"/portal/get_page_preview";
-
-		getPagePreviewURL = HttpComponentsUtil.addParameters(
-			getPagePreviewURL, "p_l_mode", Constants.PREVIEW,
-			"p_p_state", WindowState.UNDEFINED.toString());
-
 		Layout draftLayout = layout;
 
 		if (!layout.isDraftLayout()) {
 			draftLayout = layout.fetchDraftLayout();
 		}
 
-		getPagePreviewURL = HttpComponentsUtil.addParameter(
-			getPagePreviewURL, "selPlid",
-			String.valueOf(draftLayout.getPlid()));
-		getPagePreviewURL = HttpComponentsUtil.addParameter(
-			getPagePreviewURL, "segmentsExperienceId",
+		return HttpComponentsUtil.addParameters(
+			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+				"/portal/get_page_preview",
+			"p_l_mode", Constants.PREVIEW, "p_p_state",
+			WindowState.UNDEFINED.toString(), "selPlid",
+			String.valueOf(draftLayout.getPlid()), "segmentsExperienceId",
 			String.valueOf(_getSegmentsExperienceId(draftLayout)));
-
-		return getPagePreviewURL;
 	}
 
 	private long _getSegmentsExperienceId(Layout layout) {
