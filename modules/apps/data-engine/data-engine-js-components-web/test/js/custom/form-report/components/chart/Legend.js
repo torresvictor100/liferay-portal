@@ -17,26 +17,23 @@ import React from 'react';
 
 import Legend from '../../../../../../src/main/resources/META-INF/resources/js/custom/form-report/components/chart/Legend';
 
-const data = [
-	{count: 1, label: 'label1'},
-	{count: 2, label: 'label2'},
-	{count: 3, label: 'label3'},
-	{count: 4, label: 'label4'},
-	{count: 5, label: 'label5'},
-	{count: 6, label: 'label6'},
-	{count: 7, label: 'label7'},
-	{count: 8, label: 'label8'},
-	{count: 9, label: 'label9'},
-	{count: 10, label: 'label10'},
-	{count: 11, label: 'label11'},
+const labels = [
+	'label1',
+	'label2',
+	'label3',
+	'label4',
+	'label5',
+	'label6',
+	'label7',
+	'label8',
+	'label9',
+	'label10',
+	'label11',
 ];
 
 const props = {
 	activeIndex: null,
-	data: [
-		{count: 1, label: 'label1'},
-		{count: 2, label: 'label2'},
-	],
+	labels: ['label1', 'label2'],
 };
 
 describe('Legend', () => {
@@ -50,13 +47,13 @@ describe('Legend', () => {
 	});
 
 	it('displays showAll button when there are more than 10 items', () => {
-		const {queryByText} = render(<Legend {...props} data={data} />);
+		const {queryByText} = render(<Legend {...props} labels={labels} />);
 
 		expect(queryByText('show-all')).toBeTruthy();
 	});
 
 	it('displays showLess button when showAll button is clicked', () => {
-		const {queryByText} = render(<Legend {...props} data={data} />);
+		const {queryByText} = render(<Legend {...props} labels={labels} />);
 
 		fireEvent.click(queryByText('show-all'));
 

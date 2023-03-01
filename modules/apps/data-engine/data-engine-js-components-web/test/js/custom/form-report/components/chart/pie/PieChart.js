@@ -28,22 +28,7 @@ const props = {
 };
 
 describe('PieChart', () => {
-	const {ResizeObserver} = window;
-
-	beforeEach(() => {
-		delete window.ResizeObserver;
-		window.ResizeObserver = jest.fn().mockImplementation(() => ({
-			disconnect: jest.fn(),
-			observe: jest.fn(),
-			unobserve: jest.fn(),
-		}));
-	});
-
-	afterEach(() => {
-		cleanup();
-		window.ResizeObserver = ResizeObserver;
-		jest.restoreAllMocks();
-	});
+	afterEach(cleanup);
 
 	it('renders', () => {
 		const {asFragment} = render(<PieChart {...props} />);
