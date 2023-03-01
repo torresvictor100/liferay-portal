@@ -484,25 +484,15 @@ public class EditStyleBookEntryDisplayContext {
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				String getPagePreviewURL =
+				return HttpComponentsUtil.addParameters(
 					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
-						"/portal/get_page_preview";
-
-				getPagePreviewURL = HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "segmentsExperienceId",
-					String.valueOf(
-						SegmentsExperienceLocalServiceUtil.
-							fetchDefaultSegmentsExperienceId(
-								layoutPageTemplateEntry.getPlid())));
-				getPagePreviewURL = HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "selPlid",
-					String.valueOf(layoutPageTemplateEntry.getPlid()));
-
-				getPagePreviewURL = HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "p_l_mode", Constants.PREVIEW);
-
-				return HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "styleBookEntryPreview", true);
+						"/portal/get_page_preview",
+					"p_l_mode", Constants.PREVIEW, "segmentsExperienceId",
+					SegmentsExperienceLocalServiceUtil.
+						fetchDefaultSegmentsExperienceId(
+							layoutPageTemplateEntry.getPlid()),
+					"selPlid", layoutPageTemplateEntry.getPlid(),
+					"styleBookEntryPreview", true);
 			}
 
 			return _getPreviewURL(

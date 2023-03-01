@@ -193,34 +193,24 @@ public class LayoutPageTemplateEntryItemSelectorView
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE) {
 
-						String getPagePreviewURL =
+						return HttpComponentsUtil.addParameters(
 							_themeDisplay.getPortalURL() +
 								_themeDisplay.getPathMain() +
-									"/portal/get_page_preview";
-
-						getPagePreviewURL = HttpComponentsUtil.addParameter(
-							getPagePreviewURL, "segmentsExperienceId",
-							String.valueOf(
-								_segmentsExperienceLocalService.
-									fetchDefaultSegmentsExperienceId(
-										_layoutPageTemplateEntry.getPlid())));
-						getPagePreviewURL = HttpComponentsUtil.addParameter(
-							getPagePreviewURL, "selPlid",
-							String.valueOf(_layoutPageTemplateEntry.getPlid()));
-
-						return HttpComponentsUtil.addParameter(
-							getPagePreviewURL, "p_l_mode", Constants.PREVIEW);
+									"/portal/get_page_preview",
+							"p_l_mode", Constants.PREVIEW,
+							"segmentsExperienceId", "selPlid",
+							_layoutPageTemplateEntry.getPlid(),
+							_segmentsExperienceLocalService.
+								fetchDefaultSegmentsExperienceId(
+									_layoutPageTemplateEntry.getPlid()));
 					}
 
-					String layoutURL = HttpComponentsUtil.addParameter(
+					return HttpComponentsUtil.addParameters(
 						PortalUtil.getLayoutFullURL(
 							_layoutLocalService.getLayout(
 								_layoutPageTemplateEntry.getPlid()),
 							_themeDisplay),
-						"p_l_mode", Constants.PREVIEW);
-
-					return HttpComponentsUtil.addParameter(
-						layoutURL, "p_p_auth",
+						"p_l_mode", Constants.PREVIEW, "p_p_auth",
 						AuthTokenUtil.getToken(_httpServletRequest));
 				}
 			).put(
