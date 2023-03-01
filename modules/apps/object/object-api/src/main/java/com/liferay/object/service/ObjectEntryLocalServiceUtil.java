@@ -374,14 +374,17 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<ObjectEntry> getObjectEntries(
-		long groupId, long objectDefinitionId, int start, int end) {
+			long groupId, long objectDefinitionId, int start, int end)
+		throws PortalException {
 
 		return getService().getObjectEntries(
 			groupId, objectDefinitionId, start, end);
 	}
 
 	public static List<ObjectEntry> getObjectEntries(
-		long groupId, long objectDefinitionId, int status, int start, int end) {
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException {
 
 		return getService().getObjectEntries(
 			groupId, objectDefinitionId, status, start, end);
