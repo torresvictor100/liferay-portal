@@ -56,9 +56,7 @@ export default function List({data, field, summary, totalEntries, type}) {
 			<ul className="entries-list">
 				{Array.isArray(data) &&
 					data.map((field, index) => (
-						<li key={index} tabIndex={0}>
-							{checkType(field, type)}
-						</li>
+						<li key={index}>{checkType(field, type)}</li>
 					))}
 
 				{data.length === 5 && totalEntries > 5 ? (

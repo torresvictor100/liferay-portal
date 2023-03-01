@@ -65,7 +65,7 @@ export default function Card({
 								<ClayIcon symbol={icon} />
 							</div>
 
-							<div className="field-info" tabIndex={0}>
+							<div className="field-info">
 								<ClayCard.Description displayType="title">
 									{label}
 								</ClayCard.Description>
