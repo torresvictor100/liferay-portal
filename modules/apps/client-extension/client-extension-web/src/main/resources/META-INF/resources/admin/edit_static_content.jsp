@@ -26,6 +26,6 @@ StaticContentCET staticContentCET = editClientExtensionEntryDisplayContext.getCE
 	<aui:input ignoreRequestValue="<%= true %>" label="url" name="url" required="<%= true %>" type="text" value="<%= staticContentCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="specify-the-url-to-the-site-with-static-content" />
+		<liferay-ui:message key="specify-the-url-with-the-static-content" />
 	</div>
 </aui:field-wrapper>
