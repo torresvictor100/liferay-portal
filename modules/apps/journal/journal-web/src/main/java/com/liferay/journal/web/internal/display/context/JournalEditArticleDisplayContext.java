@@ -150,25 +150,19 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"previewURL",
 			() -> {
-				String getPagePreviewURL =
-					_themeDisplay.getPathMain() + "/portal/get_page_preview";
-
-				getPagePreviewURL = HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "className",
+				String getPagePreviewURL = HttpComponentsUtil.addParameters(
+					_themeDisplay.getPathMain() + "/portal/get_page_preview",
+					"p_l_mode", Constants.PREVIEW, "className",
 					JournalArticle.class.getName());
 
 				if (_article != null) {
-					getPagePreviewURL = HttpComponentsUtil.addParameter(
+					getPagePreviewURL = HttpComponentsUtil.addParameters(
 						getPagePreviewURL, "classPK",
-						String.valueOf(_article.getResourcePrimKey()));
-
-					getPagePreviewURL = HttpComponentsUtil.addParameter(
-						getPagePreviewURL, "version",
-						String.valueOf(_article.getVersion()));
+						_article.getResourcePrimKey(), "version",
+						_article.getVersion());
 				}
 
-				return HttpComponentsUtil.addParameter(
-					getPagePreviewURL, "p_l_mode", Constants.PREVIEW);
+				return getPagePreviewURL;
 			}
 		).put(
 			"saveAsDraftURL",
