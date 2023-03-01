@@ -257,8 +257,9 @@ public class LayoutActionsDisplayContext {
 			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 				"/portal/get_page_preview";
 
-		getPagePreviewURL = HttpComponentsUtil.addParameter(
-			getPagePreviewURL, "p_l_mode", Constants.PREVIEW);
+		getPagePreviewURL = HttpComponentsUtil.addParameters(
+			getPagePreviewURL, "p_l_mode", Constants.PREVIEW,
+			"p_p_state", WindowState.UNDEFINED.toString());
 
 		Layout draftLayout = layout;
 
@@ -273,8 +274,7 @@ public class LayoutActionsDisplayContext {
 			getPagePreviewURL, "segmentsExperienceId",
 			String.valueOf(_getSegmentsExperienceId(draftLayout)));
 
-		return HttpComponentsUtil.setParameter(
-			getPagePreviewURL, "p_p_state", WindowState.UNDEFINED.toString());
+		return getPagePreviewURL;
 	}
 
 	private long _getSegmentsExperienceId(Layout layout) {
