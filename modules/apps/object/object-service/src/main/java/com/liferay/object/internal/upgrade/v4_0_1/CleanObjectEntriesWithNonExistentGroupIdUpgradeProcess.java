@@ -15,13 +15,17 @@
 package com.liferay.object.internal.upgrade.v4_0_1;
 
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jorge García Jiménez
@@ -37,23 +41,33 @@ public class CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"SELECT ObjectEntry.objectEntryId from ObjectEntry left join " +
-					"Group_ on ObjectEntry.groupId = Group_.groupId where " +
-						"ObjectEntry.groupId != 0 and Group_.groupId is null",
+		List<Long> objectEntryIds = new ArrayList<>();
+
+		String sql =
+			"SELECT oe.objectEntryId  from ObjectEntry oe left join Group_ g " +
+				"on oe.groupId= g.groupId where g.groupId is null and " +
+					"oe.groupId != 0";
+
+		try (Statement s = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = s.executeQuery(sql)) {
 
 			while (resultSet.next()) {
 				long objectEntryId = resultSet.getLong("objectEntryId");
 
+				objectEntryIds.add(objectEntryId);
+			}
+
+			for (Long objectEntryId : objectEntryIds) {
 				try {
 					_objectEntryLocalService.deleteObjectEntry(objectEntryId);
 				}
 				catch (PortalException portalException) {
 					_log.error(
-						"Unable to delete object entry " + objectEntryId,
-						portalException);
+						StringBundler.concat(
+							"Cannot delete the following objectEntry: ",
+							objectEntryId, " with exception: ",
+							portalException));
 				}
 			}
 		}
