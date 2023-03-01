@@ -15,8 +15,6 @@
 package com.liferay.portal.vulcan.jaxrs.exception.mapper;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import javax.ws.rs.core.Response;
 
@@ -31,11 +29,11 @@ public class Problem {
 	public Problem() {
 	}
 
-	public Problem(PortalException portalException) {
+	public Problem(Exception exception) {
 		_status = Response.Status.BAD_REQUEST;
-		_title = portalException.getMessage();
+		_title = exception.getMessage();
 
-		Class<?> clazz = portalException.getClass();
+		Class<?> clazz = exception.getClass();
 
 		_type = clazz.getSimpleName();
 	}
@@ -52,15 +50,6 @@ public class Problem {
 		_status = status;
 		_title = title;
 		_type = type;
-	}
-
-	public Problem(SystemException systemException) {
-		_status = Response.Status.BAD_REQUEST;
-		_title = systemException.getMessage();
-
-		Class<?> clazz = systemException.getClass();
-
-		_type = clazz.getSimpleName();
 	}
 
 	public String getDetail() {
