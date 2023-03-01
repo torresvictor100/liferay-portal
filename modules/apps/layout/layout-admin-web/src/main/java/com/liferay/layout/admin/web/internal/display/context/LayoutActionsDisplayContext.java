@@ -263,9 +263,8 @@ public class LayoutActionsDisplayContext {
 			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 				"/portal/get_page_preview",
 			"p_l_mode", Constants.PREVIEW, "p_p_state",
-			WindowState.UNDEFINED.toString(), "selPlid",
-			String.valueOf(draftLayout.getPlid()), "segmentsExperienceId",
-			String.valueOf(_getSegmentsExperienceId(draftLayout)));
+			WindowState.UNDEFINED.toString(), "selPlid", draftLayout.getPlid(),
+			"segmentsExperienceId", _getSegmentsExperienceId(draftLayout));
 	}
 
 	private long _getSegmentsExperienceId(Layout layout) {
