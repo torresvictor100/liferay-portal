@@ -37,7 +37,7 @@ public class ObjectEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select ObjectEntry.objectEntryId from ObjectEntry left join " +
+				"SELECT ObjectEntry.objectEntryId from ObjectEntry left join " +
 					"Group_ on ObjectEntry.groupId = Group_.groupId where " +
 						"ObjectEntry.groupId != 0 and Group_.groupId is null",
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
