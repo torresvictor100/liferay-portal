@@ -184,7 +184,7 @@ const SelectionControls = ({
 							  )
 							: sub(
 									Liferay.Language.get(
-										'clear-selection-currently-x-of-x-x-selected'
+										'clear-selection.-there-are-currently-x-of-x-x-selected'
 									),
 									selectedItems,
 									itemsTotal,
