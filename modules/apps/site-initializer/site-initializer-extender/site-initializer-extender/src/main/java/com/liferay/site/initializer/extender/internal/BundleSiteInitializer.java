@@ -516,21 +516,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addOrUpdateResourcePermissions(
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext));
 
 			// LPS-172108 Layouts have to be created first so that links in
 			// layout page templates work
 
-			_invoke(
+			Map<String, String> layoutPageTemplateEntryReplaceValues = _invoke(
 				() -> _addLayoutPageTemplates(
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext,
 					taxonomyCategoryIdsStringUtilReplaceValues));
+
+			_invoke(
+				() -> _addOrUpdateResourcePermissions(
+					layoutPageTemplateEntryReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext));
 
 			_invoke(
 				() -> _addLayoutUtilityPageEntries(
@@ -980,7 +982,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addLayoutPageTemplates(
+	private Map<String, String> _addLayoutPageTemplates(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String>
@@ -989,11 +991,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
+		Map<String, String> layoutPageTemplateEntryReplaceValues =
+			new HashMap<>();
+
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			"/site-initializer/layout-page-templates", StringPool.STAR, true);
 
 		if (enumeration == null) {
-			return;
+			return layoutPageTemplateEntryReplaceValues;
 		}
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
@@ -1069,6 +1074,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutsImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			zipWriter.getFile(), true);
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntrys =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+				serviceContext.getScopeGroupId());
+
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntrys) {
+
+			String name = StringUtil.removeSubstring(
+				layoutPageTemplateEntry.getName(), " ");
+
+			layoutPageTemplateEntryReplaceValues.put(
+				"LAYOUT_PAGE_TEMPLATE_ENTRY_ID:" + name,
+				String.valueOf(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		}
+
+		return layoutPageTemplateEntryReplaceValues;
 	}
 
 	private void _addLayoutsContent(
@@ -2972,6 +2995,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateResourcePermissions(
+			Map<String, String> layoutPageTemplateEntryReplaceValues,
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -2986,7 +3010,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(
-				json,
+				json, layoutPageTemplateEntryReplaceValues,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
