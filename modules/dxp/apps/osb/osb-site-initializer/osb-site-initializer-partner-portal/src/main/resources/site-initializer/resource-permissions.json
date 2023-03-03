@@ -183,5 +183,17 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFListingColumn$]",
 		"roleName": "User",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW",
+			"PERMISSIONS"
+		],
+		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:MDFClaimDetail$]",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Channel General Manager",
+		"scope": "4"
 	}
 ]
