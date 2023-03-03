@@ -516,10 +516,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addOrUpdateResourcePermissions(
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext));
 
 			// LPS-172108 Layouts have to be created first so that links in
 			// layout page templates work
@@ -546,6 +542,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addOrUpdateClientExtensionEntries(
 						documentsStringUtilReplaceValues, serviceContext));
+
+			_invoke(
+				() -> _addOrUpdateResourcePermissions(
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext));
 
 			_invoke(
 				() -> _addLayoutsContent(
@@ -1164,13 +1165,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 			new HashMap<>();
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-definitions");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return objectDefinitionIdsStringUtilReplaceValues;
-		}
-
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				serviceContext.getCompanyId(), true,
@@ -1180,8 +1174,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitions) {
 
 			objectDefinitionIdsStringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
+				"OBJECT_DEFINITION_ID:" + objectDefinition.getShortName(),
 				String.valueOf(objectDefinition.getObjectDefinitionId()));
+		}
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-definitions");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
@@ -2944,6 +2945,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(
 				json,
+				_getlayoutPageTemplateEntryIdsStringUtilReplaceValues(
+					serviceContext),
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -4314,6 +4317,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return map;
+	}
+
+	private Map<String, String>
+		_getlayoutPageTemplateEntryIdsStringUtilReplaceValues(
+			ServiceContext serviceContext) {
+
+		Map<String, String> layoutPageTemplateEntryReplaceValues =
+			new HashMap<>();
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntrys =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+				serviceContext.getScopeGroupId());
+
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntrys) {
+
+			layoutPageTemplateEntryReplaceValues.put(
+				"LAYOUT_PAGE_TEMPLATE_ENTRY_ID:" +
+					layoutPageTemplateEntry.getName(),
+				String.valueOf(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		}
+
+		return layoutPageTemplateEntryReplaceValues;
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {
