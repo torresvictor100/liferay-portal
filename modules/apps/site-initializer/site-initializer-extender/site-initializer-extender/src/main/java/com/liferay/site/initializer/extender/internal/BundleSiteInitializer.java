@@ -516,10 +516,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addOrUpdateResourcePermissions(
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext));
 
 			// LPS-172108 Layouts have to be created first so that links in
 			// layout page templates work
@@ -574,6 +570,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addWorkflowDefinitions(
 					roleIdsStringUtilReplaceValues, serviceContext));
+
+			_invoke(
+				() -> _addOrUpdateResourcePermissions(
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					serviceContext));
 
 			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
 		}
@@ -2934,6 +2935,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Map<String, String> layoutPageTemplateEntryReplaceValues =
+			new HashMap<>();
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntrys =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+				serviceContext.getScopeGroupId());
+
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntrys) {
+
+			layoutPageTemplateEntryReplaceValues.put(
+				"LAYOUT_PAGE_TEMPLATE_ENTRY_ID:" +
+					layoutPageTemplateEntry.getName(),
+				String.valueOf(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		}
+
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/resource-permissions.json", _servletContext);
 
@@ -2943,7 +2961,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(
-				json,
+				json, layoutPageTemplateEntryReplaceValues,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
