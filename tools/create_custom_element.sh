@@ -220,8 +220,8 @@ function main {
 function write_angular_client_extension {
 	echo "assemble:" > client-extension.yaml
 	echo "    - from: dist" >> client-extension.yaml
-	echo "      include: ${CUSTOM_ELEMENT_NAME}/" >> client-extension.yaml
-	echo "      into: static/" >> client-extension.yaml
+	echo "      include: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "      into: static" >> client-extension.yaml
 	echo "${CUSTOM_ELEMENT_NAME}:" >> client-extension.yaml
 	echo "    cssURLs:" >> client-extension.yaml
 	echo "        - ${CUSTOM_ELEMENT_NAME}/styles.*.css" >> client-extension.yaml
