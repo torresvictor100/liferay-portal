@@ -79,8 +79,6 @@ public class ShippingMethodResourceTest
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), _commerceCurrency.getCode());
 
-		_engineKeys = new ArrayList<>(Arrays.asList("fixed", "by-weight"));
-
 		_siteAdminUser = UserTestUtil.addGroupAdminUser(testGroup);
 
 		_setUpPermissionThreadLocal();
@@ -242,7 +240,8 @@ public class ShippingMethodResourceTest
 	@DeleteAfterTestRun
 	private CPInstance _cpInstance;
 
-	private List<String> _engineKeys;
+	private List<String> _engineKeys = new ArrayList<>(
+		Arrays.asList("fixed", "by-weight"));
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
