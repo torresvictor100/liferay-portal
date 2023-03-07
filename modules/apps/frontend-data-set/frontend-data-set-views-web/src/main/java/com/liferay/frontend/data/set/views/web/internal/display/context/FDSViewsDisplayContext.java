@@ -39,7 +39,7 @@ public class FDSViewsDisplayContext {
 	}
 
 	public String getFDSEntriesAPIURL() {
-		return "/o/c/fdsentries/";
+		return "/o/c/fdsentries";
 	}
 
 	public JSONArray getHeadlessResourcesJSONArray() {
