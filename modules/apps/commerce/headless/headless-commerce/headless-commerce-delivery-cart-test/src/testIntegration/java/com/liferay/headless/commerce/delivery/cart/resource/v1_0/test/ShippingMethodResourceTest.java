@@ -42,10 +42,10 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -240,8 +240,8 @@ public class ShippingMethodResourceTest
 	@DeleteAfterTestRun
 	private CPInstance _cpInstance;
 
-	private List<String> _engineKeys = new ArrayList<>(
-		Arrays.asList("fixed", "by-weight"));
+	private final List<String> _engineKeys = ListUtil.fromArray(
+		"fixed", "by-weight");
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
