@@ -128,7 +128,7 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileEntryFillsInStoreUUID() throws Exception {
+	public void testAddFileEntry() throws Exception {
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -141,9 +141,7 @@ public class DLFileEntryLocalServiceTest {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
-		Assert.assertNotNull(
-			"store UUID should not be empty: " + dlFileVersion.toString(),
-			dlFileVersion.getStoreUUID());
+		Assert.assertNotNull(dlFileVersion.getStoreUUID());
 	}
 
 	@Test(expected = FileExtensionException.class)
