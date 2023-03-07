@@ -156,10 +156,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					catch (RuntimeException runtimeException) {
 						_log.error(
 							StringBundler.concat(
-								"Search experiences blueprint with ID ",
+								"Search experiences blueprint ",
 								resultSet.getLong("sxpBlueprintId"),
-								" contains corrupted element instances ",
-								"JSON"),
+								" contains corrupted element instances JSON"),
 							runtimeException);
 					}
 				}
