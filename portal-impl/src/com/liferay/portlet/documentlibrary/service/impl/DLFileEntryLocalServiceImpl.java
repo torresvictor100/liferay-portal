@@ -429,15 +429,15 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
-		String version = _getNextVersion(
-			dlFileEntry, computedDLVersionNumberIncrease);
-
 		latestDLFileVersion = _dlFileVersionPersistence.fetchByPrimaryKey(
 			latestDLFileVersion.getFileVersionId());
 
-		latestDLFileVersion.setVersion(version);
-
 		latestDLFileVersion.setChangeLog(changeLog);
+
+		String version = _getNextVersion(
+			dlFileEntry, computedDLVersionNumberIncrease);
+
+		latestDLFileVersion.setVersion(version);
 
 		latestDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 
@@ -2087,9 +2087,9 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setChangeLog(changeLog);
 		dlFileVersion.setExtraSettings(extraSettings);
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
-		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
+		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setExpirationDate(expirationDate);
 		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);
@@ -3144,8 +3144,8 @@ public class DLFileEntryLocalServiceImpl
 			latestDLFileVersion.getExtraSettings());
 		lastDLFileVersion.setFileEntryTypeId(
 			latestDLFileVersion.getFileEntryTypeId());
-		lastDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
+		lastDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		lastDLFileVersion.setExpirationDate(
 			latestDLFileVersion.getExpirationDate());
 		lastDLFileVersion.setReviewDate(latestDLFileVersion.getReviewDate());
@@ -3430,9 +3430,9 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setChangeLog(changeLog);
 		dlFileVersion.setExtraSettings(extraSettings);
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
-		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
+		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setExpirationDate(expirationDate);
 		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);
