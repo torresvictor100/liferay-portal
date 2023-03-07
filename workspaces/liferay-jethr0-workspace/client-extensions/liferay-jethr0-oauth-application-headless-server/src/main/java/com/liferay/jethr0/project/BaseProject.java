@@ -65,11 +65,17 @@ public abstract class BaseProject implements Project {
 	public String toString() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("id", getID());
-		jsonObject.put("name", getName());
-		jsonObject.put("priority", getPriority());
-		jsonObject.put("state", getState());
-		jsonObject.put("type", getType());
+		jsonObject.put(
+			"id", getID()
+		).put(
+			"name", getName()
+		).put(
+			"priority", getPriority()
+		).put(
+			"state", getState()
+		).put(
+			"type", getType()
+		);
 
 		return jsonObject.toString();
 	}

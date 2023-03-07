@@ -46,10 +46,15 @@ public class ProjectDALO {
 
 		JSONObject requestJSONObject = new JSONObject();
 
-		requestJSONObject.put("name", name);
-		requestJSONObject.put("priority", priority);
-		requestJSONObject.put("state", state.getJSONObject());
-		requestJSONObject.put("type", type.getJSONObject());
+		requestJSONObject.put(
+			"name", name
+		).put(
+			"priority", priority
+		).put(
+			"state", state.getJSONObject()
+		).put(
+			"type", type.getJSONObject()
+		);
 
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
@@ -77,10 +82,7 @@ public class ProjectDALO {
 				Project project = new DefaultProject(new JSONObject(response));
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Created Project ", String.valueOf(project.getID()),
-							" on Liferay"));
+					_log.debug("Created project " + project.getID());
 				}
 
 				return project;
@@ -89,9 +91,9 @@ public class ProjectDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Failed to create Projects on Liferay retry",
-							" in ", String.valueOf(_RETRY_DELAY_DURATION),
-							"ms ", exception.getMessage()));
+							"Unable to create projects. Retry in ",
+							String.valueOf(_RETRY_DELAY_DURATION), "ms: ",
+							exception.getMessage()));
 				}
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
@@ -122,10 +124,7 @@ public class ProjectDALO {
 				).block();
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Deleted Project ", String.valueOf(project.getID()),
-							" from Liferay"));
+					_log.debug("Deleted project " + project.getID());
 				}
 
 				break;
@@ -134,10 +133,8 @@ public class ProjectDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Failed to delete Project ",
-							String.valueOf(project.getID()),
-							" on Liferay retry in ",
-							String.valueOf(_RETRY_DELAY_DURATION), "ms ",
+							"Unable to delete project ", project.getID(),
+							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
 
@@ -202,9 +199,9 @@ public class ProjectDALO {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Failed to retrieve Projects on Liferay retry",
-								" in ", String.valueOf(_RETRY_DELAY_DURATION),
-								"ms ", exception.getMessage()));
+								"Unable to retrieve projects. Retry in ",
+								_RETRY_DELAY_DURATION, "ms: ",
+								exception.getMessage()));
 					}
 
 					ThreadUtil.sleep(_RETRY_DELAY_DURATION);
@@ -222,7 +219,7 @@ public class ProjectDALO {
 			_log.debug(
 				StringUtil.combine(
 					"Retrieved ", String.valueOf(projects.size()),
-					" Projects on Liferay"));
+					" projects"));
 		}
 
 		return projects;
@@ -234,10 +231,15 @@ public class ProjectDALO {
 		Project.State state = project.getState();
 		Project.Type type = project.getType();
 
-		requestJSONObject.put("name", project.getName());
-		requestJSONObject.put("priority", project.getPriority());
-		requestJSONObject.put("state", state.getJSONObject());
-		requestJSONObject.put("type", type.getJSONObject());
+		requestJSONObject.put(
+			"name", project.getName()
+		).put(
+			"priority", project.getPriority()
+		).put(
+			"state", state.getJSONObject()
+		).put(
+			"type", type.getJSONObject()
+		);
 
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
@@ -272,10 +274,7 @@ public class ProjectDALO {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Updated Project ", String.valueOf(project.getID()),
-							" on Liferay"));
+					_log.debug("Updated project " + project.getID());
 				}
 
 				return project;
@@ -284,10 +283,8 @@ public class ProjectDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Failed to update Project ",
-							String.valueOf(project.getID()),
-							" on Liferay retry in ",
-							String.valueOf(_RETRY_DELAY_DURATION), "ms ",
+							"Unable to update project ", project.getID(),
+							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
 

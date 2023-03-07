@@ -19,11 +19,11 @@ package com.liferay.jethr0.util;
  */
 public class StringUtil {
 
-	public static String combine(String... strings) {
+	public static String combine(Object... objects) {
 		StringBuilder sb = new StringBuilder();
 
-		for (String string : strings) {
-			sb.append(string);
+		for (Object object : objects) {
+			sb.append(String.valueOf(object));
 		}
 
 		return sb.toString();
