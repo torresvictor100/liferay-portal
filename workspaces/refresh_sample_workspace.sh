@@ -62,7 +62,7 @@ function refresh_sample_workspace {
 
 	mv gradle.properties.tmp gradle.properties
 
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.17"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.22"/' settings.gradle
 
 	popd
 
