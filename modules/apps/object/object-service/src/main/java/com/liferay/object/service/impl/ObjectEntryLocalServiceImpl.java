@@ -482,6 +482,7 @@ public class ObjectEntryLocalServiceImpl
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
 						objectDefinition2.getClassName(),
+						objectDefinition2.getCompanyId(),
 						objectRelationship.getType());
 
 			objectRelatedModelsProvider.deleteRelatedModel(
