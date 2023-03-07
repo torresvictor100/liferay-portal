@@ -1101,7 +1101,7 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertNotNull(storeUUID);
 
-		DLFileEntryLocalServiceUtil.updateFileEntry(
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringUtil.randomString(),
