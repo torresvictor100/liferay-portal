@@ -22,13 +22,13 @@ import java.util.function.Supplier;
  */
 public class DCLSingleton<T> {
 
-	public void destroy(Consumer<T> destroyer) {
+	public void destroy(Consumer<T> consumer) {
 		synchronized (this) {
 			T singleton = _singleton;
 
 			if (singleton != null) {
-				if (destroyer != null) {
-					destroyer.accept(singleton);
+				if (consumer != null) {
+					consumer.accept(singleton);
 				}
 
 				_singleton = null;
@@ -36,7 +36,7 @@ public class DCLSingleton<T> {
 		}
 	}
 
-	public T getSingleton(Supplier<T> creator) {
+	public T getSingleton(Supplier<T> supplier) {
 		T singleton = _singleton;
 
 		if (singleton != null) {
@@ -45,7 +45,7 @@ public class DCLSingleton<T> {
 
 		synchronized (this) {
 			if (_singleton == null) {
-				_singleton = creator.get();
+				_singleton = supplier.get();
 			}
 		}
 
