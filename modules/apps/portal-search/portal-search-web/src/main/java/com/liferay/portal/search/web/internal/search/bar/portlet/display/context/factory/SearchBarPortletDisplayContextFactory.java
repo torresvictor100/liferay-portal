@@ -116,10 +116,6 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext.setSearchURL(destinationURL);
 		}
 
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(_renderRequest.getPreferences()));
-
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
 
@@ -140,6 +136,10 @@ public class SearchBarPortletDisplayContextFactory {
 			_isEmptySearchEnabled(portletSharedSearchResponse));
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
+
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			new SearchBarPortletPreferencesImpl(
+				Optional.ofNullable(_renderRequest.getPreferences()));
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);
