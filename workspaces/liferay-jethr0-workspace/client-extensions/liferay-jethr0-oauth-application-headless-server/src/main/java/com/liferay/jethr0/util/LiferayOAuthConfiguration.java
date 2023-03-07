@@ -72,7 +72,7 @@ public class LiferayOAuthConfiguration {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Unable to get Authorization: ",
+								"Unable to get authorization: ",
 								throwable.getMessage()));
 					}
 
@@ -117,7 +117,7 @@ public class LiferayOAuthConfiguration {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Unable to get Client ID: ",
+								"Unable to get client ID: ",
 								throwable.getMessage()));
 					}
 
