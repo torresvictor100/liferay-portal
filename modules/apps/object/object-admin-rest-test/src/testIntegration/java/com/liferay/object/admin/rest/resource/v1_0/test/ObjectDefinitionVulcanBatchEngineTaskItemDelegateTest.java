@@ -165,8 +165,8 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 	}
 
 	private ObjectDefinition _createObjectDefinition(String name) {
-		String sanitizedName = name.toLowerCase(LocaleUtil.getDefault());
-		boolean systemObject = RandomTestUtil.randomBoolean();
+		String finalName = name.toLowerCase(LocaleUtil.getDefault());
+		boolean finalSystem = RandomTestUtil.randomBoolean();
 
 		return new ObjectDefinition() {
 			{
@@ -181,13 +181,13 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				label = Collections.singletonMap("en_US", "O" + sanitizedName);
+				label = Collections.singletonMap("en_US", "O" + finalName);
 
 				if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-					modifiable = !systemObject;
+					modifiable = !finalSystem;
 				}
 
-				name = "O" + sanitizedName;
+				name = "O" + finalName;
 				objectFields = new ObjectField[] {_createObjectField()};
 				panelAppOrder = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -195,7 +195,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					RandomTestUtil.randomString());
 				parameterRequired = RandomTestUtil.randomBoolean();
 				pluralLabel = Collections.singletonMap(
-					"en_US", "O" + sanitizedName + "s");
+					"en_US", "O" + finalName + "s");
 				portlet = RandomTestUtil.randomBoolean();
 				restContextPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -209,7 +209,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					storageType = StringPool.BLANK;
 				}
 
-				system = systemObject;
+				system = finalSystem;
 				titleObjectFieldName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
