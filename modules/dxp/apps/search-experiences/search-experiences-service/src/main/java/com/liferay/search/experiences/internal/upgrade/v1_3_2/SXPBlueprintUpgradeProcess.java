@@ -97,10 +97,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-			JSONObject jsonObject2 = jsonObject1.getJSONObject("sxpElement");
+			JSONObject sxpElementJSONObject = jsonObject1.getJSONObject(
+				"sxpElement");
 
 			SXPElement sxpElement = _sxpElements.get(
-				jsonObject2.getString("externalReferenceCode"));
+				sxpElementJSONObject.getString("externalReferenceCode"));
 
 			if (sxpElement == null) {
 				continue;
@@ -108,7 +109,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 			Map<String, String> descriptionMap = sxpElement.getTitle_i18n();
 
-			jsonObject2.put(
+			sxpElementJSONObject.put(
 				"description",
 				descriptionMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
 			).put(
@@ -118,7 +119,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 			Map<String, String> titleMap = sxpElement.getTitle_i18n();
 
-			jsonObject2.put(
+			sxpElementJSONObject.put(
 				"title",
 				titleMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
 			).put(
