@@ -1095,7 +1095,7 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileEntryRefreshStoreUUID() throws Exception {
+	public void testUpdateFileEntryRefreshesStoreUUID() throws Exception {
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
