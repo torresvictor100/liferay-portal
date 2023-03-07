@@ -127,23 +127,6 @@ public class DLFileEntryLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test
-	public void testAddFileEntry() throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
-
-		Assert.assertNotNull(dlFileVersion.getStoreUUID());
-	}
-
 	@Test(expected = FileExtensionException.class)
 	public void testAddFileEntryShouldFailIfSourceFileNameExtensionNotSupported()
 		throws Exception {
@@ -498,6 +481,8 @@ public class DLFileEntryLocalServiceTest {
 
 		String storeUUID1 = dlFileVersion.getStoreUUID();
 
+		Assert.assertNotNull(storeUUID1);
+
 		DLFileEntryLocalServiceUtil.checkOutFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -506,6 +491,7 @@ public class DLFileEntryLocalServiceTest {
 
 		String storeUUID2 = dlFileVersion.getStoreUUID();
 
+		Assert.assertNotNull(storeUUID2);
 		Assert.assertNotEquals(storeUUID1, storeUUID2);
 
 		DLFileEntryLocalServiceUtil.checkInFileEntry(
@@ -515,6 +501,7 @@ public class DLFileEntryLocalServiceTest {
 
 		dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
+		Assert.assertNotNull(dlFileVersion.getStoreUUID());
 		Assert.assertNotEquals(storeUUID2, dlFileVersion.getStoreUUID());
 	}
 
@@ -1112,6 +1099,8 @@ public class DLFileEntryLocalServiceTest {
 
 		String storeUUID = dlFileVersion.getStoreUUID();
 
+		Assert.assertNotNull(storeUUID);
+
 		DLFileEntryLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
@@ -1124,6 +1113,7 @@ public class DLFileEntryLocalServiceTest {
 		dlFileVersion = DLFileVersionLocalServiceUtil.getFileVersion(
 			dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
 
+		Assert.assertNotNull(dlFileVersion.getStoreUUID());
 		Assert.assertNotEquals(storeUUID, dlFileVersion.getStoreUUID());
 	}
 
