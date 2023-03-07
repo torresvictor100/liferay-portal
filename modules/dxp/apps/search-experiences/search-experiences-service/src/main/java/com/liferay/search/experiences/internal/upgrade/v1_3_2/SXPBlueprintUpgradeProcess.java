@@ -102,26 +102,28 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			SXPElement sxpElement = _sxpElements.get(
 				jsonObject2.getString("externalReferenceCode"));
 
-			if (sxpElement != null) {
-				Map<String, String> descriptionMap = sxpElement.getTitle_i18n();
-
-				jsonObject2.put(
-					"description",
-					descriptionMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
-				).put(
-					"description_i18n",
-					JSONFactoryUtil.createJSONObject(descriptionMap)
-				);
-
-				Map<String, String> titleMap = sxpElement.getTitle_i18n();
-
-				jsonObject2.put(
-					"title",
-					titleMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
-				).put(
-					"title_i18n", JSONFactoryUtil.createJSONObject(titleMap)
-				);
+			if (sxpElement == null) {
+				continue;
 			}
+
+			Map<String, String> descriptionMap = sxpElement.getTitle_i18n();
+
+			jsonObject2.put(
+				"description",
+				descriptionMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
+			).put(
+				"description_i18n",
+				JSONFactoryUtil.createJSONObject(descriptionMap)
+			);
+
+			Map<String, String> titleMap = sxpElement.getTitle_i18n();
+
+			jsonObject2.put(
+				"title",
+				titleMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
+			).put(
+				"title_i18n", JSONFactoryUtil.createJSONObject(titleMap)
+			);
 		}
 
 		return jsonArray.toString();
