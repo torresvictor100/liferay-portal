@@ -120,8 +120,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			Map<String, String> titleMap = sxpElement.getTitle_i18n();
 
 			sxpElementJSONObject.put(
-				"title",
-				titleMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
+				"title", titleMap.get(LocaleUtil.toLanguageId(LocaleUtil.US))
 			).put(
 				"title_i18n", JSONFactoryUtil.createJSONObject(titleMap)
 			);
@@ -147,7 +146,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 							1,
 							_upgradeElementInstancesJSON(
 								resultSet.getString("elementInstancesJSON")));
-
 						preparedStatement2.setLong(
 							2, resultSet.getLong("sxpBlueprintId"));
 
@@ -206,6 +204,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 							LocaleUtil.toLanguageId(LocaleUtil.US), "title"));
 					preparedStatement2.setString(
 						4, resultSet.getString("externalReferenceCode"));
+
 					preparedStatement2.addBatch();
 				}
 
