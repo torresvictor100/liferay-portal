@@ -33,38 +33,35 @@ import javax.servlet.http.Cookie;
  */
 public class MockHttp implements Http {
 
-	public MockHttp(Map<String, UnsafeSupplier<String, Exception>> requests) {
-		_cookies = null;
-		_nonProxyHost = false;
-		_proxyConfig = false;
-		_proxyHost = false;
+	public MockHttp(
+		Map<String, UnsafeSupplier<String, Exception>> unsafeSupplier) {
 
-		if (requests != null) {
-			_requests = Collections.unmodifiableMap(requests);
+		if (unsafeSupplier != null) {
+			_unsafeSupplier = Collections.unmodifiableMap(unsafeSupplier);
 		}
 		else {
-			_requests = Collections.emptyMap();
+			_unsafeSupplier = Collections.emptyMap();
 		}
 	}
 
 	@Override
 	public Cookie[] getCookies() {
-		return _cookies;
+		return null;
 	}
 
 	@Override
 	public boolean hasProxyConfig() {
-		return _proxyConfig;
+		return false;
 	}
 
 	@Override
 	public boolean isNonProxyHost(String host) {
-		return _nonProxyHost;
+		return false;
 	}
 
 	@Override
 	public boolean isProxyHost(String host) {
-		return _proxyHost;
+		return false;
 	}
 
 	@Override
@@ -142,15 +139,15 @@ public class MockHttp implements Http {
 	private byte[] _getResponse(URL url, Options httpOptions)
 		throws IOException {
 
-		if (_requests.containsKey(url.getPath())) {
+		if (_unsafeSupplier.containsKey(url.getPath())) {
 			Response httpResponse = new Response();
 
 			httpResponse.setResponseCode(200);
 
 			httpOptions.setResponse(httpResponse);
 
-			UnsafeSupplier<String, Exception> unsafeSupplier = _requests.get(
-				url.getPath());
+			UnsafeSupplier<String, Exception> unsafeSupplier =
+				_unsafeSupplier.get(url.getPath());
 
 			try {
 				String response = unsafeSupplier.get();
@@ -173,10 +170,7 @@ public class MockHttp implements Http {
 		return "error".getBytes();
 	}
 
-	private final Cookie[] _cookies;
-	private final boolean _nonProxyHost;
-	private final boolean _proxyConfig;
-	private final boolean _proxyHost;
-	private final Map<String, UnsafeSupplier<String, Exception>> _requests;
+	private final Map<String, UnsafeSupplier<String, Exception>>
+		_unsafeSupplier;
 
 }
