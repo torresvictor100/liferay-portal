@@ -24,7 +24,7 @@ import java.util.function.Function;
 public class PathItem {
 
 	public Operation get(Method method) {
-		Function<PathItem, Operation> function = _functionsByMethod.get(method);
+		Function<PathItem, Operation> function = _functions.get(method);
 
 		return function.apply(this);
 	}
@@ -94,16 +94,16 @@ public class PathItem {
 	}
 
 	private static final Map<Method, Function<PathItem, Operation>>
-		_functionsByMethod = new HashMap<>();
+		_functions = new HashMap<>();
 
 	static {
-		_functionsByMethod.put(Method.DELETE, PathItem::getDelete);
-		_functionsByMethod.put(Method.GET, PathItem::getGet);
-		_functionsByMethod.put(Method.HEAD, PathItem::getHead);
-		_functionsByMethod.put(Method.OPTIONS, PathItem::getOptions);
-		_functionsByMethod.put(Method.PATCH, PathItem::getPatch);
-		_functionsByMethod.put(Method.POST, PathItem::getPost);
-		_functionsByMethod.put(Method.PUT, PathItem::getPut);
+		_functions.put(Method.DELETE, PathItem::getDelete);
+		_functions.put(Method.GET, PathItem::getGet);
+		_functions.put(Method.HEAD, PathItem::getHead);
+		_functions.put(Method.OPTIONS, PathItem::getOptions);
+		_functions.put(Method.PATCH, PathItem::getPatch);
+		_functions.put(Method.POST, PathItem::getPost);
+		_functions.put(Method.PUT, PathItem::getPut);
 	}
 
 	private Delete _delete;
