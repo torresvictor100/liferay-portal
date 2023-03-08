@@ -57,7 +57,6 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 			StringBundler.concat(
 				"Liferay.Icons.controlPanelSpritemap = '",
 				themeDisplay.getPathControlPanelSpritemap(), "';"));
-
 		sb.append(
 			StringBundler.concat(
 				"Liferay.Icons.spritemap = '",

@@ -1491,6 +1491,12 @@ public class ThemeDisplay
 			cdnBaseURL + themeStaticResourcePath +
 				colorScheme.getColorSchemeImagesPath());
 
+		String claySpritemapPath = StringBundler.concat(
+			cdnBaseURL, themeStaticResourcePath, theme.getImagesPath(),
+			"/clay/icons.svg");
+
+		setPathControlPanelSpritemap(claySpritemapPath);
+
 		String dynamicResourcesHost = getCDNDynamicResourcesHost();
 
 		if (Validator.isNull(dynamicResourcesHost)) {
@@ -1524,14 +1530,7 @@ public class ThemeDisplay
 			setPathThemeRoot(themeStaticResourcePath + rootPath);
 		}
 
-		String claySpritemapPath = StringBundler.concat(
-			cdnBaseURL, themeStaticResourcePath, theme.getImagesPath(),
-			"/clay/icons.svg");
-
-		setPathControlPanelSpritemap(claySpritemapPath);
-
 		setPathThemeSpritemap(claySpritemapPath);
-
 		setPathThemeTemplates(
 			cdnBaseURL + themeStaticResourcePath + theme.getTemplatesPath());
 	}
