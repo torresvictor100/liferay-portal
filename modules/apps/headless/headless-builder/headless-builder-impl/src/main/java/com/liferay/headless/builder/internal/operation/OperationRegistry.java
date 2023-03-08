@@ -16,6 +16,7 @@ package com.liferay.headless.builder.internal.operation;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.HashMap;
@@ -60,8 +61,10 @@ public class OperationRegistry {
 			}
 
 			throw new IllegalStateException(
-				"There is already an operation for the company and the " +
-					"pattern " + existingPattern);
+				StringBundler.concat(
+					"There is already an operation for the company ",
+					operation.getCompanyId(), " and the pattern ",
+					existingPattern));
 		}
 
 		_serviceRegistrations.put(

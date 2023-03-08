@@ -49,33 +49,31 @@ public interface Operation {
 			return new OperationImpl(this);
 		}
 
-		public Builder withCompanyId(long companyId) {
+		public Builder companyId(long companyId) {
 			_companyId = companyId;
 
 			return this;
 		}
 
-		public Builder withMethod(String method) {
+		public Builder method(String method) {
 			_method = method;
 
 			return this;
 		}
 
-		public Builder withOperationType(String operationType) {
+		public Builder operationType(String operationType) {
 			_operationType = operationType;
 
 			return this;
 		}
 
-		public Builder withPathConfiguration(
-			PathConfiguration pathConfiguration) {
-
+		public Builder pathConfiguration(PathConfiguration pathConfiguration) {
 			_pathConfiguration = pathConfiguration;
 
 			return this;
 		}
 
-		public Builder withResponse(
+		public Builder response(
 			Response response, String mediaType, int responseCode) {
 
 			_responses.compute(

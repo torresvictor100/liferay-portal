@@ -222,13 +222,13 @@ public class HeadlessBuilderApplicationFactoryImpl
 				operation.getOperationDefinition();
 
 			Operation.Builder builder = new Operation.Builder(
-			).withCompanyId(
+			).companyId(
 				companyId
-			).withMethod(
+			).method(
 				method.name()
-			).withOperationType(
+			).operationType(
 				operationDefinition.getType()
-			).withPathConfiguration(
+			).pathConfiguration(
 				pathConfiguration
 			);
 
@@ -276,7 +276,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 						successfulInfoFields = infoFields;
 					}
 
-					builder.withResponse(
+					builder.response(
 						new Operation.Response(
 							schemaDefinition.getEntityName(), infoFields),
 						entry2.getKey(), httpCode);
