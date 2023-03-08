@@ -130,13 +130,11 @@ public class DefaultSearchResultPermissionFilterTest {
 		DefaultSearchResultPermissionFilter defaultSearchResultPermissionFilter,
 		int pageCount, int totalCount) {
 
-		Hits searchHits = defaultSearchResultPermissionFilter.search(
-			searchContext);
+		Hits hits = defaultSearchResultPermissionFilter.search(searchContext);
 
-		Document[] docs = searchHits.getDocs();
+		Document[] docs = hits.getDocs();
 
-		Assert.assertEquals(
-			searchHits.toString(), totalCount, searchHits.getLength());
+		Assert.assertEquals(hits.toString(), totalCount, hits.getLength());
 
 		Assert.assertEquals(Arrays.toString(docs), pageCount, docs.length);
 	}
