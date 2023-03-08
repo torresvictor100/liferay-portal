@@ -88,21 +88,18 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 
 	@Test
 	public void testGetGlobalOpenAPI() throws Exception {
-		JSONObject globalOpenAPIJSONObject = _invoke("openapi/openapi.json");
+		List<String> globalOpenAPIPaths = _getPaths(
+			_invoke("openapi/openapi.json"));
 
-		List<String> globalOpenAPIPaths = _getPaths(globalOpenAPIJSONObject);
+		JSONObject jsonObject = _invoke("openapi");
 
-		JSONObject openAPIEndpointsJSONObject = _invoke("openapi");
+		Map<String, Object> map = jsonObject.toMap();
 
-		Map<String, Object> openAPIEndpointsMap =
-			openAPIEndpointsJSONObject.toMap();
-
-		for (Map.Entry<String, Object> entry : openAPIEndpointsMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			for (String openAPIPath : (List<String>)entry.getValue()) {
-				JSONObject openAPIJSONObject = _invoke(
-					_getOpenAPISubpath(openAPIPath));
+				for (String path :
+						_getPaths(_invoke(_getOpenAPISubpath(openAPIPath)))) {
 
-				for (String path : _getPaths(openAPIJSONObject)) {
 					if (path.endsWith("/")) {
 						path = path.substring(0, path.lastIndexOf("/"));
 					}
@@ -113,8 +110,7 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 			}
 		}
 
-		Assert.assertTrue(
-			"The list of paths must be empty", globalOpenAPIPaths.isEmpty());
+		Assert.assertTrue(globalOpenAPIPaths.isEmpty());
 	}
 
 	private String _getOpenAPISubpath(String openAPIPath) {
@@ -127,9 +123,9 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 	private List<String> _getPaths(JSONObject openAPIJSONObject) {
 		JSONObject pathsJSONObject = openAPIJSONObject.getJSONObject("paths");
 
-		Map<String, Object> pathsMap = pathsJSONObject.toMap();
+		Map<String, Object> map = pathsJSONObject.toMap();
 
-		return new ArrayList<>(pathsMap.keySet());
+		return new ArrayList<>(map.keySet());
 	}
 
 	private JSONObject _invoke(String endpoint) throws Exception {
