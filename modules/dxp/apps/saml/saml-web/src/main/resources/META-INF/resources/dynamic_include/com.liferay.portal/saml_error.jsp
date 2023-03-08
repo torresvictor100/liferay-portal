@@ -25,8 +25,8 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 >
 	<aui:form action='<%= PortalUtil.getPortalURL(request) + "/c/portal/login" %>' method="post" name="fm">
 		<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
-		<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getCurrentURL(request) %>" />
 		<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+		<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getCurrentURL(request) %>" />
 		<aui:input name="forceAuthn" type="hidden" value="true" />
 		<aui:input name="idpEntityId" type="hidden" value="<%= (String)request.getAttribute(com.liferay.saml.web.internal.constants.SamlWebKeys.SAML_SSO_ERROR_ENTITY_ID) %>" />
 
