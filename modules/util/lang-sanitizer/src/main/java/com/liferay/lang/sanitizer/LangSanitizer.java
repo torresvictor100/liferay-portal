@@ -216,19 +216,18 @@ public class LangSanitizer {
 		}
 		catch (ScanException scanException) {
 			return new SanitizedMessage(
-				file.getAbsolutePath(), key, originalValue,
-				EscapeUtil.escapeTag(originalValue),
-				scanException.getMessage());
+				file.getAbsolutePath(), key, scanException.getMessage(),
+				originalValue, EscapeUtil.escapeTag(originalValue));
 		}
 
 		if (!sanitizedValue.equals(
 				EscapeUtil.formatTag(EscapeUtil.unescape(originalValue)))) {
 
 			return new SanitizedMessage(
-				file.getAbsolutePath(), key, originalValue,
-				EscapeUtil.unescapeTag(sanitizedValue),
+				file.getAbsolutePath(), key,
 				_getMessage(
-					originalValue, EscapeUtil.unescapeTag(sanitizedValue)));
+					originalValue, EscapeUtil.unescapeTag(sanitizedValue)),
+				originalValue, EscapeUtil.unescapeTag(sanitizedValue));
 		}
 
 		return null;
@@ -274,14 +273,14 @@ public class LangSanitizer {
 		implements Comparable<SanitizedMessage> {
 
 		public SanitizedMessage(
-			String fileName, String languageKey, String originalContent,
-			String santizedContent, String message) {
+			String fileName, String languageKey, String message,
+			String originalContent, String santizedContent) {
 
 			_fileName = fileName;
 			_languageKey = languageKey;
+			_message = message;
 			_originalContent = originalContent;
 			_santizedContent = santizedContent;
-			_message = message;
 		}
 
 		@Override
