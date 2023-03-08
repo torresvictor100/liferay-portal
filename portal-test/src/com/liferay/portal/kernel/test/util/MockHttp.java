@@ -34,13 +34,13 @@ import javax.servlet.http.Cookie;
 public class MockHttp implements Http {
 
 	public MockHttp(
-		Map<String, UnsafeSupplier<String, Exception>> unsafeSupplier) {
+		Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
 
-		if (unsafeSupplier != null) {
-			_unsafeSupplier = Collections.unmodifiableMap(unsafeSupplier);
+		if (unsafeSuppliers != null) {
+			_unsafeSuppliers = Collections.unmodifiableMap(unsafeSuppliers);
 		}
 		else {
-			_unsafeSupplier = Collections.emptyMap();
+			_unsafeSuppliers = Collections.emptyMap();
 		}
 	}
 
@@ -121,45 +121,41 @@ public class MockHttp implements Http {
 		return new String(_toBytes(url, null));
 	}
 
-	private byte[] _toBytes(String location, Options httpOptions)
+	private byte[] _toBytes(String location, Options options)
 		throws IOException {
 
-		return _toBytes(new URL(location), httpOptions);
+		return _toBytes(new URL(location), options);
 	}
 
-	private byte[] _toBytes(URL url, Options httpOptions) throws IOException {
-		if (_unsafeSupplier.containsKey(url.getPath())) {
-			Response httpResponse = new Response();
+	private byte[] _toBytes(URL url, Options options) throws IOException {
+		Response response = new Response();
 
-			httpResponse.setResponseCode(200);
+		options.setResponse(response);
 
-			httpOptions.setResponse(httpResponse);
+		UnsafeSupplier<String, Exception> unsafeSupplier = _unsafeSuppliers.get(
+			url.getPath());
 
-			UnsafeSupplier<String, Exception> unsafeSupplier =
-				_unsafeSupplier.get(url.getPath());
+		if (unsafeSupplier != null) {
+			response.setResponseCode(200);
 
 			try {
-				String response = unsafeSupplier.get();
+				String string = unsafeSupplier.get();
 
-				return response.getBytes();
+				return string.getBytes();
 			}
 			catch (Exception exception) {
-				if (httpOptions == null) {
+				if (options == null) {
 					throw new IOException(exception);
 				}
 			}
 		}
 
-		Response httpResponse = new Response();
-
-		httpResponse.setResponseCode(400);
-
-		httpOptions.setResponse(httpResponse);
+		response.setResponseCode(400);
 
 		return "error".getBytes();
 	}
 
 	private final Map<String, UnsafeSupplier<String, Exception>>
-		_unsafeSupplier;
+		_unsafeSuppliers;
 
 }
