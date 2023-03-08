@@ -3024,9 +3024,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		else if (sqlType == Types.DECIMAL) {
-			String valueString = String.valueOf(value);
-
-			if ((value == null) || valueString.isEmpty()) {
+			if (Validator.isNull(String.valueOf(value))) {
 				value = BigDecimal.ZERO;
 			}
 
