@@ -41,8 +41,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +62,22 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-166216", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-166216", "false"
+			).build());
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
@@ -70,45 +88,33 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 
 	@Test
 	public void testGetGlobalOpenAPI() throws Exception {
-		_setFeatureFlag(true, "LPS-166216");
+		JSONObject globalOpenAPIJSONObject = _invoke("openapi/openapi.json");
 
-		try {
-			JSONObject globalOpenAPIJSONObject = _invoke(
-				"openapi/openapi.json");
+		List<String> globalOpenAPIPaths = _getPaths(globalOpenAPIJSONObject);
 
-			List<String> globalOpenAPIPaths = _getPaths(
-				globalOpenAPIJSONObject);
+		JSONObject openAPIEndpointsJSONObject = _invoke("openapi");
 
-			JSONObject openAPIEndpointsJSONObject = _invoke("openapi");
+		Map<String, Object> openAPIEndpointsMap =
+			openAPIEndpointsJSONObject.toMap();
 
-			Map<String, Object> openAPIEndpointsMap =
-				openAPIEndpointsJSONObject.toMap();
+		for (Map.Entry<String, Object> entry : openAPIEndpointsMap.entrySet()) {
+			for (String openAPIPath : (List<String>)entry.getValue()) {
+				JSONObject openAPIJSONObject = _invoke(
+					_getOpenAPISubpath(openAPIPath));
 
-			for (Map.Entry<String, Object> entry :
-					openAPIEndpointsMap.entrySet()) {
-
-				for (String openAPIPath : (List<String>)entry.getValue()) {
-					JSONObject openAPIJSONObject = _invoke(
-						_getOpenAPISubpath(openAPIPath));
-
-					for (String path : _getPaths(openAPIJSONObject)) {
-						if (path.endsWith("/")) {
-							path = path.substring(0, path.lastIndexOf("/"));
-						}
-
-						Assert.assertTrue(
-							globalOpenAPIPaths.remove(entry.getKey() + path));
+				for (String path : _getPaths(openAPIJSONObject)) {
+					if (path.endsWith("/")) {
+						path = path.substring(0, path.lastIndexOf("/"));
 					}
+
+					Assert.assertTrue(
+						globalOpenAPIPaths.remove(entry.getKey() + path));
 				}
 			}
+		}
 
-			Assert.assertTrue(
-				"The list of paths must be empty",
-				globalOpenAPIPaths.isEmpty());
-		}
-		finally {
-			_setFeatureFlag(false, "LPS-166216");
-		}
+		Assert.assertTrue(
+			"The list of paths must be empty", globalOpenAPIPaths.isEmpty());
 	}
 
 	private String _getOpenAPISubpath(String openAPIPath) {
@@ -159,13 +165,6 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
-	}
-
-	private void _setFeatureFlag(boolean booleanValue, String featureFlag) {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag." + featureFlag, String.valueOf(booleanValue)
-			).build());
 	}
 
 	private ObjectDefinition _objectDefinition1;
