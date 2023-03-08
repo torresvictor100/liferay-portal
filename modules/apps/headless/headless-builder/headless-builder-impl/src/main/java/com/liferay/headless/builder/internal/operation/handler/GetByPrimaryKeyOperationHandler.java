@@ -56,12 +56,12 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 				response.getEntityName(), InfoItemObjectProvider.class);
 
 		try {
-			Map<String, String> pathParams = URLUtil.getPathParams(
+			Map<String, String> pathParameters = URLUtil.getPathParameters(
 				httpServletRequest.getRequestURI(),
 				operation.getPathConfiguration());
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				GetterUtil.getLong(pathParams.get("id")));
+				GetterUtil.getLong(pathParameters.get("id")));
 
 			InfoItemFieldValuesProvider infoItemFieldValuesProvider =
 				HeadlessBuilderUtil.getInfoItemService(

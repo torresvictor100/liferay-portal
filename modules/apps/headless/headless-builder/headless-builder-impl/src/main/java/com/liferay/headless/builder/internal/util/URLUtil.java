@@ -36,14 +36,14 @@ public class URLUtil {
 	public static Operation.PathConfiguration getPathConfiguration(
 		String path, String version) {
 
-		final String absolutePath;
+		final String finalPath;
 
 		if (Validator.isBlank(version)) {
-			absolutePath =
+			finalPath =
 				Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_PATH + path;
 		}
 		else {
-			absolutePath = StringBundler.concat(
+			finalPath = StringBundler.concat(
 				Portal.PATH_MODULE, HeadlessBuilderConstants.BASE_PATH,
 				StringPool.SLASH, version, path);
 		}
@@ -52,18 +52,17 @@ public class URLUtil {
 
 			@Override
 			public String getPath() {
-				return absolutePath;
+				return finalPath;
 			}
 
 			@Override
 			public List<String> getPathParameterNames() {
-				return URLUtil.getPathParameterNames(
-					absolutePath, getPattern());
+				return URLUtil.getPathParameterNames(finalPath, getPattern());
 			}
 
 			@Override
 			public Pattern getPattern() {
-				return URLUtil.getPattern(absolutePath);
+				return URLUtil.getPattern(finalPath);
 			}
 
 		};
@@ -87,25 +86,26 @@ public class URLUtil {
 		return parameterNames;
 	}
 
-	public static Map<String, String> getPathParams(
+	public static Map<String, String> getPathParameters(
 		String path, Operation.PathConfiguration pathConfiguration) {
 
-		List<String> pathParamNames = pathConfiguration.getPathParameterNames();
-
-		List<String> pathParamValues = _getPathParamValues(
+		List<String> pathParameterNames =
+			pathConfiguration.getPathParameterNames();
+		List<String> pathParameterValues = _getPathParameterValues(
 			path, pathConfiguration.getPattern());
 
-		if (pathParamNames.size() != pathParamValues.size()) {
+		if (pathParameterNames.size() != pathParameterValues.size()) {
 			throw new IllegalStateException();
 		}
 
-		Map<String, String> pathParams = new HashMap<>();
+		Map<String, String> pathParameters = new HashMap<>();
 
-		for (int i = 0; i < pathParamNames.size(); i++) {
-			pathParams.put(pathParamNames.get(i), pathParamValues.get(i));
+		for (int i = 0; i < pathParameterNames.size(); i++) {
+			pathParameters.put(
+				pathParameterNames.get(i), pathParameterValues.get(i));
 		}
 
-		return pathParams;
+		return pathParameters;
 	}
 
 	public static Pattern getPattern(String path) {
@@ -114,20 +114,20 @@ public class URLUtil {
 		return Pattern.compile(pathRegex);
 	}
 
-	private static List<String> _getPathParamValues(
+	private static List<String> _getPathParameterValues(
 		String path, Pattern pathPattern) {
 
-		List<String> pathParamValues = new ArrayList<>();
+		List<String> pathParameterValues = new ArrayList<>();
 
 		Matcher matcher = pathPattern.matcher(path);
 
 		while (matcher.find()) {
 			for (int i = 1; i <= matcher.groupCount(); i++) {
-				pathParamValues.add(matcher.group(i));
+				pathParameterValues.add(matcher.group(i));
 			}
 		}
 
-		return pathParamValues;
+		return pathParameterValues;
 	}
 
 }

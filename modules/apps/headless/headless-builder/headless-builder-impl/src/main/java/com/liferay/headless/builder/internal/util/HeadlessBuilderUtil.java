@@ -58,9 +58,8 @@ public class HeadlessBuilderUtil {
 
 		if (infoItemService == null) {
 			throw new NoSuchInfoItemException(
-				String.format(
-					"There is no %s defined for the class name '%s'",
-					serviceClass.getSimpleName(), className));
+				serviceClass.getSimpleName() + " is not defined for " +
+					className);
 		}
 
 		return infoItemService;
