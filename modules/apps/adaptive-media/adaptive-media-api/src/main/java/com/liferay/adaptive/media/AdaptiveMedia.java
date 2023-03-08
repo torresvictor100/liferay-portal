@@ -47,15 +47,6 @@ public interface AdaptiveMedia<T> {
 	 */
 	public URI getURI();
 
-	/**
-	 * Returns the value of this {@link AdaptiveMedia} instance's attribute.
-	 * This method will return a non-<code>null</code> if the attribute value
-	 * exists.
-	 *
-	 * @param  amAttribute the adaptive media attribute
-	 * @return the attribute value. If no value
-	 *         exists, a null is returned.
-	 */
 	public <V> V getValue(AMAttribute<T, V> amAttribute);
 
 }
