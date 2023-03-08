@@ -75,24 +75,22 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 			).build();
 		}
 
-		OperationHandler operationHandler =
-			_operationHandlerServiceTrackerMap.getService(
-				operation.getOperationType());
+		OperationHandler operationHandler = _serviceTrackerMap.getService(
+			operation.getOperationType());
 
 		return operationHandler.handle(contextHttpServletRequest, operation);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_operationHandlerServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, OperationHandler.class,
-				HeadlessBuilderConstants.OPERATION_NAME);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, OperationHandler.class,
+			HeadlessBuilderConstants.OPERATION_NAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_operationHandlerServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private Operation _getOperation(
@@ -120,13 +118,12 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 		return null;
 	}
 
-	private ServiceTrackerMap<String, OperationHandler>
-		_operationHandlerServiceTrackerMap;
-
 	@Reference
 	private OperationRegistry _operationRegistry;
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, OperationHandler> _serviceTrackerMap;
 
 }
