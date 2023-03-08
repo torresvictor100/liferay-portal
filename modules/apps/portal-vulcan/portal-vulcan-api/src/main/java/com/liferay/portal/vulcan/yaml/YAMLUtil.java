@@ -72,28 +72,6 @@ public class YAMLUtil {
 	private static final Yaml _YAML_OPEN_API;
 
 	static {
-		Representer representer = new Representer();
-
-		PropertyUtils propertyUtils = new PropertyUtils() {
-
-			@Override
-			public Property getProperty(
-				Class<? extends Object> type, String name) {
-
-				if (ArrayUtil.contains(_LIFERAY_PROPERTIES, name, false)) {
-					name = CamelCaseUtil.toCamelCase(
-						StringUtil.removeFirst(name, "x-"));
-				}
-
-				return super.getProperty(type, name);
-			}
-
-		};
-
-		propertyUtils.setSkipMissingProperties(true);
-
-		representer.setPropertyUtils(propertyUtils);
-
 		Constructor configYAMLConstructor = new Constructor(ConfigYAML.class);
 
 		TypeDescription securityTypeDescription = new TypeDescription(
@@ -103,6 +81,32 @@ public class YAMLUtil {
 			"oAuth2", String.class, "getOAuth2", "setOAuth2");
 
 		configYAMLConstructor.addTypeDescription(securityTypeDescription);
+
+		Representer representer = new Representer() {
+			{
+				setPropertyUtils(
+					new PropertyUtils() {
+						{
+							setSkipMissingProperties(true);
+						}
+
+						@Override
+						public Property getProperty(
+							Class<? extends Object> type, String name) {
+
+							if (ArrayUtil.contains(
+									_LIFERAY_PROPERTIES, name, false)) {
+
+								name = CamelCaseUtil.toCamelCase(
+									StringUtil.removeFirst(name, "x-"));
+							}
+
+							return super.getProperty(type, name);
+						}
+
+					});
+			}
+		};
 
 		LoaderOptions loaderOptions = new LoaderOptions();
 
