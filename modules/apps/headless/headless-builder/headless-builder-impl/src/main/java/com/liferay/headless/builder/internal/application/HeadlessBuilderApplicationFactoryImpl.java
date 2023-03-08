@@ -149,11 +149,11 @@ public class HeadlessBuilderApplicationFactoryImpl
 			String entityName, Map<String, Schema> schemas)
 		throws Exception {
 
+		Map<String, InfoField> infoFields = new HashMap<>();
+
 		InfoItemFormProvider<?> infoItemFormProvider =
 			HeadlessBuilderUtil.getInfoItemService(
 				entityName, InfoItemFormProvider.class);
-
-		Map<String, InfoField> infoFields = new HashMap<>();
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm();
 
@@ -164,20 +164,17 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			if (fieldDefinition == null) {
 				throw new InvalidObjectException(
-					"No field definition exists with the property " +
-						entry.getKey());
+					"No field definition exists for " + entry.getKey());
 			}
 
-			String internalFieldName = fieldDefinition.getName();
-
-			InfoField infoField = infoForm.getInfoField(internalFieldName);
+			InfoField infoField = infoForm.getInfoField(
+				fieldDefinition.getName());
 
 			if (infoField == null) {
 				throw new InvalidObjectException(
 					StringBundler.concat(
-						"Info field ", internalFieldName,
-						" is not registered for the class name '", entityName,
-						"'"));
+						"Info field ", fieldDefinition.getName(),
+						" is not associated with ", entityName));
 			}
 
 			String externalFieldName = entry.getKey();
@@ -189,9 +186,8 @@ public class HeadlessBuilderApplicationFactoryImpl
 					infoField.getInfoFieldType())) {
 
 				throw new InvalidObjectException(
-					StringBundler.concat(
-						"Invalid types between the fields ", externalFieldName,
-						" and ", infoField.getName()));
+					externalFieldName + " is not compatible with " +
+						infoField.getName());
 			}
 
 			infoFields.put(externalFieldName, infoField);
@@ -229,10 +225,10 @@ public class HeadlessBuilderApplicationFactoryImpl
 				pathConfiguration
 			);
 
+			Map<String, InfoField> successfulInfoFields = null;
+
 			Map<ResponseCode, com.liferay.portal.vulcan.yaml.openapi.Response>
 				responses = operation.getResponses();
-
-			Map<String, InfoField> successfulInfoFields = null;
 
 			for (Map.Entry
 					<ResponseCode,
@@ -282,7 +278,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			if (successfulInfoFields == null) {
 				throw new IllegalStateException(
-					"There is no schema defined for a successful code");
+					"No schema is defined for an HTTP 200 status code");
 			}
 
 			operations.add(builder.build());
@@ -309,19 +305,19 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			if (operationDefinition == null) {
 				throw new InvalidObjectException(
-					"Missing operation definition");
+					"Operation definition is null");
 			}
 
 			String type = operationDefinition.getType();
 
 			if (!_serviceTrackerMap.containsKey(type)) {
 				throw new InvalidObjectException(
-					"OperationProvider not defined for the type " + type);
+					"No operation handler exists with the type " + type);
 			}
 		}
 
 		if (empty) {
-			throw new InvalidObjectException("There is no operation defined");
+			throw new InvalidObjectException("No operation is defined");
 		}
 	}
 
