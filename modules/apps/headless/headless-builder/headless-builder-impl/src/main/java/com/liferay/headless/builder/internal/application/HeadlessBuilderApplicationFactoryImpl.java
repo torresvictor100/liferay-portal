@@ -76,13 +76,11 @@ public class HeadlessBuilderApplicationFactoryImpl
 			long companyId, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
+		Components components = openAPIYAML.getComponents();
+		Info info = openAPIYAML.getInfo();
 		List<Operation> operations = new ArrayList<>();
 
-		Components components = openAPIYAML.getComponents();
-
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
-
-		Info info = openAPIYAML.getInfo();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			PathItem pathItem = entry.getValue();
@@ -112,15 +110,14 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_operationHandlerServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, OperationHandler.class,
-				HeadlessBuilderConstants.OPERATION_NAME);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, OperationHandler.class,
+			HeadlessBuilderConstants.OPERATION_NAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_operationHandlerServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private Set<InfoFieldType> _getCompatibleInfoFieldTypes(Schema schema) {
@@ -145,8 +142,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 			return SetUtil.fromArray(TextInfoFieldType.INSTANCE);
 		}
 
-		throw new UnsupportedOperationException(
-			"Impossible to get the InfoFieldType of the type " + type);
+		throw new UnsupportedOperationException("Schema type " + type);
 	}
 
 	private Map<String, InfoField> _getInfoFields(
@@ -168,7 +164,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			if (fieldDefinition == null) {
 				throw new InvalidObjectException(
-					"FieldDefinition not found for the property " +
+					"No field definition exists with the property " +
 						entry.getKey());
 			}
 
@@ -179,8 +175,8 @@ public class HeadlessBuilderApplicationFactoryImpl
 			if (infoField == null) {
 				throw new InvalidObjectException(
 					StringBundler.concat(
-						"There is no InfoField '", internalFieldName,
-						"' registered for the class name '", entityName, "'"));
+						"Info field ", internalFieldName,
+						" is not registered for the class name '", entityName, "'"));
 			}
 
 			String externalFieldName = entry.getKey();
@@ -317,7 +313,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			String type = operationDefinition.getType();
 
-			if (!_operationHandlerServiceTrackerMap.containsKey(type)) {
+			if (!_serviceTrackerMap.containsKey(type)) {
 				throw new InvalidObjectException(
 					"OperationProvider not defined for the type " + type);
 			}
@@ -328,10 +324,9 @@ public class HeadlessBuilderApplicationFactoryImpl
 		}
 	}
 
-	private ServiceTrackerMap<String, OperationHandler>
-		_operationHandlerServiceTrackerMap;
-
 	@Reference
 	private OperationRegistry _operationRegistry;
+
+	private ServiceTrackerMap<String, OperationHandler> _serviceTrackerMap;
 
 }
