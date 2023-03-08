@@ -66,7 +66,7 @@ public class MockHttp implements Http {
 
 	@Override
 	public byte[] URLtoByteArray(Options options) throws IOException {
-		return _getResponse(options.getLocation(), options);
+		return _toBytes(options.getLocation(), options);
 	}
 
 	@Override
@@ -78,14 +78,13 @@ public class MockHttp implements Http {
 	public byte[] URLtoByteArray(String location, boolean post)
 		throws IOException {
 
-		return _getResponse(location, null);
+		return _toBytes(location, null);
 	}
 
 	@Override
 	public InputStream URLtoInputStream(Options options) throws IOException {
-		byte[] response = _getResponse(options.getLocation(), options);
-
-		return new ByteArrayInputStream(response);
+		return new ByteArrayInputStream(
+			_toBytes(options.getLocation(), options));
 	}
 
 	@Override
@@ -97,16 +96,12 @@ public class MockHttp implements Http {
 	public InputStream URLtoInputStream(String location, boolean post)
 		throws IOException {
 
-		byte[] response = _getResponse(location, null);
-
-		return new ByteArrayInputStream(response);
+		return new ByteArrayInputStream(_toBytes(location, null));
 	}
 
 	@Override
 	public String URLtoString(Options options) throws IOException {
-		byte[] response = _getResponse(options.getLocation(), options);
-
-		return new String(response);
+		return new String(_toBytes(options.getLocation(), options));
 	}
 
 	@Override
@@ -118,27 +113,21 @@ public class MockHttp implements Http {
 	public String URLtoString(String location, boolean post)
 		throws IOException {
 
-		byte[] response = _getResponse(location, null);
-
-		return new String(response);
+		return new String(_toBytes(location, null));
 	}
 
 	@Override
 	public String URLtoString(URL url) throws IOException {
-		byte[] response = _getResponse(url, null);
-
-		return new String(response);
+		return new String(_toBytes(url, null));
 	}
 
-	private byte[] _getResponse(String location, Options httpOptions)
+	private byte[] _toBytes(String location, Options httpOptions)
 		throws IOException {
 
-		return _getResponse(new URL(location), httpOptions);
+		return _toBytes(new URL(location), httpOptions);
 	}
 
-	private byte[] _getResponse(URL url, Options httpOptions)
-		throws IOException {
-
+	private byte[] _toBytes(URL url, Options httpOptions) throws IOException {
 		if (_unsafeSupplier.containsKey(url.getPath())) {
 			Response httpResponse = new Response();
 
