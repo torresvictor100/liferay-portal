@@ -104,19 +104,19 @@ public class DDMStructureModelListenerTest {
 	public void testUpdateDataDefinitionThrowsRuntimeException()
 		throws Exception {
 
-		JournalArticle journalArticle = _addJournalArticle();
-
-		String expectedContent = journalArticle.getContent();
-
-		ServiceRegistration<?> serviceRegistration = null;
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			DDMStructureModelListenerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		JournalArticle journalArticle = _addJournalArticle();
+
+		String expectedContent = journalArticle.getContent();
+
 		RuntimeException runtimeException = new RuntimeException(
 			RandomTestUtil.randomString());
+
+		ServiceRegistration<?> serviceRegistration = null;
 
 		try {
 			serviceRegistration = bundleContext.registerService(
@@ -184,16 +184,15 @@ public class DDMStructureModelListenerTest {
 			ddmFormFieldValuesMap.toString(), expectedFieldValuesMap.size(),
 			ddmFormFieldValuesMap.size());
 
-		for (Map.Entry<String, List<String>> expectedFieldValuesEntry :
+		for (Map.Entry<String, List<String>> entry :
 				expectedFieldValuesMap.entrySet()) {
 
 			List<DDMFormFieldValue> ddmFormFieldValues =
-				ddmFormFieldValuesMap.get(expectedFieldValuesEntry.getKey());
+				ddmFormFieldValuesMap.get(entry.getKey());
 
 			Assert.assertNotNull(ddmFormFieldValues);
 
-			List<String> expectedFieldValues =
-				expectedFieldValuesEntry.getValue();
+			List<String> expectedFieldValues = entry.getValue();
 
 			Assert.assertEquals(
 				ddmFormFieldValues.toString(), expectedFieldValues.size(),
@@ -219,12 +218,12 @@ public class DDMStructureModelListenerTest {
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 			_dataDefinitionResourceFactory.create();
 
-		Class<?> clazz = getClass();
-
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourcedBuilder.user(
 				TestPropsValues.getUser()
 			).build();
+
+		Class<?> clazz = getClass();
 
 		DataDefinition updatedDataDefinition = DataDefinition.toDTO(
 			StringUtil.read(
