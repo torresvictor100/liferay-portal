@@ -1,6 +1,7 @@
 [
 	{
 		"actionIds": [
+			"PERMISSIONS",
 			"VIEW_PRICE"
 		],
 		"primKey": "0",
@@ -20,12 +21,11 @@
 	{
 		"actionIds": [
 			"DELETE",
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
-		"roleName": "Test Role 2",
+		"roleName": "Test Role 3",
 		"scope": 1
 	},
 	{
@@ -35,7 +35,17 @@
 		],
 		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:Test Display Page Template$]",
 		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
-		"roleName": "Test Role 2",
+		"roleName": "Test Role 4",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:Test Master Page$]",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Test Role 4",
 		"scope": "4"
 	}
 ]
