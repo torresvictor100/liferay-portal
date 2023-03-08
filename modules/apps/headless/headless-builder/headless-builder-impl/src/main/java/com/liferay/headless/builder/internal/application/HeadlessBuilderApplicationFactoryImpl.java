@@ -32,7 +32,6 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
@@ -54,7 +53,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
@@ -120,31 +118,6 @@ public class HeadlessBuilderApplicationFactoryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private Set<InfoFieldType> _getCompatibleInfoFieldTypes(Schema schema) {
-		String type = schema.getType();
-
-		if (StringUtil.equals(type, "boolean")) {
-			return SetUtil.fromArray(BooleanInfoFieldType.INSTANCE);
-		}
-		else if (StringUtil.equals(type, "integer")) {
-			if (StringUtil.equals(schema.getFormat(), "int64")) {
-				return SetUtil.fromArray(NumberInfoFieldType.INSTANCE);
-			}
-			else if (StringUtil.equals(schema.getFormat(), "int32")) {
-				return SetUtil.fromArray(NumberInfoFieldType.INSTANCE);
-			}
-		}
-		else if (StringUtil.equals(type, "string")) {
-			if (StringUtil.equals(schema.getFormat(), "date-time")) {
-				return SetUtil.fromArray(DateInfoFieldType.INSTANCE);
-			}
-
-			return SetUtil.fromArray(TextInfoFieldType.INSTANCE);
-		}
-
-		throw new UnsupportedOperationException("Schema type " + type);
-	}
-
 	private Map<String, InfoField> _getInfoFields(
 			String entityName, Map<String, Schema> schemas)
 		throws Exception {
@@ -179,10 +152,8 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 			String externalFieldName = entry.getKey();
 
-			Set<InfoFieldType> compatibleInfoFieldTypes =
-				_getCompatibleInfoFieldTypes(schemas.get(externalFieldName));
-
-			if (!compatibleInfoFieldTypes.contains(
+			if (!Objects.equals(
+					_getInfoFieldType(schemas.get(externalFieldName)),
 					infoField.getInfoFieldType())) {
 
 				throw new InvalidObjectException(
@@ -194,6 +165,31 @@ public class HeadlessBuilderApplicationFactoryImpl
 		}
 
 		return infoFields;
+	}
+
+	private InfoFieldType _getInfoFieldType(Schema schema) {
+		String type = schema.getType();
+
+		if (StringUtil.equals(type, "boolean")) {
+			return BooleanInfoFieldType.INSTANCE;
+		}
+		else if (StringUtil.equals(type, "integer")) {
+			if (StringUtil.equals(schema.getFormat(), "int64")) {
+				return NumberInfoFieldType.INSTANCE;
+			}
+			else if (StringUtil.equals(schema.getFormat(), "int32")) {
+				return NumberInfoFieldType.INSTANCE;
+			}
+		}
+		else if (StringUtil.equals(type, "string")) {
+			if (StringUtil.equals(schema.getFormat(), "date-time")) {
+				return DateInfoFieldType.INSTANCE;
+			}
+
+			return TextInfoFieldType.INSTANCE;
+		}
+
+		throw new UnsupportedOperationException("Schema type " + type);
 	}
 
 	private List<Operation> _getOperations(
