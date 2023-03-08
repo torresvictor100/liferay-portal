@@ -176,7 +176,8 @@ public class HeadlessBuilderApplicationFactoryImpl
 				throw new InvalidObjectException(
 					StringBundler.concat(
 						"Info field ", internalFieldName,
-						" is not registered for the class name '", entityName, "'"));
+						" is not registered for the class name '", entityName,
+						"'"));
 			}
 
 			String externalFieldName = entry.getKey();
