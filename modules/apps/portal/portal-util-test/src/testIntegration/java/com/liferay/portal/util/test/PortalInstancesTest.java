@@ -138,10 +138,10 @@ public class PortalInstancesTest {
 	public void testGetVirtualHostLanguageId() throws Exception {
 		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 
-		String languageId = LanguageUtil.getLanguageId(LocaleUtil.SPAIN);
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
+
+		String languageId = LanguageUtil.getLanguageId(LocaleUtil.SPAIN);
 
 		typeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES, languageId);
