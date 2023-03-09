@@ -273,21 +273,21 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(25, 3, 1),
 			UpgradeProcessFactory.alterColumnType(
-				"UserGroupGroupRole", "groupId", "LONG null"),
-			UpgradeProcessFactory.alterColumnType(
-				"UserGroupGroupRole", "roleId", "LONG null"),
-			UpgradeProcessFactory.alterColumnType(
 				"UserGroupGroupRole", "userGroupGroupRoleId", "LONG not null"),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupGroupRole", "userGroupId", "LONG null"),
 			UpgradeProcessFactory.alterColumnType(
-				"UserGroupRole", "groupId", "LONG null"),
+				"UserGroupGroupRole", "groupId", "LONG null"),
 			UpgradeProcessFactory.alterColumnType(
-				"UserGroupRole", "roleId", "LONG null"),
+				"UserGroupGroupRole", "roleId", "LONG null"),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupRole", "userGroupRoleId", "LONG not null"),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupRole", "userId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "groupId", "LONG null"),
+			UpgradeProcessFactory.alterColumnType(
+				"UserGroupRole", "roleId", "LONG null"),
 			new UpgradeUsersUserGroups());
 	}
 
