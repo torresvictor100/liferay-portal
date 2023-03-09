@@ -67,18 +67,18 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Test
-	public void testBatchEngineBundles() throws Exception {
-		_testBatchEngineBundle("batch1", 1);
-		_testBatchEngineBundle("batch2", 0);
-		_testBatchEngineBundle("batch3", 2);
-		_testBatchEngineBundle("batch4", 3);
-		_testBatchEngineBundle("batch5", 1);
-		_testBatchEngineBundle("batch6", 2);
-		_testBatchEngineBundle("batch7", 1);
-		_testBatchEngineBundle("batch8", 3);
+	public void testProcessBatchEngineBundle() throws Exception {
+		_testProcessBatchEngineBundle("batch1", 1);
+		_testProcessBatchEngineBundle("batch2", 0);
+		_testProcessBatchEngineBundle("batch3", 2);
+		_testProcessBatchEngineBundle("batch4", 3);
+		_testProcessBatchEngineBundle("batch5", 1);
+		_testProcessBatchEngineBundle("batch6", 2);
+		_testProcessBatchEngineBundle("batch7", 1);
+		_testProcessBatchEngineBundle("batch8", 3);
 	}
 
-	private void _testBatchEngineBundle(String dirName, int expectedCount)
+	private void _testProcessBatchEngineBundle(String dirName, int expectedCount)
 		throws Exception {
 
 		Bundle bundle = _bundleContext.installBundle(
