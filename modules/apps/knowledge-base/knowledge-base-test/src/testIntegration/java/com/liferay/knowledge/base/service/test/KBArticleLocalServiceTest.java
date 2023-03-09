@@ -248,11 +248,11 @@ public class KBArticleLocalServiceTest {
 
 		Assert.assertNotNull(
 			_assetEntryLocalService.getEntry(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey()));
+				KBArticle.class.getName(), draftKBArticle.getKbArticleId()));
 
 		Assert.assertNotNull(
 			_assetEntryLocalService.getEntry(
-				KBArticle.class.getName(), draftKBArticle.getKbArticleId()));
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey()));
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -262,13 +262,12 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), null, null, null, null, null, null,
 			_serviceContext);
 
-		Assert.assertNotNull(
-			_assetEntryLocalService.getEntry(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey()));
-
 		Assert.assertNull(
 			_assetEntryLocalService.fetchEntry(
 				KBArticle.class.getName(), draftKBArticle.getKbArticleId()));
+		Assert.assertNotNull(
+			_assetEntryLocalService.getEntry(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey()));
 	}
 
 	@Test(expected = KBArticleExpirationDateException.class)
