@@ -87,7 +87,7 @@ public class KBArticleViewDisplayContext {
 		).buildString();
 	}
 
-	public int getFolderKBArticlesCount(long groupId, long kbFolderId)
+	public int getKBFolderKBArticlesCount(long groupId, long kbFolderId)
 		throws PortalException {
 
 		int foldersAndArticlesCount =

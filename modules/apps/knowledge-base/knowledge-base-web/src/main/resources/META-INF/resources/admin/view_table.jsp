@@ -88,7 +88,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					align="right"
 					name="num-of-kb-articles"
 				>
-					<%= kbArticleViewDisplayContext.getFolderKBArticlesCount(scopeGroupId, kbFolder.getKbFolderId()) %>
+					<%= kbArticleViewDisplayContext.getKBFolderKBArticlesCount(scopeGroupId, kbFolder.getKbFolderId()) %>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
