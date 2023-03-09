@@ -24,8 +24,6 @@ long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClass
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig);
-
-String displayStyle = kbAdminManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
 <c:choose>
@@ -129,7 +127,7 @@ String displayStyle = kbAdminManagementToolbarDisplayContext.getDisplayStyle();
 				<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-156421") || kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
 
 				<c:choose>
-						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<c:when test='<%= Objects.equals(kbAdminManagementToolbarDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-util:include page="/admin/view_descriptive.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>

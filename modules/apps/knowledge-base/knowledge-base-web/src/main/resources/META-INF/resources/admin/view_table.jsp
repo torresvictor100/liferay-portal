@@ -21,20 +21,14 @@ long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassN
 
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 
-boolean kbFolderView = parentResourceClassNameId == kbFolderClassNameId;
-
-KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
-
 KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig);
-
-SearchContainer<Object> kbAdminManagementToolbarDisplayContextSearchContainer = kbAdminManagementToolbarDisplayContext.getSearchContainer();
-
+KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse);
 %>
 
 <liferay-ui:search-container
 	id="kbObjects"
-	searchContainer="<%= kbAdminManagementToolbarDisplayContextSearchContainer %>"
+	searchContainer="<%= kbAdminManagementToolbarDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
 		className="Object"
@@ -235,6 +229,6 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 	<liferay-ui:search-iterator
 		displayStyle="<%= kbAdminManagementToolbarDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
-		resultRowSplitter="<%= kbFolderView ? new KBResultRowSplitter() : null %>"
+		resultRowSplitter="<%= (parentResourceClassNameId == kbFolderClassNameId) ? new KBResultRowSplitter() : null %>"
 	/>
 </liferay-ui:search-container>
