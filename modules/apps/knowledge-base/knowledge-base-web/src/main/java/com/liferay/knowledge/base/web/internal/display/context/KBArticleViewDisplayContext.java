@@ -87,6 +87,10 @@ public class KBArticleViewDisplayContext {
 		).buildString();
 	}
 
+	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
+		return _kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle);
+	}
+
 	public int getKBFolderKBArticlesCount(long groupId, long kbFolderId)
 		throws PortalException {
 
@@ -96,10 +100,6 @@ public class KBArticleViewDisplayContext {
 
 		return foldersAndArticlesCount -
 			KBFolderServiceUtil.getKBFoldersCount(groupId, kbFolderId);
-	}
-
-	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
-		return _kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle);
 	}
 
 	public int getKBFoldersCount(long groupId, long kbFolderId)
