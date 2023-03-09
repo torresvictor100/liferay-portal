@@ -34,6 +34,7 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -84,13 +85,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 			return false;
 		}
 
-		context.register(
-			new ConfigurableContainerScopeCheckerContainerRequestFilter(),
-			HashMapBuilder.<Class<?>, Integer>put(
-				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
-			).build());
-
-		HashSet<String> scopes = new HashSet<>();
+		Set<String> scopes = new HashSet<>();
 
 		for (CheckPattern checkPattern : _checkPatterns) {
 			for (String scope : checkPattern.getScopes()) {
@@ -99,6 +94,12 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				}
 			}
 		}
+
+		context.register(
+			new ConfigurableContainerScopeCheckerContainerRequestFilter(),
+			HashMapBuilder.<Class<?>, Integer>put(
+				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
+			).build());
 
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(scopes),
