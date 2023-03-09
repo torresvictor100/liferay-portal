@@ -298,35 +298,37 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getObjectValidationRules(),
 			objectDefinition.getObjectViews());
 
-		List<com.liferay.object.model.ObjectField> aggregationFields =
-			transformToList(
-				ArrayUtil.filter(
-					objectDefinition.getObjectFields(),
-					objectField -> StringUtil.equals(
-						objectField.getBusinessTypeAsString(),
-						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)),
-				objectField -> ObjectFieldUtil.toObjectField(
-					_listTypeDefinitionLocalService, objectField,
-					_objectFieldLocalService, _objectFieldSettingLocalService,
-					_objectFilterLocalService));
-
-		for (com.liferay.object.model.ObjectField aggregationField :
-				aggregationFields) {
+		for (com.liferay.object.model.ObjectField
+				aggregationServiceBuilderObjectField :
+					transformToList(
+						ArrayUtil.filter(
+							objectDefinition.getObjectFields(),
+							objectField -> StringUtil.equals(
+								objectField.getBusinessTypeAsString(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_AGGREGATION)),
+						objectField -> ObjectFieldUtil.toObjectField(
+							_listTypeDefinitionLocalService, objectField,
+							_objectFieldLocalService,
+							_objectFieldSettingLocalService,
+							_objectFilterLocalService))) {
 
 			_objectFieldLocalService.addCustomObjectField(
-				aggregationField.getExternalReferenceCode(),
+				aggregationServiceBuilderObjectField.getExternalReferenceCode(),
 				GuestOrUserUtil.getUserId(),
-				aggregationField.getListTypeDefinitionId(),
+				aggregationServiceBuilderObjectField.getListTypeDefinitionId(),
 				serviceBuilderObjectDefinition.getObjectDefinitionId(),
-				aggregationField.getBusinessType(),
-				aggregationField.getDBType(),
-				aggregationField.getDefaultValue(),
-				aggregationField.isIndexed(),
-				aggregationField.isIndexedAsKeyword(),
-				aggregationField.getIndexedLanguageId(),
-				aggregationField.getLabelMap(), aggregationField.getName(),
-				aggregationField.isRequired(), aggregationField.isState(),
-				aggregationField.getObjectFieldSettings());
+				aggregationServiceBuilderObjectField.getBusinessType(),
+				aggregationServiceBuilderObjectField.getDBType(),
+				aggregationServiceBuilderObjectField.getDefaultValue(),
+				aggregationServiceBuilderObjectField.isIndexed(),
+				aggregationServiceBuilderObjectField.isIndexedAsKeyword(),
+				aggregationServiceBuilderObjectField.getIndexedLanguageId(),
+				aggregationServiceBuilderObjectField.getLabelMap(),
+				aggregationServiceBuilderObjectField.getName(),
+				aggregationServiceBuilderObjectField.isRequired(),
+				aggregationServiceBuilderObjectField.isState(),
+				aggregationServiceBuilderObjectField.getObjectFieldSettings());
 		}
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
