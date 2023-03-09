@@ -73,7 +73,7 @@ public class BatchEngineBundleTracker {
 		_bundleTracker.close();
 	}
 
-	private boolean _bundleAlreadyProcessed(Bundle bundle) {
+	private boolean _isAlreadyProcessed(Bundle bundle) {
 		File batchMarkerFile = bundle.getDataFile(
 			".liferay-client-extension-batch");
 
@@ -171,7 +171,7 @@ public class BatchEngineBundleTracker {
 		String batchPath = headers.get("Liferay-Client-Extension-Batch");
 
 		if (batchPath != null) {
-			if (_bundleAlreadyProcessed(bundle)) {
+			if (_isAlreadyProcessed(bundle)) {
 				return;
 			}
 
