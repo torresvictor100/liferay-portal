@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v8_9_3;
 
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -34,10 +35,11 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet resultSet = selectStatement.executeQuery(
-				"select countryId from Country where groupFilterEnabled = " +
-					"[$FALSE$]");
+		try (Statement statement = connection.createStatement()) {
+			ResultSet resultSet = statement.executeQuery(
+				SQLTransformer.transform(
+					"select countryId from Country where groupFilterEnabled " +
+						"= [$FALSE$]"));
 
 			while (resultSet.next()) {
 				long countryId = resultSet.getLong("countryId");
