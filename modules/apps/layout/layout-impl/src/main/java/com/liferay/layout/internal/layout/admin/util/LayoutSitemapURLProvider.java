@@ -146,11 +146,11 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	private Set<Locale> _getAvailableLocales(Layout layout)
 		throws PortalException {
 
+		Set<Locale> availableLocales = new HashSet<>();
+
 		InfoItemLanguagesProvider<Layout> infoItemLanguagesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, Layout.class.getName());
-
-		Set<Locale> availableLocales = new HashSet<>();
 
 		for (String availableLanguageId :
 				infoItemLanguagesProvider.getAvailableLanguageIds(layout)) {
