@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -78,17 +78,11 @@ public class BatchEngineBundleTrackerTest {
 		_testBatchEngineBundle("batch8", 3);
 	}
 
-	private void _testBatchEngineBundle(
-			String batchResourcePath, int expectedCount)
+	private void _testBatchEngineBundle(String dirName, int expectedCount)
 		throws Exception {
 
 		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(),
-			new FileInputStream(
-				_toJarFile(
-					StringBundler.concat(
-						_PATH_DEPENDENCIES, batchResourcePath,
-						StringPool.SLASH))));
+			RandomTestUtil.randomString(), _toInputStream(dirName));
 
 		IntegerWrapper actualCount = new IntegerWrapper();
 		BooleanWrapper processed = new BooleanWrapper();
@@ -135,8 +129,12 @@ public class BatchEngineBundleTrackerTest {
 		}
 	}
 
-	private File _toJarFile(String basePath) throws Exception {
+	private InputStream _toInputStream(String dirName) throws Exception {
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		String basePath = StringBundler.concat(
+			"com/liferay/batch/engine/internal/test/dependencies/", dirName,
+			StringPool.SLASH);
 
 		Enumeration<URL> enumeration = _bundle.findEntries(basePath, "*", true);
 
@@ -144,13 +142,13 @@ public class BatchEngineBundleTrackerTest {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				String path = url.getPath();
+				String urlPath = url.getPath();
 
-				if (path.endsWith(StringPool.SLASH)) {
+				if (urlPath.endsWith(StringPool.SLASH)) {
 					continue;
 				}
 
-				String zipPath = path.substring(basePath.length());
+				String zipPath = urlPath.substring(basePath.length());
 
 				if (zipPath.startsWith(StringPool.SLASH)) {
 					zipPath = zipPath.substring(1);
@@ -160,11 +158,8 @@ public class BatchEngineBundleTrackerTest {
 			}
 		}
 
-		return zipWriter.getFile();
+		return new FileInputStream(zipWriter.getFile());
 	}
-
-	private static final String _PATH_DEPENDENCIES =
-		"com/liferay/batch/engine/internal/test/dependencies/";
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
