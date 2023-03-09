@@ -81,17 +81,25 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private void _testBatchEngineBundle(
-			String batchResourcePath, int expectedValidUnits)
+			String batchResourcePath, int expectedCount)
 		throws Exception {
 
-		AtomicInteger validUnits = new AtomicInteger();
+		Bundle bundle = _bundleContext.installBundle(
+			RandomTestUtil.randomString(),
+			new FileInputStream(
+				_toJarFile(
+					StringBundler.concat(
+						_PATH_DEPENDENCIES, batchResourcePath,
+						StringPool.SLASH))));
+
+		AtomicInteger actualCount = new AtomicInteger();
 
 		TestBatchEngineUnitProcessor testBatchEngineUnitProcessor =
 			new TestBatchEngineUnitProcessor(
 				batchEngineUnits -> {
 					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 						if (batchEngineUnit.isValid()) {
-							validUnits.incrementAndGet();
+							actualCount.incrementAndGet();
 						}
 					}
 				});
@@ -103,39 +111,26 @@ public class BatchEngineBundleTrackerTest {
 					Constants.SERVICE_RANKING, 1000
 				).build());
 
-		String bundleSymbolicName = RandomTestUtil.randomString();
-
-		File zipFile = _toJarFile(
-			StringBundler.concat(
-				_PATH_DEPENDENCIES, batchResourcePath, StringPool.SLASH));
-
-		Bundle bundle = _bundleContext.installBundle(
-			bundleSymbolicName, new FileInputStream(zipFile));
-
 		try {
+
+			// Ensure the bundle is only processed on first start
+
 			bundle.start();
 
 			CountDownLatch countDownLatch =
 				testBatchEngineUnitProcessor.getCountDownLatch();
 
-			boolean countReached = countDownLatch.await(2, TimeUnit.SECONDS);
+			Assert.assertTrue(countDownLatch.await(2, TimeUnit.SECONDS));
 
-			Assert.assertTrue(countReached);
-
-			// Make sure the bundle is only processed on first start
-
-			countDownLatch =
-				testBatchEngineUnitProcessor.resetAndGetCountDownLatch();
+			testBatchEngineUnitProcessor.resetAndGetCountDownLatch();
 
 			bundle.stop();
 
 			bundle.start();
 
-			countReached = countDownLatch.await(2, TimeUnit.SECONDS);
+			Assert.assertFalse(countDownLatch.await(2, TimeUnit.SECONDS));
 
-			Assert.assertFalse(countReached);
-
-			Assert.assertEquals(expectedValidUnits, validUnits.intValue());
+			Assert.assertEquals(expectedCount, actualCount.intValue());
 		}
 		finally {
 			bundle.uninstall();
