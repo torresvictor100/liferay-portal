@@ -77,8 +77,9 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				_partialTermNames.forEach(
-					(key, value) -> termNames.put(key, _getTermName(value)));
+				_objectFieldNames.forEach(
+					(termLabel, objectFieldName) -> termNames.put(
+						termLabel, _getTermName(objectFieldName)));
 			}
 			else {
 				termNames.put(
@@ -90,27 +91,11 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 		return termNames.entrySet();
 	}
 
-	private String _getTermName(String value) {
+	private String _getTermName(String objectFieldName) {
 		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			_objectDefinition.getShortName(), value);
+			_objectDefinition.getShortName(), objectFieldName);
 	}
 
-	private final Map<String, String> _partialTermNames =
-		HashMapBuilder.put(
-			"author-email-address", "AUTHOR_EMAIL_ADDRESS"
-		).put(
-			"author-first-name", "AUTHOR_FIRST_NAME"
-		).put(
-			"author-id", "AUTHOR_ID"
-		).put(
-			"author-last-name", "AUTHOR_LAST_NAME"
-		).put(
-			"author-middle-name", "AUTHOR_MIDDLE_NAME"
-		).put(
-			"author-prefix", "AUTHOR_PREFIX"
-		).put(
-			"author-suffix", "AUTHOR_SUFFIX"
-		).build();
 	private ObjectDefinition _objectDefinition;
 
 	@Reference
@@ -118,5 +103,21 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	private final Map<String, String> _objectFieldNames = HashMapBuilder.put(
+		"author-email-address", "AUTHOR_EMAIL_ADDRESS"
+	).put(
+		"author-first-name", "AUTHOR_FIRST_NAME"
+	).put(
+		"author-id", "AUTHOR_ID"
+	).put(
+		"author-last-name", "AUTHOR_LAST_NAME"
+	).put(
+		"author-middle-name", "AUTHOR_MIDDLE_NAME"
+	).put(
+		"author-prefix", "AUTHOR_PREFIX"
+	).put(
+		"author-suffix", "AUTHOR_SUFFIX"
+	).build();
 
 }
