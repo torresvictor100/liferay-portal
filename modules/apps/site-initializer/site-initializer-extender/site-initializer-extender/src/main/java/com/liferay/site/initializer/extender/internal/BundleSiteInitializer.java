@@ -1165,13 +1165,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 			new HashMap<>();
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-definitions");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return objectDefinitionIdsStringUtilReplaceValues;
-		}
-
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				serviceContext.getCompanyId(), true,
@@ -1181,8 +1174,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitions) {
 
 			objectDefinitionIdsStringUtilReplaceValues.put(
-				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
+				"OBJECT_DEFINITION_ID:" + objectDefinition.getShortName(),
 				String.valueOf(objectDefinition.getObjectDefinitionId()));
+		}
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-definitions");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
