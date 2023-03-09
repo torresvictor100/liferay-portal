@@ -96,7 +96,7 @@ public class BatchEngineBundleTrackerTest {
 					}
 				});
 
-		ServiceRegistration<BatchEngineUnitProcessor> registration =
+		ServiceRegistration<BatchEngineUnitProcessor> serviceRegistration =
 			_bundleContext.registerService(
 				BatchEngineUnitProcessor.class, testBatchEngineUnitProcessor,
 				HashMapDictionaryBuilder.put(
@@ -140,7 +140,7 @@ public class BatchEngineBundleTrackerTest {
 		finally {
 			bundle.uninstall();
 
-			registration.unregister();
+			serviceRegistration.unregister();
 		}
 	}
 
