@@ -77,7 +77,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				_authorTermNameSuffixes.forEach(
+				_partialTermNames.forEach(
 					(key, value) -> termNames.put(key, _getTermName(value)));
 			}
 			else {
@@ -95,7 +95,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			_objectDefinition.getShortName(), value);
 	}
 
-	private final Map<String, String> _authorTermNameSuffixes =
+	private final Map<String, String> _partialTermNames =
 		HashMapBuilder.put(
 			"author-email-address", "AUTHOR_EMAIL_ADDRESS"
 		).put(
