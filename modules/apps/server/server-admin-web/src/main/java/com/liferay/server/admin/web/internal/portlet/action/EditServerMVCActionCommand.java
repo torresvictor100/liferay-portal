@@ -723,14 +723,14 @@ public class EditServerMVCActionCommand
 
 		String advancedProperties = ParamUtil.getString(
 			actionRequest, "advancedProperties");
-		boolean popServerNotificationsEnabled = ParamUtil.getBoolean(
-			actionRequest, "popServerNotificationsEnabled");
 		String pop3Host = ParamUtil.getString(actionRequest, "pop3Host");
 		String pop3Password = ParamUtil.getString(
 			actionRequest, "pop3Password");
 		int pop3Port = ParamUtil.getInteger(actionRequest, "pop3Port");
 		boolean pop3Secure = ParamUtil.getBoolean(actionRequest, "pop3Secure");
 		String pop3User = ParamUtil.getString(actionRequest, "pop3User");
+		boolean popServerNotificationsEnabled = ParamUtil.getBoolean(
+			actionRequest, "popServerNotificationsEnabled");
 		String smtpHost = ParamUtil.getString(actionRequest, "smtpHost");
 		String smtpPassword = ParamUtil.getString(
 			actionRequest, "smtpPassword");
