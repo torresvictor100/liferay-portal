@@ -280,6 +280,7 @@ public class PortalUpgradeProcessRegistryImpl
 				"UserGroupGroupRole", "groupId", "LONG null"),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupGroupRole", "roleId", "LONG null"),
+			//
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupRole", "userGroupRoleId", "LONG not null"),
 			UpgradeProcessFactory.alterColumnType(
