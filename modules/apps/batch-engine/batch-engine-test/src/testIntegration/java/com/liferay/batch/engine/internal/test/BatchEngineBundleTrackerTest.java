@@ -88,8 +88,8 @@ public class BatchEngineBundleTrackerTest {
 
 		TestBatchEngineUnitProcessor testBatchEngineUnitProcessor =
 			new TestBatchEngineUnitProcessor(
-				units -> {
-					for (BatchEngineUnit batchEngineUnit : units) {
+				batchEngineUnits -> {
+					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 						if (batchEngineUnit.isValid()) {
 							validUnits.incrementAndGet();
 						}
