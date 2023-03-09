@@ -260,36 +260,16 @@ public abstract class BaseDB implements DB {
 			Connection connection, String tableName)
 		throws SQLException {
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		List<PrimaryKey> primaryKeys = _getPrimaryKeys(connection, tableName);
 
-		DBInspector dbInspector = new DBInspector(connection);
-
-		String normalizedTableName = dbInspector.normalizeName(
-			tableName, databaseMetaData);
-
-		ArrayList<PrimaryKey> primaryKeys = new ArrayList<>();
-
-		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				normalizedTableName)) {
-
-			while (resultSet.next()) {
-				primaryKeys.add(
-					new PrimaryKey(
-						dbInspector.normalizeName(
-							resultSet.getString("COLUMN_NAME"),
-							databaseMetaData),
-						resultSet.getInt("KEY_SEQ")));
-			}
-		}
-
-		String[] columnNamesStrings = new String[primaryKeys.size()];
+		String[] primaryKeyColumnNames = new String[primaryKeys.size()];
 
 		for (PrimaryKey primaryKey : primaryKeys) {
-			columnNamesStrings[primaryKey._keySeq - 1] = primaryKey._columnName;
+			primaryKeyColumnNames[primaryKey._keySeq - 1] =
+				primaryKey._columnName;
 		}
 
-		return columnNamesStrings;
+		return primaryKeyColumnNames;
 	}
 
 	@Override
@@ -1073,6 +1053,32 @@ public abstract class BaseDB implements DB {
 		matcher.appendTail(sb);
 
 		return sb.toString();
+	}
+
+	private List<PrimaryKey> _getPrimaryKeys(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		List<PrimaryKey> primaryKeys = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				dbInspector.normalizeName(tableName, databaseMetaData))) {
+
+			while (resultSet.next()) {
+				primaryKeys.add(
+					new PrimaryKey(
+						dbInspector.normalizeName(
+							resultSet.getString("COLUMN_NAME"),
+							databaseMetaData),
+						resultSet.getInt("KEY_SEQ")));
+			}
+		}
+
+		return primaryKeys;
 	}
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
