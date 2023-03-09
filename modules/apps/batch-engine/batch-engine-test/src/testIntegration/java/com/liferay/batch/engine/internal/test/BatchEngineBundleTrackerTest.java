@@ -20,7 +20,9 @@ import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -32,10 +34,6 @@ import java.io.FileInputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,45 +90,43 @@ public class BatchEngineBundleTrackerTest {
 						_PATH_DEPENDENCIES, batchResourcePath,
 						StringPool.SLASH))));
 
-		AtomicInteger actualCount = new AtomicInteger();
-
-		TestBatchEngineUnitProcessor testBatchEngineUnitProcessor =
-			new TestBatchEngineUnitProcessor(
-				batchEngineUnits -> {
-					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
-						if (batchEngineUnit.isValid()) {
-							actualCount.incrementAndGet();
-						}
-					}
-				});
+		IntegerWrapper actualCount = new IntegerWrapper();
+		BooleanWrapper processed = new BooleanWrapper();
 
 		ServiceRegistration<BatchEngineUnitProcessor> serviceRegistration =
 			_bundleContext.registerService(
-				BatchEngineUnitProcessor.class, testBatchEngineUnitProcessor,
+				BatchEngineUnitProcessor.class,
+				batchEngineUnits -> {
+					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
+						if (batchEngineUnit.isValid()) {
+							actualCount.increment();
+						}
+					}
+
+					processed.setValue(true);
+				},
 				HashMapDictionaryBuilder.put(
 					Constants.SERVICE_RANKING, 1000
 				).build());
 
 		try {
-
-			// Ensure the bundle is only processed on first start
-
 			bundle.start();
 
-			CountDownLatch countDownLatch =
-				testBatchEngineUnitProcessor.getCountDownLatch();
+			Thread.sleep(2000);
 
-			Assert.assertTrue(countDownLatch.await(2, TimeUnit.SECONDS));
+			Assert.assertEquals(expectedCount, actualCount.getValue());
+			Assert.assertTrue(processed.getValue());
 
-			testBatchEngineUnitProcessor.resetAndGetCountDownLatch();
+			processed.setValue(false);
 
 			bundle.stop();
 
 			bundle.start();
 
-			Assert.assertFalse(countDownLatch.await(2, TimeUnit.SECONDS));
+			Thread.sleep(2000);
 
-			Assert.assertEquals(expectedCount, actualCount.intValue());
+			Assert.assertEquals(expectedCount, actualCount.getValue());
+			Assert.assertFalse(processed.getValue());
 		}
 		finally {
 			bundle.uninstall();
@@ -172,38 +168,5 @@ public class BatchEngineBundleTrackerTest {
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
-
-	private class TestBatchEngineUnitProcessor
-		implements BatchEngineUnitProcessor {
-
-		public TestBatchEngineUnitProcessor(
-			Consumer<Iterable<BatchEngineUnit>> consumer) {
-
-			_consumer = consumer;
-		}
-
-		public CountDownLatch getCountDownLatch() {
-			return _countDownLatch;
-		}
-
-		@Override
-		public void processBatchEngineUnits(
-			Iterable<BatchEngineUnit> batchEngineUnits) {
-
-			_consumer.accept(batchEngineUnits);
-
-			_countDownLatch.countDown();
-		}
-
-		public CountDownLatch resetAndGetCountDownLatch() {
-			_countDownLatch = new CountDownLatch(1);
-
-			return _countDownLatch;
-		}
-
-		private final Consumer<Iterable<BatchEngineUnit>> _consumer;
-		private volatile CountDownLatch _countDownLatch = new CountDownLatch(1);
-
-	}
 
 }
