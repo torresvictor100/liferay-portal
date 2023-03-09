@@ -73,30 +73,6 @@ public class BatchEngineBundleTracker {
 		_bundleTracker.close();
 	}
 
-	private boolean _isAlreadyProcessed(Bundle bundle) {
-		File batchMarkerFile = bundle.getDataFile(
-			".liferay-client-extension-batch");
-
-		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
-			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
-
-			return true;
-		}
-
-		try {
-			if (!batchMarkerFile.exists()) {
-				batchMarkerFile.createNewFile();
-			}
-
-			batchMarkerFile.setLastModified(bundle.getLastModified());
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
-		}
-
-		return false;
-	}
-
 	private String _getBatchEngineBundleEntryKey(URL url) {
 		String zipEntryName = url.getPath();
 
@@ -162,6 +138,30 @@ public class BatchEngineBundleTracker {
 			}
 
 		};
+	}
+
+	private boolean _isAlreadyProcessed(Bundle bundle) {
+		File batchMarkerFile = bundle.getDataFile(
+			".liferay-client-extension-batch");
+
+		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
+			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
+
+			return true;
+		}
+
+		try {
+			if (!batchMarkerFile.exists()) {
+				batchMarkerFile.createNewFile();
+			}
+
+			batchMarkerFile.setLastModified(bundle.getLastModified());
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
+
+		return false;
 	}
 
 	private void _processBatchEngineBundle(Bundle bundle) {
