@@ -1813,10 +1813,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					KBArticleTable.INSTANCE.latest.eq(Boolean.TRUE)
 				).and(
 					KBArticleTable.INSTANCE.status.neq(
-						WorkflowConstants.STATUS_EXPIRED)
+						WorkflowConstants.STATUS_DRAFT)
 				).and(
 					KBArticleTable.INSTANCE.status.neq(
-						WorkflowConstants.STATUS_DRAFT)
+						WorkflowConstants.STATUS_EXPIRED)
 				)
 			));
 	}
