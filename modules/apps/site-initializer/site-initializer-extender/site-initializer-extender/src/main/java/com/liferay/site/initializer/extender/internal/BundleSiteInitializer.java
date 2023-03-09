@@ -1171,7 +1171,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				WorkflowConstants.STATUS_APPROVED);
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
-				objectDefinitions) {
+			objectDefinitions) {
 
 			objectDefinitionIdsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getShortName(),
