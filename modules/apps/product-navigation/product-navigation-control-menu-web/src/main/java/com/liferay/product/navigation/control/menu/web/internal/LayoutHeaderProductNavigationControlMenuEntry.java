@@ -117,7 +117,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		if (_hasDraftLayout(httpServletRequest) &&
 			_hasEditPermission(httpServletRequest)) {
 
-			sb.append("<sup aria-hidden=\"true\"");
+			sb.append("<sup aria-hidden=\"true\" ");
 			sb.append("class=\"flex-shrink-0 small\">*</sup>");
 		}
 
