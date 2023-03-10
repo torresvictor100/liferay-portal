@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Test;
@@ -83,19 +84,17 @@ public class DispatchTriggerResourceTest
 							_dispatchTaskExecutorRegistry.
 								getDispatchTaskExecutorTypes();
 
-						int index = 0;
-						int randomIndex = RandomTestUtil.randomInt(
+						int index = RandomTestUtil.randomInt(
 							0, dispatchTaskExecutorTypes.size() - 1);
 
-						for (String dispatchTaskExecutorType :
-								dispatchTaskExecutorTypes) {
+						Iterator<String> iterator =
+							dispatchTaskExecutorTypes.iterator();
 
-							if (index++ == randomIndex) {
-								return dispatchTaskExecutorType;
-							}
+						for (int i = 0; i < index; i++) {
+							iterator.next();
 						}
 
-						return "test";
+						return iterator.next();
 					});
 			}
 		};
