@@ -63,7 +63,6 @@ public class DispatchTriggerResourceTest
 				cronExpression = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				dispatchTaskClusterMode = RandomTestUtil.randomInt();
-				dispatchTaskExecutorType = _getRandomDispatchExecutorType();
 				dispatchTaskSettings = LocalizedMapUtil.getI18nMap(
 					RandomTestUtil.randomLocaleStringMap());
 				endDate = RandomTestUtil.nextDate();
@@ -77,6 +76,27 @@ public class DispatchTriggerResourceTest
 				timeZoneId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				userId = RandomTestUtil.randomLong();
+
+				setDispatchTaskExecutorType(
+					() -> {
+						Set<String> dispatchTaskExecutorTypes =
+							_dispatchTaskExecutorRegistry.
+								getDispatchTaskExecutorTypes();
+
+						int index = 0;
+						int randomIndex = RandomTestUtil.randomInt(
+							0, dispatchTaskExecutorTypes.size() - 1);
+
+						for (String dispatchTaskExecutorType :
+								dispatchTaskExecutorTypes) {
+
+							if (index++ == randomIndex) {
+								return dispatchTaskExecutorType;
+							}
+						}
+
+						return "test";
+					});
 			}
 		};
 	}
@@ -100,23 +120,6 @@ public class DispatchTriggerResourceTest
 		throws Exception {
 
 		return dispatchTriggerResource.postDispatchTrigger(dispatchTrigger);
-	}
-
-	private String _getRandomDispatchExecutorType() {
-		Set<String> dispatchTaskExecutorTypes =
-			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
-
-		int index = 0;
-		int randomIndex = RandomTestUtil.randomInt(
-			0, dispatchTaskExecutorTypes.size() - 1);
-
-		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
-			if (index++ == randomIndex) {
-				return dispatchTaskExecutorType;
-			}
-		}
-
-		return "test";
 	}
 
 	@Inject
