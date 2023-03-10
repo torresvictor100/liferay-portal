@@ -18,12 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Iterator;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +62,9 @@ public class DispatchTriggerResourceTest
 				cronExpression = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				dispatchTaskClusterMode = RandomTestUtil.randomInt();
+				dispatchTaskExecutorType = SetUtil.randomElement(
+					_dispatchTaskExecutorRegistry.
+						getDispatchTaskExecutorTypes());
 				dispatchTaskSettings = LocalizedMapUtil.getI18nMap(
 					RandomTestUtil.randomLocaleStringMap());
 				endDate = RandomTestUtil.nextDate();
@@ -77,25 +78,6 @@ public class DispatchTriggerResourceTest
 				timeZoneId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				userId = RandomTestUtil.randomLong();
-
-				setDispatchTaskExecutorType(
-					() -> {
-						Set<String> dispatchTaskExecutorTypes =
-							_dispatchTaskExecutorRegistry.
-								getDispatchTaskExecutorTypes();
-
-						int index = RandomTestUtil.randomInt(
-							0, dispatchTaskExecutorTypes.size() - 1);
-
-						Iterator<String> iterator =
-							dispatchTaskExecutorTypes.iterator();
-
-						for (int i = 0; i < index; i++) {
-							iterator.next();
-						}
-
-						return iterator.next();
-					});
 			}
 		};
 	}
