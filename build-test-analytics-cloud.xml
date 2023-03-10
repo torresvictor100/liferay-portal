@@ -333,7 +333,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 											<equals arg1="${analytics.cloud.start.result}" arg2="0" />
 										</not>
 										<then>
-											<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
+											<fail message="Failed to start Analytics Cloud with error code ${analytics.cloud.start.result}." />
 										</then>
 									</if>
 								</try>
@@ -349,7 +349,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					</retry>
 				</try>
 				<catch>
-					<echo>Failed to create analytics cloud demo data.</echo>
+					<echo>Failed to create Analytics Cloud demo data.</echo>
+
 					<fail message="${analytics.cloud.error}" />
 				</catch>
 			</trycatch>
