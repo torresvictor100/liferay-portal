@@ -132,13 +132,14 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 				/>
 
 				<ClayButtonWithIcon
-					aria-label="Clear"
+					aria-label={i18n.translate('clear')}
 					className="clear-button"
 					displayType="unstyled"
 					onClick={() => setFilter('')}
 					symbol="times"
-					title="Clear"
+					title={i18n.translate('clear')}
 				/>
+
 				<Form.Divider />
 			</div>
 
