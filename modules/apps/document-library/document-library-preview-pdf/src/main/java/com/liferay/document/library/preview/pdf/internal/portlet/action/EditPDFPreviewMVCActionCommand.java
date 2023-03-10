@@ -73,8 +73,8 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 
 			if (maxNumberOfPages < 0) {
 				throw new PDFPreviewException(
-					"Maximum number of pages limit must be a non-negative " +
-						"integer");
+					"Maximum number of pages limit must be greater than or " +
+						"equal to 0 ");
 			}
 
 			_pdfPreviewManagedServiceFactory.updatePDFPreview(
