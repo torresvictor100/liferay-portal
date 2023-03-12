@@ -770,12 +770,6 @@ public class DefaultObjectEntryManagerImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		if (Validator.isNotNull(objectEntry.getKeywords()) &&
-			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-
-			serviceContext.setAssetTagNames(objectEntry.getKeywords());
-		}
-
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		if (properties.get("categoryIds") != null) {
@@ -783,6 +777,12 @@ public class DefaultObjectEntryManagerImpl
 				ListUtil.toLongArray(
 					(List<String>)properties.get("categoryIds"),
 					Long::parseLong));
+		}
+
+		if (Validator.isNotNull(objectEntry.getKeywords()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
+			serviceContext.setAssetTagNames(objectEntry.getKeywords());
 		}
 
 		if (properties.get("tagNames") != null) {
