@@ -98,7 +98,7 @@ public class SetUtilTest {
 				foundC = true;
 			}
 			else {
-				Assert.fail("Invalid string: " + string);
+				throw new IllegalStateException("Invalid string: " + string);
 			}
 
 			if (foundA && foundB && foundC) {
