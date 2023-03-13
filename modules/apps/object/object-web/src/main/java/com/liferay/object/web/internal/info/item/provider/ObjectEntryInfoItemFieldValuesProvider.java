@@ -356,7 +356,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.displayPageURLInfoField,
 				_getDisplayPageURL(serviceBuilderObjectEntry, themeDisplay)));
-
 		objectEntryFieldValues.addAll(
 			_getObjectFieldsInfoFieldValues(
 				_objectFieldLocalService.getObjectFields(
@@ -433,12 +432,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				relatedObjectEntry.getObjectDefinitionId());
-
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
-
 		Map<String, ?> relatedObjectEntryValues =
 			relatedObjectEntry.getValues();
 
