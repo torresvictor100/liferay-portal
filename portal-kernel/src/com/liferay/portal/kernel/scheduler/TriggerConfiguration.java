@@ -50,7 +50,7 @@ public class TriggerConfiguration {
 		}
 
 		if (timeUnit == null) {
-			throw new IllegalArgumentException("Timeunit is null");
+			throw new IllegalArgumentException("Time unit is null");
 		}
 
 		_interval = interval;
@@ -59,7 +59,7 @@ public class TriggerConfiguration {
 
 	private TriggerConfiguration(String cronExpression) {
 		if (cronExpression == null) {
-			throw new IllegalArgumentException("CronExpression is null");
+			throw new IllegalArgumentException("Cron expression is null");
 		}
 
 		_cronExpression = cronExpression;
