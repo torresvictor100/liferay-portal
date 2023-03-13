@@ -31,11 +31,11 @@ public class FieldNameFilterFunction
 	}
 
 	@Override
-	public Map<String, Object> apply(Map<String, Object> stringObjectMap) {
+	public Map<String, Object> apply(Map<String, Object> map) {
 		Map<String, Object> filteredMap = new HashMap<>();
 
 		for (String name : _includeNames) {
-			filteredMap.put(name, stringObjectMap.get(name));
+			filteredMap.put(name, map.get(name));
 		}
 
 		return filteredMap;
