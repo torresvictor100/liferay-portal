@@ -47,7 +47,7 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+	 public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
 		return companyId -> {
 			NotificationType notificationType =
 				_notificationTypeServiceTracker.getNotificationType(

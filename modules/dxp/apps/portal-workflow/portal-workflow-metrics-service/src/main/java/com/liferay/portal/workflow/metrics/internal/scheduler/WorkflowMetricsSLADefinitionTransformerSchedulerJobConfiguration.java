@@ -55,7 +55,8 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+	@Override
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
 		return companyId -> _transform(companyId);
 	}
 

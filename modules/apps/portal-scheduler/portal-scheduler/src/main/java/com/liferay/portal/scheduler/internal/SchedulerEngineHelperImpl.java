@@ -689,11 +689,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 							jobExecutor.run();
 						}
 						else {
-							UnsafeConsumer<Long, Exception> companyJobExecutor =
+							UnsafeConsumer<Long, Exception> companyJobExecutorUnsafeConsumer =
 								schedulerJobConfiguration.
-									getCompanyJobExecutor();
+									 getCompanyJobExecutorUnsafeConsumer();
 
-							companyJobExecutor.accept(companyId);
+							companyJobExecutorUnsafeConsumer.accept(companyId);
 						}
 					}
 					catch (Exception exception) {

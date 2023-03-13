@@ -47,7 +47,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class UserImportSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+	@Override
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
 		return companyId -> _importUsers(companyId, _getLastImportTime());
 	}
 
