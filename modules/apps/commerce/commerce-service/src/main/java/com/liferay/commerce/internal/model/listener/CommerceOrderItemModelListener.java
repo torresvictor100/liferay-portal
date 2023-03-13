@@ -58,30 +58,6 @@ public class CommerceOrderItemModelListener
 		}
 	}
 
-	@Override
-	public void onAfterUpdate(
-		CommerceOrderItem originalCommerceOrderItem,
-		CommerceOrderItem commerceOrderItem) {
-
-		try {
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-
-			if ((commerceOrder.getOrderStatus() ==
-					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) ||
-				(commerceOrder.getOrderStatus() ==
-					CommerceOrderConstants.ORDER_STATUS_SHIPPED)) {
-
-				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-					commerceOrderItem.getCommerceOrder());
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderItemModelListener.class);
 
