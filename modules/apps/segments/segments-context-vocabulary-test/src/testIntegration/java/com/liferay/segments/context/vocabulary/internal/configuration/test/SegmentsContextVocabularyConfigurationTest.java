@@ -63,8 +63,6 @@ public class SegmentsContextVocabularyConfigurationTest {
 				"entityFieldName", "entityFieldName"
 			).build();
 
-		// Simple update
-
 		_configuration.update(properties);
 
 		Assert.assertEquals(
@@ -72,9 +70,6 @@ public class SegmentsContextVocabularyConfigurationTest {
 		Assert.assertEquals(
 			"entityFieldName", properties.get("entityFieldName"));
 		Assert.assertEquals("987", properties.get("companyId"));
-
-		// Update for same EntityField and different AssetVocabulary throws
-		// Exception
 
 		Dictionary<String, Object> duplicatedProperties =
 			HashMapDictionaryBuilder.<String, Object>put(
