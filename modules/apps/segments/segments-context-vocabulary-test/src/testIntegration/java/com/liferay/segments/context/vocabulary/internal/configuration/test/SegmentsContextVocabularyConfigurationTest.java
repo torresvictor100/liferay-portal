@@ -71,17 +71,16 @@ public class SegmentsContextVocabularyConfigurationTest {
 			"entityFieldName", properties.get("entityFieldName"));
 		Assert.assertEquals("987", properties.get("companyId"));
 
-		Dictionary<String, Object> duplicatedProperties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"assetVocabularyName", "differentAssetVocabularyName"
-			).put(
-				"companyId", "987"
-			).put(
-				"entityFieldName", "entityFieldName"
-			).build();
+		properties = HashMapDictionaryBuilder.<String, Object>put(
+			"assetVocabularyName", "differentAssetVocabularyName"
+		).put(
+			"companyId", "987"
+		).put(
+			"entityFieldName", "entityFieldName"
+		).build();
 
 		try {
-			_configuration.update(duplicatedProperties);
+			_configuration.update(properties);
 
 			Assert.fail();
 		}
