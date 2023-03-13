@@ -43,12 +43,11 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		HttpServletRequest httpServletRequest, PageContext pageContext) {
 
 		_httpServletRequest = httpServletRequest;
-
 		_pageContext = pageContext;
 
 		_httpServletResponse =
 			PipingServletResponseFactory.createPipingServletResponse(
-				_pageContext);
+				pageContext);
 	}
 
 	public Map<String, List<ProductNavigationControlMenuEntry>>
