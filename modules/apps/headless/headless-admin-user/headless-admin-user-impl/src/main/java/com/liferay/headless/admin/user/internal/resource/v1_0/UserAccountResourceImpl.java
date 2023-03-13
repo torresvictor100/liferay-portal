@@ -663,11 +663,12 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public Response postUserAccountImage(Long id, MultipartBody multipartBody)
+	public Response postUserAccountImage(
+			Long userAccountId, MultipartBody multipartBody)
 		throws Exception {
 
 		_userService.updatePortrait(
-			id, multipartBody.getBinaryFileAsBytes("image"));
+			userAccountId, multipartBody.getBinaryFileAsBytes("image"));
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
