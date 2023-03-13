@@ -160,10 +160,9 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				_dlURLHelper.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK),
-				_TIMESTAMP_PARAMETER),
+				"t"),
 			HttpComponentsUtil.removeParameter(
-				String.valueOf(downloadURLInfoFieldValue.getValue()),
-				_TIMESTAMP_PARAMETER));
+				String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
 
 		_assertInfoFieldValue(
 			"#fileName", infoItemFieldValues, objectField,
@@ -197,8 +196,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		return objectFieldSetting;
 	}
-
-	private static final String _TIMESTAMP_PARAMETER = "t";
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
