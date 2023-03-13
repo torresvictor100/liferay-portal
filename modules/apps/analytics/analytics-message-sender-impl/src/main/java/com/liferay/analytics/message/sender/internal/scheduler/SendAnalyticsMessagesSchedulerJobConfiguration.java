@@ -46,7 +46,7 @@ public class SendAnalyticsMessagesSchedulerJobConfiguration
 	}
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			if (_isDisabled()) {
 				return;

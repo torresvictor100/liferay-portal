@@ -42,7 +42,7 @@ public class CheckCommerceInventoryAuditSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			int deleteAuditMonthInterval =
 				_commerceInventorySystemConfiguration.

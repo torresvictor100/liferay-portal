@@ -42,7 +42,7 @@ public class DeleteAkismetSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			int reportableTime =
 				_akismetServiceConfiguration.akismetReportableTime();

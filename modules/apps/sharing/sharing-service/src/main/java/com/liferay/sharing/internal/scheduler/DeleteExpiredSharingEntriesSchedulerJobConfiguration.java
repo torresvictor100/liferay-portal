@@ -39,7 +39,7 @@ public class DeleteExpiredSharingEntriesSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return _sharingEntryLocalService::deleteExpiredEntries;
 	}
 

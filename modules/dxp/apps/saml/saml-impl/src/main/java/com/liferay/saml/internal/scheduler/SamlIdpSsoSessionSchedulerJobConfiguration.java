@@ -39,7 +39,7 @@ public class SamlIdpSsoSessionSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			Thread currentThread = Thread.currentThread();
 

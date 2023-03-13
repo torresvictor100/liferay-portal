@@ -39,7 +39,7 @@ public class CheckFileEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _dlFileEntryLocalService.checkFileEntries(
 			_dlConfiguration.checkInterval());
 	}

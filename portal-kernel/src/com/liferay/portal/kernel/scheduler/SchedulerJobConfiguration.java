@@ -36,7 +36,7 @@ public interface SchedulerJobConfiguration {
 		return DestinationNames.SCHEDULER_DISPATCH;
 	}
 
-	public UnsafeRunnable<Exception> getJobExecutor();
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable();
 
 	public default String getName() {
 		Class<?> clazz = getClass();

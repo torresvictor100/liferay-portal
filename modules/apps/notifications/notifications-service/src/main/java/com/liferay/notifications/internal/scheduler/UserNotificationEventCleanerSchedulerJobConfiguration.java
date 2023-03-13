@@ -45,7 +45,7 @@ public class UserNotificationEventCleanerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			if (_userNotificationEventDaysLimit <= 0) {
 				return;

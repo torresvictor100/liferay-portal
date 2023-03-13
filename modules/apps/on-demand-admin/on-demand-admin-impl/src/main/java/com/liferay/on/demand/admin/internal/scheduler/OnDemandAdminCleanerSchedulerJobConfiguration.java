@@ -41,7 +41,7 @@ public class OnDemandAdminCleanerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			int cleanUpInterval = _onDemandAdminConfiguration.cleanUpInterval();
 

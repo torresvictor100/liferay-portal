@@ -43,7 +43,7 @@ public class BatchEngineTaskCleanerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			for (BatchEngineExportTask batchEngineExportTask :
 					_batchEngineExportTaskLocalService.

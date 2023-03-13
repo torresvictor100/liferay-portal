@@ -42,7 +42,7 @@ public class AbortedMultipartUploadCleanerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			S3Store s3Store = (S3Store)_store;
 

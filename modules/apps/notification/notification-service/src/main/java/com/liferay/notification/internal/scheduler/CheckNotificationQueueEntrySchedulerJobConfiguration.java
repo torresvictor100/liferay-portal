@@ -65,7 +65,7 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 	}
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		throw new UnsupportedOperationException();
 	}
 

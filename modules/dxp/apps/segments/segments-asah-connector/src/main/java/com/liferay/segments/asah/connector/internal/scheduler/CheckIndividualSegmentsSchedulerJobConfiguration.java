@@ -39,7 +39,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return _individualSegmentsChecker::checkIndividualSegments;
 	}
 

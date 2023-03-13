@@ -31,7 +31,7 @@ public class ClusterSampleSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Run job at " + System.currentTimeMillis());

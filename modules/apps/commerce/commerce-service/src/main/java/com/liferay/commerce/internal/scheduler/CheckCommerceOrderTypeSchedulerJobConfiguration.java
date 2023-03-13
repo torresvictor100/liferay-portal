@@ -39,7 +39,7 @@ public class CheckCommerceOrderTypeSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return _commerceOrderTypeLocalService::checkCommerceOrderTypes;
 	}
 

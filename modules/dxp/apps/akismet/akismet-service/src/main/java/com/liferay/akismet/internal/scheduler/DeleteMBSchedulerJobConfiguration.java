@@ -52,7 +52,7 @@ public class DeleteMBSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			Class<?> clazz = _mbMessageLocalService.getClass();
 

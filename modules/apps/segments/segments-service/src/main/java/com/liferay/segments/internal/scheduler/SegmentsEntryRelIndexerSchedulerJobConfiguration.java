@@ -46,7 +46,7 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_segmentsEntryLocalService.getActionableDynamicQuery();

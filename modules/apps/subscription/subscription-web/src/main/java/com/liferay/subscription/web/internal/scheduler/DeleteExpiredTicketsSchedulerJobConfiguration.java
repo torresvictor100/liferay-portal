@@ -45,7 +45,7 @@ public class DeleteExpiredTicketsSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			long subscriptionClassNameId =
 				_classNameLocalService.getClassNameId(Subscription.class);

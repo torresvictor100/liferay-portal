@@ -42,7 +42,7 @@ public class CheckEntrySchedulerJobConfiguration
 	implements ClusterMasterTokenTransitionListener, SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			Date startDate = _previousEndDate;
 			Date endDate = new Date();

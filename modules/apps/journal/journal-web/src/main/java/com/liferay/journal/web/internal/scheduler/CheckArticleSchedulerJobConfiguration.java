@@ -41,7 +41,7 @@ public class CheckArticleSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return _journalArticleLocalService::checkArticles;
 	}
 

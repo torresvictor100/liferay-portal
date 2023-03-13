@@ -48,7 +48,7 @@ public class TempFileEntriesSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_repositoryLocalService.getActionableDynamicQuery();

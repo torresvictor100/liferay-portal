@@ -58,7 +58,7 @@ public class UserImportSchedulerJobConfiguration
 	}
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			long time = _getLastImportTime();
 

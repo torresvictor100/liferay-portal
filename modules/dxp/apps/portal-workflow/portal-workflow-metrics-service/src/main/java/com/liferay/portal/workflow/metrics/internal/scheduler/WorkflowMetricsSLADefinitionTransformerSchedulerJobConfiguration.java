@@ -61,7 +61,7 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	}
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompanyId(
 			companyId -> _transform(companyId));
 	}

@@ -422,7 +422,7 @@ public class OfflineOpenIdConnectSessionManager {
 		implements SchedulerJobConfiguration {
 
 		@Override
-		public UnsafeRunnable<Exception> getJobExecutor() {
+		public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 			return () -> {
 				List<OpenIdConnectSession> openIdConnectSessions =
 					_openIdConnectSessionLocalService.

@@ -55,7 +55,7 @@ public class SamlMetadataSchedulerJobConfiguration
 	}
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompany(
 			company -> {
 				if (!company.isActive()) {

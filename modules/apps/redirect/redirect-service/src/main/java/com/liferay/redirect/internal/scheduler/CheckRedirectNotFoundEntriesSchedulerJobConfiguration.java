@@ -46,7 +46,7 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			_removeMaximumOverflowRedirectNotFoundEntries();
 			_removeOldRedirectNotFoundEntries();

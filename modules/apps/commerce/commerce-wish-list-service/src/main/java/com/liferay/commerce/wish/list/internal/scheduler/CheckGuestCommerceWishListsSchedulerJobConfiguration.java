@@ -42,7 +42,7 @@ public class CheckGuestCommerceWishListsSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			int deleteInterval =
 				_commerceWishListConfiguration.deleteInterval();

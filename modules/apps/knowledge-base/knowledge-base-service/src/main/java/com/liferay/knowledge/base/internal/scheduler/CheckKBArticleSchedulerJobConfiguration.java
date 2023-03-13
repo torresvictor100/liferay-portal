@@ -40,7 +40,7 @@ public class CheckKBArticleSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 				_kbArticleLocalService.checkKBArticles();

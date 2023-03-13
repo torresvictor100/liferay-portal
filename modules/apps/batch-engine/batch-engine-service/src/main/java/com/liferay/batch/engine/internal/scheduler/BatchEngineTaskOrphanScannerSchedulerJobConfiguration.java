@@ -51,7 +51,7 @@ public class BatchEngineTaskOrphanScannerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			NoticeableExecutorService noticeableExecutorService =
 				_portalExecutorManager.getPortalExecutor(

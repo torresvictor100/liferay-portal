@@ -49,7 +49,7 @@ public class CheckAssetEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return _assetEntriesCheckerUtil::checkAssetEntries;
 	}
 

@@ -41,7 +41,7 @@ public class CheckCommerceNotificationQueueEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 
 			// Check unsent commerce notification queue entries

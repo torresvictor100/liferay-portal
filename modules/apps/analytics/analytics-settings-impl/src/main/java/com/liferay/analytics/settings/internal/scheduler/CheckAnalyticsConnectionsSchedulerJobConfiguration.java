@@ -37,7 +37,7 @@ public class CheckAnalyticsConnectionsSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeRunnable<Exception> getJobExecutor() {
+	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
 			Map<Long, AnalyticsConfiguration> analyticsConfigurations =
 				_analyticsConfigurationRegistry.getAnalyticsConfigurations();
