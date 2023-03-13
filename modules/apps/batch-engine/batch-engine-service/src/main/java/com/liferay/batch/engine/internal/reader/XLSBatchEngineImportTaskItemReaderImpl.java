@@ -117,7 +117,7 @@ public class XLSBatchEngineImportTaskItemReaderImpl
 	}
 
 	private Function<Map<String, Object>, Map<String, Object>>
-		_fieldNameFilter = m -> m;
+		_fieldNameFilter = map -> map;
 	private final String[] _fieldNames;
 	private final InputStream _inputStream;
 	private final Iterator<Row> _iterator;
