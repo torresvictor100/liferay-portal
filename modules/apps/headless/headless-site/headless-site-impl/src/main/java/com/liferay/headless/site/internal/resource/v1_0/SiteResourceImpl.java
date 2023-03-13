@@ -133,12 +133,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Site.MembershipType membershipType = site.getMembershipType();
 
 		if (membershipType != null) {
-			String value = membershipType.getValue();
-
-			if (value.equals(GroupConstants.TYPE_SITE_PRIVATE_LABEL)) {
+			if (membershipType.equals(Site.MembershipType.PRIVATE)) {
 				type = GroupConstants.TYPE_SITE_PRIVATE;
 			}
-			else if (value.equals(GroupConstants.TYPE_SITE_RESTRICTED_LABEL)) {
+			else if (membershipType.equals(Site.MembershipType.RESTRICTED)) {
 				type = GroupConstants.TYPE_SITE_RESTRICTED;
 			}
 		}
