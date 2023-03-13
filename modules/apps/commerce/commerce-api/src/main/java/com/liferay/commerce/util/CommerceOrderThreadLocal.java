@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order;
+package com.liferay.commerce.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
