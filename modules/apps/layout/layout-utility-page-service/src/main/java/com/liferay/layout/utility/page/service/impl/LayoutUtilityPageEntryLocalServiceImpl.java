@@ -122,10 +122,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntry);
 
 		if (defaultLayoutUtilityPageEntry) {
-			layoutUtilityPageEntry =
-				layoutUtilityPageEntryLocalService.
-					setDefaultLayoutUtilityPageEntry(
-						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+			layoutUtilityPageEntry = setDefaultLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 		}
 
 		_resourceLocalService.addResources(
