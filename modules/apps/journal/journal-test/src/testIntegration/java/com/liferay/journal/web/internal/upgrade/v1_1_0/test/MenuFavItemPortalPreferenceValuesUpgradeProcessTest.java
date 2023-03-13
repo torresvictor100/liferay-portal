@@ -89,20 +89,16 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcessTest {
 
 		_addMenuFavItemPortalPreferences(
 			0, _group2, _companyGroupDDMStructure, group2DDMStructure);
-
 		_addMenuFavItemPortalPreferences(1, _group2, group2DDMStructure);
 
 		_runUpgrade();
 
 		_assertMenuFavItemPortalPreferences(
 			0, companyGroup, _companyGroupDDMStructure);
-
 		_assertMenuFavItemPortalPreferences(
 			0, _group1, _companyGroupDDMStructure, group1DDMStructure);
-
 		_assertMenuFavItemPortalPreferences(
 			0, _group2, _companyGroupDDMStructure, group2DDMStructure);
-
 		_assertMenuFavItemPortalPreferences(1, _group2, group2DDMStructure);
 	}
 
