@@ -48,7 +48,7 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 			return;
 		}
 
-		delete(projectPrioritizer.getID());
+		delete(projectPrioritizer.getId());
 	}
 
 	public List<ProjectPrioritizer> retrieveProjectPrioritizers() {

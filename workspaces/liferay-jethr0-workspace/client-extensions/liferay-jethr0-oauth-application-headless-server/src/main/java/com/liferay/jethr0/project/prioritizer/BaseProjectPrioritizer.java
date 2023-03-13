@@ -45,7 +45,7 @@ public abstract class BaseProjectPrioritizer implements ProjectPrioritizer {
 	}
 
 	@Override
-	public long getID() {
+	public long getId() {
 		return _id;
 	}
 
@@ -54,7 +54,7 @@ public abstract class BaseProjectPrioritizer implements ProjectPrioritizer {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"id", getID()
+			"id", getId()
 		).put(
 			"name", getName()
 		);

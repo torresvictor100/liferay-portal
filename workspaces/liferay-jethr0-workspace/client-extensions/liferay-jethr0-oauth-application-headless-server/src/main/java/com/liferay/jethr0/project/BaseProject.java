@@ -32,7 +32,7 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
-	public long getID() {
+	public long getId() {
 		return _id;
 	}
 
@@ -46,7 +46,7 @@ public abstract class BaseProject implements Project {
 		jsonObject.put(
 			"dateCreated", _simpleDateFormat.format(getCreatedDate())
 		).put(
-			"id", getID()
+			"id", getId()
 		).put(
 			"name", getName()
 		).put(

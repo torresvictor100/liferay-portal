@@ -43,7 +43,7 @@ public class ProjectComparatorDALO extends BaseDALO {
 			"position", position
 		).put(
 			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
-			projectPrioritizer.getID()
+			projectPrioritizer.getId()
 		).put(
 			"type", type.getJSONObject()
 		).put(
@@ -63,7 +63,7 @@ public class ProjectComparatorDALO extends BaseDALO {
 
 		projectPrioritizer.removeProjectComparator(projectComparator);
 
-		delete(projectComparator.getID());
+		delete(projectComparator.getId());
 	}
 
 	public List<ProjectComparator> retrieveProjectComparators(
@@ -72,7 +72,7 @@ public class ProjectComparatorDALO extends BaseDALO {
 		List<ProjectComparator> projectComparators = new ArrayList<>();
 
 		String objectURLPath = StringUtil.combine(
-			"/o/c/projectprioritizers/", projectPrioritizer.getID(),
+			"/o/c/projectprioritizers/", projectPrioritizer.getId(),
 			"/projectPrioritizerToProjectComparators");
 
 		for (JSONObject jsonObject : retrieve(objectURLPath)) {

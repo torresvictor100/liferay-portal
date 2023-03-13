@@ -27,7 +27,7 @@ public interface Project {
 
 	public Date getCreatedDate();
 
-	public long getID();
+	public long getId();
 
 	public JSONObject getJSONObject();
 

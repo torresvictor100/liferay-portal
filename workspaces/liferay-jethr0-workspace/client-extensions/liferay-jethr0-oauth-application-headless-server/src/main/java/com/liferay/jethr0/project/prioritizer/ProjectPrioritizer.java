@@ -30,7 +30,7 @@ public interface ProjectPrioritizer {
 	public void addProjectComparators(
 		List<ProjectComparator> projectComparators);
 
-	public long getID();
+	public long getId();
 
 	public JSONObject getJSONObject();
 

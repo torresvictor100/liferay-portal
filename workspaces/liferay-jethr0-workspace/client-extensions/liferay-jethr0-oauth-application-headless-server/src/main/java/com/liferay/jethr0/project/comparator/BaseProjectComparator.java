@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public abstract class BaseProjectComparator implements ProjectComparator {
 
 	@Override
-	public long getID() {
+	public long getId() {
 		return _id;
 	}
 
@@ -36,12 +36,12 @@ public abstract class BaseProjectComparator implements ProjectComparator {
 		ProjectPrioritizer projectPrioritizer = getProjectPrioritizer();
 
 		jsonObject.put(
-			"id", getID()
+			"id", getId()
 		).put(
 			"position", getPosition()
 		).put(
 			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
-			projectPrioritizer.getID()
+			projectPrioritizer.getId()
 		).put(
 			"type", type.getJSONObject()
 		).put(

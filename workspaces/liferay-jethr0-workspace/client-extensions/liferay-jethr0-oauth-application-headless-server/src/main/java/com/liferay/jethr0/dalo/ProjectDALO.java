@@ -59,7 +59,7 @@ public class ProjectDALO extends BaseDALO {
 			return;
 		}
 
-		delete(project.getID());
+		delete(project.getId());
 	}
 
 	public List<Project> retrieveProjects() {

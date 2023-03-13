@@ -28,7 +28,7 @@ import org.json.JSONObject;
  */
 public interface ProjectComparator extends Comparator<Project> {
 
-	public long getID();
+	public long getId();
 
 	public JSONObject getJSONObject();
 
