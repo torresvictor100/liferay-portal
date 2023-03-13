@@ -15,6 +15,7 @@
 package com.liferay.segments.context.vocabulary.internal.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -24,6 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,54 +49,63 @@ public class SegmentsContextVocabularyConfigurationTest {
 
 	@Test
 	public void testUpdate() throws Exception {
-		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+		Locale themeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		_configuration = _configurationAdmin.createFactoryConfiguration(
-			"com.liferay.segments.context.vocabulary.internal.configuration." +
-				"SegmentsContextVocabularyConfiguration",
-			StringPool.QUESTION);
+		try {
+			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"assetVocabularyName", "assetVocabularyName"
+			_configuration = _configurationAdmin.createFactoryConfiguration(
+				"com.liferay.segments.context.vocabulary.internal." +
+					"configuration.SegmentsContextVocabularyConfiguration",
+				StringPool.QUESTION);
+
+			Dictionary<String, Object> properties =
+				HashMapDictionaryBuilder.<String, Object>put(
+					"assetVocabularyName", "assetVocabularyName"
+				).put(
+					"companyId", "987"
+				).put(
+					"entityFieldName", "entityFieldName"
+				).build();
+
+			_configuration.update(properties);
+
+			Assert.assertEquals(
+				"assetVocabularyName", properties.get("assetVocabularyName"));
+			Assert.assertEquals(
+				"entityFieldName", properties.get("entityFieldName"));
+			Assert.assertEquals("987", properties.get("companyId"));
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabularyName", "differentAssetVocabularyName"
 			).put(
 				"companyId", "987"
 			).put(
 				"entityFieldName", "entityFieldName"
 			).build();
 
-		_configuration.update(properties);
+			try {
+				_configuration.update(properties);
 
-		Assert.assertEquals(
-			"assetVocabularyName", properties.get("assetVocabularyName"));
-		Assert.assertEquals(
-			"entityFieldName", properties.get("entityFieldName"));
-		Assert.assertEquals("987", properties.get("companyId"));
+				Assert.fail();
+			}
+			catch (ConfigurationModelListenerException
+						configurationModelListenerException) {
 
-		properties = HashMapDictionaryBuilder.<String, Object>put(
-			"assetVocabularyName", "differentAssetVocabularyName"
-		).put(
-			"companyId", "987"
-		).put(
-			"entityFieldName", "entityFieldName"
-		).build();
+				Assert.assertEquals(
+					StringBundler.concat(
+						"This session property is already linked to one ",
+						"vocabulary. Remove the linked vocabulary before ",
+						"linking it to a new one, or choose another session ",
+						"property name."),
+					configurationModelListenerException.causeMessage);
+			}
 
-		try {
-			_configuration.update(properties);
-
-			Assert.fail();
+			_configuration.delete();
 		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
-
-			Assert.assertEquals(
-				"This session property is already linked to one vocabulary. " +
-					"Remove the linked vocabulary before linking it to a new " +
-						"one, or choose another session property name.",
-				configurationModelListenerException.causeMessage);
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
-
-		_configuration.delete();
 	}
 
 	private Configuration _configuration;
