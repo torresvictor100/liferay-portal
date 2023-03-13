@@ -1287,10 +1287,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Map<Long, List<UserGroup>> map = new HashMap<>();
 
 		for (UserGroup userGroup : userGroups) {
-			List<UserGroup> userGroupList = map.computeIfAbsent(
-				userGroup.getCompanyId(), key -> new ArrayList<>());
+			List<UserGroup> companyUserGroups = map.computeIfAbsent(
+				userGroup.getCompanyId(), companyId -> new ArrayList<>());
 
-			userGroupList.add(userGroup);
+			companyUserGroups.add(userGroup);
 		}
 
 		for (Map.Entry<Long, List<UserGroup>> entry : map.entrySet()) {
