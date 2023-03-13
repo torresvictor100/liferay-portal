@@ -84,10 +84,10 @@ public class
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 
-		UnsafeRunnable<Exception> jobExecutor =
-			_schedulerJobConfiguration.getJobExecutor();
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion =
@@ -153,10 +153,10 @@ public class
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 
-		UnsafeRunnable<Exception> jobExecutor =
-			_schedulerJobConfiguration.getJobExecutor();
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion =

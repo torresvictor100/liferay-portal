@@ -82,10 +82,10 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfigurationTest {
 			redirectNotFoundEntries.toString(), 2,
 			redirectNotFoundEntries.size());
 
-		UnsafeRunnable<Exception> jobExecutor =
-			_schedulerJobConfiguration.getJobExecutor();
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		redirectNotFoundEntries =
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
@@ -111,10 +111,10 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfigurationTest {
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
 				_group.getGroupId()));
 
-		UnsafeRunnable<Exception> jobExecutor =
-			_schedulerJobConfiguration.getJobExecutor();
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		Assert.assertEquals(
 			1000,

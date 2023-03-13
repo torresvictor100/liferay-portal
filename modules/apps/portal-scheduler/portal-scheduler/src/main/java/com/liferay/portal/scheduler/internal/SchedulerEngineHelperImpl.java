@@ -683,10 +683,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 					try {
 						if (companyId == CompanyConstants.SYSTEM) {
-							UnsafeRunnable<Exception> jobExecutor =
-								schedulerJobConfiguration.getJobExecutor();
+							UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+								schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-							jobExecutor.run();
+							jobExecutorUnsafeRunnable.run();
 						}
 						else {
 							UnsafeConsumer<Long, Exception>

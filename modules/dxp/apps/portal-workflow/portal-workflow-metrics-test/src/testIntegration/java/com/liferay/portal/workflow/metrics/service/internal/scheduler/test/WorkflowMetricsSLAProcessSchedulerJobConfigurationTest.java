@@ -110,10 +110,10 @@ public class WorkflowMetricsSLAProcessSchedulerJobConfigurationTest
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
 
-		UnsafeRunnable<Exception> jobExecutor =
-			_schedulerJobConfiguration.getJobExecutor();
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		assertCount(
 			0,
@@ -144,7 +144,7 @@ public class WorkflowMetricsSLAProcessSchedulerJobConfigurationTest
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -170,7 +170,7 @@ public class WorkflowMetricsSLAProcessSchedulerJobConfigurationTest
 			workflowDefinition.getWorkflowDefinitionId(), "slaDefinitionId",
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 
-		jobExecutor.run();
+		jobExecutorUnsafeRunnable.run();
 
 		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
