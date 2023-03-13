@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
  */
 public interface SchedulerJobConfiguration {
 
-	public default UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
+	public default UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
 		return companyId -> {
 			UnsafeRunnable<Exception> unsafeRunnable =
 				getJobExecutorUnsafeRunnable();

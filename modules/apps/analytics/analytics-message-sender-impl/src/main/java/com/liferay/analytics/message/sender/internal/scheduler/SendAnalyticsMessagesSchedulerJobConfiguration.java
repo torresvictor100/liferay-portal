@@ -35,7 +35,9 @@ public class SendAnalyticsMessagesSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	 public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
 		return companyId -> {
 			if (_isDisabled()) {
 				return;

@@ -48,7 +48,9 @@ public class UserImportSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
 		return companyId -> _importUsers(companyId, _getLastImportTime());
 	}
 

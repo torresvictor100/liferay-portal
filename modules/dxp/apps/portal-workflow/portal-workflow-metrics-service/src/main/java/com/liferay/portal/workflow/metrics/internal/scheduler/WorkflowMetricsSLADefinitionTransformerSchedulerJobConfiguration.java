@@ -56,7 +56,9 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeConsumer<Long, Exception> getCompanyJobExecutorUnsafeConsumer() {
+	public UnsafeConsumer<Long, Exception>
+		getCompanyJobExecutorUnsafeConsumer() {
+
 		return companyId -> _transform(companyId);
 	}
 
