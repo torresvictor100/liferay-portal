@@ -50,7 +50,8 @@ public class SegmentsContextVocabularyConfigurationTest {
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
 		_configuration = _configurationAdmin.createFactoryConfiguration(
-			_SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID,
+			"com.liferay.segments.context.vocabulary.internal.configuration." +
+				"SegmentsContextVocabularyConfiguration",
 			StringPool.QUESTION);
 
 		Dictionary<String, Object> properties =
@@ -101,10 +102,6 @@ public class SegmentsContextVocabularyConfigurationTest {
 
 		_configuration.delete();
 	}
-
-	private static final String _SEGMENTS_CONTEXT_VOCABULARY_CONFIGURATION_PID =
-		"com.liferay.segments.context.vocabulary.internal.configuration." +
-			"SegmentsContextVocabularyConfiguration";
 
 	private Configuration _configuration;
 
