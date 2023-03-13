@@ -80,6 +80,7 @@ function create_angular_app {
 
 	cd ${CUSTOM_ELEMENT_NAME}
 
+	rm -f README.md
 	rm -fr .vscode
 
 	#
