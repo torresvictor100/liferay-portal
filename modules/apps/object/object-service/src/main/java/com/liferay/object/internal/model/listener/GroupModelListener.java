@@ -68,7 +68,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					RestrictionsFactoryUtil.eq("groupId", groupId),
 					RestrictionsFactoryUtil.eq(
 						"objectDefinitionId", objectDefinitionId))));
-
 		actionableDynamicQuery.setPerformActionMethod(
 			objectEntry -> _objectEntryLocalService.deleteObjectEntry(
 				(ObjectEntry)objectEntry));
