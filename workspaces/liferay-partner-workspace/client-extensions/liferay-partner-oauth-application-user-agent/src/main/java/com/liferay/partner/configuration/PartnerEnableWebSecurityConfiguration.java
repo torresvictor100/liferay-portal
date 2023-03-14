@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner.util.configuration;
+package com.liferay.partner.configuration;
 
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;

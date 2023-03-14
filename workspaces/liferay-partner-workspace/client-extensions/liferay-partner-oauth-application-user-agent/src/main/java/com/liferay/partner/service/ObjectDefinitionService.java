@@ -17,7 +17,7 @@ package com.liferay.partner.service;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.partner.util.configuration.ResourceClientConfiguration;
+import com.liferay.partner.configuration.ResourceClientConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

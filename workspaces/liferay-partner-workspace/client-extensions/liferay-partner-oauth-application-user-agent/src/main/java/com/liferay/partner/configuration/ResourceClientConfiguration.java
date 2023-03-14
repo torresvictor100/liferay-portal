@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner.util.configuration;
+package com.liferay.partner.configuration;
 
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
 
