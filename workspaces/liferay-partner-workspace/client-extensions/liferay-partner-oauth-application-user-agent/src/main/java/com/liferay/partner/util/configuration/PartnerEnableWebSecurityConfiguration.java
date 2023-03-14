@@ -60,6 +60,9 @@ public class PartnerEnableWebSecurityConfiguration {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
+		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
+			new UrlBasedCorsConfigurationSource();
+
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowedHeaders(
@@ -68,9 +71,6 @@ public class PartnerEnableWebSecurityConfiguration {
 			Arrays.asList(
 				"DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"));
 		corsConfiguration.setAllowedOrigins(_getAllowedOrigins());
-
-		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
-			new UrlBasedCorsConfigurationSource();
 
 		urlBasedCorsConfigurationSource.registerCorsConfiguration(
 			"/**", corsConfiguration);
@@ -92,9 +92,15 @@ public class PartnerEnableWebSecurityConfiguration {
 		NimbusJwtDecoder nimbusJwtDecoder = new NimbusJwtDecoder(
 			defaultJWTProcessor);
 
+		String clientId = _getClientId();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Using client ID " + clientId);
+		}
+
 		nimbusJwtDecoder.setJwtValidator(
 			new DelegatingOAuth2TokenValidator<>(
-				new ClientIdOAuth2TokenValidator(_getClientId())));
+				new ClientIdOAuth2TokenValidator(clientId)));
 
 		return nimbusJwtDecoder;
 	}
