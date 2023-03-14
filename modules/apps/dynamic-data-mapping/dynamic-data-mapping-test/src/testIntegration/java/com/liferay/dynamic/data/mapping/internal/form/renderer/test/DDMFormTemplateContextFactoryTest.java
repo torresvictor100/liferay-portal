@@ -452,18 +452,19 @@ public class DDMFormTemplateContextFactoryTest {
 			Arrays.toString(actualValidations), expectedValidationsMap.size(),
 			actualValidations.length);
 
-		for (Object actualValidationObject : actualValidations) {
-			HashMap<String, Object> actualValidation =
-				(HashMap<String, Object>)actualValidationObject;
+		for (Object actualValidation : actualValidations) {
+			HashMap<String, Object> actualValidationMap =
+				(HashMap<String, Object>)actualValidation;
 
-			Assert.assertTrue(actualValidation.containsKey("label"));
-			Assert.assertTrue(actualValidation.containsKey("name"));
-			Assert.assertTrue(actualValidation.containsKey("parameterMessage"));
-			Assert.assertTrue(actualValidation.containsKey("template"));
+			Assert.assertTrue(actualValidationMap.containsKey("label"));
+			Assert.assertTrue(actualValidationMap.containsKey("name"));
+			Assert.assertTrue(
+				actualValidationMap.containsKey("parameterMessage"));
+			Assert.assertTrue(actualValidationMap.containsKey("template"));
 
 			Assert.assertEquals(
-				expectedValidationsMap.remove(actualValidation.get("name")),
-				actualValidation.get("template"));
+				expectedValidationsMap.remove(actualValidationMap.get("name")),
+				actualValidationMap.get("template"));
 		}
 
 		Assert.assertEquals(
