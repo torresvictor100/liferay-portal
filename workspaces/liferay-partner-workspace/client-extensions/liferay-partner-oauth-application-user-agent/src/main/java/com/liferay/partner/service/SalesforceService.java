@@ -46,65 +46,73 @@ public class SalesforceService {
 			String[] objectFields, String objectType)
 		throws Exception {
 
-		JobInfo jobInfo1 = new JobInfo();
+		JobInfo jobInfo = _bulkConnection.createJob(
+			new JobInfo() {
+				{
+					setConcurrencyMode(ConcurrencyMode.Parallel);
+					setContentType(ContentType.CSV);
+					setObject(objectType);
+					setOperation(OperationEnum.query);
+				}
+			});
 
-		jobInfo1.setOperation(OperationEnum.query);
-		jobInfo1.setObject(objectType);
-		jobInfo1.setConcurrencyMode(ConcurrencyMode.Parallel);
-		jobInfo1.setContentType(ContentType.CSV);
+		_bulkConnection.updateJob(
+			new JobInfo() {
+				{
+					setId(jobInfo.getId());
+					setState(JobStateEnum.Closed);
+				}
+			});
 
-		jobInfo1 = _bulkConnection.createJob(jobInfo1);
+		BatchInfo batchInfo = _getBatchInfo(jobInfo, objectFields, objectType);
 
-		String query = StringBundler.concat(
-			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
-			objectType);
-
-		BatchInfo batchInfo;
-
-		try (ByteArrayInputStream byteArrayInputStream =
-				new ByteArrayInputStream(query.getBytes())) {
-
-			batchInfo = _bulkConnection.createBatchFromStream(
-				jobInfo1, byteArrayInputStream);
-		}
-
-		JobInfo jobInfo2 = new JobInfo();
-
-		jobInfo2.setId(jobInfo1.getId());
-		jobInfo2.setState(JobStateEnum.Closed);
-
-		_bulkConnection.updateJob(jobInfo2);
+		String batchInfoId = batchInfo.getId();
 
 		while (true) {
-			BatchInfo batchInfoStatus = _bulkConnection.getBatchInfo(
-				jobInfo1.getId(), batchInfo.getId());
+			batchInfo = _bulkConnection.getBatchInfo(
+				jobInfo.getId(), batchInfoId);
 
-			if (batchInfoStatus.getState() == BatchStateEnum.Completed) {
+			if (batchInfo.getState() == BatchStateEnum.Completed) {
 				break;
 			}
 
-			if (batchInfoStatus.getState() == BatchStateEnum.Failed) {
-				throw new Exception(
-					"Batch ID " + batchInfo.getId() + " has failed");
+			if (batchInfo.getState() == BatchStateEnum.Failed) {
+				throw new Exception("Batch ID " + batchInfoId + " failed");
 			}
 
 			Thread.sleep(1000);
 		}
 
 		QueryResultList queryResultList = _bulkConnection.getQueryResultList(
-			jobInfo1.getId(), batchInfo.getId());
+			jobInfo.getId(), batchInfoId);
 
 		String[] queryResults = queryResultList.getResult();
 
 		if ((queryResults != null) && (queryResults.length == 1)) {
 			JSONTokener jsonTokener = new JSONTokener(
 				_bulkConnection.getQueryResultStream(
-					jobInfo1.getId(), batchInfo.getId(), queryResults[0]));
+					jobInfo.getId(), batchInfoId, queryResults[0]));
 
 			return CDL.toJSONArray(jsonTokener);
 		}
 
 		return new JSONArray();
+	}
+
+	private BatchInfo _getBatchInfo(
+			JobInfo jobInfo, String[] objectFields, String objectType)
+		throws Exception {
+
+		String query = StringBundler.concat(
+			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
+			objectType);
+
+		try (ByteArrayInputStream byteArrayInputStream =
+				new ByteArrayInputStream(query.getBytes())) {
+
+			return _bulkConnection.createBatchFromStream(
+				jobInfo, byteArrayInputStream);
+		}
 	}
 
 	@Autowired
