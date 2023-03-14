@@ -49,10 +49,10 @@ public class ResourceClientConfiguration {
 
 		Authentication authentication = securityContext.getAuthentication();
 
-		AbstractOAuth2Token token =
+		AbstractOAuth2Token abstractOAuth2Token =
 			(AbstractOAuth2Token)authentication.getCredentials();
 
-		return "Bearer " + token.getTokenValue();
+		return "Bearer " + abstractOAuth2Token.getTokenValue();
 	}
 
 	@Value("${liferay.portal.url}")
