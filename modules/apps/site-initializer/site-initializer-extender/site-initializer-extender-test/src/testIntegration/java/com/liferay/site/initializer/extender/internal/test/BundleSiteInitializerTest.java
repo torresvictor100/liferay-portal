@@ -1126,7 +1126,7 @@ public class BundleSiteInitializerTest {
 		ListTypeDefinition listTypeDefinition1 =
 			listTypeDefinitionResource.
 				getListTypeDefinitionByExternalReferenceCode(
-					"LISTTYPEDEFINITION1");
+					"TESTLISTTYPEDEFINITION1");
 
 		Assert.assertEquals(
 			"Test List Type Definition 1 Update",
