@@ -34,30 +34,30 @@ public class SalesforceConfiguration {
 	public BulkConnection bulkConnection()
 		throws AsyncApiException, ConnectionException {
 
-		ConnectorConfig connectorConfig1 = new ConnectorConfig();
+		ConnectorConfig connectorConfig = new ConnectorConfig();
 
-		connectorConfig1.setAuthEndpoint(
+		connectorConfig.setAuthEndpoint(
 			_salesforceApiEndpoint + "/" + _salesforceApiVersion);
-		connectorConfig1.setPassword(
-			_salesforceApiPassword + _salesforceApiKey);
-		connectorConfig1.setUsername(_salesforceApiLogin);
+		connectorConfig.setPassword(_salesforceApiPassword + _salesforceApiKey);
+		connectorConfig.setUsername(_salesforceApiLogin);
 
-		new PartnerConnection(connectorConfig1);
+		new PartnerConnection(connectorConfig);
 
-		String serviceEndpoint = connectorConfig1.getServiceEndpoint();
+		String serviceEndpoint = connectorConfig.getServiceEndpoint();
 
 		String restEndpoint =
 			serviceEndpoint.substring(0, serviceEndpoint.indexOf("Soap/")) +
 				"async/" + _salesforceApiVersion;
 
-		ConnectorConfig connectorConfig2 = new ConnectorConfig();
-
-		connectorConfig2.setCompression(true);
-		connectorConfig2.setRestEndpoint(restEndpoint);
-		connectorConfig2.setSessionId(connectorConfig1.getSessionId());
-		connectorConfig2.setTraceMessage(false);
-
-		return new BulkConnection(connectorConfig2);
+		return new BulkConnection(
+			new ConnectorConfig() {
+				{
+					setCompression(true);
+					setRestEndpoint(restEndpoint);
+					setSessionId(connectorConfig.getSessionId());
+					setTraceMessage(false);
+				}
+			});
 	}
 
 	@Value("${salesforce.api.endpoint}")
