@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -40,19 +38,29 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionLocalService.getObjectDefinitions(
-					group.getCompanyId(), true, false,
-					WorkflowConstants.STATUS_APPROVED)) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_objectDefinitionLocalService.getActionableDynamicQuery();
 
-			try {
-				_deleteObjectEntries(
-					group.getGroupId(),
-					objectDefinition.getObjectDefinitionId());
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", group.getCompanyId())
+			).add(
+				RestrictionsFactoryUtil.eq("active", true)
+			).add(
+				RestrictionsFactoryUtil.eq("system", false)
+			).add(
+				RestrictionsFactoryUtil.eq(
+					"status", WorkflowConstants.STATUS_APPROVED)
+			));
+		actionableDynamicQuery.setPerformActionMethod(
+			(ObjectDefinition objectDefinition) -> _deleteObjectEntries(
+				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -69,14 +77,11 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					RestrictionsFactoryUtil.eq(
 						"objectDefinitionId", objectDefinitionId))));
 		actionableDynamicQuery.setPerformActionMethod(
-			objectEntry -> _objectEntryLocalService.deleteObjectEntry(
-				(ObjectEntry)objectEntry));
+			(ObjectEntry objectEntry) ->
+				_objectEntryLocalService.deleteObjectEntry(objectEntry));
 
 		actionableDynamicQuery.performActions();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GroupModelListener.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
