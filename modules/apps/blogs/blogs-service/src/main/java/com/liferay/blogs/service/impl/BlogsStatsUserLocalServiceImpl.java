@@ -60,11 +60,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 
-		Predicate companyIdEquals = _companyIdAlias.eq(companyId);
+		Predicate predicate = _companyIdAlias.eq(companyId);
 
 		return _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			companyIdEquals.and(_groupIdAlias.eq(groupId)),
+			predicate.and(_groupIdAlias.eq(groupId)),
 			_entryCountExpression.descending(), start, end);
 	}
 
@@ -72,11 +72,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public List<BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 
-		Predicate groupIdEquals = _groupIdAlias.eq(groupId);
+		Predicate predicate = _groupIdAlias.eq(groupId);
 
 		return _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			groupIdEquals.and(_entryCountExpression.neq(0L)),
+			predicate.and(_entryCountExpression.neq(0L)),
 			_lastPostDateExpression.descending(), start, end);
 	}
 
@@ -96,11 +96,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException {
 
-		Predicate groupIdEquals = _groupIdAlias.eq(groupId);
+		Predicate predicate = _groupIdAlias.eq(groupId);
 
 		List<BlogsStatsUser> blogsStatsUsers = _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			groupIdEquals.and(_userIdAlias.eq(userId)),
+			predicate.and(_userIdAlias.eq(userId)),
 			_groupIdExpression.descending(), 0, 1);
 
 		if (blogsStatsUsers.isEmpty()) {
