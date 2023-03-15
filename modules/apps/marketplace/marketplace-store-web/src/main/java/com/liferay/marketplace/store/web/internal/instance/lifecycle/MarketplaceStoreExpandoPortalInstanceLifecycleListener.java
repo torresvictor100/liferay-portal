@@ -36,25 +36,29 @@ public class MarketplaceStoreExpandoPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		ExpandoTable table = _expandoTableLocalService.fetchTable(
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			company.getCompanyId(),
 			_classNameLocalService.getClassNameId(User.class.getName()), "MP");
 
-		if (table != null) {
+		if (expandoTable != null) {
 			return;
 		}
 
-		table = _expandoTableLocalService.addTable(
+		expandoTable = _expandoTableLocalService.addTable(
 			company.getCompanyId(), User.class.getName(), "MP");
 
 		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "accessSecret", ExpandoColumnConstants.STRING);
+			expandoTable.getTableId(), "accessSecret",
+			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "accessToken", ExpandoColumnConstants.STRING);
+			expandoTable.getTableId(), "accessToken",
+			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "requestSecret", ExpandoColumnConstants.STRING);
+			expandoTable.getTableId(), "requestSecret",
+			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "requestToken", ExpandoColumnConstants.STRING);
+			expandoTable.getTableId(), "requestToken",
+			ExpandoColumnConstants.STRING);
 	}
 
 	@Reference
