@@ -406,21 +406,21 @@ public class CommerceQualifierEntryLocalServiceImpl
 			);
 		}
 
-		List<String> allowedTargetKeys = new ArrayList<>();
+		List<String> allowedTargetKeysList = new ArrayList<>();
 
-		for (String[] curAllowedTargetKeys :
+		for (String[] allowedTargetKeys :
 				sourceCommerceQualifierMetadata.getAllowedTargetKeysArray()) {
 
-			Collections.addAll(allowedTargetKeys, curAllowedTargetKeys);
+			Collections.addAll(allowedTargetKeysList, allowedTargetKeys);
 		}
 
-		if (allowedTargetKeys.isEmpty()) {
+		if (allowedTargetKeysList.isEmpty()) {
 			return joinStep.where(predicate);
 		}
 
 		Predicate subpredicate = null;
 
-		for (String allowedTargetKey : allowedTargetKeys) {
+		for (String allowedTargetKey : allowedTargetKeysList) {
 			CommerceQualifierEntryTable aliasCommerceQualifierEntryTable =
 				_commerceQualifierHelper.getAliasCommerceQualifierEntryTable(
 					sourceCommerceQualifierMetadata.getKey(), allowedTargetKey);
