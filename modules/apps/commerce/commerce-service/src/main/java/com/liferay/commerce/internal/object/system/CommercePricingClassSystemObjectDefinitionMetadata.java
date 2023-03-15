@@ -172,19 +172,6 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private ProductGroup _toProductGroup(Map<String, Object> values) {
-		return new ProductGroup() {
-			{
-				description = getLanguageIdMap("description", values);
-				externalReferenceCode = GetterUtil.getString(
-					values.get("externalReferenceCode"));
-				productsCount = GetterUtil.getInteger(
-					values.get("productsCount"));
-				title = getLanguageIdMap("title", values);
-			}
-		};
-	}
-
 	private ProductGroupResource _buildProductGroupResource(User user) {
 		ProductGroupResource.Builder builder =
 			_productGroupResourceFactory.create();
@@ -196,6 +183,19 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 		).user(
 			user
 		).build();
+	}
+
+	private ProductGroup _toProductGroup(Map<String, Object> values) {
+		return new ProductGroup() {
+			{
+				description = getLanguageIdMap("description", values);
+				externalReferenceCode = GetterUtil.getString(
+					values.get("externalReferenceCode"));
+				productsCount = GetterUtil.getInteger(
+					values.get("productsCount"));
+				title = getLanguageIdMap("title", values);
+			}
+		};
 	}
 
 	@Reference

@@ -190,6 +190,18 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 			user, values);
 	}
 
+	private ProductResource _buildProductResource(User user) {
+		ProductResource.Builder builder = _productResourceFactory.create();
+
+		return builder.checkPermissions(
+			false
+		).preferredLocale(
+			user.getLocale()
+		).user(
+			user
+		).build();
+	}
+
 	private Product _toProduct(Map<String, Object> values) {
 		return new Product() {
 			{
@@ -206,18 +218,6 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 				thumbnail = GetterUtil.getString(values.get("thumbnail"));
 			}
 		};
-	}
-
-	private ProductResource _buildProductResource(User user) {
-		ProductResource.Builder builder = _productResourceFactory.create();
-
-		return builder.checkPermissions(
-			false
-		).preferredLocale(
-			user.getLocale()
-		).user(
-			user
-		).build();
 	}
 
 	@Reference

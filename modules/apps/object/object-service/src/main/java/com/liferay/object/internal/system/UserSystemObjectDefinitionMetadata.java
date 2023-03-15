@@ -53,7 +53,8 @@ public class UserSystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		UserAccountResource userAccountResource = _buildUserAccountResource(user);
+		UserAccountResource userAccountResource = _buildUserAccountResource(
+			user);
 
 		UserAccount userAccount = userAccountResource.postUserAccount(
 			_toUserAccount(values));
@@ -192,7 +193,8 @@ public class UserSystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		UserAccountResource userAccountResource = _buildUserAccountResource(user);
+		UserAccountResource userAccountResource = _buildUserAccountResource(
+			user);
 
 		UserAccount userAccount = userAccountResource.patchUserAccount(
 			primaryKey, _toUserAccount(values));
@@ -202,6 +204,19 @@ public class UserSystemObjectDefinitionMetadata
 			_extensionProviderRegistry.getExtensionProviders(
 				user.getCompanyId(), UserAccount.class.getName()),
 			user, values);
+	}
+
+	private UserAccountResource _buildUserAccountResource(User user) {
+		UserAccountResource.Builder builder =
+			_userAccountResourceFactory.create();
+
+		return builder.checkPermissions(
+			false
+		).preferredLocale(
+			user.getLocale()
+		).user(
+			user
+		).build();
 	}
 
 	private UserAccount _toUserAccount(Map<String, Object> values) {
@@ -218,19 +233,6 @@ public class UserSystemObjectDefinitionMetadata
 				givenName = GetterUtil.getString(values.get("givenName"));
 			}
 		};
-	}
-
-	private UserAccountResource _buildUserAccountResource(User user) {
-		UserAccountResource.Builder builder =
-			_userAccountResourceFactory.create();
-
-		return builder.checkPermissions(
-			false
-		).preferredLocale(
-			user.getLocale()
-		).user(
-			user
-		).build();
 	}
 
 	@Reference

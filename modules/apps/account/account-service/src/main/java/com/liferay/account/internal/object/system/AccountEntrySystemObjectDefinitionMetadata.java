@@ -165,6 +165,18 @@ public class AccountEntrySystemObjectDefinitionMetadata
 			user, values);
 	}
 
+	private AccountResource _buildAccountResource(User user) {
+		AccountResource.Builder builder = _accountResourceFactory.create();
+
+		return builder.checkPermissions(
+			false
+		).preferredLocale(
+			user.getLocale()
+		).user(
+			user
+		).build();
+	}
+
 	private Account _toAccount(Map<String, Object> values) {
 		return new Account() {
 			{
@@ -177,18 +189,6 @@ public class AccountEntrySystemObjectDefinitionMetadata
 						GetterUtil.getString(values.get("type"))));
 			}
 		};
-	}
-
-	private AccountResource _buildAccountResource(User user) {
-		AccountResource.Builder builder = _accountResourceFactory.create();
-
-		return builder.checkPermissions(
-			false
-		).preferredLocale(
-			user.getLocale()
-		).user(
-			user
-		).build();
 	}
 
 	@Reference

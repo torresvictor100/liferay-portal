@@ -171,6 +171,18 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 			user, values);
 	}
 
+	private OrderResource _buildOrderResource(User user) {
+		OrderResource.Builder builder = _orderResourceFactory.create();
+
+		return builder.checkPermissions(
+			false
+		).preferredLocale(
+			user.getLocale()
+		).user(
+			user
+		).build();
+	}
+
 	private Order _toOrder(Map<String, Object> values) {
 		return new Order() {
 			{
@@ -184,18 +196,6 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 					GetterUtil.getString(values.get("shippingAmount")));
 			}
 		};
-	}
-
-	private OrderResource _buildOrderResource(User user) {
-		OrderResource.Builder builder = _orderResourceFactory.create();
-
-		return builder.checkPermissions(
-			false
-		).preferredLocale(
-			user.getLocale()
-		).user(
-			user
-		).build();
 	}
 
 	@Reference
