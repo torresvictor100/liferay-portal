@@ -54,9 +54,9 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductResource productResource = _getProductResource(user);
+		ProductResource productResource = _buildProductResource(user);
 
-		Product product = productResource.postProduct(_getProduct(values));
+		Product product = productResource.postProduct(_toProduct(values));
 
 		setExtendedProperties(
 			Product.class.getName(), product,
@@ -175,13 +175,13 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductResource productResource = _getProductResource(user);
+		ProductResource productResource = _buildProductResource(user);
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			primaryKey);
 
 		productResource.patchProduct(
-			cpDefinition.getCProductId(), _getProduct(values));
+			cpDefinition.getCProductId(), _toProduct(values));
 
 		setExtendedProperties(
 			Product.class.getName(), JSONUtil.put("id", primaryKey),
@@ -190,7 +190,7 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private Product _getProduct(Map<String, Object> values) {
+	private Product _toProduct(Map<String, Object> values) {
 		return new Product() {
 			{
 				active = GetterUtil.getBoolean(values.get("active"));
@@ -208,7 +208,7 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 		};
 	}
 
-	private ProductResource _getProductResource(User user) {
+	private ProductResource _buildProductResource(User user) {
 		ProductResource.Builder builder = _productResourceFactory.create();
 
 		return builder.checkPermissions(

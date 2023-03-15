@@ -53,10 +53,10 @@ public class UserSystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		UserAccountResource userAccountResource = _getUserAccountResource(user);
+		UserAccountResource userAccountResource = _buildUserAccountResource(user);
 
 		UserAccount userAccount = userAccountResource.postUserAccount(
-			_getUserAccount(values));
+			_toUserAccount(values));
 
 		setExtendedProperties(
 			UserAccount.class.getName(), userAccount,
@@ -192,10 +192,10 @@ public class UserSystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		UserAccountResource userAccountResource = _getUserAccountResource(user);
+		UserAccountResource userAccountResource = _buildUserAccountResource(user);
 
 		UserAccount userAccount = userAccountResource.patchUserAccount(
-			primaryKey, _getUserAccount(values));
+			primaryKey, _toUserAccount(values));
 
 		setExtendedProperties(
 			UserAccount.class.getName(), userAccount,
@@ -204,7 +204,7 @@ public class UserSystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private UserAccount _getUserAccount(Map<String, Object> values) {
+	private UserAccount _toUserAccount(Map<String, Object> values) {
 		return new UserAccount() {
 			{
 				additionalName = GetterUtil.getString(
@@ -220,7 +220,7 @@ public class UserSystemObjectDefinitionMetadata
 		};
 	}
 
-	private UserAccountResource _getUserAccountResource(User user) {
+	private UserAccountResource _buildUserAccountResource(User user) {
 		UserAccountResource.Builder builder =
 			_userAccountResourceFactory.create();
 

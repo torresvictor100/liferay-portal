@@ -52,11 +52,11 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductGroupResource productGroupResource = _getProductGroupResource(
+		ProductGroupResource productGroupResource = _buildProductGroupResource(
 			user);
 
 		ProductGroup productGroup = productGroupResource.postProductGroup(
-			_getProductGroup(values));
+			_toProductGroup(values));
 
 		setExtendedProperties(
 			ProductGroup.class.getName(), productGroup,
@@ -159,11 +159,11 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductGroupResource productGroupResource = _getProductGroupResource(
+		ProductGroupResource productGroupResource = _buildProductGroupResource(
 			user);
 
 		productGroupResource.patchProductGroup(
-			primaryKey, _getProductGroup(values));
+			primaryKey, _toProductGroup(values));
 
 		setExtendedProperties(
 			ProductGroup.class.getName(), JSONUtil.put("id", primaryKey),
@@ -172,7 +172,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private ProductGroup _getProductGroup(Map<String, Object> values) {
+	private ProductGroup _toProductGroup(Map<String, Object> values) {
 		return new ProductGroup() {
 			{
 				description = getLanguageIdMap("description", values);
@@ -185,7 +185,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 		};
 	}
 
-	private ProductGroupResource _getProductGroupResource(User user) {
+	private ProductGroupResource _buildProductGroupResource(User user) {
 		ProductGroupResource.Builder builder =
 			_productGroupResourceFactory.create();
 

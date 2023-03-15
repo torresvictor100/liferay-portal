@@ -55,9 +55,9 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderResource orderResource = _getOrderResource(user);
+		OrderResource orderResource = _buildOrderResource(user);
 
-		Order order = orderResource.postOrder(_getOrder(values));
+		Order order = orderResource.postOrder(_toOrder(values));
 
 		setExtendedProperties(
 			Order.class.getName(), order,
@@ -160,9 +160,9 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderResource orderResource = _getOrderResource(user);
+		OrderResource orderResource = _buildOrderResource(user);
 
-		orderResource.patchOrder(primaryKey, _getOrder(values));
+		orderResource.patchOrder(primaryKey, _toOrder(values));
 
 		setExtendedProperties(
 			Order.class.getName(), JSONUtil.put("id", primaryKey),
@@ -171,7 +171,7 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private Order _getOrder(Map<String, Object> values) {
+	private Order _toOrder(Map<String, Object> values) {
 		return new Order() {
 			{
 				accountId = GetterUtil.getLong(values.get("accountId"));
@@ -186,7 +186,7 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 		};
 	}
 
-	private OrderResource _getOrderResource(User user) {
+	private OrderResource _buildOrderResource(User user) {
 		OrderResource.Builder builder = _orderResourceFactory.create();
 
 		return builder.checkPermissions(

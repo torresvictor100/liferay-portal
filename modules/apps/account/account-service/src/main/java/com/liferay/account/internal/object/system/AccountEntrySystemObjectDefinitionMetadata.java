@@ -52,9 +52,9 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _getAccountResource(user);
+		AccountResource accountResource = _buildAccountResource(user);
 
-		Account account = accountResource.postAccount(_getAccount(values));
+		Account account = accountResource.postAccount(_toAccount(values));
 
 		setExtendedProperties(
 			Account.class.getName(), account,
@@ -153,10 +153,10 @@ public class AccountEntrySystemObjectDefinitionMetadata
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _getAccountResource(user);
+		AccountResource accountResource = _buildAccountResource(user);
 
 		Account account = accountResource.patchAccount(
-			primaryKey, _getAccount(values));
+			primaryKey, _toAccount(values));
 
 		setExtendedProperties(
 			Account.class.getName(), account,
@@ -165,7 +165,7 @@ public class AccountEntrySystemObjectDefinitionMetadata
 			user, values);
 	}
 
-	private Account _getAccount(Map<String, Object> values) {
+	private Account _toAccount(Map<String, Object> values) {
 		return new Account() {
 			{
 				description = GetterUtil.getString(values.get("description"));
@@ -179,7 +179,7 @@ public class AccountEntrySystemObjectDefinitionMetadata
 		};
 	}
 
-	private AccountResource _getAccountResource(User user) {
+	private AccountResource _buildAccountResource(User user) {
 		AccountResource.Builder builder = _accountResourceFactory.create();
 
 		return builder.checkPermissions(
