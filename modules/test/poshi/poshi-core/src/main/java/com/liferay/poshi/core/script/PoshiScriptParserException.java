@@ -90,7 +90,7 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 			System.out.println(sb.toString());
 
-			throw new Exception("Poshi Script syntax errors found");
+			throw new Exception("Found Poshi script syntax errors");
 		}
 	}
 

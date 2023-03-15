@@ -217,7 +217,7 @@ public class PoshiScriptParserTest {
 		catch (Exception exception) {
 			String message = exception.getMessage();
 
-			if (!message.contains("Poshi Script syntax errors found")) {
+			if (!message.contains("Found Poshi script syntax errors")) {
 				throw new RuntimeException(exception);
 			}
 		}
