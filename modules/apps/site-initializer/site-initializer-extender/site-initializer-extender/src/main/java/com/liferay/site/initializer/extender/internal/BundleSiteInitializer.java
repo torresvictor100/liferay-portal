@@ -2402,13 +2402,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			com.liferay.list.type.model.ListTypeDefinition
-				existingListTypeDefinition =
+				serviceBuilderListTypeDefinition =
 					_listTypeDefinitionLocalService.
 						fetchListTypeDefinitionByExternalReferenceCode(
 							listTypeDefinition.getExternalReferenceCode(),
 							serviceContext.getCompanyId());
 
-			if (existingListTypeDefinition == null) {
+			if (serviceBuilderListTypeDefinition == null) {
 				listTypeDefinition =
 					listTypeDefinitionResource.postListTypeDefinition(
 						listTypeDefinition);
@@ -2416,7 +2416,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			else {
 				listTypeDefinition =
 					listTypeDefinitionResource.patchListTypeDefinition(
-						existingListTypeDefinition.getListTypeDefinitionId(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId(),
 						listTypeDefinition);
 			}
 
@@ -2448,17 +2449,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 					String.valueOf(jsonArray.getJSONObject(i)));
 
 				com.liferay.list.type.model.ListTypeEntry
-					existingListTypeEntry =
+					serviceBuilderListTypeEntry =
 						_listTypeEntryLocalService.fetchListTypeEntry(
 							listTypeDefinition.getId(), listTypeEntry.getKey());
 
-				if (existingListTypeEntry == null) {
+				if (serviceBuilderListTypeEntry == null) {
 					listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 						listTypeDefinition.getId(), listTypeEntry);
 				}
 				else {
 					listTypeEntryResource.putListTypeEntry(
-						existingListTypeEntry.getListTypeEntryId(),
+						serviceBuilderListTypeEntry.getListTypeEntryId(),
 						listTypeEntry);
 				}
 			}
