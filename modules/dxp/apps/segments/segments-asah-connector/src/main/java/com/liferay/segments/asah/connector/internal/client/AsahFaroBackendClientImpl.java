@@ -316,19 +316,19 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		long companyId, IndividualSegment individualSegment) {
 
 		if (individualSegment == null) {
-			throw new IllegalArgumentException("IndividualSegment is null");
+			throw new IllegalArgumentException("Individual segment is null");
 		}
 
 		if (Validator.isNull(individualSegment.getId())) {
-			throw new IllegalArgumentException("IndividualSegment ID is null");
+			throw new IllegalArgumentException("Individual segment ID is null");
 		}
 
 		if (Validator.isNull(individualSegment.getName())) {
-			throw new IllegalArgumentException("Experiment NAME is null");
+			throw new IllegalArgumentException("Experiment name is null");
 		}
 
 		if (Validator.isNull(individualSegment.getFilter())) {
-			throw new IllegalArgumentException("Experiment FILTER is null");
+			throw new IllegalArgumentException("Experiment filter is null");
 		}
 
 		try {
