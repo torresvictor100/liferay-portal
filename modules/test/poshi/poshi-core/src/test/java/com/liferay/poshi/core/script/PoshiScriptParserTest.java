@@ -86,46 +86,32 @@ public class PoshiScriptParserTest {
 
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 6, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 14, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 22, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 30, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 38, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 46, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 55, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 63, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 71, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 79, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 89, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 97, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 105, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 109, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 115, _getFilePath(fileName));
 
@@ -146,7 +132,6 @@ public class PoshiScriptParserTest {
 
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 2, _getFilePath(fileName));
-
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 9, _getFilePath(fileName));
 
@@ -181,11 +166,9 @@ public class PoshiScriptParserTest {
 			_assertContains(
 				actualPoshiScriptParserException.getMessage(),
 				expectedPoshiScriptParserException.getMessage());
-
 			Assert.assertEquals(
 				expectedPoshiScriptParserException.getErrorLineNumber(),
 				actualPoshiScriptParserException.getErrorLineNumber());
-
 			Assert.assertEquals(
 				expectedPoshiScriptParserException.getFilePath(),
 				actualPoshiScriptParserException.getFilePath());
