@@ -320,7 +320,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		if (Validator.isNull(individualSegment.getFilter())) {
-			throw new IllegalArgumentException("Experiment filter is null");
+			throw new IllegalArgumentException(
+				"Individual segment filter is null");
 		}
 
 		if (Validator.isNull(individualSegment.getId())) {
@@ -328,7 +329,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		if (Validator.isNull(individualSegment.getName())) {
-			throw new IllegalArgumentException("Experiment name is null");
+			throw new IllegalArgumentException(
+				"Individual segment name is null");
 		}
 
 		try {
