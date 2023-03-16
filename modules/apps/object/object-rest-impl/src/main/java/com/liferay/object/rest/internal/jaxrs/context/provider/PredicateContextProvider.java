@@ -46,19 +46,19 @@ public class PredicateContextProvider implements ContextProvider<Predicate> {
 
 	@Override
 	public Predicate createContext(Message message) {
-		String filter = ParamUtil.getString(
+		String filterString = ParamUtil.getString(
 			ObjectsContextProviderUtil.getHttpServletRequest(message),
 			"filter");
 
 		Predicate predicate = null;
 
-		if (Validator.isNotNull(filter)) {
+		if (Validator.isNotNull(filterString)) {
 			ObjectDefinition objectDefinition =
 				ObjectsContextProviderUtil.getObjectDefinition(
 					message, _objectDefinitionDeployerImpl, _portal);
 
 			predicate = _filterPredicateFactory.create(
-				filter, objectDefinition.getObjectDefinitionId());
+				filterString, objectDefinition.getObjectDefinitionId());
 		}
 
 		return predicate;
