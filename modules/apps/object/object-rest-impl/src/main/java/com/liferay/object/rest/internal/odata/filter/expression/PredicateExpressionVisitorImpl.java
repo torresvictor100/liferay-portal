@@ -518,39 +518,6 @@ public class PredicateExpressionVisitorImpl
 		);
 	}
 
-	private List<ObjectValuePair<ObjectRelationship, Long>>
-		_getObjectValuePairs(
-			long objectDefinitionId, List<String> objectRelationshipsNames) {
-
-		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
-			new ArrayList<>();
-
-		for (String objectRelationshipsName : objectRelationshipsNames) {
-			ObjectRelationship objectRelationship = _fetchObjectRelationship(
-				objectDefinitionId, objectRelationshipsName);
-
-			if (objectRelationship != null) {
-				objectValuePairs.add(
-					new ObjectValuePair<>(
-						objectRelationship, objectDefinitionId));
-
-				objectDefinitionId = _getRelatedObjectDefinitionId(
-					objectDefinitionId, objectRelationship);
-			}
-		}
-
-		if (objectValuePairs.isEmpty()) {
-			throw new ServerErrorException(
-				500,
-				new Exception(
-					"Unexpected error. ObjectRelationships not founded"));
-		}
-
-		Collections.reverse(objectValuePairs);
-
-		return objectValuePairs;
-	}
-
 	private EntityModel _getObjectDefinitionEntityModel(
 		long objectDefinitionId) {
 
@@ -567,8 +534,7 @@ public class PredicateExpressionVisitorImpl
 
 	private Predicate _getObjectRelationshipPredicate(
 			long objectDefinitionId,
-			List<ObjectValuePair<ObjectRelationship, Long>>
-				objectValuePairs,
+			List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs,
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws Exception {
 
@@ -608,21 +574,18 @@ public class PredicateExpressionVisitorImpl
 			fieldNameObjectRelationshipsNames =
 				_getFieldNameObjectRelationshipsNames((String)left);
 
-		List<ObjectValuePair<ObjectRelationship, Long>>
-			objectValuePairs =
-				_getObjectValuePairs(
-					_objectDefinitionId,
-					fieldNameObjectRelationshipsNames.getValue());
+		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
+			_getObjectValuePairs(
+				_objectDefinitionId,
+				fieldNameObjectRelationshipsNames.getValue());
 
 		ObjectValuePair<ObjectRelationship, Long>
-			objectRelationshipObjectDefinitionId =
-				objectValuePairs.remove(0);
+			objectRelationshipObjectDefinitionId = objectValuePairs.remove(0);
 
 		try {
 			return _getObjectRelationshipPredicate(
 				objectRelationshipObjectDefinitionId.getValue(),
-				objectValuePairs,
-				objectRelationshipObjectDefinitionId.getKey(),
+				objectValuePairs, objectRelationshipObjectDefinitionId.getKey(),
 				unsafeBiFunction.apply(
 					fieldNameObjectRelationshipsNames.getKey(),
 					_getRelatedObjectDefinitionId(
@@ -632,6 +595,39 @@ public class PredicateExpressionVisitorImpl
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private List<ObjectValuePair<ObjectRelationship, Long>>
+		_getObjectValuePairs(
+			long objectDefinitionId, List<String> objectRelationshipsNames) {
+
+		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
+			new ArrayList<>();
+
+		for (String objectRelationshipsName : objectRelationshipsNames) {
+			ObjectRelationship objectRelationship = _fetchObjectRelationship(
+				objectDefinitionId, objectRelationshipsName);
+
+			if (objectRelationship != null) {
+				objectValuePairs.add(
+					new ObjectValuePair<>(
+						objectRelationship, objectDefinitionId));
+
+				objectDefinitionId = _getRelatedObjectDefinitionId(
+					objectDefinitionId, objectRelationship);
+			}
+		}
+
+		if (objectValuePairs.isEmpty()) {
+			throw new ServerErrorException(
+				500,
+				new Exception(
+					"Unexpected error. ObjectRelationships not founded"));
+		}
+
+		Collections.reverse(objectValuePairs);
+
+		return objectValuePairs;
 	}
 
 	private Predicate _getPredicate(
