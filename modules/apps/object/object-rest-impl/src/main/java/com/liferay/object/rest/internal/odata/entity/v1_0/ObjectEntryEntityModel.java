@@ -196,9 +196,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 		for (ObjectRelationship relatedObjectRelationship :
 				relatedObjectDefinitionObjectRelationships) {
 
-			if (!_shouldAddRelationship(
-					objectRelationship, relatedObjectRelationship)) {
-
+			if ((relatedObjectRelationship.getObjectRelationshipId() !=
+					objectRelationship.getObjectRelationshipId()) &&
+				!_relatedObjectRelationships.contains(
+					relatedObjectRelationship.getObjectRelationshipId())) {
+			}
+			else {
 				continue;
 			}
 
@@ -316,21 +319,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 		}
 
 		return entityFieldsMap;
-	}
-
-	private boolean _shouldAddRelationship(
-		ObjectRelationship objectRelationship,
-		ObjectRelationship relatedObjectRelationship) {
-
-		if ((relatedObjectRelationship.getObjectRelationshipId() !=
-				objectRelationship.getObjectRelationshipId()) &&
-			!_relatedObjectRelationships.contains(
-				relatedObjectRelationship.getObjectRelationshipId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;
