@@ -559,13 +559,13 @@ public class PredicateExpressionVisitorImpl
 		Object left,
 		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
 
-		List<String> stringChunks = ListUtil.fromString(
+		List<String> leftParts = ListUtil.fromString(
 			(String)left, StringPool.SLASH);
 
-		String objectFieldName = stringChunks.get(stringChunks.size() - 1);
+		String objectFieldName = leftParts.get(leftParts.size() - 1);
 
 		List<String> objectRelationshipsNames = new ArrayList<>(
-			stringChunks.subList(0, stringChunks.size() - 1));
+			leftParts.subList(0, leftParts.size() - 1));
 
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
 			_getObjectValuePairs(_objectDefinitionId, objectRelationshipsNames);
