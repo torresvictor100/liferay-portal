@@ -391,12 +391,13 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private ObjectRelationship _fetchObjectRelationship(
-		long objectDefinitionId, String relationshipName) {
+		long objectDefinitionId, String objectRelationshipName) {
 
 		try {
 			return ObjectRelationshipLocalServiceUtil.
 				getObjectRelationshipByObjectDefinitionId(
-					objectDefinitionId, GetterUtil.getString(relationshipName));
+					objectDefinitionId,
+					GetterUtil.getString(objectRelationshipName));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
