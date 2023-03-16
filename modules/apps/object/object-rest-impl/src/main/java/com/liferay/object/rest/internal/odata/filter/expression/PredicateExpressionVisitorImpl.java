@@ -609,7 +609,11 @@ public class PredicateExpressionVisitorImpl
 			throw new ServerErrorException(
 				500,
 				new Exception(
-					"Unexpected error. ObjectRelationships not founded"));
+					StringBundler.concat(
+						"Unable to get object value pairs for object ",
+						"definition ", objectDefinitionId,
+						" and object relationship: ",
+						StringUtil.merge(objectRelationshipNames))));
 		}
 
 		Collections.reverse(objectValuePairs);
