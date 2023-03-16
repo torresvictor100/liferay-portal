@@ -67,11 +67,14 @@ public class OptionSelectorInfoItemRenderer
 		}
 
 		try {
+			httpServletRequest.setAttribute(
+				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
+
+			long commerceAccountId = 0;
+
 			CommerceContext commerceContext =
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			long commerceAccountId = 0;
 
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
@@ -87,7 +90,6 @@ public class OptionSelectorInfoItemRenderer
 			httpServletRequest.setAttribute(
 				"liferay-commerce:option-selector:channelId",
 				commerceContext.getCommerceChannelId());
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:option-selector:cpDefinitionId",
 				cpDefinition.getCPDefinitionId());
@@ -112,9 +114,6 @@ public class OptionSelectorInfoItemRenderer
 			httpServletRequest.setAttribute(
 				"liferay-commerce:option-selector:productId",
 				cpDefinition.getCProductId());
-
-			httpServletRequest.setAttribute(
-				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
