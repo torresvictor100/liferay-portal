@@ -519,7 +519,7 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private List<ObjectValuePair<ObjectRelationship, Long>>
-		_getListObjectRelationshipsRelatedObjectDefinitionId(
+		_getObjectValuePairs(
 			long objectDefinitionId, List<String> objectRelationshipsNames) {
 
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
@@ -568,7 +568,7 @@ public class PredicateExpressionVisitorImpl
 	private Predicate _getObjectRelationshipPredicate(
 			long objectDefinitionId,
 			List<ObjectValuePair<ObjectRelationship, Long>>
-				objectRelationshipsObjectsDefinitionIdsList,
+				objectValuePairs,
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws Exception {
 
@@ -583,18 +583,18 @@ public class PredicateExpressionVisitorImpl
 						objectDefinition.getClassName(),
 						objectRelationship.getType());
 
-		if (objectRelationshipsObjectsDefinitionIdsList.isEmpty()) {
+		if (objectValuePairs.isEmpty()) {
 			return objectRelatedModelsPredicateProvider.getPredicate(
 				objectRelationship, predicate);
 		}
 
 		ObjectValuePair<ObjectRelationship, Long>
 			objectRelationshipRelatedObjectDefinitionId =
-				objectRelationshipsObjectsDefinitionIdsList.remove(0);
+				objectValuePairs.remove(0);
 
 		return _getObjectRelationshipPredicate(
 			objectRelationshipRelatedObjectDefinitionId.getValue(),
-			objectRelationshipsObjectsDefinitionIdsList,
+			objectValuePairs,
 			objectRelationshipRelatedObjectDefinitionId.getKey(),
 			objectRelatedModelsPredicateProvider.getPredicate(
 				objectRelationship, predicate));
@@ -609,19 +609,19 @@ public class PredicateExpressionVisitorImpl
 				_getFieldNameObjectRelationshipsNames((String)left);
 
 		List<ObjectValuePair<ObjectRelationship, Long>>
-			objectRelationshipObjectDefinitionIdList =
-				_getListObjectRelationshipsRelatedObjectDefinitionId(
+			objectValuePairs =
+				_getObjectValuePairs(
 					_objectDefinitionId,
 					fieldNameObjectRelationshipsNames.getValue());
 
 		ObjectValuePair<ObjectRelationship, Long>
 			objectRelationshipObjectDefinitionId =
-				objectRelationshipObjectDefinitionIdList.remove(0);
+				objectValuePairs.remove(0);
 
 		try {
 			return _getObjectRelationshipPredicate(
 				objectRelationshipObjectDefinitionId.getValue(),
-				objectRelationshipObjectDefinitionIdList,
+				objectValuePairs,
 				objectRelationshipObjectDefinitionId.getKey(),
 				unsafeBiFunction.apply(
 					fieldNameObjectRelationshipsNames.getKey(),
