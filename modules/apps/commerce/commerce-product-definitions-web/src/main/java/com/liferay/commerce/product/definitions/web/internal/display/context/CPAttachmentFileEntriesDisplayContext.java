@@ -272,8 +272,8 @@ public class CPAttachmentFileEntriesDisplayContext
 	}
 
 	public String renderOptions(
-			PageContext pageContext, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, PageContext pageContext)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
