@@ -16,7 +16,7 @@ package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.deployer.ObjectDefinitionDeployerImpl;
-import com.liferay.object.rest.internal.jaxrs.context.provider.util.ObjectsContextProviderUtil;
+import com.liferay.object.rest.internal.jaxrs.context.provider.util.ObjectContextProviderUtil;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,15 +47,14 @@ public class PredicateContextProvider implements ContextProvider<Predicate> {
 	@Override
 	public Predicate createContext(Message message) {
 		String filterString = ParamUtil.getString(
-			ObjectsContextProviderUtil.getHttpServletRequest(message),
-			"filter");
+			ObjectContextProviderUtil.getHttpServletRequest(message), "filter");
 
 		if (Validator.isNull(filterString)) {
 			return null;
 		}
 
 		ObjectDefinition objectDefinition =
-			ObjectsContextProviderUtil.getObjectDefinition(
+			ObjectContextProviderUtil.getObjectDefinition(
 				message, _objectDefinitionDeployerImpl, _portal);
 
 		return _filterPredicateFactory.create(

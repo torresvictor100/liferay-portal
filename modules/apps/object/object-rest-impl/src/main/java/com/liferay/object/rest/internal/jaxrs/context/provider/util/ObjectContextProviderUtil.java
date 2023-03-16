@@ -28,7 +28,7 @@ import org.apache.cxf.message.Message;
 /**
  * @author Luis Miguel Barcos
  */
-public class ObjectsContextProviderUtil {
+public class ObjectContextProviderUtil {
 
 	public static HttpServletRequest getHttpServletRequest(Message message) {
 		return (HttpServletRequest)message.getContextualProperty(
@@ -65,6 +65,6 @@ public class ObjectsContextProviderUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectsContextProviderUtil.class);
+		ObjectContextProviderUtil.class);
 
 }

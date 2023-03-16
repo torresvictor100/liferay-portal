@@ -16,7 +16,7 @@ package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.deployer.ObjectDefinitionDeployerImpl;
-import com.liferay.object.rest.internal.jaxrs.context.provider.util.ObjectsContextProviderUtil;
+import com.liferay.object.rest.internal.jaxrs.context.provider.util.ObjectContextProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.ws.rs.ext.Provider;
@@ -41,7 +41,7 @@ public class ObjectDefinitionContextProvider
 
 	@Override
 	public ObjectDefinition createContext(Message message) {
-		return ObjectsContextProviderUtil.getObjectDefinition(
+		return ObjectContextProviderUtil.getObjectDefinition(
 			message, _objectDefinitionDeployerImpl, _portal);
 	}
 
