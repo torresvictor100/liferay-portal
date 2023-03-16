@@ -221,10 +221,10 @@ public class SkuResourceImpl
 			CPDefinition cpDefinition)
 		throws Exception {
 
+		List<Sku> skus = new ArrayList<>();
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
-
-		List<Sku> skus = new ArrayList<>();
 
 		for (CPInstance cpInstance : cpInstances) {
 			skus.add(
