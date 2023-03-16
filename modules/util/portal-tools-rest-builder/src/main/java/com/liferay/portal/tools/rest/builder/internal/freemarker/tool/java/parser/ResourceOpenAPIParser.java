@@ -202,7 +202,7 @@ public class ResourceOpenAPIParser {
 
 				path = StringUtil.replace(
 					path, "{" + parameterName + "}",
-					"{" + parameterName + " : .+}");
+					"{" + parameterName + ": .+}");
 			}
 		}
 
