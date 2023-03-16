@@ -11,7 +11,7 @@
 	"keywords": [
 	],
 	"license": "ISC",
-	"name": "@liferay/liferay-dot-com-global-js",
+	"name": "@liferay/liferay-dotcom-global-js",
 	"scripts": {
 		"build": "webpack"
 	},

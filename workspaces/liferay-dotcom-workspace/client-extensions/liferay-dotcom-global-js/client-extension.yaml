@@ -2,7 +2,7 @@ assemble:
     - from: build
       include: "*.js"
       into: static
-liferay-dot-com-global-js:
-    name: Liferay Dot Com Global JS
+liferay-dotcom-global-js:
+    name: Liferay Dotcom Global JS
     type: globalJS
     url: .*.js
