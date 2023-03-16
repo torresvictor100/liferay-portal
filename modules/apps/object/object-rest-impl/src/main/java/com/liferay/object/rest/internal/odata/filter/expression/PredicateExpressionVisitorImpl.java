@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -73,7 +74,6 @@ import java.text.Format;
 import java.text.ParseException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -559,10 +559,8 @@ public class PredicateExpressionVisitorImpl
 		Object left,
 		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
 
-		String filterString = (String)left;
-
-		List<String> stringChunks = Arrays.asList(
-			filterString.split(StringPool.SLASH));
+		List<String> stringChunks = ListUtil.fromString(
+			(String)left, StringPool.SLASH);
 
 		String objectFieldName = stringChunks.get(stringChunks.size() - 1);
 
