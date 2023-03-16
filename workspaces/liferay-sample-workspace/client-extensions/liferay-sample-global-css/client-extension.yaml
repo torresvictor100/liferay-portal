@@ -2,7 +2,7 @@ assemble:
     - from: assets
       include: "**/*"
       into: static
-sample-global-css:
-    name: Sample Global CSS
+liferay-sample-global-css:
+    name: Liferay Sample Global CSS
     type: globalCSS
     url: global.css

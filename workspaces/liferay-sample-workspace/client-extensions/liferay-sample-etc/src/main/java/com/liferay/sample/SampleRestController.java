@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample;
+package com.liferay.sample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

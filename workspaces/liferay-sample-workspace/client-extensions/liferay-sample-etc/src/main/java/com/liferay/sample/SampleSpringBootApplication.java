@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.sample;
+package com.liferay.sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

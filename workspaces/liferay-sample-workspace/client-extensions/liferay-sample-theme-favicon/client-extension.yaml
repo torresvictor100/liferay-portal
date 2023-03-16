@@ -2,7 +2,7 @@ assemble:
     - from: assets
       include: "**/*"
       into: static
-sample-theme-favicon:
-    name: Sample Theme Favicon
+liferay-sample-theme-favicon:
+    name: Liferay Sample Theme Favicon
     type: themeFavicon
     url: favicon.ico
