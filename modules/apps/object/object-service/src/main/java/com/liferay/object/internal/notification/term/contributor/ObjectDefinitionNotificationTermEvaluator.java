@@ -89,14 +89,14 @@ public class ObjectDefinitionNotificationTermEvaluator
 		String prefix = StringUtil.toUpperCase(
 			_objectDefinition.getShortName());
 
-		if (!termName.equals("[%" + prefix + "_CREATOR%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
+		if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
-			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]")) {
+			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]") &&
+			!termName.equals("[%" + prefix + "_CREATOR%]")) {
 
 			return null;
 		}
