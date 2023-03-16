@@ -196,17 +196,19 @@ public class ObjectEntryEntityModel implements EntityModel {
 		for (ObjectRelationship relatedObjectRelationship :
 				relatedObjectDefinitionObjectRelationships) {
 
-			if (_shouldAddRelationship(
+			if (!_shouldAddRelationship(
 					objectRelationship, relatedObjectRelationship)) {
 
-				relatedObjectDefinitionEntityFields.add(
-					new ComplexEntityField(
-						relatedObjectRelationship.getName(),
-						new ArrayList<>(
-							_getRelatedObjectDefinitionEntityFields(
-								relatedObjectRelationship,
-								relatedObjectDefinition))));
+				continue;
 			}
+
+			relatedObjectDefinitionEntityFields.add(
+				new ComplexEntityField(
+					relatedObjectRelationship.getName(),
+					new ArrayList<>(
+						_getRelatedObjectDefinitionEntityFields(
+							relatedObjectRelationship,
+							relatedObjectDefinition))));
 		}
 
 		return relatedObjectDefinitionEntityFields;
