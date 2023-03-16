@@ -196,12 +196,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 		for (ObjectRelationship relatedObjectRelationship :
 				relatedObjectDefinitionObjectRelationships) {
 
-			if ((relatedObjectRelationship.getObjectRelationshipId() !=
-					objectRelationship.getObjectRelationshipId()) &&
-				!_relatedObjectRelationships.contains(
+			if ((relatedObjectRelationship.getObjectRelationshipId() ==
+					objectRelationship.getObjectRelationshipId()) ||
+				_relatedObjectRelationships.contains(
 					relatedObjectRelationship.getObjectRelationshipId())) {
-			}
-			else {
+
 				continue;
 			}
 
