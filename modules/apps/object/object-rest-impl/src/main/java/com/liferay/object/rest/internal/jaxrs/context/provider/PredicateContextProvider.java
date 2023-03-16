@@ -50,18 +50,16 @@ public class PredicateContextProvider implements ContextProvider<Predicate> {
 			ObjectsContextProviderUtil.getHttpServletRequest(message),
 			"filter");
 
-		Predicate predicate = null;
-
-		if (Validator.isNotNull(filterString)) {
-			ObjectDefinition objectDefinition =
-				ObjectsContextProviderUtil.getObjectDefinition(
-					message, _objectDefinitionDeployerImpl, _portal);
-
-			predicate = _filterPredicateFactory.create(
-				filterString, objectDefinition.getObjectDefinitionId());
+		if (Validator.isNull(filterString)) {
+			return null;
 		}
 
-		return predicate;
+		ObjectDefinition objectDefinition =
+			ObjectsContextProviderUtil.getObjectDefinition(
+				message, _objectDefinitionDeployerImpl, _portal);
+
+		return _filterPredicateFactory.create(
+			filterString, objectDefinition.getObjectDefinitionId());
 	}
 
 	private final FilterPredicateFactory _filterPredicateFactory;
