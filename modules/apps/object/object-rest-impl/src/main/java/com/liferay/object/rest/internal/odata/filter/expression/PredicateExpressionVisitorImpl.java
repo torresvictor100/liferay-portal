@@ -560,11 +560,11 @@ public class PredicateExpressionVisitorImpl
 		List<String> leftParts = ListUtil.fromString(
 			(String)left, StringPool.SLASH);
 
-		List<String> objectRelationshipsNames = new ArrayList<>(
+		List<String> objectRelationshipNames = new ArrayList<>(
 			leftParts.subList(0, leftParts.size() - 1));
 
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
-			_getObjectValuePairs(_objectDefinitionId, objectRelationshipsNames);
+			_getObjectValuePairs(_objectDefinitionId, objectRelationshipNames);
 
 		ObjectValuePair<ObjectRelationship, Long> objectValuePair =
 			objectValuePairs.remove(0);
@@ -585,14 +585,14 @@ public class PredicateExpressionVisitorImpl
 
 	private List<ObjectValuePair<ObjectRelationship, Long>>
 		_getObjectValuePairs(
-			long objectDefinitionId, List<String> objectRelationshipsNames) {
+			long objectDefinitionId, List<String> objectRelationshipNames) {
 
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
 			new ArrayList<>();
 
-		for (String objectRelationshipsName : objectRelationshipsNames) {
+		for (String objectRelationshipName : objectRelationshipNames) {
 			ObjectRelationship objectRelationship = _fetchObjectRelationship(
-				objectDefinitionId, objectRelationshipsName);
+				objectDefinitionId, objectRelationshipName);
 
 			if (objectRelationship == null) {
 				continue;
