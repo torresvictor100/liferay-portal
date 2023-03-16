@@ -186,8 +186,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 				ObjectFieldLocalServiceUtil.getObjectFields(
 					relatedObjectDefinition.getObjectDefinitionId()));
 
-		ArrayList<EntityField> relatedObjectDefinitionEntityFields =
-			new ArrayList<>(relatedObjectDefinitionEntityFieldsMap.values());
+		List<EntityField> relatedObjectDefinitionEntityFields = new ArrayList<>(
+			relatedObjectDefinitionEntityFieldsMap.values());
 
 		List<ObjectRelationship> relatedObjectDefinitionObjectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
