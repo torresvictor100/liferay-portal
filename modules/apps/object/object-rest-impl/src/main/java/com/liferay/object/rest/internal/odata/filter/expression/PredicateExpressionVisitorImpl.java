@@ -594,14 +594,15 @@ public class PredicateExpressionVisitorImpl
 			ObjectRelationship objectRelationship = _fetchObjectRelationship(
 				objectDefinitionId, objectRelationshipsName);
 
-			if (objectRelationship != null) {
-				objectValuePairs.add(
-					new ObjectValuePair<>(
-						objectRelationship, objectDefinitionId));
-
-				objectDefinitionId = _getRelatedObjectDefinitionId(
-					objectDefinitionId, objectRelationship);
+			if (objectRelationship == null) {
+				continue;
 			}
+
+			objectValuePairs.add(
+				new ObjectValuePair<>(objectRelationship, objectDefinitionId));
+
+			objectDefinitionId = _getRelatedObjectDefinitionId(
+				objectDefinitionId, objectRelationship);
 		}
 
 		if (objectValuePairs.isEmpty()) {
