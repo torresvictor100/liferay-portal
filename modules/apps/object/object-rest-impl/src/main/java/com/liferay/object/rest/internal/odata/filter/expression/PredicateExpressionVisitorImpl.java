@@ -568,18 +568,17 @@ public class PredicateExpressionVisitorImpl
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
 			_getObjectValuePairs(_objectDefinitionId, objectRelationshipsNames);
 
-		ObjectValuePair<ObjectRelationship, Long>
-			objectRelationshipObjectDefinitionId = objectValuePairs.remove(0);
+		ObjectValuePair<ObjectRelationship, Long> objectValuePair =
+			objectValuePairs.remove(0);
 
 		try {
 			return _getObjectRelationshipPredicate(
-				objectRelationshipObjectDefinitionId.getValue(),
-				objectValuePairs, objectRelationshipObjectDefinitionId.getKey(),
+				objectValuePair.getValue(), objectValuePairs,
+				objectValuePair.getKey(),
 				unsafeBiFunction.apply(
 					leftParts.get(leftParts.size() - 1),
 					_getRelatedObjectDefinitionId(
-						objectRelationshipObjectDefinitionId.getValue(),
-						objectRelationshipObjectDefinitionId.getKey())));
+						objectValuePair.getValue(), objectValuePair.getKey())));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
