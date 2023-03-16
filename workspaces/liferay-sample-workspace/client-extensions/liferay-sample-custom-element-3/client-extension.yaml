@@ -1,7 +1,7 @@
 assemble:
     - from: dist
-      include: liferay-sample-custom-element-3/
-      into: static/
+      include: liferay-sample-custom-element-3
+      into: static
 liferay-sample-custom-element-3:
     cssURLs:
         - liferay-sample-custom-element-3/styles.*.css

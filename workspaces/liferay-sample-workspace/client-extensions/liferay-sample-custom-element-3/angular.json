@@ -2,7 +2,7 @@
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"newProjectRoot": "projects",
 	"projects": {
-		"sample-custom-element-3": {
+		"liferay-sample-custom-element-3": {
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
@@ -39,7 +39,7 @@
 						],
 						"index": "src/index.html",
 						"main": "src/main.ts",
-						"outputPath": "dist/sample-custom-element-3",
+						"outputPath": "dist/liferay-sample-custom-element-3",
 						"polyfills": [
 							"zone.js"
 						],
@@ -54,17 +54,17 @@
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "sample-custom-element-3:build"
+						"browserTarget": "liferay-sample-custom-element-3:build"
 					}
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"development": {
-							"browserTarget": "sample-custom-element-3:build:development"
+							"browserTarget": "liferay-sample-custom-element-3:build:development"
 						},
 						"production": {
-							"browserTarget": "sample-custom-element-3:build:production"
+							"browserTarget": "liferay-sample-custom-element-3:build:production"
 						}
 					},
 					"defaultConfiguration": "development"

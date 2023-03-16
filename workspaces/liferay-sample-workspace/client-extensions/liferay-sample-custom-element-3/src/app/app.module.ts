@@ -24,7 +24,7 @@ export class AppModule {
         injector: this.injector
       });
  
-    customElements.define('sample-custom-element-3',
+    customElements.define('liferay-sample-custom-element-3',
       AppComponentElement
     );
   }

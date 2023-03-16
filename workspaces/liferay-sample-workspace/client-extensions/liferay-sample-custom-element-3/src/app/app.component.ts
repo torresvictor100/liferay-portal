@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @Input("title") title = 'sample-custom-element-3';
+  @Input("title") title = 'liferay-sample-custom-element-3';
 }
