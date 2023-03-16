@@ -189,10 +189,9 @@ public class NotificationQueueEntryLocalServiceImpl
 				NotificationQueueEntryConstants.STATUS_SENT) {
 
 			throw new NotificationQueueEntryStatusException(
-				String.format(
-					"Must not resend notification with ID %d, because it has " +
-						"already been sent",
-					notificationQueueEntry.getNotificationQueueEntryId()));
+				"Notification queue entry " +
+					notificationQueueEntry.getNotificationQueueEntryId() +
+						" has already been sent");
 		}
 
 		NotificationType notificationType =
