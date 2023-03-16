@@ -1650,12 +1650,12 @@ public class Main {
 			return;
 		}
 
-		String canonicalPath = file.getCanonicalPath();
+		String filePathString = file.getCanonicalPath();
 
 		image.setUrl(
 			BasedSequence.of(
 				_liferayLearnResourcesDomain + "/images" +
-					canonicalPath.substring(_markdownImportDirName.length())));
+					filePathString.substring(_markdownImportDirName.length())));
 
 		_nodeVisitor.visitChildren(image);
 	}
