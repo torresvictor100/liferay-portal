@@ -92,7 +92,7 @@ function refresh_liferay_sample_workspace {
 
 	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-custom-element-2
 
-	../tools/create_remote_app.sh liferay-sample-custom-element-2 react
+	../tools/create_custom_element.sh liferay-sample-custom-element-2 react
 
 	mkdir -p liferay-sample-custom-element-2/src/common/components
 
@@ -224,7 +224,7 @@ EOF
 
 	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-custom-element-3
 
-	../tools/create_remote_app.sh liferay-sample-custom-element-3 angular
+	../tools/create_custom_element.sh liferay-sample-custom-element-3 angular
 
 	mv liferay-sample-custom-element-3 liferay-sample-workspace/client-extensions
 }
