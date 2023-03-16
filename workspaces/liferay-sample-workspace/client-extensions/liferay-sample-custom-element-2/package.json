@@ -23,7 +23,7 @@
 			"react-app/jest"
 		]
 	},
-	"name": "sample-custom-element-2",
+	"name": "liferay-sample-custom-element-2",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",

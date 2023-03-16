@@ -6,6 +6,6 @@
 		"baseTheme": "styled"
 	},
 	"main": "package.json",
-	"name": "@liferay/sample-theme-css",
+	"name": "@liferay/liferay-sample-theme-css",
 	"version": "1.0.0"
 }
