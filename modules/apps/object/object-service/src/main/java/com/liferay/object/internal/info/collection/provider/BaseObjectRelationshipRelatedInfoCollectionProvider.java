@@ -47,10 +47,8 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 		ObjectRelationship objectRelationship) {
 
 		_language = language;
-
 		this.objectEntryLocalService = objectEntryLocalService;
 		this.objectRelationship = objectRelationship;
-
 		_objectDefinition1 = objectDefinition1;
 		_objectDefinition2 = objectDefinition2;
 	}
