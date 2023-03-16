@@ -396,8 +396,7 @@ public class PredicateExpressionVisitorImpl
 		try {
 			return ObjectRelationshipLocalServiceUtil.
 				getObjectRelationshipByObjectDefinitionId(
-					objectDefinitionId,
-					GetterUtil.getString(objectRelationshipName));
+					objectDefinitionId, objectRelationshipName);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
