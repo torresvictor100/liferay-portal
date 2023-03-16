@@ -34,7 +34,7 @@ function check_blade {
 	#jpm install -f https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/blade/com.liferay.blade.cli/4.1.1/com.liferay.blade.cli-4.1.1.jar
 }
 
-function refresh_sample_workspace {
+function refresh_liferay_sample_workspace {
 
 	#
 	# Sample Workspace
@@ -66,37 +66,37 @@ function refresh_sample_workspace {
 
 	popd
 
-	cp ${temp_dir}/.gitignore sample-workspace
-	cp ${temp_dir}/gradle.properties sample-workspace
-	cp ${temp_dir}/gradlew sample-workspace
-	cp ${temp_dir}/settings.gradle sample-workspace
+	cp ${temp_dir}/.gitignore liferay-sample-workspace
+	cp ${temp_dir}/gradle.properties liferay-sample-workspace
+	cp ${temp_dir}/gradlew liferay-sample-workspace
+	cp ${temp_dir}/settings.gradle liferay-sample-workspace
 
-	cp -R ${temp_dir}/gradle sample-workspace
+	cp -R ${temp_dir}/gradle liferay-sample-workspace
 
-	mkdir -p sample-workspace/configs/local
+	mkdir -p liferay-sample-workspace/configs/local
 
-	cp ${temp_dir}/configs/local/portal-ext.properties sample-workspace/configs/local
+	cp ${temp_dir}/configs/local/portal-ext.properties liferay-sample-workspace/configs/local
 
-	mkdir -p sample-workspace/modules
+	mkdir -p liferay-sample-workspace/modules
 
-	echo "Client extensions are the recommended way of customizing Liferay. Modules and" > sample-workspace/modules/README.txt
-	echo "themes are supported for backwards compatibility." >> sample-workspace/modules/README.txt
+	echo "Client extensions are the recommended way of customizing Liferay. Modules and" > liferay-sample-workspace/modules/README.txt
+	echo "themes are supported for backwards compatibility." >> liferay-sample-workspace/modules/README.txt
 
-	mkdir -p sample-workspace/themes
+	mkdir -p liferay-sample-workspace/themes
 
-	cp sample-workspace/modules/README.txt sample-workspace/themes
+	cp liferay-sample-workspace/modules/README.txt liferay-sample-workspace/themes
 
 	#
 	# Client Extension: Sample Custom Element 2
 	#
 
-	rm -fr sample-workspace/client-extensions/sample-custom-element-2
+	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-custom-element-2
 
-	../tools/create_remote_app.sh sample-custom-element-2 react
+	../tools/create_remote_app.sh liferay-sample-custom-element-2 react
 
-	mkdir -p sample-custom-element-2/src/common/components
+	mkdir -p liferay-sample-custom-element-2/src/common/components
 
-	cat <<EOF > sample-custom-element-2/src/common/components/DadJoke.js
+	cat <<EOF > liferay-sample-custom-element-2/src/common/components/DadJoke.js
 import React from 'react';
 
 class DadJoke extends React.Component {
@@ -136,7 +136,7 @@ class DadJoke extends React.Component {
 export default DadJoke;
 EOF
 
-	cat <<EOF > sample-custom-element-2/src/index.js
+	cat <<EOF > liferay-sample-custom-element-2/src/index.js
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
@@ -176,7 +176,7 @@ class WebComponent extends HTMLElement {
 		super();
 
 		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'sample-oauth-application-user-agent'
+			'liferay-sample-oauth-application-user-agent'
 		);
 	}
 
@@ -207,32 +207,32 @@ class WebComponent extends HTMLElement {
 	}
 }
 
-const ELEMENT_ID = 'sample-custom-element-2';
+const ELEMENT_ID = 'liferay-sample-custom-element-2';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, WebComponent);
 }
 EOF
 
-	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" sample-custom-element-2/package.json
+	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" liferay-sample-custom-element-2/package.json
 
-	mv sample-custom-element-2 sample-workspace/client-extensions
+	mv liferay-sample-custom-element-2 liferay-sample-workspace/client-extensions
 
 	#
 	# Client Extension: Sample Custom Element 3
 	#
 
-	rm -fr sample-workspace/client-extensions/sample-custom-element-3
+	rm -fr liferay-sample-workspace/client-extensions/liferay-sample-custom-element-3
 
-	../tools/create_remote_app.sh sample-custom-element-3 angular
+	../tools/create_remote_app.sh liferay-sample-custom-element-3 angular
 
-	mv sample-custom-element-3 sample-workspace/client-extensions
+	mv liferay-sample-custom-element-3 liferay-sample-workspace/client-extensions
 }
 
 function main {
 	check_blade
 
-	refresh_sample_workspace
+	refresh_liferay_sample_workspace
 }
 
 main "${@}"
