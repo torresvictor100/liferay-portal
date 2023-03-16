@@ -55,14 +55,14 @@ import javax.ws.rs.BadRequestException;
 public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
-		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
+		_entityFieldsMap = _getStringEntityFieldsMap(objectFields);
 	}
 
 	public ObjectEntryEntityModel(
 			long objectDefinitionId, List<ObjectField> objectFields)
 		throws Exception {
 
-		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
+		_entityFieldsMap = _getStringEntityFieldsMap(objectFields);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-154672")) {
 			return;
@@ -181,13 +181,13 @@ public class ObjectEntryEntityModel implements EntityModel {
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			objectDefinition, objectRelationship);
 
-		Map<String, EntityField> relatedObjectDefinitionEntityFieldMap =
-			_getStringEntityFieldMap(
+		Map<String, EntityField> relatedObjectDefinitionEntityFieldsMap =
+			_getStringEntityFieldsMap(
 				ObjectFieldLocalServiceUtil.getObjectFields(
 					relatedObjectDefinition.getObjectDefinitionId()));
 
 		ArrayList<EntityField> relatedObjectDefinitionEntityFields =
-			new ArrayList<>(relatedObjectDefinitionEntityFieldMap.values());
+			new ArrayList<>(relatedObjectDefinitionEntityFieldsMap.values());
 
 		List<ObjectRelationship> relatedObjectDefinitionObjectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
@@ -212,7 +212,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 		return relatedObjectDefinitionEntityFields;
 	}
 
-	private Map<String, EntityField> _getStringEntityFieldMap(
+	private Map<String, EntityField> _getStringEntityFieldsMap(
 		List<ObjectField> objectFields) {
 
 		Map<String, EntityField> entityFieldsMap =
