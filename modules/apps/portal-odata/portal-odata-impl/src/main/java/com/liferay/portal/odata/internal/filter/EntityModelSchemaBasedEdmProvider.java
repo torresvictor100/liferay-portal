@@ -55,11 +55,11 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			_createCsdlSchema(
 				_NAMESPACE, entityModel.getName(),
 				_createCsdlComplexTypes(
-					_NAMESPACE, entityModel.getEntityFieldsMap()),
+					entityModel.getEntityFieldsMap(), _NAMESPACE),
 				_createCsdlNavigationProperties(
 					entityModel.getEntityRelationshipsMap()),
 				_createCsdlProperties(
-					_NAMESPACE, entityModel.getEntityFieldsMap())));
+					entityModel.getEntityFieldsMap(), _NAMESPACE)));
 	}
 
 	private CsdlProperty _createCollectionCsdlProperty(
@@ -75,8 +75,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlComplexType _createCsdlComplexType(
-		String namespace, EntityField entityField,
-		List<CsdlComplexType> csdlComplexTypes) {
+		List<CsdlComplexType> csdlComplexTypes, EntityField entityField,
+		String namespace) {
 
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
@@ -105,7 +105,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 						curEntityField.getType(), EntityField.Type.COMPLEX)) {
 
 					csdlComplexTypes.addAll(
-						_createCsdlComplexTypes(_NAMESPACE, entityFieldsMap));
+						_createCsdlComplexTypes(entityFieldsMap, _NAMESPACE));
 				}
 			}
 		}
@@ -116,14 +116,14 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private List<CsdlComplexType> _createCsdlComplexTypes(
-		String namespace, Map<String, EntityField> entityFieldsMap) {
+		Map<String, EntityField> entityFieldsMap, String namespace) {
 
 		List<CsdlComplexType> csdlComplexTypes = new ArrayList<>(
 			entityFieldsMap.size());
 
 		for (EntityField entityField : entityFieldsMap.values()) {
 			CsdlComplexType csdlComplexType = _createCsdlComplexType(
-				namespace, entityField, csdlComplexTypes);
+				csdlComplexTypes, entityField, namespace);
 
 			if (csdlComplexType != null) {
 				csdlComplexTypes.add(csdlComplexType);
@@ -202,7 +202,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private List<CsdlProperty> _createCsdlProperties(
-		String namespace, Map<String, EntityField> entityFieldsMap) {
+		Map<String, EntityField> entityFieldsMap, String namespace) {
 
 		List<CsdlProperty> csdlProperties = new ArrayList<>(
 			entityFieldsMap.size());
