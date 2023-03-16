@@ -64,10 +64,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		for (UnsafeTriFunction
-				<Context, String, Map<String, Object>, String, PortalException>
-					evaluatorFunction : _evaluatorsFunctions) {
-
+		for (EvaluatorFunction evaluatorFunction : _evaluatorFunctions) {
 			String termValue = evaluatorFunction.apply(
 				context, termName, termValues);
 
@@ -77,6 +74,12 @@ public class ObjectDefinitionNotificationTermEvaluator
 		}
 
 		return termName;
+	}
+
+	@FunctionalInterface
+	public interface EvaluatorFunction
+		extends UnsafeTriFunction
+			<Context, String, Map<String, Object>, String, PortalException> {
 	}
 
 	private String _evaluateAuthor(
@@ -213,12 +216,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private final List
-		<UnsafeTriFunction
-			<Context, String, Map<String, Object>, String, PortalException>>
-				_evaluatorsFunctions = Arrays.asList(
-					this::_evaluateAuthor, this::_evaluateCurrentUser,
-					this::_evaluateObjectFields);
+	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
+		this::_evaluateAuthor, this::_evaluateCurrentUser,
+		this::_evaluateObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;
