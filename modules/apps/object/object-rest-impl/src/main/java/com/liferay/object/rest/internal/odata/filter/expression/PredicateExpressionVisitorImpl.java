@@ -543,14 +543,12 @@ public class PredicateExpressionVisitorImpl
 				objectRelationship, predicate);
 		}
 
-		ObjectValuePair<ObjectRelationship, Long>
-			objectRelationshipRelatedObjectDefinitionId =
-				objectValuePairs.remove(0);
+		ObjectValuePair<ObjectRelationship, Long> objectValuePair =
+			objectValuePairs.remove(0);
 
 		return _getObjectRelationshipPredicate(
-			objectRelationshipRelatedObjectDefinitionId.getValue(),
-			objectValuePairs,
-			objectRelationshipRelatedObjectDefinitionId.getKey(),
+			objectValuePair.getValue(), objectValuePairs,
+			objectValuePair.getKey(),
 			objectRelatedModelsPredicateProvider.getPredicate(
 				objectRelationship, predicate));
 	}
