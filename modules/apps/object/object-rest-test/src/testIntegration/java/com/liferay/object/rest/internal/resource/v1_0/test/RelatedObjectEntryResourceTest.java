@@ -114,7 +114,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteManyToManySystemObjectNotFoundRelatedObject()
+	public void testDeleteManyToManySystemObjectNotFoundRelatedObjectEntry()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -154,7 +154,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteManyToManySystemObjectRelatedObject()
+	public void testDeleteManyToManySystemObjectRelatedObjectEntry()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -261,7 +261,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteOneToManySystemObjectNotFoundRelatedObject()
+	public void testDeleteOneToManySystemObjectNotFoundRelatedObjectEntry()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -319,7 +319,7 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testDeleteOneToManySystemObjectRelatedObject()
+	public void testDeleteOneToManySystemObjectRelatedObjectEntry()
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -487,14 +487,14 @@ public class RelatedObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPutSystemObjectRelatedObject() throws Exception {
+	public void testPutSystemObjectRelatedObjectEntry() throws Exception {
 		_objectRelationship = _addObjectRelationship(
 			StringUtil.randomId(), _objectDefinition.getObjectDefinitionId(),
 			_userSystemObjectDefinition.getObjectDefinitionId(),
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testPutSystemObjectRelatedObject(_objectRelationship);
+		_testPutSystemObjectRelatedObjectEntry(_objectRelationship);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
@@ -506,7 +506,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testPutSystemObjectRelatedObject(_objectRelationship);
+		_testPutSystemObjectRelatedObjectEntry(_objectRelationship);
 	}
 
 	@Test
@@ -590,7 +590,7 @@ public class RelatedObjectEntryResourceTest {
 		return objectRelationship;
 	}
 
-	private void _testPutSystemObjectRelatedObject(
+	private void _testPutSystemObjectRelatedObjectEntry(
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
