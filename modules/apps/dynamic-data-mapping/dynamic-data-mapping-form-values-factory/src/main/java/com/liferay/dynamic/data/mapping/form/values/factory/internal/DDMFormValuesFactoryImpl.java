@@ -108,21 +108,20 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			return;
 		}
 
-		HashSet<String> fullDDMFormFields = new HashSet<>();
+		Set<String> checkedDDMFormFieldNames = new HashSet<>();
 
 		_checkDDMFormFieldParameterNames(
-			ddmForm.getDDMFormFields(), StringPool.BLANK,
-			ddmFormFieldParameterNames, fullDDMFormFields);
+			checkedDDMFormFieldNames, ddmForm.getDDMFormFields(),
+			StringPool.BLANK, ddmFormFieldParameterNames);
 	}
 
 	private void _checkDDMFormFieldParameterNames(
-		List<DDMFormField> ddmFormFields,
+		Set<String> checkedDDMFormFieldNames, List<DDMFormField> ddmFormFields,
 		String parentDDMFormFieldParameterName,
-		Set<String> ddmFormFieldParameterNames,
-		HashSet<String> fullDDMFormFields) {
+		Set<String> ddmFormFieldParameterNames) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (fullDDMFormFields.contains(ddmFormField.getName())) {
+			if (checkedDDMFormFieldNames.contains(ddmFormField.getName())) {
 				continue;
 			}
 
@@ -145,20 +144,22 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 					defaultDDMFormFieldParameterName);
 
 				_checkDDMFormFieldParameterNames(
+					checkedDDMFormFieldNames,
 					ddmFormField.getNestedDDMFormFields(), StringPool.BLANK,
-					ddmFormFieldParameterNames, fullDDMFormFields);
+					ddmFormFieldParameterNames);
 			}
 
 			for (String filteredDDMFormFieldParameterName :
 					filteredDDMFormFieldParameterNames) {
 
 				_checkDDMFormFieldParameterNames(
+					checkedDDMFormFieldNames,
 					ddmFormField.getNestedDDMFormFields(),
 					filteredDDMFormFieldParameterName,
-					ddmFormFieldParameterNames, fullDDMFormFields);
+					ddmFormFieldParameterNames);
 			}
 
-			fullDDMFormFields.add(ddmFormField.getName());
+			checkedDDMFormFieldNames.add(ddmFormField.getName());
 		}
 	}
 
