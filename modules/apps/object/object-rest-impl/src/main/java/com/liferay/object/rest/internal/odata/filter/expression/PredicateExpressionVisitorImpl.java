@@ -460,17 +460,6 @@ public class PredicateExpressionVisitorImpl
 		return null;
 	}
 
-	private ObjectValuePair<String, List<String>>
-		_getFieldNameObjectRelationshipsNames(String filterString) {
-
-		List<String> stringChunks = Arrays.asList(
-			filterString.split(StringPool.SLASH));
-
-		return new ObjectValuePair<>(
-			stringChunks.get(stringChunks.size() - 1),
-			new ArrayList<>(stringChunks.subList(0, stringChunks.size() - 1)));
-	}
-
 	private Predicate _getInPredicate(
 		Object left, long objectDefinitionId, List<Object> rights) {
 
@@ -570,14 +559,18 @@ public class PredicateExpressionVisitorImpl
 		Object left,
 		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
 
-		ObjectValuePair<String, List<String>>
-			fieldNameObjectRelationshipsNames =
-				_getFieldNameObjectRelationshipsNames((String)left);
+		String filterString = (String)left;
+
+		List<String> stringChunks = Arrays.asList(
+			filterString.split(StringPool.SLASH));
+
+		String objectFieldName = stringChunks.get(stringChunks.size() - 1);
+
+		List<String> objectRelationshipsNames = new ArrayList<>(
+			stringChunks.subList(0, stringChunks.size() - 1));
 
 		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
-			_getObjectValuePairs(
-				_objectDefinitionId,
-				fieldNameObjectRelationshipsNames.getValue());
+			_getObjectValuePairs(_objectDefinitionId, objectRelationshipsNames);
 
 		ObjectValuePair<ObjectRelationship, Long>
 			objectRelationshipObjectDefinitionId = objectValuePairs.remove(0);
@@ -587,7 +580,7 @@ public class PredicateExpressionVisitorImpl
 				objectRelationshipObjectDefinitionId.getValue(),
 				objectValuePairs, objectRelationshipObjectDefinitionId.getKey(),
 				unsafeBiFunction.apply(
-					fieldNameObjectRelationshipsNames.getKey(),
+					objectFieldName,
 					_getRelatedObjectDefinitionId(
 						objectRelationshipObjectDefinitionId.getValue(),
 						objectRelationshipObjectDefinitionId.getKey())));
