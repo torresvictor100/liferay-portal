@@ -173,25 +173,27 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _getTermValue(String suffix, User user)
+	private String _getTermValue(String partialTermName, User user)
 		throws PortalException {
 
-		if (suffix.equals("EMAIL_ADDRESS%]")) {
+		if (partialTermName.equals("EMAIL_ADDRESS%]")) {
 			return user.getEmailAddress();
 		}
-		else if (suffix.equals("FIRST_NAME%]")) {
+		else if (partialTermName.equals("FIRST_NAME%]")) {
 			return user.getFirstName();
 		}
-		else if (suffix.equals("ID%]")) {
+		else if (partialTermName.equals("ID%]")) {
 			return String.valueOf(user.getUserId());
 		}
-		else if (suffix.equals("LAST_NAME%]")) {
+		else if (partialTermName.equals("LAST_NAME%]")) {
 			return user.getLastName();
 		}
-		else if (suffix.equals("MIDDLE_NAME%]")) {
+		else if (partialTermName.equals("MIDDLE_NAME%]")) {
 			return user.getMiddleName();
 		}
-		else if (suffix.equals("PREFIX%]") || suffix.equals("SUFFIX%]")) {
+		else if (partialTermName.equals("PREFIX%]") ||
+				 partialTermName.equals("SUFFIX%]")) {
+
 			Contact contact = user.fetchContact();
 
 			if (contact == null) {
@@ -200,7 +202,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 			long listTypeId = contact.getPrefixListTypeId();
 
-			if (suffix.equals("SUFFIX%]")) {
+			if (partialTermName.equals("SUFFIX%]")) {
 				listTypeId = contact.getSuffixListTypeId();
 			}
 
