@@ -562,8 +562,6 @@ public class PredicateExpressionVisitorImpl
 		List<String> leftParts = ListUtil.fromString(
 			(String)left, StringPool.SLASH);
 
-		String objectFieldName = leftParts.get(leftParts.size() - 1);
-
 		List<String> objectRelationshipsNames = new ArrayList<>(
 			leftParts.subList(0, leftParts.size() - 1));
 
@@ -578,7 +576,7 @@ public class PredicateExpressionVisitorImpl
 				objectRelationshipObjectDefinitionId.getValue(),
 				objectValuePairs, objectRelationshipObjectDefinitionId.getKey(),
 				unsafeBiFunction.apply(
-					objectFieldName,
+					leftParts.get(leftParts.size() - 1),
 					_getRelatedObjectDefinitionId(
 						objectRelationshipObjectDefinitionId.getValue(),
 						objectRelationshipObjectDefinitionId.getKey())));
