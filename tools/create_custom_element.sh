@@ -451,7 +451,6 @@ EOF
 function write_react_client_extension {
 	echo "assemble:" > client-extension.yaml
 	echo "    - from: build" >> client-extension.yaml
-	echo "      include: \"static/**/*\"" >> client-extension.yaml
 	echo "      into: static" >> client-extension.yaml
 	echo "${CUSTOM_ELEMENT_NAME}:" >> client-extension.yaml
 	echo "    cssURLs:" >> client-extension.yaml
