@@ -118,6 +118,14 @@ public class CommerceMediaResolverTest {
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, _serviceContext);
 
+		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
+			_accountEntry.getAccountEntryId());
+
+		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
+			_user.getCompanyId(), RandomTestUtil.randomString(),
+			CommerceAccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
+			_commerceAccount.getCommerceAccountId(), _serviceContext);
+
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			_user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -128,25 +136,15 @@ public class CommerceMediaResolverTest {
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId(),
 			_commerceCurrency.getCode());
-
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			RandomTestUtil.randomString(), _group.getGroupId(),
 			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
-
 		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
 			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId());
-
-		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
-			_accountEntry.getAccountEntryId());
-
-		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
-			_user.getCompanyId(), RandomTestUtil.randomString(),
-			CommerceAccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
-			_commerceAccount.getCommerceAccountId(), _serviceContext);
 	}
 
 	@Test
