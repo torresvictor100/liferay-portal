@@ -1,9 +1,9 @@
 assemble:
     - from: assets
     - fromTask: shadowJar
-liferay-learn-cron:
+liferay-learn-etc-cron:
     homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
-    name: Liferay Learn Cron
+    name: Liferay Learn Etc Cron
     scopes:
         - Liferay.Data.Engine.REST.everything
         - Liferay.Headless.Admin.User.everything.read

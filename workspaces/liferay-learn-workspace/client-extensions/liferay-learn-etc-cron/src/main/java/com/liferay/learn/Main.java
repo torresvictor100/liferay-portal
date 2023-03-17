@@ -117,17 +117,20 @@ public class Main {
 
 	public static void main(String[] arguments) throws Exception {
 		File markdownImportDirFile = new File(
-			System.getenv("LIFERAY_LEARN_CRON_MARKDOWN_IMPORT_DIR"));
+			System.getenv("LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR"));
 
 		Main main = new Main(
-			System.getenv("LIFERAY_LEARN_CRON_LIFERAY_DATA_DEFINITION_KEY"),
-			System.getenv("LIFERAY_LEARN_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN"),
-			System.getenv("LIFERAY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_ID"),
-			System.getenv("LIFERAY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			System.getenv("LIFERAY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH"),
-			new URL(System.getenv("LIFERAY_LEARN_CRON_LIFERAY_URL")),
+			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_DATA_DEFINITION_KEY"),
+			System.getenv(
+				"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN"),
+			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
+			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
+			System.getenv(
+				"LIFERAY_LEARN_ETC_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH"),
+			new URL(System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_URL")),
 			markdownImportDirFile.getCanonicalPath(),
-			GetterUtil.getBoolean(System.getenv("LIFERAY_LEARN_CRON_OFFLINE")));
+			GetterUtil.getBoolean(
+				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")));
 
 		main.uploadToLiferay();
 	}
