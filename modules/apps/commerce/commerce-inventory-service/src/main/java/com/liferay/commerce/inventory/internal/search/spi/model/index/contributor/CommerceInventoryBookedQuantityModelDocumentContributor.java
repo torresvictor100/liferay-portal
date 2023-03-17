@@ -74,10 +74,8 @@ public class CommerceInventoryBookedQuantityModelDocumentContributor
 				"commerceAccountId", commerceOrder.getCommerceAccountId());
 			document.addKeyword(
 				"commerceOrderId", commerceOrder.getCommerceOrderId());
-
 			document.addNumber(
 				"itemsQuantity", commerceInventoryBookedQuantity.getQuantity());
-
 			document.add(new Field("sku", commerceOrderItem.getSku()));
 		}
 		catch (Exception exception) {

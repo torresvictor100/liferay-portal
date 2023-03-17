@@ -100,12 +100,6 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
-
-		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_group.getGroupId(), _commerceCurrency.getCode());
-
 		try {
 			_commerceAccount =
 				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
@@ -118,8 +112,11 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 					_user.getUserId());
 		}
 
-		_indexer = _indexerRegistry.nullSafeGetIndexer(
-			CommerceInventoryBookedQuantity.class);
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), _commerceCurrency.getCode(),
@@ -127,6 +124,9 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 
 		_commerceContext = new TestCommerceContext(
 			_commerceCurrency, _commerceChannel, _user, _group, null, null);
+
+		_indexer = _indexerRegistry.nullSafeGetIndexer(
+			CommerceInventoryBookedQuantity.class);
 	}
 
 	@After

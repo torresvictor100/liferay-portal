@@ -51,14 +51,12 @@ public class CommerceInventoryBookedQuantityModelPreFilterContributor
 		String sku = GetterUtil.getString(searchContext.getAttribute("sku"));
 
 		if (Validator.isNull(sku)) {
-			Filter existsFilter = new ExistsFilter("sku.raw");
-
-			booleanFilter.add(existsFilter, BooleanClauseOccur.MUST_NOT);
+			booleanFilter.add(
+				new ExistsFilter("sku.raw"), BooleanClauseOccur.MUST_NOT);
 		}
 
-		Filter termFilter = new TermFilter("sku.raw", sku);
-
-		booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(
+			new TermFilter("sku.raw", sku), BooleanClauseOccur.MUST);
 	}
 
 }
